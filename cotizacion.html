@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Solicitar información | Pirámide Woodworks</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Solicitar información</h1>
+
+        <p>Cuéntanos qué necesitas.</p>
+    </header>
+
+    <main>
+
+      <form class="formulario" onsubmit="enviarWhatsApp(event)">
+
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Tu teléfono">
+<div id="producto-seleccionado"></div>
+
+            <label for="mensaje">¿Qué necesitas?</label>
+            <textarea id="mensaje" name="mensaje" rows="5"
+                placeholder="Escribe aquí tu pregunta o lo que necesitas cotizar"></textarea>
+
+            <button type="submit" class="boton-principal">
+    Enviar solicitud de información
+</button>
+        </form>
+
+    </main>
+
+<script>
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const contenedorPedido = document.getElementById("producto-seleccionado");
+
+if (carrito.length > 0) {
+    let total = 0;
+
+    contenedorPedido.innerHTML = "<strong>🛒 Tu pedido:</strong><br><br>";
+
+    carrito.forEach(function(producto) {
+        const subtotal = producto.precio * producto.cantidad;
+        total += subtotal;
+
+        contenedorPedido.innerHTML +=
+            producto.nombre +
+            " x " + producto.cantidad +
+            " — $" + subtotal +
+            "<br>";
+    });
+
+    contenedorPedido.innerHTML +=
+        "<br><strong>Total: $" + total + "</strong>";
+}
+</script>
+
+</script>
+<script>
+function enviarWhatsApp(event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const telefono = document.getElementById("telefono").value;
+    const mensaje = document.getElementById("mensaje").value;
+
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    let texto =
+        "Hola, quiero hacer un pedido en Pirámide Woodworks.\n\n" +
+        "Nombre: " + nombre + "\n" +
+        "Teléfono: " + telefono + "\n\n" +
+        "Pedido:\n";
+
+    let total = 0;
+
+    carrito.forEach(function(producto) {
+        const subtotal = producto.precio * producto.cantidad;
+        total += subtotal;
+
+        texto +=
+            "- " + producto.nombre +
+            " x " + producto.cantidad +
+            " — $" + subtotal + "\n";
+    });
+
+    texto += "\nTotal: $" + total;
+
+    if (mensaje) {
+        texto += "\n\nMensaje: " + mensaje;
+    }
+
+    const numero = "528991194289";
+
+    window.open(
+        "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto),
+        "_blank"
+    );
+    localStorage.removeItem("carrito");
+}
+</script>
+</body>
+
+
+</html>
