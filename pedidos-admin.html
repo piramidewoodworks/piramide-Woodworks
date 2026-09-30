@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos | Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --negro-suave: #222222;
+            --blanco: #ffffff;
+            --crema: #f7f5f1;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--blanco);
+        }
+
+        header {
+            text-align: center;
+            padding: 42px 20px 28px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 44px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--dorado-claro);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(100% - 30px, 1000px);
+            margin: 0 auto 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .volver:hover {
+            color: white;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .acciones h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .boton {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .boton:hover {
+            background: #292929;
+            border-color: var(--dorado-claro);
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .resumen-card span {
+            display: block;
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .resumen-card strong {
+            font-size: 25px;
+            font-weight: 500;
+            color: var(--dorado);
+        }
+
+        .filtros {
+            background: rgba(255,255,255,0.96);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filtros input,
+        .filtros select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .filtros input:focus,
+        .filtros select:focus {
+            border-color: var(--dorado);
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 10px;
+        }
+
+        .pedido {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .pedido-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .pedido h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fecha {
+            color: var(--texto-suave);
+            font-size: 12px;
+        }
+
+        .estado {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            background: #eee;
+        }
+
+        .estado-pendiente {
+            background: #f4ead9;
+            color: #8a672f;
+        }
+
+        .estado-proceso {
+            background: #e6edf2;
+            color: #466273;
+        }
+
+        .estado-listo {
+            background: #e5efe5;
+            color: #4d6b4d;
+        }
+
+        .estado-entregado {
+            background: #e9e9e9;
+            color: #555;
+        }
+
+        .pedido-info {
+            margin-top: 15px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .pedido-info strong {
+            color: var(--texto);
+        }
+
+        .pedido-acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px solid var(--linea);
+        }
+
+        .boton-secundario {
+            border: 1px solid var(--linea);
+            background: white;
+            color: var(--texto);
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .boton-secundario:hover {
+            border-color: var(--dorado);
+        }
+
+        .boton-eliminar {
+            color: #9b3d3d;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            border-radius: 12px;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-contenido {
+            background: white;
+            color: var(--texto);
+            width: min(100%, 600px);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .modal-contenido h2 {
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        .campo {
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--texto-suave);
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .resumen {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pedido-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Pedidos</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+        <h2>Administración de pedidos</h2>
+        <button class="boton" onclick="abrirModal()">+ Nuevo pedido</button>
+    </div>
+
+    <section class="resumen">
+        <div class="resumen-card">
+            <span>Total</span>
+            <strong id="totalPedidos">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Pendientes</span>
+            <strong id="pendientes">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>En proceso</span>
+            <strong id="enProceso">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Listos</span>
+            <strong id="listos">0</strong>
+        </div>
+    </section>
+
+    <section class="filtros">
+
+        <div class="filtros-grid">
+
+            <input
+                type="text"
+                id="busqueda"
+                placeholder="Buscar por cliente, teléfono o producto..."
+                oninput="mostrarPedidos()"
+            >
+
+            <select id="filtroEstado" onchange="mostrarPedidos()">
+                <option value="Todos">Todos</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Listo">Listo</option>
+                <option value="Entregado">Entregado</option>
+            </select>
+
+        </div>
+
+    </section>
+
+    <section id="listaPedidos"></section>
+
+</main>
+
+<div class="modal" id="modalPedido">
+
+    <div class="modal-contenido">
+
+        <h2>Nuevo pedido</h2>
+
+        <div class="campo">
+            <label>Cliente</label>
+            <input type="text" id="cliente">
+        </div>
+
+        <div class="campo">
+            <label>Teléfono</label>
+            <input type="tel" id="telefono">
+        </div>
+
+        <div class="campo">
+            <label>Producto</label>
+            <input type="text" id="producto">
+        </div>
+
+        <div class="campo">
+            <label>Cantidad</label>
+            <input type="number" id="cantidad" min="1" value="1">
+        </div>
+
+        <div class="campo">
+            <label>Total del pedido</label>
+            <input type="number" id="precio" min="0">
+        </div>
+
+        <div class="campo">
+            <label>Estado</label>
+
+            <select id="estado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Listo">Listo</option>
+                <option value="Entregado">Entregado</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Notas</label>
+            <textarea id="notas" placeholder="Detalles del pedido..."></textarea>
+        </div>
+
+        <div class="modal-botones">
+            <button class="boton-secundario" onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+            <button class="boton" onclick="guardarPedido()">
+                Guardar pedido
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+function guardarPedidos() {
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}
+
+function abrirModal() {
+    document.getElementById("modalPedido").style.display = "flex";
+}
+
+function cerrarModal() {
+    document.getElementById("modalPedido").style.display = "none";
+
+    document.getElementById("cliente").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("producto").value = "";
+    document.getElementById("cantidad").value = 1;
+    document.getElementById("precio").value = "";
+    document.getElementById("estado").value = "Pendiente";
+    document.getElementById("notas").value = "";
+}
+
+function guardarPedido() {
+
+    const cliente = document.getElementById("cliente").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+    const producto = document.getElementById("producto").value.trim();
+    const cantidad = Number(document.getElementById("cantidad").value);
+    const precio = Number(document.getElementById("precio").value);
+    const estado = document.getElementById("estado").value;
+    const notas = document.getElementById("notas").value.trim();
+
+    if (!cliente || !telefono || !producto) {
+        alert("Completa cliente, teléfono y producto.");
+        return;
+    }
+
+    const pedido = {
+        id: Date.now(),
+        cliente: cliente,
+        telefono: telefono,
+        producto: producto,
+        cantidad: cantidad || 1,
+        precio: precio || 0,
+        estado: estado,
+        notas: notas,
+        fecha: new Date().toLocaleString("es-MX")
+    };
+
+    pedidos.push(pedido);
+
+    guardarPedidos();
+    mostrarPedidos();
+    cerrarModal();
+}
+
+function obtenerClaseEstado(estado) {
+
+    if (estado === "Pendiente") {
+        return "estado-pendiente";
+    }
+
+    if (estado === "En proceso") {
+        return "estado-proceso";
+    }
+
+    if (estado === "Listo") {
+        return "estado-listo";
+    }
+
+    return "estado-entregado";
+}
+
+function mostrarPedidos() {
+
+    const contenedor = document.getElementById("listaPedidos");
+
+    const busqueda = document
+        .getElementById("busqueda")
+        .value
+        .toLowerCase();
+
+    const filtroEstado = document.getElementById("filtroEstado").value;
+
+    const filtrados = pedidos.filter(function(pedido) {
+
+        const coincideBusqueda =
+            pedido.cliente.toLowerCase().includes(busqueda) ||
+            pedido.telefono.toLowerCase().includes(busqueda) ||
+            pedido.producto.toLowerCase().includes(busqueda);
+
+        const coincideEstado =
+            filtroEstado === "Todos" ||
+            pedido.estado === filtroEstado;
+
+        return coincideBusqueda && coincideEstado;
+    });
+
+    contenedor.innerHTML = "";
+
+    if (filtrados.length === 0) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay pedidos para mostrar.
+            </div>
+        `;
+
+    } else {
+
+        filtrados.forEach(function(pedido) {
+
+            const subtotal = pedido.precio * pedido.cantidad;
+
+            contenedor.innerHTML += `
+                <article class="pedido">
+
+                    <div class="pedido-top">
+
+                        <div>
+                            <h3>${pedido.cliente}</h3>
+                            <div class="fecha">${pedido.fecha}</div>
+                        </div>
+
+                        <span class="estado ${obtenerClaseEstado(pedido.estado)}">
+                            ${pedido.estado}
+                        </span>
+
+                    </div>
+
+                    <div class="pedido-info">
+
+                        <strong>📞 Teléfono:</strong>
+                        ${pedido.telefono}
+                        <br>
+
+                        <strong>Producto:</strong>
+                        ${pedido.producto}
+                        <br>
+
+                        <strong>Cantidad:</strong>
+                        ${pedido.cantidad}
+                        <br>
+
+                        <strong>Total:</strong>
+                        $${subtotal}
+
+                        ${
+                            pedido.notas
+                            ? `<br><strong>Notas:</strong> ${pedido.notas}`
+                            : ""
+                        }
+
+                    </div>
+
+                    <div class="pedido-acciones">
+
+                        <button
+                            class="boton-secundario"
+                            onclick="cambiarEstado(${pedido.id})">
+                            Cambiar estado
+                        </button>
+
+                        <button
+                            class="boton-secundario"
+                            onclick="abrirWhatsApp('${pedido.telefono}', '${pedido.cliente}', '${pedido.producto}')">
+                            WhatsApp
+                        </button>
+
+                        <button
+                            class="boton-secundario boton-eliminar"
+                            onclick="eliminarPedido(${pedido.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </article>
+            `;
+        });
+    }
+
+    actualizarResumen();
+}
+
+function cambiarEstado(id) {
+
+    const pedido = pedidos.find(function(p) {
+        return p.id === id;
+    });
+
+    if (!pedido) {
+        return;
+    }
+
+    const nuevoEstado = prompt(
+        "Escribe el nuevo estado:\n\nPendiente\nEn proceso\nListo\nEntregado",
+        pedido.estado
+    );
+
+    if (!nuevoEstado) {
+        return;
+    }
+
+    const estadosValidos = [
+        "Pendiente",
+        "En proceso",
+        "Listo",
+        "Entregado"
+    ];
+
+    if (!estadosValidos.includes(nuevoEstado)) {
+        alert("Estado no válido.");
+        return;
+    }
+
+    pedido.estado = nuevoEstado;
+
+    guardarPedidos();
+    mostrarPedidos();
+}
+
+function eliminarPedido(id) {
+
+    const confirmar = confirm(
+        "¿Seguro que quieres eliminar este pedido?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    pedidos = pedidos.filter(function(pedido) {
+        return pedido.id !== id;
+    });
+
+    guardarPedidos();
+    mostrarPedidos();
+}
+
+function abrirWhatsApp(telefono, cliente, producto) {
+
+    const numero = telefono.replace(/\D/g, "");
+
+    const texto =
+        "Hola " + cliente +
+        ", te escribimos de Pirámide Woodworks respecto a tu pedido de " +
+        producto + ".";
+
+    window.open(
+        "https://wa.me/52" + numero +
+        "?text=" + encodeURIComponent(texto),
+        "_blank"
+    );
+}
+
+function actualizarResumen() {
+
+    document.getElementById("totalPedidos").textContent =
+        pedidos.length;
+
+    document.getElementById("pendientes").textContent =
+        pedidos.filter(function(p) {
+            return p.estado === "Pendiente";
+        }).length;
+
+    document.getElementById("enProceso").textContent =
+        pedidos.filter(function(p) {
+            return p.estado === "En proceso";
+        }).length;
+
+    document.getElementById("listos").textContent =
+        pedidos.filter(function(p) {
+            return p.estado === "Listo";
+        }).length;
+}
+
+mostrarPedidos();
+
+</script>
+
+</body>
+</html>

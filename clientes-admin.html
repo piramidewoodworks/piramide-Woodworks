@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--blanco);
+        }
+
+        header {
+            text-align: center;
+            padding: 42px 20px 28px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 44px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--dorado-claro);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(100% - 30px, 1000px);
+            margin: 0 auto 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .acciones h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .boton {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .boton:hover {
+            background: #292929;
+            border-color: var(--dorado-claro);
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .resumen-card span {
+            display: block;
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .resumen-card strong {
+            font-size: 25px;
+            font-weight: 500;
+            color: var(--dorado);
+        }
+
+        .filtros {
+            background: rgba(255,255,255,0.96);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filtros input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .cliente {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .cliente-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .cliente h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .cliente-info {
+            color: var(--texto-suave);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .cliente-numero {
+            color: var(--dorado);
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .cliente-acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px solid var(--linea);
+        }
+
+        .boton-secundario {
+            border: 1px solid var(--linea);
+            background: white;
+            color: var(--texto);
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .boton-secundario:hover {
+            border-color: var(--dorado);
+        }
+
+        .boton-eliminar {
+            color: #9b3d3d;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            border-radius: 12px;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-contenido {
+            background: white;
+            color: var(--texto);
+            width: min(100%, 600px);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .modal-contenido h2 {
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        .campo {
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--texto-suave);
+        }
+
+        .campo input,
+        .campo textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            .cliente-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Clientes</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+        <h2>Directorio de clientes</h2>
+
+        <button class="boton" onclick="abrirModal()">
+            + Nuevo cliente
+        </button>
+    </div>
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+            <span>Total de clientes</span>
+            <strong id="totalClientes">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Con teléfono</span>
+            <strong id="conTelefono">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Con correo</span>
+            <strong id="conCorreo">0</strong>
+        </div>
+
+    </section>
+
+    <section class="filtros">
+
+        <input
+            type="text"
+            id="busqueda"
+            placeholder="Buscar por nombre, teléfono o correo..."
+            oninput="mostrarClientes()"
+        >
+
+    </section>
+
+    <section id="listaClientes"></section>
+
+</main>
+
+<div class="modal" id="modalCliente">
+
+    <div class="modal-contenido">
+
+        <h2>Nuevo cliente</h2>
+
+        <div class="campo">
+            <label>Nombre</label>
+            <input type="text" id="nombre">
+        </div>
+
+        <div class="campo">
+            <label>Teléfono</label>
+            <input type="tel" id="telefono">
+        </div>
+
+        <div class="campo">
+            <label>Correo electrónico</label>
+            <input type="email" id="correo">
+        </div>
+
+        <div class="campo">
+            <label>Dirección</label>
+            <input type="text" id="direccion">
+        </div>
+
+        <div class="campo">
+            <label>Notas</label>
+            <textarea id="notas"></textarea>
+        </div>
+
+        <div class="modal-botones">
+
+            <button
+                class="boton-secundario"
+                onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+            <button
+                class="boton"
+                onclick="guardarCliente()">
+                Guardar cliente
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let clientes =
+    JSON.parse(localStorage.getItem("clientes")) || [];
+
+function guardarClientes() {
+    localStorage.setItem(
+        "clientes",
+        JSON.stringify(clientes)
+    );
+}
+
+function abrirModal() {
+    document.getElementById("modalCliente").style.display = "flex";
+}
+
+function cerrarModal() {
+
+    document.getElementById("modalCliente").style.display = "none";
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("correo").value = "";
+    document.getElementById("direccion").value = "";
+    document.getElementById("notas").value = "";
+}
+
+function guardarCliente() {
+
+    const nombre =
+        document.getElementById("nombre").value.trim();
+
+    const telefono =
+        document.getElementById("telefono").value.trim();
+
+    const correo =
+        document.getElementById("correo").value.trim();
+
+    const direccion =
+        document.getElementById("direccion").value.trim();
+
+    const notas =
+        document.getElementById("notas").value.trim();
+
+    if (!nombre) {
+        alert("Escribe el nombre del cliente.");
+        return;
+    }
+
+    const cliente = {
+
+        id: Date.now(),
+
+        nombre: nombre,
+
+        telefono: telefono,
+
+        correo: correo,
+
+        direccion: direccion,
+
+        notas: notas,
+
+        fecha: new Date().toLocaleString("es-MX")
+
+    };
+
+    clientes.push(cliente);
+
+    guardarClientes();
+
+    mostrarClientes();
+
+    cerrarModal();
+}
+
+function mostrarClientes() {
+
+    const contenedor =
+        document.getElementById("listaClientes");
+
+    const busqueda =
+        document
+            .getElementById("busqueda")
+            .value
+            .toLowerCase();
+
+    const filtrados =
+        clientes.filter(function(cliente) {
+
+            return (
+                cliente.nombre
+                    .toLowerCase()
+                    .includes(busqueda) ||
+
+                cliente.telefono
+                    .toLowerCase()
+                    .includes(busqueda) ||
+
+                cliente.correo
+                    .toLowerCase()
+                    .includes(busqueda)
+            );
+
+        });
+
+    contenedor.innerHTML = "";
+
+    if (filtrados.length === 0) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay clientes para mostrar.
+            </div>
+        `;
+
+    } else {
+
+        filtrados.forEach(function(cliente) {
+
+            contenedor.innerHTML += `
+
+                <article class="cliente">
+
+                    <div class="cliente-top">
+
+                        <div>
+
+                            <h3>
+                                ${cliente.nombre}
+                            </h3>
+
+                            <div class="cliente-info">
+
+                                ${
+                                    cliente.telefono
+                                    ? "📞 " + cliente.telefono + "<br>"
+                                    : ""
+                                }
+
+                                ${
+                                    cliente.correo
+                                    ? "✉️ " + cliente.correo + "<br>"
+                                    : ""
+                                }
+
+                                ${
+                                    cliente.direccion
+                                    ? "📍 " + cliente.direccion
+                                    : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                        <div class="cliente-numero">
+                            Cliente #${cliente.id}
+                        </div>
+
+                    </div>
+
+                    ${
+                        cliente.notas
+                        ? `
+                            <div class="cliente-info" style="margin-top:12px;">
+                                <strong>Notas:</strong>
+                                ${cliente.notas}
+                            </div>
+                        `
+                        : ""
+                    }
+
+                    <div class="cliente-acciones">
+
+                        ${
+                            cliente.telefono
+                            ? `
+                                <button
+                                    class="boton-secundario"
+                                    onclick="abrirWhatsApp('${cliente.telefono}', '${cliente.nombre}')">
+                                    WhatsApp
+                                </button>
+                            `
+                            : ""
+                        }
+
+                        <button
+                            class="boton-secundario boton-eliminar"
+                            onclick="eliminarCliente(${cliente.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+        });
+    }
+
+    actualizarResumen();
+}
+
+function eliminarCliente(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar este cliente?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    clientes =
+        clientes.filter(function(cliente) {
+            return cliente.id !== id;
+        });
+
+    guardarClientes();
+
+    mostrarClientes();
+}
+
+function abrirWhatsApp(telefono, nombre) {
+
+    const numero =
+        telefono.replace(/\D/g, "");
+
+    const texto =
+        "Hola " +
+        nombre +
+        ", te escribimos de Pirámide Woodworks.";
+
+    window.open(
+        "https://wa.me/52" +
+        numero +
+        "?text=" +
+        encodeURIComponent(texto),
+        "_blank"
+    );
+}
+
+function actualizarResumen() {
+
+    document.getElementById("totalClientes").textContent =
+        clientes.length;
+
+    document.getElementById("conTelefono").textContent =
+        clientes.filter(function(cliente) {
+            return cliente.telefono.trim() !== "";
+        }).length;
+
+    document.getElementById("conCorreo").textContent =
+        clientes.filter(function(cliente) {
+            return cliente.correo.trim() !== "";
+        }).length;
+}
+
+mostrarClientes();
+
+</script>
+
+</body>
+</html>

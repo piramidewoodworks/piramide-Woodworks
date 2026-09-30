@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas | Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--blanco);
+        }
+
+        header {
+            text-align: center;
+            padding: 42px 20px 28px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 44px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--dorado-claro);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(100% - 30px, 1000px);
+            margin: 0 auto 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .acciones h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .boton {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .boton:hover {
+            background: #292929;
+            border-color: var(--dorado-claro);
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .resumen-card span {
+            display: block;
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .resumen-card strong {
+            font-size: 25px;
+            font-weight: 500;
+            color: var(--dorado);
+        }
+
+        .filtros {
+            background: rgba(255,255,255,0.96);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 10px;
+        }
+
+        .filtros input,
+        .filtros select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .venta {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .venta-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .venta h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fecha {
+            color: var(--texto-suave);
+            font-size: 12px;
+        }
+
+        .venta-total {
+            color: var(--dorado);
+            font-size: 20px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .venta-info {
+            margin-top: 15px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .venta-acciones {
+            display: flex;
+            gap: 8px;
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px solid var(--linea);
+        }
+
+        .boton-secundario {
+            border: 1px solid var(--linea);
+            background: white;
+            color: var(--texto);
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .boton-eliminar {
+            color: #9b3d3d;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            border-radius: 12px;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-contenido {
+            background: white;
+            color: var(--texto);
+            width: min(100%, 600px);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .modal-contenido h2 {
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        .campo {
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--texto-suave);
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .precio-ayuda {
+            margin-top: 5px;
+            color: var(--texto-suave);
+            font-size: 11px;
+        }
+
+        .descuento-info {
+            margin-top: 5px;
+            color: var(--dorado);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .total-venta {
+            background: #f7f5f1;
+            border: 1px solid var(--linea);
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .total-venta span {
+            display: block;
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .total-venta strong {
+            color: var(--dorado);
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .venta-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Ventas</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+        <h2>Registro de ventas</h2>
+
+        <button class="boton" onclick="abrirModal()">
+            + Nueva venta
+        </button>
+    </div>
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+            <span>Ventas registradas</span>
+            <strong id="totalVentas">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Ventas del mes</span>
+            <strong id="ventasMes">$0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Total vendido</span>
+            <strong id="totalVendido">$0</strong>
+        </div>
+
+    </section>
+
+    <section class="filtros">
+
+        <div class="filtros-grid">
+
+            <input
+                type="text"
+                id="busqueda"
+                placeholder="Buscar por cliente o producto..."
+                oninput="mostrarVentas()"
+            >
+
+            <select id="filtroMetodo" onchange="mostrarVentas()">
+                <option value="Todos">Todos los pagos</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Otro">Otro</option>
+            </select>
+
+        </div>
+
+    </section>
+
+    <section id="listaVentas"></section>
+
+</main>
+
+<div class="modal" id="modalVenta">
+
+    <div class="modal-contenido">
+
+        <h2>Nueva venta</h2>
+
+        <div class="campo">
+            <label>Cliente</label>
+            <input type="text" id="cliente">
+        </div>
+
+        <div class="campo">
+            <label>Fecha de la venta</label>
+            <input type="date" id="fechaVenta">
+        </div>
+
+        <div class="campo">
+            <label>Producto</label>
+
+            <select id="producto" onchange="actualizarPrecio()">
+                <option value="">Selecciona un producto</option>
+                <option value="BottleBox">BottleBox</option>
+                <option value="TequilaBox">TequilaBox</option>
+                <option value="TequilaBox sin botella">TequilaBox sin botella</option>
+                <option value="GiftBox">GiftBox</option>
+                <option value="SlidingBox">SlidingBox</option>
+                <option value="Portallaves Home">Portallaves Home</option>
+                <option value="Mostrador QR & Códigos Personalizado">Mostrador QR & Códigos Personalizado</option>
+                <option value="Carruaje de Cenicienta">Carruaje de Cenicienta</option>
+                <option value="Mesa Carruaje Gigante">Mesa Carruaje Gigante</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Cantidad</label>
+            <input
+                type="number"
+                id="cantidad"
+                min="1"
+                value="1"
+                oninput="actualizarTotal()"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Precio por unidad</label>
+
+            <input
+                type="number"
+                id="precio"
+                min="0"
+                oninput="actualizarTotal()"
+            >
+
+            <div class="precio-ayuda">
+                Se coloca automáticamente según el producto. Puedes modificarlo si es necesario.
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Descuento (%) — opcional</label>
+
+            <input
+                type="number"
+                id="descuento"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="Ej. 10"
+                oninput="actualizarTotal()"
+            >
+
+            <div class="descuento-info" id="descuentoInfo"></div>
+        </div>
+
+        <div class="total-venta">
+            <span>Total de la venta</span>
+            <strong id="totalCalculado">$0</strong>
+        </div>
+
+        <div class="campo">
+            <label>Método de pago</label>
+
+            <select id="metodo">
+                <option value="Efectivo">Efectivo</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Notas</label>
+            <textarea id="notas"></textarea>
+        </div>
+
+        <div class="modal-botones">
+
+            <button class="boton-secundario" onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+            <button class="boton" onclick="guardarVenta()">
+                Guardar venta
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+
+/* PRECIOS OFICIALES */
+
+const preciosProductos = {
+
+    "BottleBox": 600,
+
+    "TequilaBox": 1200,
+
+    "TequilaBox sin botella": 480,
+
+    "GiftBox": 550,
+
+    "SlidingBox": 400,
+
+    "Portallaves Home": 130,
+
+    "Mostrador QR & Códigos Personalizado": 120,
+
+    "Carruaje de Cenicienta": 155,
+
+    "Mesa Carruaje Gigante": 2500
+
+};
+
+
+function guardarVentas() {
+
+    localStorage.setItem(
+        "ventas",
+        JSON.stringify(ventas)
+    );
+}
+
+
+function obtenerFechaHoy() {
+
+    const ahora = new Date();
+
+    const año =
+        ahora.getFullYear();
+
+    const mes =
+        String(ahora.getMonth() + 1)
+        .padStart(2, "0");
+
+    const dia =
+        String(ahora.getDate())
+        .padStart(2, "0");
+
+    return año + "-" + mes + "-" + dia;
+}
+
+
+function abrirModal() {
+
+    document
+        .getElementById("modalVenta")
+        .style.display = "flex";
+
+    document
+        .getElementById("fechaVenta")
+        .value = obtenerFechaHoy();
+
+    actualizarPrecio();
+
+}
+
+
+function cerrarModal() {
+
+    document
+        .getElementById("modalVenta")
+        .style.display = "none";
+
+    document
+        .getElementById("cliente")
+        .value = "";
+
+    document
+        .getElementById("producto")
+        .value = "";
+
+    document
+        .getElementById("cantidad")
+        .value = 1;
+
+    document
+        .getElementById("precio")
+        .value = "";
+
+    document
+        .getElementById("descuento")
+        .value = "";
+
+    document
+        .getElementById("metodo")
+        .value = "Efectivo";
+
+    document
+        .getElementById("notas")
+        .value = "";
+
+    document
+        .getElementById("fechaVenta")
+        .value = "";
+
+    document
+        .getElementById("descuentoInfo")
+        .textContent = "";
+
+    document
+        .getElementById("totalCalculado")
+        .textContent = "$0";
+}
+
+
+function actualizarPrecio() {
+
+    const producto =
+        document
+            .getElementById("producto")
+            .value;
+
+    const precio =
+        preciosProductos[producto];
+
+    const campoPrecio =
+        document
+            .getElementById("precio");
+
+    if (precio !== undefined) {
+
+        campoPrecio.value = precio;
+
+    } else if (producto === "Otro") {
+
+        campoPrecio.value = "";
+
+    } else {
+
+        campoPrecio.value = "";
+    }
+
+    actualizarTotal();
+}
+
+
+function actualizarTotal() {
+
+    const precio =
+        Number(
+            document
+                .getElementById("precio")
+                .value
+        ) || 0;
+
+    const cantidad =
+        Number(
+            document
+                .getElementById("cantidad")
+                .value
+        ) || 0;
+
+    let descuento =
+        Number(
+            document
+                .getElementById("descuento")
+                .value
+        ) || 0;
+
+    if (descuento < 0) {
+        descuento = 0;
+    }
+
+    if (descuento > 100) {
+        descuento = 100;
+        document.getElementById("descuento").value = 100;
+    }
+
+    const subtotal =
+        precio * cantidad;
+
+    const montoDescuento =
+        subtotal * (descuento / 100);
+
+    const total =
+        subtotal - montoDescuento;
+
+    document
+        .getElementById("totalCalculado")
+        .textContent =
+            "$" + total.toFixed(2).replace(".00", "");
+
+    const descuentoInfo =
+        document.getElementById("descuentoInfo");
+
+    if (descuento > 0) {
+
+        descuentoInfo.textContent =
+            "Descuento aplicado: $" +
+            montoDescuento.toFixed(2).replace(".00", "");
+
+    } else {
+
+        descuentoInfo.textContent = "";
+    }
+}
+
+
+function guardarVenta() {
+
+    const cliente =
+        document
+            .getElementById("cliente")
+            .value
+            .trim();
+
+    const producto =
+        document
+            .getElementById("producto")
+            .value;
+
+    const cantidad =
+        Number(
+            document
+                .getElementById("cantidad")
+                .value
+        );
+
+    const precio =
+        Number(
+            document
+                .getElementById("precio")
+                .value
+        );
+
+    const descuento =
+        Number(
+            document
+                .getElementById("descuento")
+                .value
+        ) || 0;
+
+    const metodo =
+        document
+            .getElementById("metodo")
+            .value;
+
+    const notas =
+        document
+            .getElementById("notas")
+            .value
+            .trim();
+
+    const fechaVenta =
+        document
+            .getElementById("fechaVenta")
+            .value;
+
+
+    if (
+        !cliente ||
+        !producto ||
+        !precio ||
+        !fechaVenta
+    ) {
+
+        alert(
+            "Completa cliente, producto, precio y fecha de la venta."
+        );
+
+        return;
+    }
+
+
+    const cantidadFinal =
+        cantidad || 1;
+
+
+    const subtotal =
+        precio * cantidadFinal;
+
+
+    const montoDescuento =
+        subtotal * (descuento / 100);
+
+
+    const total =
+        subtotal - montoDescuento;
+
+
+    const venta = {
+
+        id: Date.now(),
+
+        cliente: cliente,
+
+        producto: producto,
+
+        cantidad: cantidadFinal,
+
+        precio: precio,
+
+        descuento: descuento,
+
+        montoDescuento: montoDescuento,
+
+        subtotal: subtotal,
+
+        total: total,
+
+        metodo: metodo,
+
+        notas: notas,
+
+        fecha: fechaVenta
+
+    };
+
+
+    ventas.push(venta);
+
+    guardarVentas();
+
+    mostrarVentas();
+
+    cerrarModal();
+}
+
+
+function convertirFechaLocal(fecha) {
+
+    if (!fecha) {
+        return new Date();
+    }
+
+    if (fecha.includes("T")) {
+        return new Date(fecha);
+    }
+
+    const partes =
+        fecha.split("-");
+
+    return new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+}
+
+
+function mostrarVentas() {
+
+    const contenedor =
+        document.getElementById("listaVentas");
+
+    const busqueda =
+        document
+            .getElementById("busqueda")
+            .value
+            .toLowerCase();
+
+    const filtroMetodo =
+        document
+            .getElementById("filtroMetodo")
+            .value;
+
+
+    const filtradas =
+        ventas.filter(function(venta) {
+
+            const coincideBusqueda =
+                venta.cliente
+                    .toLowerCase()
+                    .includes(busqueda) ||
+
+                venta.producto
+                    .toLowerCase()
+                    .includes(busqueda);
+
+
+            const coincideMetodo =
+                filtroMetodo === "Todos" ||
+                venta.metodo === filtroMetodo;
+
+
+            return (
+                coincideBusqueda &&
+                coincideMetodo
+            );
+
+        });
+
+
+    contenedor.innerHTML = "";
+
+
+    if (filtradas.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <div class="vacio">
+                No hay ventas para mostrar.
+            </div>
+
+        `;
+
+    } else {
+
+        filtradas.forEach(function(venta) {
+
+            const total =
+                venta.total !== undefined
+                ? venta.total
+                : venta.precio * venta.cantidad;
+
+
+            const fecha =
+                convertirFechaLocal(venta.fecha)
+                    .toLocaleDateString("es-MX");
+
+
+            contenedor.innerHTML += `
+
+                <article class="venta">
+
+                    <div class="venta-top">
+
+                        <div>
+
+                            <h3>
+                                ${venta.cliente}
+                            </h3>
+
+                            <div class="fecha">
+                                ${fecha}
+                            </div>
+
+                        </div>
+
+                        <div class="venta-total">
+                            $${total.toFixed
+                                ? total.toFixed(2).replace(".00", "")
+                                : total}
+                        </div>
+
+                    </div>
+
+
+                    <div class="venta-info">
+
+                        <strong>Producto:</strong>
+                        ${venta.producto}
+                        <br>
+
+                        <strong>Cantidad:</strong>
+                        ${venta.cantidad}
+                        <br>
+
+                        <strong>Precio por unidad:</strong>
+                        $${venta.precio}
+                        <br>
+
+                        ${
+                            venta.descuento > 0
+                            ? `
+                                <strong>Descuento:</strong>
+                                ${venta.descuento}% 
+                                (-$${Number(venta.montoDescuento).toFixed(2).replace(".00", "")})
+                                <br>
+                            `
+                            : ""
+                        }
+
+                        <strong>Pago:</strong>
+                        ${venta.metodo}
+
+                        ${
+                            venta.notas
+                            ? `<br><strong>Notas:</strong> ${venta.notas}`
+                            : ""
+                        }
+
+                    </div>
+
+
+                    <div class="venta-acciones">
+
+                        <button
+                            class="boton-secundario boton-eliminar"
+                            onclick="eliminarVenta(${venta.id})">
+
+                            Eliminar
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        });
+
+    }
+
+
+    actualizarResumen();
+}
+
+
+function eliminarVenta(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar esta venta?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    ventas =
+        ventas.filter(function(venta) {
+
+            return venta.id !== id;
+
+        });
+
+
+    guardarVentas();
+
+    mostrarVentas();
+}
+
+
+function actualizarResumen() {
+
+    document
+        .getElementById("totalVentas")
+        .textContent =
+            ventas.length;
+
+
+    const ahora =
+        new Date();
+
+
+    const mesActual =
+        ahora.getMonth();
+
+
+    const añoActual =
+        ahora.getFullYear();
+
+
+    let totalMes = 0;
+
+    let totalGeneral = 0;
+
+
+    ventas.forEach(function(venta) {
+
+        const total =
+            venta.total !== undefined
+            ? venta.total
+            : venta.precio * venta.cantidad;
+
+
+        totalGeneral += total;
+
+
+        const fecha =
+            convertirFechaLocal(venta.fecha);
+
+
+        if (
+            fecha.getMonth() === mesActual &&
+            fecha.getFullYear() === añoActual
+        ) {
+
+            totalMes += total;
+
+        }
+
+    });
+
+
+    document
+        .getElementById("ventasMes")
+        .textContent =
+            "$" + totalMes;
+
+
+    document
+        .getElementById("totalVendido")
+        .textContent =
+            "$" + totalGeneral;
+}
+
+
+mostrarVentas();
+
+</script>
+
+</body>
+</html>

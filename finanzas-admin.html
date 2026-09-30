@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas - Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+            --verde: #55745c;
+            --rojo: #9a554b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            color: var(--blanco);
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 45px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 9px 0 0;
+            color: var(--dorado-claro);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(950px, calc(100% - 30px));
+            margin: auto;
+            padding-bottom: 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .resumen-card strong {
+            display: block;
+            font-size: 23px;
+            color: var(--dorado);
+            margin-bottom: 5px;
+        }
+
+        .resumen-card span {
+            font-size: 12px;
+            color: var(--texto-suave);
+        }
+
+        .positivo {
+            color: var(--verde) !important;
+        }
+
+        .negativo {
+            color: var(--rojo) !important;
+        }
+
+        .seccion {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.16);
+        }
+
+        .seccion h2 {
+            margin: 0 0 18px;
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+        .fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--linea);
+        }
+
+        .fila:last-child {
+            border-bottom: none;
+        }
+
+        .fila span {
+            color: var(--texto-suave);
+            font-size: 14px;
+        }
+
+        .fila strong {
+            font-size: 16px;
+        }
+
+        .vacio {
+            color: var(--texto-suave);
+            text-align: center;
+            padding: 20px 5px;
+            font-size: 14px;
+        }
+
+        .nota {
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 750px) {
+            .resumen {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 450px) {
+            .resumen {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .resumen-card {
+                padding: 17px 8px;
+            }
+
+            .resumen-card strong {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Finanzas</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+            <strong id="ventasMes">$0</strong>
+            <span>Ventas del mes</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="gastosMes">$0</strong>
+            <span>Gastos del mes</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="resultadoMes">$0</strong>
+            <span>Resultado del mes</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="ventasTotales">$0</strong>
+            <span>Ventas registradas</span>
+        </div>
+
+    </section>
+
+    <section class="seccion">
+
+        <h2>Resumen financiero</h2>
+
+        <div class="fila">
+            <span>Total vendido</span>
+            <strong id="totalVendido">$0</strong>
+        </div>
+
+        <div class="fila">
+            <span>Total gastado</span>
+            <strong id="totalGastado">$0</strong>
+        </div>
+
+        <div class="fila">
+            <span>Resultado general</span>
+            <strong id="resultadoGeneral">$0</strong>
+        </div>
+
+        <p class="nota">
+            El resultado se calcula restando los gastos registrados a las ventas registradas.
+        </p>
+
+    </section>
+
+    <section class="seccion">
+
+        <h2>Ventas por método de pago</h2>
+
+        <div id="metodosPago"></div>
+
+    </section>
+
+    <section class="seccion">
+
+        <h2>Gastos por categoría</h2>
+
+        <div id="categoriasGasto"></div>
+
+    </section>
+
+</main>
+
+<script>
+
+const ventas =
+    JSON.parse(localStorage.getItem("ventas")) || [];
+
+const gastos =
+    JSON.parse(localStorage.getItem("gastos")) || [];
+
+function numero(valor) {
+    return Number(valor) || 0;
+}
+
+function dinero(valor) {
+    return "$" + numero(valor).toLocaleString("es-MX", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+}
+
+function esEsteMes(fecha) {
+
+    if (!fecha) return false;
+
+    const ahora = new Date();
+    const fechaVenta = new Date(fecha);
+
+    return (
+        fechaVenta.getMonth() === ahora.getMonth() &&
+        fechaVenta.getFullYear() === ahora.getFullYear()
+    );
+}
+
+function obtenerMontoVenta(venta) {
+    return numero(
+        venta.total !== undefined
+            ? venta.total
+            : venta.precio
+    );
+}
+
+function obtenerMontoGasto(gasto) {
+    return numero(gasto.monto);
+}
+
+function calcularFinanzas() {
+
+    let totalVendido = 0;
+    let ventasMes = 0;
+
+    ventas.forEach(function(venta) {
+
+        const monto = obtenerMontoVenta(venta);
+
+        totalVendido += monto;
+
+        if (esEsteMes(venta.fecha)) {
+            ventasMes += monto;
+        }
+    });
+
+    let totalGastado = 0;
+    let gastosMes = 0;
+
+    gastos.forEach(function(gasto) {
+
+        const monto = obtenerMontoGasto(gasto);
+
+        totalGastado += monto;
+
+        if (esEsteMes(gasto.fecha)) {
+            gastosMes += monto;
+        }
+    });
+
+    const resultadoMes =
+        ventasMes - gastosMes;
+
+    const resultadoGeneral =
+        totalVendido - totalGastado;
+
+    document.getElementById("ventasMes").textContent =
+        dinero(ventasMes);
+
+    document.getElementById("gastosMes").textContent =
+        dinero(gastosMes);
+
+    document.getElementById("resultadoMes").textContent =
+        dinero(resultadoMes);
+
+    document.getElementById("ventasTotales").textContent =
+        dinero(totalVendido);
+
+    document.getElementById("totalVendido").textContent =
+        dinero(totalVendido);
+
+    document.getElementById("totalGastado").textContent =
+        dinero(totalGastado);
+
+    document.getElementById("resultadoGeneral").textContent =
+        dinero(resultadoGeneral);
+
+    aplicarColor(
+        document.getElementById("resultadoMes"),
+        resultadoMes
+    );
+
+    aplicarColor(
+        document.getElementById("resultadoGeneral"),
+        resultadoGeneral
+    );
+
+    mostrarMetodosPago();
+    mostrarCategoriasGasto();
+}
+
+function aplicarColor(elemento, valor) {
+
+    elemento.classList.remove("positivo");
+    elemento.classList.remove("negativo");
+
+    if (valor > 0) {
+        elemento.classList.add("positivo");
+    }
+
+    if (valor < 0) {
+        elemento.classList.add("negativo");
+    }
+}
+
+function mostrarMetodosPago() {
+
+    const contenedor =
+        document.getElementById("metodosPago");
+
+    const metodos = {};
+
+    ventas.forEach(function(venta) {
+
+        const metodo =
+            venta.metodo || "Otro";
+
+        if (!metodos[metodo]) {
+            metodos[metodo] = 0;
+        }
+
+        metodos[metodo] +=
+            obtenerMontoVenta(venta);
+    });
+
+    contenedor.innerHTML = "";
+
+    const nombres =
+        Object.keys(metodos);
+
+    if (nombres.length === 0) {
+
+        contenedor.innerHTML =
+            '<div class="vacio">Todavía no hay ventas registradas.</div>';
+
+        return;
+    }
+
+    nombres.forEach(function(metodo) {
+
+        contenedor.innerHTML += `
+            <div class="fila">
+                <span>${metodo}</span>
+                <strong>${dinero(metodos[metodo])}</strong>
+            </div>
+        `;
+    });
+}
+
+function mostrarCategoriasGasto() {
+
+    const contenedor =
+        document.getElementById("categoriasGasto");
+
+    const categorias = {};
+
+    gastos.forEach(function(gasto) {
+
+        const categoria =
+            gasto.categoria || "Otro";
+
+        if (!categorias[categoria]) {
+            categorias[categoria] = 0;
+        }
+
+        categorias[categoria] +=
+            obtenerMontoGasto(gasto);
+    });
+
+    contenedor.innerHTML = "";
+
+    const nombres =
+        Object.keys(categorias);
+
+    if (nombres.length === 0) {
+
+        contenedor.innerHTML =
+            '<div class="vacio">Todavía no hay gastos registrados.</div>';
+
+        return;
+    }
+
+    nombres.forEach(function(categoria) {
+
+        contenedor.innerHTML += `
+            <div class="fila">
+                <span>${categoria}</span>
+                <strong>${dinero(categorias[categoria])}</strong>
+            </div>
+        `;
+    });
+}
+
+calcularFinanzas();
+
+</script>
+
+</body>
+</html>

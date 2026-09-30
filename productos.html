@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Productos | Pirámide Woodworks</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --crema: #f7f5f1;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, .82),
+                    rgba(20, 14, 10, .92)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+        }
+
+
+        /* =========================
+           ENCABEZADO
+        ========================== */
+
+        header {
+            text-align: center;
+            padding: 38px 20px 25px;
+        }
+
+        header h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: var(--dorado-claro);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+        ========================== */
+
+        .contenedor {
+            width: min(1050px, calc(100% - 30px));
+            margin: auto;
+            padding-bottom: 60px;
+        }
+
+
+        /* =========================
+           BARRA SUPERIOR
+        ========================== */
+
+        .barra-superior {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .volver {
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            font-size: 13px;
+
+            transition: color .2s ease;
+        }
+
+        .volver:hover {
+            color: var(--dorado-claro);
+        }
+
+
+        /* =========================
+           BOTÓN AGREGAR
+        ========================== */
+
+        .boton-agregar {
+            border: 1px solid var(--dorado);
+            border-radius: 7px;
+
+            background: var(--negro);
+            color: white;
+
+            padding: 11px 17px;
+
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                transform .2s ease;
+        }
+
+        .boton-agregar:hover {
+            background: #000;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           INTRODUCCIÓN
+        ========================== */
+
+        .introduccion {
+            background: rgba(255,255,255,.97);
+            color: var(--texto);
+
+            border-radius: 14px;
+
+            padding: 27px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.20);
+        }
+
+        .introduccion h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .introduccion p {
+            margin-top: 8px;
+            color: var(--texto-suave);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           PRODUCTOS
+        ========================== */
+
+        .productos {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 17px;
+        }
+
+
+        .producto {
+            background: rgba(255,255,255,.97);
+            color: var(--texto);
+
+            border-radius: 13px;
+
+            padding: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,.16);
+        }
+
+
+        .producto-imagen {
+            width: 100%;
+            height: 210px;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f1ec,
+                    #e9e3da
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            color: #8a8178;
+            font-size: 13px;
+        }
+
+        .producto-imagen img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .producto h3 {
+            margin-top: 18px;
+
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+
+        .categoria {
+            display: inline-block;
+
+            margin-top: 7px;
+
+            color: #9a713b;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .producto-descripcion {
+            margin-top: 10px;
+
+            color: var(--texto-suave);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+
+        .producto-datos {
+            margin-top: 13px;
+
+            padding-top: 13px;
+
+            border-top: 1px solid var(--linea);
+
+            color: var(--texto-suave);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+        .producto-datos strong {
+            color: var(--texto);
+        }
+
+
+        .producto-precio {
+            margin-top: 14px;
+
+            color: #9a713b;
+
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           ACCIONES
+        ========================== */
+
+        .acciones {
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+        .accion {
+            flex: 1;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .editar {
+            background: var(--negro);
+            color: white;
+
+            border: 1px solid var(--negro);
+        }
+
+        .editar:hover {
+            border-color: var(--dorado);
+            background: #000;
+        }
+
+
+        .eliminar {
+            background: transparent;
+            color: #76553a;
+
+            border: 1px solid var(--linea);
+        }
+
+        .eliminar:hover {
+            border-color: #b28a52;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================== */
+
+        #modal {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,.72);
+
+            z-index: 9999;
+
+            padding: 20px;
+
+            overflow-y: auto;
+        }
+
+
+        #modal.visible {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .modal-contenido {
+            width: min(560px, 100%);
+
+            background: white;
+
+            color: var(--texto);
+
+            border-radius: 14px;
+
+            padding: 27px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.4);
+        }
+
+
+        .modal-contenido h2 {
+            font-size: 22px;
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           FORMULARIO
+        ========================== */
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: var(--texto);
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+
+            border: 1px solid var(--linea);
+
+            border-radius: 7px;
+
+            background: #faf9f7;
+
+            color: var(--texto);
+
+            padding: 11px 12px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+
+        .campo textarea {
+            min-height: 90px;
+
+            resize: vertical;
+        }
+
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+            border-color: var(--dorado);
+
+            box-shadow:
+                0 0 0 3px rgba(178,138,82,.12);
+        }
+
+
+        .fila {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+
+        /* =========================
+           BOTONES MODAL
+        ========================== */
+
+        .modal-botones {
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 20px;
+        }
+
+
+        .modal-botones button {
+            flex: 1;
+
+            padding: 11px;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .guardar {
+            background: var(--negro);
+            color: white;
+
+            border: 1px solid var(--negro);
+        }
+
+
+        .guardar:hover {
+            background: #000;
+            border-color: var(--dorado);
+        }
+
+
+        .cancelar {
+            background: white;
+            color: var(--texto);
+
+            border: 1px solid var(--linea);
+        }
+
+
+        .cancelar:hover {
+            border-color: var(--dorado);
+        }
+
+
+        /* =========================
+           MENSAJE VACÍO
+        ========================== */
+
+        .vacio {
+            grid-column: 1 / -1;
+
+            background: rgba(255,255,255,.97);
+
+            color: var(--texto-suave);
+
+            border-radius: 13px;
+
+            padding: 45px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,.15);
+        }
+
+        .vacio strong {
+            display: block;
+
+            color: var(--texto);
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .productos {
+                grid-template-columns: 1fr;
+            }
+
+            .fila {
+                grid-template-columns: 1fr;
+            }
+
+            .barra-superior {
+                align-items: flex-start;
+            }
+        }
+
+
+        @media (max-width: 450px) {
+
+            .contenedor {
+                width: calc(100% - 20px);
+            }
+
+            .introduccion {
+                padding: 22px;
+            }
+
+            .producto {
+                padding: 14px;
+            }
+
+            .modal-contenido {
+                padding: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>Pirámide Woodworks</h1>
+
+    <p>Administración · Productos</p>
+
+</header>
+
+
+<main class="contenedor">
+
+
+    <div class="barra-superior">
+
+        <a href="panel.html" class="volver">
+            ← Volver al panel
+        </a>
+
+        <button
+            class="boton-agregar"
+            onclick="abrirFormulario()"
+        >
+            + Agregar producto
+        </button>
+
+    </div>
+
+
+    <section class="introduccion">
+
+        <h2>Productos</h2>
+
+        <p>
+            Desde aquí podrás administrar los productos que
+            manejas en Pirámide Woodworks: nombres, categorías,
+            precios, medidas, materiales, fotografías y
+            descripciones.
+        </p>
+
+    </section>
+
+
+    <section
+        id="lista-productos"
+        class="productos"
+    ></section>
+
+
+</main>
+
+
+
+<!-- =========================
+     MODAL PRODUCTO
+========================== -->
+
+<div id="modal">
+
+    <div class="modal-contenido">
+
+        <h2 id="titulo-modal">
+            Agregar producto
+        </h2>
+
+
+        <form
+            id="form-producto"
+            onsubmit="guardarProducto(event)"
+        >
+
+
+            <input
+                type="hidden"
+                id="producto-id"
+            >
+
+
+            <div class="campo">
+
+                <label for="nombre">
+                    Nombre del producto
+                </label>
+
+                <input
+                    type="text"
+                    id="nombre"
+                    placeholder="Ej. TequilaBox"
+                    required
+                >
+
+            </div>
+
+
+            <div class="fila">
+
+
+                <div class="campo">
+
+                    <label for="categoria">
+                        Categoría
+                    </label>
+
+                    <select
+                        id="categoria"
+                        required
+                    >
+
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="Tequileras">
+                            Cajas para Tequila & Botellas
+                        </option>
+
+                        <option value="Regalo">
+                            Cajas de Regalo
+                        </option>
+
+                        <option value="Portallaves">
+                            Portallaves
+                        </option>
+
+                        <option value="Centros">
+                            Centros de Mesa
+                        </option>
+
+                        <option value="Mesas">
+                            Mesas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="precio">
+                        Precio
+                    </label>
+
+                    <input
+                        type="number"
+                        id="precio"
+                        min="0"
+                        step="1"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="descripcion">
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcion"
+                    placeholder="Describe el producto..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="fila">
+
+
+                <div class="campo">
+
+                    <label for="medidas">
+                        Medidas
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medidas"
+                        placeholder="Ej. 30 × 20 × 10 cm"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="material">
+                        Material
+                    </label>
+
+                    <input
+                        type="text"
+                        id="material"
+                        placeholder="Ej. Triplay Birch 4 mm"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="imagen">
+                    Ruta de imagen
+                </label>
+
+                <input
+                    type="text"
+                    id="imagen"
+                    placeholder="Ej. imagenes/producto.jpeg"
+                >
+
+            </div>
+
+
+            <div class="modal-botones">
+
+                <button
+                    type="button"
+                    class="cancelar"
+                    onclick="cerrarFormulario()"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="guardar"
+                >
+                    Guardar producto
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   PRODUCTOS INICIALES
+========================= */
+
+let productos =
+    JSON.parse(
+        localStorage.getItem("productos")
+    ) || [
+
+        {
+            id: 1,
+
+            nombre: "BottleBox",
+
+            categoria: "Tequileras",
+
+            precio: 600,
+
+            descripcion:
+                "Caja personalizada sin tequila para cualquier otro tamaño o marca.",
+
+            medidas:
+                "A elegir",
+
+            material:
+                "Madera Triplay Birch 4 mm",
+
+            imagen:
+                "imagenes/botllebox.jpeg"
+        },
+
+
+        {
+            id: 2,
+
+            nombre: "TequilaBox",
+
+            categoria: "Tequileras",
+
+            precio: 1200,
+
+            descripcion:
+                "Caja personalizada por dentro y fuera.",
+
+            medidas:
+                "",
+
+            material:
+                "Triplay Birch 4 mm",
+
+            imagen:
+                "imagenes/TequilaBox.jpeg"
+        },
+
+
+        {
+            id: 3,
+
+            nombre: "GiftBox",
+
+            categoria: "Regalo",
+
+            precio: 550,
+
+            descripcion:
+                "Caja de madera personalizada para regalos.",
+
+            medidas:
+                "30 × 20 × 10 cm",
+
+            material:
+                "Triplay Birch 4 mm",
+
+            imagen:
+                "imagenes/GiftBox.jpeg"
+        },
+
+
+        {
+            id: 4,
+
+            nombre: "SlidingBox",
+
+            categoria: "Regalo",
+
+            precio: 400,
+
+            descripcion:
+                "Caja deslizante personalizada.",
+
+            medidas:
+                "30 × 20 × 10 cm",
+
+            material:
+                "Triplay Birch 4 mm",
+
+            imagen:
+                "imagenes/slidingBox.jpeg"
+        },
+
+
+        {
+            id: 5,
+
+            nombre: "Portallaves Home",
+
+            categoria: "Portallaves",
+
+            precio: 130,
+
+            descripcion:
+                "Portallaves de pared decorativo y funcional.",
+
+            medidas:
+                "30 × 20 × 10 cm",
+
+            material:
+                "Madera",
+
+            imagen:
+                "imagenes/portallaves.jpeg"
+        },
+
+
+        {
+            id: 6,
+
+            nombre: "Carruaje de Cenicienta",
+
+            categoria: "Centros",
+
+            precio: 90,
+
+            descripcion:
+                "Centro de mesa con diseño de carruaje de Cenicienta.",
+
+            medidas:
+                "",
+
+            material:
+                "MDF",
+
+            imagen:
+                ""
+        },
+
+
+        {
+            id: 7,
+
+            nombre:
+                "Mesa Carruaje Gigante",
+
+            categoria: "Mesas",
+
+            precio: 2400,
+
+            descripcion:
+                "Mesa decorativa con forma de carruaje clásico para eventos.",
+
+            medidas:
+                "2 m × 1.5 m",
+
+            material:
+                "Madera",
+
+            imagen:
+                ""
+        }
+
+    ];
+
+
+
+/* =========================
+   CORREGIR FOTOS EXISTENTES
+========================= */
+
+const fotosProductos = {
+
+    1: "imagenes/botllebox.jpeg",
+
+    2: "imagenes/TequilaBox.jpeg",
+
+    3: "imagenes/GiftBox.jpeg",
+
+    4: "imagenes/slidingBox.jpeg",
+
+    5: "imagenes/portallaves.jpeg"
+
+};
+
+
+productos.forEach(function(producto) {
+
+    if (fotosProductos[producto.id]) {
+
+        producto.imagen =
+            fotosProductos[producto.id];
+
+    }
+
+});
+
+
+
+/* =========================
+   GUARDAR
+========================= */
+
+function guardarDatos() {
+
+    localStorage.setItem(
+        "productos",
+        JSON.stringify(productos)
+    );
+
+}
+
+
+guardarDatos();
+
+
+
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
+
+function mostrarProductos() {
+
+    const contenedor =
+        document.getElementById(
+            "lista-productos"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    if (productos.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <div class="vacio">
+
+                <strong>
+                    Todavía no hay productos
+                </strong>
+
+                Agrega tu primer producto
+                para comenzar.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    productos.forEach(function(producto) {
+
+        let imagenHTML = "";
+
+
+        if (producto.imagen) {
+
+            imagenHTML = `
+
+                <img
+                    src="${producto.imagen}"
+                    alt="${producto.nombre}"
+                    onerror="this.parentElement.innerHTML='Sin fotografía'"
+                >
+
+            `;
+
+        } else {
+
+            imagenHTML =
+                "Foto próximamente";
+
+        }
+
+
+        contenedor.innerHTML += `
+
+            <article class="producto">
+
+                <div class="producto-imagen">
+
+                    ${imagenHTML}
+
+                </div>
+
+
+                <h3>
+                    ${producto.nombre}
+                </h3>
+
+
+                <span class="categoria">
+                    ${producto.categoria}
+                </span>
+
+
+                <p class="producto-descripcion">
+                    ${producto.descripcion}
+                </p>
+
+
+                <div class="producto-datos">
+
+                    ${
+                        producto.medidas
+                        ? `<div>
+                            <strong>Medidas:</strong>
+                            ${producto.medidas}
+                           </div>`
+                        : ""
+                    }
+
+
+                    ${
+                        producto.material
+                        ? `<div>
+                            <strong>Material:</strong>
+                            ${producto.material}
+                           </div>`
+                        : ""
+                    }
+
+                </div>
+
+
+                <div class="producto-precio">
+                    $${Number(producto.precio).toLocaleString("es-MX")} MXN
+                </div>
+
+
+                <div class="acciones">
+
+                    <button
+                        class="accion editar"
+                        onclick="editarProducto(${producto.id})"
+                    >
+                        Editar
+                    </button>
+
+
+                    <button
+                        class="accion eliminar"
+                        onclick="eliminarProducto(${producto.id})"
+                    >
+                        Eliminar
+                    </button>
+
+                </div>
+
+            </article>
+
+        `;
+
+    });
+
+}
+
+
+
+/* =========================
+   ABRIR FORMULARIO
+========================= */
+
+function abrirFormulario() {
+
+    document
+        .getElementById("form-producto")
+        .reset();
+
+
+    document
+        .getElementById("producto-id")
+        .value = "";
+
+
+    document
+        .getElementById("titulo-modal")
+        .textContent =
+            "Agregar producto";
+
+
+    document
+        .getElementById("modal")
+        .classList.add("visible");
+
+}
+
+
+
+/* =========================
+   CERRAR FORMULARIO
+========================= */
+
+function cerrarFormulario() {
+
+    document
+        .getElementById("modal")
+        .classList.remove("visible");
+
+}
+
+
+
+/* =========================
+   GUARDAR PRODUCTO
+========================= */
+
+function guardarProducto(event) {
+
+    event.preventDefault();
+
+
+    const id =
+        document.getElementById(
+            "producto-id"
+        ).value;
+
+
+    const producto = {
+
+        id:
+            id
+            ? Number(id)
+            : Date.now(),
+
+        nombre:
+            document.getElementById(
+                "nombre"
+            ).value.trim(),
+
+        categoria:
+            document.getElementById(
+                "categoria"
+            ).value,
+
+        precio:
+            Number(
+                document.getElementById(
+                    "precio"
+                ).value
+            ),
+
+        descripcion:
+            document.getElementById(
+                "descripcion"
+            ).value.trim(),
+
+        medidas:
+            document.getElementById(
+                "medidas"
+            ).value.trim(),
+
+        material:
+            document.getElementById(
+                "material"
+            ).value.trim(),
+
+        imagen:
+            document.getElementById(
+                "imagen"
+            ).value.trim()
+
+    };
+
+
+    if (id) {
+
+        const indice =
+            productos.findIndex(
+                function(item) {
+
+                    return item.id === Number(id);
+
+                }
+            );
+
+
+        if (indice !== -1) {
+
+            productos[indice] =
+                producto;
+
+        }
+
+    } else {
+
+        productos.push(producto);
+
+    }
+
+
+    guardarDatos();
+
+    mostrarProductos();
+
+    cerrarFormulario();
+
+}
+
+
+
+/* =========================
+   EDITAR
+========================= */
+
+function editarProducto(id) {
+
+    const producto =
+        productos.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!producto) {
+        return;
+    }
+
+
+    document.getElementById(
+        "producto-id"
+    ).value = producto.id;
+
+
+    document.getElementById(
+        "nombre"
+    ).value = producto.nombre;
+
+
+    document.getElementById(
+        "categoria"
+    ).value = producto.categoria;
+
+
+    document.getElementById(
+        "precio"
+    ).value = producto.precio;
+
+
+    document.getElementById(
+        "descripcion"
+    ).value = producto.descripcion;
+
+
+    document.getElementById(
+        "medidas"
+    ).value = producto.medidas;
+
+
+    document.getElementById(
+        "material"
+    ).value = producto.material;
+
+
+    document.getElementById(
+        "imagen"
+    ).value = producto.imagen;
+
+
+    document.getElementById(
+        "titulo-modal"
+    ).textContent =
+        "Editar producto";
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("visible");
+
+}
+
+
+
+/* =========================
+   ELIMINAR
+========================= */
+
+function eliminarProducto(id) {
+
+    const producto =
+        productos.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!producto) {
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            "¿Eliminar " +
+            producto.nombre +
+            "?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    productos =
+        productos.filter(
+            function(item) {
+
+                return item.id !== id;
+
+            }
+        );
+
+
+    guardarDatos();
+
+    mostrarProductos();
+
+}
+
+
+
+/* =========================
+   INICIO
+========================= */
+
+mostrarProductos();
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,1418 +1,1848 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Catálogo | Pirámide Woodworks</title>
 
-    <link rel="stylesheet" href="style.css">
-
     <style>
-/* =========================
-   FONDO ESTILO PIRÁMIDE
-========================= */
-
-body {
-    background:
-        radial-gradient(
-            ellipse at 20% 30%,
-            rgba(255, 220, 170, 0.10),
-            transparent 35%
-        ),
-        radial-gradient(
-            ellipse at 80% 70%,
-            rgba(0, 0, 0, 0.45),
-            transparent 40%
-        ),
-        repeating-linear-gradient(
-            91deg,
-            #4a3020 0px,
-            #5b3a25 55px,
-            #3b2619 57px,
-            #68432a 115px,
-            #452c1d 118px
-        );
-
-    color: #fff;
-}
-/* =========================
-   TEXTO DENTRO DE TARJETAS
-========================= */
-
-.categoria,
-.producto,
-#carrito {
-    color: #2b2118;
-}
-
-.categoria h3,
-.producto h3,
-#carrito h2 {
-    color: #2b2118;
-}
-
-.categoria p,
-.producto p,
-.producto li {
-    color: #6b5a48;
-}
-
-        /* =========================
-           CATEGORÍAS
-        ========================= */
-
-        .catalogo-inicio {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
+        :root {
+            --negro: #171717;
+            --negro-suave: #222222;
+            --blanco: #ffffff;
+            --crema: #f7f5f1;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
         }
 
-        .catalogo-inicio h2 {
-            margin-bottom: 10px;
+        * {
+            box-sizing: border-box;
         }
 
-        .texto-catalogo {
-            color: #6b5a48;
-            margin-bottom: 30px;
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--texto);
+
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 35px 20px 25px;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 38px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--dorado-claro);
+            font-size: 17px;
+        }
+
+        .catalogo-inicio,
+        .pantalla-categoria {
+            max-width: 1050px;
+            margin: auto;
+            padding: 25px 24px 60px;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .titulo-seccion h2 {
+            margin-bottom: 8px;
+            font-size: 27px;
+        }
+
+        .titulo-seccion p {
+            margin: 0;
+            color: #ddd2c5;
+            font-size: 15px;
         }
 
         .categorias {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 18px;
         }
 
         .categoria {
-            background: white;
-            border-radius: 15px;
-            padding: 30px 20px;
-            min-height: 150px;
-
+            background: var(--blanco);
+            border: 1px solid transparent;
+            border-radius: 12px;
+            min-height: 145px;
+            padding: 25px 18px;
+            cursor: pointer;
+            transition: 0.25s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-
+            justify-content: center;
             text-align: center;
-
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-
-            cursor: pointer;
-
-            transition: 0.2s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
         }
 
         .categoria:hover {
             transform: translateY(-4px);
+            border-color: var(--dorado);
         }
 
-        .categoria-icono {
-            font-size: 42px;
+        .categoria svg {
+            width: 42px;
+            height: 42px;
             margin-bottom: 12px;
+            fill: var(--dorado);
         }
 
         .categoria h3 {
             margin: 0;
-            font-size: 19px;
+            font-size: 18px;
         }
 
-        .categoria p {
-            margin-top: 8px;
-            color: #6b5a48;
+        .nota-categorias {
+            margin: 25px auto 0;
+            max-width: 650px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
             font-size: 14px;
+            color: var(--texto-suave);
         }
-
-
-        /* =========================
-           PANTALLAS DE CATEGORÍA
-        ========================= */
 
         .pantalla-categoria {
             display: none;
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
         }
 
-        .pantalla-categoria:target {
-            display: block;
-        }
-
-        .pantalla-categoria:target ~ #inicio-catalogo {
-            display: none;
-        }
-
-        .volver {
-            display: inline-block;
+        .encabezado-categoria {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 25px;
-            padding: 10px 18px;
+        }
 
-            background: white;
-            color: #2b2118;
+        .encabezado-categoria h2 {
+            color: white;
+            margin: 0;
+            font-size: 28px;
+        }
 
-            border: 1px solid #c89b63;
+        .boton-volver {
+            border: 1px solid var(--dorado-claro);
+            background: transparent;
+            color: white;
+            padding: 10px 15px;
             border-radius: 8px;
-
-            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
+        .boton-volver:hover {
+            background: var(--dorado);
+            border-color: var(--dorado);
+        }
 
-        /* =========================
-           PRODUCTOS
-        ========================= */
-
-        .productos-grid {
+        .productos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
         }
 
-        .producto {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-
-            text-align: left;
+        .producto-card {
+            background: var(--blanco);
+            border-radius: 13px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.20);
         }
 
-        .producto h3 {
-            margin: 20px 0 12px;
-            font-size: 24px;
+        .galeria-producto {
+            margin-bottom: 17px;
         }
-
-        .producto p {
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-
-        .producto ul {
-            padding-left: 20px;
-            line-height: 1.6;
-        }
-
-        .precio {
-            font-size: 25px;
-            font-weight: bold;
-            color: #8b6237;
-            margin-top: 15px;
-        }
-
-        .producto .boton-principal {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-
-        /* =========================
-           FOTOS
-        ========================= */
 
         .foto-principal {
             width: 100%;
-            height: 380px;
-            background: #e8dfd4;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .foto-principal img {
-            width: 100%;
-            height: 100%;
+            height: 370px;
             object-fit: cover;
+            border-radius: 10px;
             cursor: pointer;
+            display: block;
         }
 
         .miniaturas {
             display: flex;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 9px;
+            overflow-x: auto;
         }
 
         .miniaturas img {
-            width: 65px;
-            height: 65px;
-
+            width: 68px;
+            height: 68px;
             object-fit: cover;
-
-            border-radius: 8px;
-
+            border-radius: 7px;
             cursor: pointer;
-
-            border: 2px solid #d8c2a8;
+            border: 2px solid transparent;
         }
 
-
-        /* =========================
-           PRODUCTOS SIN FOTO
-        ========================= */
+        .miniaturas img:hover {
+            border-color: var(--dorado);
+        }
 
         .sin-foto {
-            width: 100%;
-            height: 300px;
-
-            background: #e8dfd4;
-
+            height: 220px;
             border-radius: 10px;
-
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.35),
+                    rgba(20, 14, 10, 0.55)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
             display: flex;
             align-items: center;
             justify-content: center;
-
+            color: var(--dorado-claro);
+            font-size: 16px;
             text-align: center;
-
-            color: #6b5a48;
-
-            font-size: 18px;
         }
 
+        .producto-info h3 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
 
-        /* =========================
-           VISOR
-        ========================= */
+        .producto-info p {
+            line-height: 1.5;
+            color: var(--texto-suave);
+        }
 
-        #visor-imagen {
-            display: none;
+        .producto-info ul {
+            padding-left: 20px;
+            color: var(--texto-suave);
+            line-height: 1.6;
+        }
 
+        .precio {
+            color: var(--dorado) !important;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .boton-principal {
+            width: 100%;
+            border: none;
+            background: var(--negro);
+            color: white;
+            padding: 13px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .boton-principal:hover {
+            background: var(--dorado);
+        }
+
+        .visor-imagen {
             position: fixed;
             inset: 0;
-
-            background: rgba(0,0,0,0.85);
-
-            align-items: center;
+            background: rgba(0,0,0,0.88);
+            display: none;
             justify-content: center;
-
-            z-index: 9999;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
         }
 
-        #imagen-grande {
+        .visor-imagen img {
             max-width: 95%;
-            max-height: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
-
-        /* =========================
-           CARRITO
-        ========================= */
-
-        #boton-carrito {
-            position: fixed;
-
-            right: 20px;
-            bottom: 20px;
-
-            width: 62px;
-            height: 62px;
-
-            border-radius: 50%;
-
-            background: #c89b63;
+        .cerrar-visor {
+            position: absolute;
+            top: 18px;
+            right: 22px;
             color: white;
-
-            border: none;
-
-            font-size: 24px;
-
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-
-            z-index: 9998;
-
+            font-size: 35px;
             cursor: pointer;
         }
 
-        #contador-carrito {
-            font-size: 13px;
+        /* CARRITO */
+
+        .boton-carrito {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--negro);
+            border: 2px solid var(--dorado);
+            color: white;
+            font-size: 23px;
+            cursor: pointer;
+            z-index: 900;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+
+        .contador-carrito {
+            position: absolute;
+            top: -6px;
+            right: -5px;
+            background: var(--dorado);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: bold;
         }
 
-
-        #carrito {
-            display: none;
-
+        .carrito {
             position: fixed;
-
             right: 20px;
-            bottom: 95px;
-
+            bottom: 88px;
             width: 340px;
-
-            max-width: calc(100% - 40px);
-
+            max-width: calc(100vw - 40px);
             max-height: 70vh;
-
             overflow-y: auto;
-
             background: white;
-
-            border-radius: 15px;
-
-            padding: 22px;
-
-            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
-
-            z-index: 9997;
-
-            text-align: left;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+            z-index: 899;
+            display: none;
         }
 
-        #carrito.visible {
+        .carrito.visible {
             display: block;
         }
 
-        .item-carrito {
-            padding: 14px 0;
+        .carrito h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
 
-            border-bottom: 1px solid #e5ddd3;
+        .item-carrito {
+            border-bottom: 1px solid var(--linea);
+            padding: 12px 0;
+            font-size: 14px;
         }
 
         .item-carrito-nombre {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .controles-cantidad {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 7px;
+            margin: 8px 0;
         }
 
         .controles-cantidad button {
-            width: 35px;
-            height: 35px;
-
-            padding: 0;
-            margin: 0;
-
-            background: #f5f1eb;
-            color: #2b2118;
+            border: none;
+            background: var(--negro);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        .boton-eliminar {
-            background: transparent !important;
-            color: #a33 !important;
-
-            border: none !important;
-
-            width: auto !important;
-            height: auto !important;
-
-            font-size: 13px !important;
+        .controles-cantidad .boton-eliminar {
+            width: auto;
+            padding: 0 9px;
+            background: #8b3333;
+            font-size: 12px;
         }
 
-        #total-carrito {
-            font-size: 22px;
+        .total-carrito {
+            font-size: 20px;
             font-weight: bold;
-
-            margin-top: 20px;
+            margin: 18px 0;
         }
 
-        #carrito .boton-principal {
+        .boton-cotizacion {
             width: 100%;
-            margin-top: 18px;
+            background: var(--dorado);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
+        .boton-cotizacion:hover {
+            background: #956f3f;
+        }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
+
+            header {
+                padding-top: 28px;
+            }
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            .catalogo-inicio,
+            .pantalla-categoria {
+                padding: 20px 15px 50px;
+            }
 
             .categorias {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
 
             .categoria {
-                padding: 20px 10px;
                 min-height: 135px;
-            }
-
-            .categoria-icono {
-                font-size: 34px;
+                padding: 18px 10px;
             }
 
             .categoria h3 {
-                font-size: 17px;
+                font-size: 15px;
+            }
+
+            .productos {
+                grid-template-columns: 1fr;
             }
 
             .foto-principal {
-                height: 330px;
+                height: 320px;
             }
 
-            #carrito {
+            .encabezado-categoria {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .boton-volver {
+                width: 100%;
+            }
+
+            .carrito {
                 right: 10px;
-                width: calc(100% - 20px);
+                bottom: 82px;
+                width: calc(100vw - 20px);
+                max-width: none;
             }
 
+            .boton-carrito {
+                right: 15px;
+                bottom: 15px;
+            }
         }
 
+        @media (max-width: 380px) {
+            .categorias {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
     <h1>Catálogo</h1>
-
     <p>Pirámide Woodworks</p>
-
 </header>
 
 
+<!-- ========================= -->
+<!-- PANTALLA DE CATEGORÍAS -->
+<!-- ========================= -->
 
-<!-- =========================
-     PANTALLA 1
-========================= -->
+<section
+    id="pantalla-inicio"
+    class="catalogo-inicio"
+>
 
-<section id="inicio-catalogo" class="catalogo-inicio">
-
-    <h2>Elige una categoría</h2>
-
-    <p class="texto-catalogo">
-    </p>
-
+    <div class="titulo-seccion">
+        <h2>Elige una categoría</h2>
+        <p>
+            Encuentra diseños personalizados hechos en madera.
+        </p>
+    </div>
 
     <div class="categorias">
 
+        <!-- Cajas para tequila -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('tequila')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M9 2h6v3l1 1v14H8V6l1-1V2zm2 2v1h2V4h-2zm-1 4v9h4V8h-4z"/>
+            </svg>
 
-        <a href="#tequileras" class="categoria">
-
-            <div class="categoria-icono">🍾</div>
-
-            <h3>Cajas para Tequila & Botellas</h3>
-
-            <p>Diseños personalizados</p>
-
-        </a>
-
-
-        <a href="#regalo" class="categoria">
-
-            <div class="categoria-icono">🎁</div>
-
-            <h3>Cajas de Regalo</h3>
-
-            <p>Detalles especiales</p>
-
-        </a>
+            <h3>
+                Cajas para Tequila & Botellas
+            </h3>
+        </div>
 
 
-        <a href="#portallaves" class="categoria">
+        <!-- Cajas de regalo -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('regalo')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M20 12v8H4v-8h16zm-1-7h-4.2c.1-.3.2-.7.2-1 0-1.7-1.3-3-3-3-1.2 0-2.2.7-2.7 1.7C8.8.7 7.8 0 6.5 0c-1.7 0-3 1.3-3 3 0 .3.1.7.2 1H0v5h19V5zM6.5 2c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1zm5.5 0c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1z"/>
+            </svg>
 
-            <div class="categoria-icono">🔑</div>
-
-            <h3>Portallaves</h3>
-
-            <p>Decorativos y funcionales</p>
-
-        </a>
-
-
-        <a href="#centros" class="categoria">
-
-            <div class="categoria-icono">🏰</div>
-
-            <h3>Centros de Mesa</h3>
-
-            <p>Para tus eventos</p>
-
-        </a>
+            <h3>
+                Cajas de Regalo
+            </h3>
+        </div>
 
 
-        <a href="#mesas" class="categoria">
+        <!-- Portallaves y accesorios -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('accesorios')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M7 14a5 5 0 1 1 4.9-6H22v4h-2v2h-3v2h-3v-3h-2.1A5 5 0 0 1 7 14zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+            </svg>
 
-            <div class="categoria-icono">🪑</div>
-
-            <h3>Mesas</h3>
-
-            <p>Diseños especiales</p>
-
-        </a>
+            <h3>
+                Portallaves & Accesorios
+            </h3>
+        </div>
 
 
+        <!-- Centros de mesa -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('centros')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2c1.5 2.2 3.5 3.7 5 5.2C18.5 8.7 19 10.3 19 12c0 3.9-3.1 7-7 7s-7-3.1-7-7c0-1.7.5-3.3 2-4.8C8.5 5.7 10.5 4.2 12 2zm0 6c-.8 1.2-2.2 2.3-2.2 4.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-1.2-.5-2.3-1.5-3.3-.7-.7-1.6-1.3-2.3-1.8z"/>
+            </svg>
+
+            <h3>
+                Centros de Mesa
+            </h3>
+        </div>
+
+
+        <!-- Mesas -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('mesas')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M3 5h18v3H3V5zm2 4h2v9H5V9zm12 0h2v9h-2V9zM2 19h20v2H2v-2z"/>
+            </svg>
+
+            <h3>
+                Mesas
+            </h3>
+        </div>
+
+
+        <!-- Otros -->
+        <div
+            class="categoria"
+            onclick="abrirCategoria('otros')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M4 4h16v16H4V4zm3 3v10h10V7H7zm2 2h6v2H9V9zm0 4h6v2H9v-2z"/>
+            </svg>
+
+            <h3>
+                Otros Diseños
+            </h3>
+        </div>
+
+    </div>
+
+
+    <div class="nota-categorias">
+        ¿Necesitas otro tamaño?
+        Podemos ajustar las medidas.
+        El precio depende del tamaño.
+        Pregunta sin compromiso.
     </div>
 
 </section>
 
 
+<!-- ========================= -->
+<!-- TEQUILA -->
+<!-- ========================= -->
 
-<!-- =========================
-     TEQUILERAS
-========================= -->
+<section
+    id="categoria-tequila"
+    class="pantalla-categoria"
+>
 
-<section id="tequileras" class="pantalla-categoria">
+    <div class="encabezado-categoria">
 
-    <a href="#" class="volver">
-        ← Volver a categorías
-    </a>
+        <h2>
+            Cajas para Tequila & Botellas
+        </h2>
+
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
+
+    </div>
 
 
-    <h2>Cajas para Tequila & Botellas</h2>
+    <div class="productos">
 
 
-    <div class="productos-grid">
+        <!-- TEQUILABOX -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
+
+                <img
+                    id="foto-tequilabox"
+                    class="foto-principal"
+                    src="imagenes/TequilaBox.jpeg"
+                    alt="TequilaBox"
+                    onclick="abrirImagen(this.src)"
+                >
+
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/TequilaBox.jpeg"
+                        alt="TequilaBox"
+                        onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/TequilaBox2.jpeg"
+                        alt="TequilaBox"
+                        onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/TequilaBox3.jpeg"
+                        alt="TequilaBox"
+                        onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    >
+
+                </div>
+
+            </div>
 
 
-        <article class="producto">
+            <div class="producto-info">
+
+                <h3>
+                    TequilaBox
+                </h3>
+
+                <p>
+                    Caja personalizada por dentro y fuera.
+                </p>
+
+                <ul>
+                    <li>1 Don Julio Blanco 750 ml</li>
+                    <li>2 vasitos de shots</li>
+                    <li>1 frasco de cacahuates</li>
+                    <li>Personalizada por dentro y fuera</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm
+                </p>
+
+                <p class="precio">
+                    $1,200 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('TequilaBox', 1200)"
+                >
+                    Agregar al carrito
+                </button>
+
+            </div>
+
+        </div>
 
 
-            <div class="foto-principal">
+        <!-- BOXTEQUILA SIN BOTELLA -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
+
+                <img
+                    id="foto-boxtequila"
+                    class="foto-principal"
+                    src="imagenes/Boxtequila.jpg"
+                    alt="Boxtequila sin botella"
+                    onclick="abrirImagen(this.src)"
+                >
+
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/Boxtequila.jpg"
+                        alt="Boxtequila"
+                        onclick="cambiarFoto('foto-boxtequila', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/Boxtequila2.jpeg"
+                        alt="Boxtequila"
+                        onclick="cambiarFoto('foto-boxtequila', this.src)"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="producto-info">
+
+                <h3>
+                    Boxtequila
+                </h3>
+
+                <p>
+                    Es el mismo modelo de la caja
+                    para Don Julio, pero
+                    <strong>no incluye la botella.</strong>
+                </p>
+
+                <ul>
+                    <li>2 vasitos de shots</li>
+                    <li>1 frasco de cacahuates</li>
+                    <li>Personalizada por dentro y fuera</li>
+                    <li>No incluye botella de tequila</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm
+                </p>
+
+                <p class="precio">
+                    $480 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('Boxtequila', 480)"
+                >
+                    Agregar al carrito
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTLEBOX -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
 
                 <img
                     id="foto-bottlebox"
+                    class="foto-principal"
                     src="imagenes/botllebox.jpeg"
                     alt="BottleBox"
                     onclick="abrirImagen(this.src)"
                 >
 
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/botllebox.jpeg"
+                        alt="BottleBox"
+                        onclick="cambiarFoto('foto-bottlebox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/botllebox2.jpeg"
+                        alt="BottleBox"
+                        onclick="cambiarFoto('foto-bottlebox', this.src)"
+                    >
+
+                </div>
+
             </div>
 
 
-            <div class="miniaturas">
+            <div class="producto-info">
 
-                <img
-                    src="imagenes/botllebox.jpeg"
-                    onclick="cambiarFoto('foto-bottlebox', this.src)"
-                >
+                <h3>
+                    BottleBox
+                </h3>
 
-                <img
-                    src="imagenes/botllebox2.jpeg"
-                    onclick="cambiarFoto('foto-bottlebox', this.src)"
+                <p>
+                    Caja personalizada para cualquier
+                    otra botella, tamaño o marca.
+                </p>
+
+                <ul>
+                    <li>2 vasitos de shots</li>
+                    <li>1 frasco de cacahuates</li>
+                    <li>Personalizada por dentro y fuera</li>
+                    <li>Medidas: A elegir</li>
+                    <li>El precio depende de la altura de la botella</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm
+                </p>
+
+                <p class="precio">
+                    $600 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('BottleBox', 600)"
                 >
+                    Agregar al carrito
+                </button>
 
             </div>
 
+        </div>
 
-            <h3>BottleBox</h3>
+    </div>
 
-
-            <p>
-                Caja personalizada sin tequila para cualquier otro
-                tamaño o marca.
-            </p>
-
-            <p>
-                <strong>
-                    ¡El precio depende de la altura de la botella!
-                </strong>
-            </p>
+</section>
 
 
-            <ul>
+<!-- ========================= -->
+<!-- CAJAS DE REGALO -->
+<!-- ========================= -->
 
-                <li>2 vasitos de shots tequileros</li>
+<section
+    id="categoria-regalo"
+    class="pantalla-categoria"
+>
 
-                <li>1 frasco de cacahuates tipo bar</li>
+    <div class="encabezado-categoria">
 
-                <li>Personalizada por dentro y fuera</li>
+        <h2>
+            Cajas de Regalo
+        </h2>
 
-            </ul>
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
 
-
-            <p>
-                <strong>Medidas:</strong> A elegir
-            </p>
-
-            <p>
-                <strong>Material:</strong> Madera Triplay Birch 4 mm
-            </p>
-
-
-            <p class="precio">
-                $600 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('BottleBox', 600)"
-            >
-                Agregar al carrito
-            </button>
+    </div>
 
 
-        </article>
+    <div class="productos">
 
 
+        <!-- GIFTBOX -->
 
-        <article class="producto">
+        <div class="producto-card">
 
-
-            <div class="foto-principal">
+            <div class="galeria-producto">
 
                 <img
-                    id="foto-tequilabox"
-                    src="imagenes/TequilaBox1.jpeg"
-                    alt="TequilaBox"
+                    id="foto-giftbox"
+                    class="foto-principal"
+                    src="imagenes/GiftBox.jpeg"
+                    alt="GiftBox"
                     onclick="abrirImagen(this.src)"
                 >
 
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/GiftBox.jpeg"
+                        alt="GiftBox"
+                        onclick="cambiarFoto('foto-giftbox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/GiftBox2.jpeg"
+                        alt="GiftBox"
+                        onclick="cambiarFoto('foto-giftbox', this.src)"
+                    >
+
+                </div>
+
             </div>
 
 
-            <div class="miniaturas">
+            <div class="producto-info">
+
+                <h3>
+                    GiftBox
+                </h3>
+
+                <p>
+                    Caja personalizada con apertura hacia arriba.
+                    Ideal para diferentes tipos de regalos.
+                </p>
+
+                <ul>
+                    <li>Puede llevar desde un reloj hasta un regalo de máximo 40 cm</li>
+                    <li>30 × 20 × 10 cm</li>
+                    <li>El precio también depende del tamaño</li>
+                    <li>Grabado por dentro y fuera</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm
+                </p>
+
+                <p class="precio">
+                    $550 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('GiftBox', 550)"
+                >
+                    Agregar al carrito
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SLIDINGBOX -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
 
                 <img
-                    src="imagenes/TequilaBox1.jpeg"
-                    onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    id="foto-slidingbox"
+                    class="foto-principal"
+                    src="imagenes/slidingBox.jpeg"
+                    alt="SlidingBox"
+                    onclick="abrirImagen(this.src)"
                 >
+
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/slidingBox.jpeg"
+                        alt="SlidingBox"
+                        onclick="cambiarFoto('foto-slidingbox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/slidingBox2.jpeg"
+                        alt="SlidingBox"
+                        onclick="cambiarFoto('foto-slidingbox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/slidingBox3.jpeg"
+                        alt="SlidingBox"
+                        onclick="cambiarFoto('foto-slidingbox', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/slidingBox4.jpeg"
+                        alt="SlidingBox"
+                        onclick="cambiarFoto('foto-slidingbox', this.src)"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="producto-info">
+
+                <h3>
+                    SlidingBox
+                </h3>
+
+                <p>
+                    Caja personalizada con apertura deslizante
+                    y decoración de corazón en la tapa.
+                </p>
+
+                <ul>
+                    <li>30 × 20 × 10 cm</li>
+                    <li>Personalizada</li>
+                    <li>Diseño con corazón en la tapa</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm
+                </p>
+
+                <p class="precio">
+                    $400 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('SlidingBox', 400)"
+                >
+                    Agregar al carrito
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- PORTALLAVES & ACCESORIOS -->
+<!-- ========================= -->
+
+<section
+    id="categoria-accesorios"
+    class="pantalla-categoria"
+>
+
+    <div class="encabezado-categoria">
+
+        <h2>
+            Portallaves & Accesorios
+        </h2>
+
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
+
+    </div>
+
+
+    <div class="productos">
+
+
+        <!-- PORTALLAVES HOME -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
 
                 <img
-                    src="imagenes/TequilaBox2.jpeg"
-                    onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    id="foto-portallaves"
+                    class="foto-principal"
+                    src="imagenes/portallaves.jpeg"
+                    alt="Portallaves Home"
+                    onclick="abrirImagen(this.src)"
                 >
+
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/portallaves.jpeg"
+                        alt="Portallaves Home"
+                        onclick="cambiarFoto('foto-portallaves', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/portallaves2.png"
+                        alt="Portallaves Home"
+                        onclick="cambiarFoto('foto-portallaves', this.src)"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="producto-info">
+
+                <h3>
+                    Portallaves Home
+                </h3>
+
+                <p>
+                    Portallaves de pared en madera,
+                    decorativo y funcional.
+                </p>
+
+                <ul>
+                    <li>Ganchos metálicos</li>
+                    <li>Personalización con nombres, apellidos, frases o logos</li>
+                    <li>Ideal para casa, oficina o regalo</li>
+                    <li>30 × 15 cm</li>
+                </ul>
+
+                <p>
+                    <strong>Material:</strong>
+                    MDF 4 mm
+                </p>
+
+                <p class="precio">
+                    $130 MXN
+                </p>
+
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('Portallaves Home', 130)"
+                >
+                    Agregar al carrito
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PORTACÓDIGOS QR -->
+
+        <div class="producto-card">
+
+            <div class="galeria-producto">
 
                 <img
-                    src="imagenes/TequilaBox3.jpeg"
-                    onclick="cambiarFoto('foto-tequilabox', this.src)"
+                    id="foto-mostrador"
+                    class="foto-principal"
+                    src="imagenes/Mostrador.jpeg"
+                    alt="Portacódigos QR Personalizado"
+                    onclick="abrirImagen(this.src)"
                 >
 
+                <div class="miniaturas">
+
+                    <img
+                        src="imagenes/Mostrador.jpeg"
+                        alt="Portacódigos QR"
+                        onclick="cambiarFoto('foto-mostrador', this.src)"
+                    >
+
+                    <img
+                        src="imagenes/Mostrador2.jpeg"
+                        alt="Portacódigos QR"
+                        onclick="cambiarFoto('foto-mostrador', this.src)"
+                    >
+
+                </div>
+
             </div>
 
 
-            <h3>TequilaBox</h3>
+            <div class="producto-info">
 
+                <h3>
+                    Portacódigos QR Personalizado
+                </h3>
 
-            <p>
-                Caja personalizada por dentro y fuera.
-            </p>
+                <p>
+                    Mostrador personalizado ideal para
+                    negocios, menús, métodos de pago,
+                    códigos de barras y redes sociales.
+                </p>
 
+                <ul>
+                    <li>Ideal para menú</li>
+                    <li>Métodos de pago</li>
+                    <li>Códigos de barras y códigos QR</li>
+                    <li>Redes sociales</li>
+                    <li>Diseño personalizado a elegir</li>
+                    <li>20 cm de alto × 15 cm de ancho</li>
+                </ul>
 
-            <ul>
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 4 mm + base de 6 mm
+                </p>
 
-                <li>1 Don Julio Blanco 750 ml</li>
+                <p class="precio">
+                    $120 MXN pieza
+                </p>
 
-                <li>2 vasitos de shots</li>
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('Portacódigos QR Personalizado', 120)"
+                >
+                    Agregar al carrito
+                </button>
 
-                <li>1 frasco de cacahuates</li>
+            </div>
 
-                <li>Personalizada por dentro y fuera</li>
-
-            </ul>
-
-
-            <p>
-                <strong>Material:</strong> Triplay Birch 4 mm
-            </p>
-
-
-            <p class="precio">
-                $1,200 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('TequilaBox', 1200)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ========================= -->
+<!-- CENTROS DE MESA -->
+<!-- ========================= -->
 
-<!-- =========================
-     REGALO
-========================= -->
+<section
+    id="categoria-centros"
+    class="pantalla-categoria"
+>
 
-<section id="regalo" class="pantalla-categoria">
+    <div class="encabezado-categoria">
 
-    <a href="#" class="volver">
-        ← Volver a categorías
-    </a>
+        <h2>
+            Centros de Mesa
+        </h2>
+
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
+
+    </div>
 
 
-    <h2>Cajas de Regalo</h2>
+    <div class="productos">
 
 
-    <div class="productos-grid">
+        <!-- CARRUAJE DE CENICIENTA -->
 
+        <div class="producto-card">
 
-        <article class="producto">
+            <div class="galeria-producto">
 
-            <div class="sin-foto">
-                📦<br><br>
-                Foto próximamente
+                <div class="sin-foto">
+                    Imagen próximamente
+                </div>
+
             </div>
 
 
-            <h3>GiftBox</h3>
+            <div class="producto-info">
 
+                <h3>
+                    Carruaje de Cenicienta
+                </h3>
 
-            <p>
-                Caja de madera con diseño de abertura hacia arriba.
-                Puede ser desde un reloj hasta un regalo de máximo
-                40 cm.
-            </p>
+                <p>
+                    Modelo único con caballos y grabado.
+                    Ideal para cumpleaños, XV años
+                    y diferentes eventos.
+                </p>
 
+                <ul>
+                    <li>25 cm de alto × 37 cm de ancho</li>
+                    <li>Ideal para centros de mesa</li>
+                    <li>Diseño con caballos y grabado</li>
+                    <li>Mayoreo: 10 piezas $1,200</li>
+                    <li>Mayoreo: 20 piezas $2,000</li>
+                </ul>
 
-            <p>
-                El precio también depende del tamaño.
-            </p>
+                <p>
+                    <strong>Material:</strong>
+                    MDF 3 mm
+                </p>
 
+                <p class="precio">
+                    $155 MXN pieza
+                </p>
 
-            <p>
-                <strong>Medidas:</strong> 30 × 20 × 10 cm
-            </p>
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('Carruaje de Cenicienta', 155)"
+                >
+                    Agregar al carrito
+                </button>
 
-
-            <p>
-                <strong>Material:</strong> Triplay Birch 4 mm
-            </p>
-
-
-            <p>
-                Grabada por dentro y fuera.
-            </p>
-
-
-            <p class="precio">
-                $550 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('GiftBox', 550)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
-
-
-        <article class="producto">
-
-            <div class="sin-foto">
-                📦<br><br>
-                Foto próximamente
             </div>
 
-
-            <h3>SlidingBox</h3>
-
-
-            <p>
-                Caja deslizante personalizada con una decoración
-                en la tapa en forma de corazón.
-            </p>
-
-
-            <p>
-                <strong>Medidas:</strong> 30 × 20 × 10 cm
-            </p>
-
-
-            <p>
-                <strong>Material:</strong> Triplay Birch 4 mm
-            </p>
-
-
-            <p class="precio">
-                $400 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('SlidingBox', 400)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ========================= -->
+<!-- MESAS -->
+<!-- ========================= -->
 
-<!-- =========================
-     PORTALLAVES
-========================= -->
+<section
+    id="categoria-mesas"
+    class="pantalla-categoria"
+>
 
-<section id="portallaves" class="pantalla-categoria">
+    <div class="encabezado-categoria">
 
-    <a href="#" class="volver">
-        ← Volver a categorías
-    </a>
+        <h2>
+            Mesas
+        </h2>
 
-
-    <h2>Portallaves</h2>
-
-
-    <div class="productos-grid">
-
-
-        <article class="producto">
-
-            <div class="sin-foto">
-                🔑<br><br>
-                Foto próximamente
-            </div>
-
-
-            <h3>Portallaves Home</h3>
-
-
-            <p>
-                Porta llaves de pared elaborado en madera.
-                Diseño decorativo y funcional con ganchos metálicos
-                para organizar llaves, accesorios o pequeños objetos.
-            </p>
-
-
-            <p>
-                Personalizable con nombres, apellidos, frases o
-                logotipos mediante grabado láser.
-            </p>
-
-
-            <p>
-                Ideal para el hogar, oficina o como regalo.
-            </p>
-
-
-            <p>
-                <strong>Medidas:</strong> 30 × 20 × 10 cm
-            </p>
-
-
-            <p class="precio">
-                $130 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('Portallaves Home', 130)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
 
     </div>
 
 
-    <p style="margin-top:25px;">
-        Más modelos próximamente ✨
-    </p>
-
-</section>
+    <div class="productos">
 
 
+        <!-- MESA CARRUAJE -->
 
-<!-- =========================
-     CENTROS
-========================= -->
+        <div class="producto-card">
 
-<section id="centros" class="pantalla-categoria">
+            <div class="galeria-producto">
 
-    <a href="#" class="volver">
-        ← Volver a categorías
-    </a>
+                <div class="sin-foto">
+                    Imagen próximamente
+                </div>
 
-
-    <h2>Centros de Mesa</h2>
-
-
-    <div class="productos-grid">
-
-
-        <article class="producto">
-
-            <div class="sin-foto">
-                🏰<br><br>
-                Foto próximamente
             </div>
 
 
-            <h3>Carruaje de Cenicienta</h3>
+            <div class="producto-info">
 
+                <h3>
+                    Mesa Carruaje Gigante de Madera para Eventos
+                </h3>
 
-            <p>
-                Centro de mesa con diseño de carruaje de Cenicienta,
-                elaborado con corte láser.
-            </p>
+                <p>
+                    Mesa plegable, fácil de guardar e instalar.
+                    Ideal como mesa de centro para XV años,
+                    bodas, bautizos y otros eventos.
+                </p>
 
+                <ul>
+                    <li>2 m × 1.5 m</li>
+                    <li>Plegable</li>
+                    <li>Fácil de almacenar</li>
+                    <li>Disponible bajo pedido</li>
+                    <li>La medida puede ajustarse</li>
+                    <li>El precio depende de la medida</li>
+                </ul>
 
-            <p>
-                Cuenta con cuatro ruedas caladas, ventanas laterales
-                ovaladas y detalles curvos decorativos.
-            </p>
+                <p>
+                    <strong>Material:</strong>
+                    Triplay Birch 8 mm
+                </p>
 
+                <p>
+                    Pregunta sin compromiso.
+                </p>
 
-            <p>
-                Puede utilizarse como dulcero, base para arreglos
-                florales o decoración para mesa.
-            </p>
+                <p class="precio">
+                    $2,500 MXN
+                </p>
 
+                <button
+                    class="boton-principal"
+                    onclick="agregarAlCarrito('Mesa Carruaje Gigante', 2500)"
+                >
+                    Agregar al carrito
+                </button>
 
-            <p>
-                <strong>Material:</strong> MDF
-            </p>
+            </div>
 
-
-            <p class="precio">
-                $90 MXN por pieza
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('Carruaje de Cenicienta', 90)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ========================= -->
+<!-- OTROS DISEÑOS -->
+<!-- ========================= -->
 
-<!-- =========================
-     MESAS
-========================= -->
+<section
+    id="categoria-otros"
+    class="pantalla-categoria"
+>
 
-<section id="mesas" class="pantalla-categoria">
+    <div class="encabezado-categoria">
 
-    <a href="#" class="volver">
-        ← Volver a categorías
-    </a>
+        <h2>
+            Otros Diseños
+        </h2>
+
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+            ← Volver a categorías
+        </button>
+
+    </div>
 
 
-    <h2>Mesas</h2>
+    <div class="producto-card">
 
-
-    <div class="productos-grid">
-
-
-        <article class="producto">
-
-            <div class="sin-foto">
-                🪑<br><br>
-                Foto próximamente
-            </div>
-
+        <div class="producto-info">
 
             <h3>
-                Mesa Carruaje Gigante de Madera para Eventos
+                Próximamente
             </h3>
 
-
             <p>
-                Destaca la decoración de tu evento o negocio de renta
-                de mobiliario con esta espectacular mesa decorativa
-                con forma de carruaje clásico.
+                Aquí iremos agregando nuevos diseños
+                y productos de Pirámide Woodworks.
             </p>
 
-
-            <p>
-                Elaborada en madera de alta resistencia con detalles
-                de corte y relieve.
-            </p>
-
-
-            <p>
-                Ideal como mesa principal, mesa de postres o para
-                exhibición de arreglos florales.
-            </p>
-
-
-            <p>
-                Su acabado natural permite pintarla en blanco,
-                dorado o en el color que combine con tu evento.
-            </p>
-
-
-            <p>
-                <strong>Medidas:</strong> 2 m × 1.5 m
-            </p>
-
-
-            <p>
-                <strong>Características:</strong> Plegable
-            </p>
-
-
-            <p>
-                <strong>Disponible bajo pedido.</strong>
-                Consulta envíos y entregas dejando tu mensaje.
-            </p>
-
-
-            <p class="precio">
-                $2,400 MXN
-            </p>
-
-
-            <button
-                class="boton-principal"
-                onclick="agregarAlCarrito('Mesa Carruaje Gigante', 2400)"
-            >
-                Agregar al carrito
-            </button>
-
-
-        </article>
-
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ========================= -->
+<!-- VISOR DE IMAGEN -->
+<!-- ========================= -->
 
-<!-- =========================
-     BOTÓN CARRITO
-========================= -->
+<div
+    id="visor-imagen"
+    class="visor-imagen"
+    onclick="cerrarImagen()"
+>
 
-<button id="boton-carrito" onclick="mostrarCarrito()">
+    <span class="cerrar-visor">
+        ×
+    </span>
 
+    <img
+        id="imagen-grande"
+        src=""
+        alt="Imagen ampliada"
+        onclick="event.stopPropagation()"
+    >
+
+</div>
+
+
+<!-- ========================= -->
+<!-- CARRITO -->
+<!-- ========================= -->
+
+<button
+    class="boton-carrito"
+    onclick="mostrarCarrito()"
+    aria-label="Abrir carrito"
+>
     🛒
 
-    <span id="contador-carrito">
+    <span
+        id="contador-carrito"
+        class="contador-carrito"
+    >
         0
     </span>
 
 </button>
 
 
+<div
+    id="carrito"
+    class="carrito"
+>
 
-<!-- =========================
-     CARRITO
-========================= -->
+    <h3>
+        🛒 Tu carrito
+    </h3>
 
-<div id="carrito">
+    <div id="lista-carrito">
+    </div>
 
-    <h2>🛒 Tu carrito</h2>
-
-    <div id="lista-carrito"></div>
-
-    <div id="total-carrito">
+    <div
+        id="total-carrito"
+        class="total-carrito"
+    >
         Total: $0
     </div>
 
-
     <button
-        class="boton-principal"
+        class="boton-cotizacion"
         onclick="continuarCotizacion()"
     >
-        Continuar con la cotizacion
+        Continuar con la cotización
     </button>
 
 </div>
 
 
-
-<!-- VISOR -->
-
-<div
-    id="visor-imagen"
-    onclick="cerrarImagen()"
->
-
-    <img
-        id="imagen-grande"
-        src=""
-        alt="Imagen ampliada"
-    >
-
-</div>
-
-
-
 <script>
 
-let carrito =
-    JSON.parse(localStorage.getItem("carrito")) || [];
+    /* =========================
+       CATEGORÍAS
+    ========================= */
 
+    function abrirCategoria(categoria) {
 
+        document
+            .getElementById("pantalla-inicio")
+            .style.display = "none";
 
-function guardarCarrito() {
+        document
+            .querySelectorAll(".pantalla-categoria")
+            .forEach(function(seccion) {
+                seccion.style.display = "none";
+            });
 
-    localStorage.setItem(
-        "carrito",
-        JSON.stringify(carrito)
-    );
+        document
+            .getElementById("categoria-" + categoria)
+            .style.display = "block";
 
-}
-
-
-
-function agregarAlCarrito(nombre, precio) {
-
-    let producto =
-        carrito.find(function(item) {
-
-            return item.nombre === nombre;
-
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
-
-
-    if (producto) {
-
-        producto.cantidad++;
-
-    } else {
-
-        carrito.push({
-
-            nombre: nombre,
-            precio: precio,
-            cantidad: 1
-
-        });
-
     }
 
 
-    guardarCarrito();
+    function volverCategorias() {
 
-    actualizarCarrito();
+        document
+            .querySelectorAll(".pantalla-categoria")
+            .forEach(function(seccion) {
+                seccion.style.display = "none";
+            });
 
-    document.getElementById("carrito")
-        .classList.add("visible");
+        document
+            .getElementById("pantalla-inicio")
+            .style.display = "block";
 
-}
-
-
-
-function cambiarCantidad(nombre, cambio) {
-
-    let producto =
-        carrito.find(function(item) {
-
-            return item.nombre === nombre;
-
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
-
-
-    if (!producto) {
-
-        return;
-
     }
 
 
-    producto.cantidad += cambio;
+    /* =========================
+       CARRITO
+    ========================= */
+
+    let carrito =
+        JSON.parse(localStorage.getItem("carrito")) || [];
 
 
-    if (producto.cantidad <= 0) {
+    function guardarCarrito() {
+
+        localStorage.setItem(
+            "carrito",
+            JSON.stringify(carrito)
+        );
+    }
+
+
+    function agregarAlCarrito(nombre, precio) {
+
+        let producto =
+            carrito.find(function(item) {
+                return item.nombre === nombre;
+            });
+
+
+        if (producto) {
+
+            producto.cantidad++;
+
+        } else {
+
+            carrito.push({
+                nombre: nombre,
+                precio: precio,
+                cantidad: 1
+            });
+
+        }
+
+
+        guardarCarrito();
+
+        actualizarCarrito();
+
+        document
+            .getElementById("carrito")
+            .classList.add("visible");
+    }
+
+
+    function cambiarCantidad(nombre, cambio) {
+
+        let producto =
+            carrito.find(function(item) {
+                return item.nombre === nombre;
+            });
+
+
+        if (!producto) {
+            return;
+        }
+
+
+        producto.cantidad += cambio;
+
+
+        if (producto.cantidad <= 0) {
+
+            carrito =
+                carrito.filter(function(item) {
+                    return item.nombre !== nombre;
+                });
+
+        }
+
+
+        guardarCarrito();
+
+        actualizarCarrito();
+    }
+
+
+    function eliminarProducto(nombre) {
 
         carrito =
             carrito.filter(function(item) {
-
                 return item.nombre !== nombre;
-
             });
 
+
+        guardarCarrito();
+
+        actualizarCarrito();
     }
 
 
-    guardarCarrito();
+    function actualizarCarrito() {
 
-    actualizarCarrito();
+        const lista =
+            document.getElementById("lista-carrito");
 
-}
+        const contador =
+            document.getElementById("contador-carrito");
 
-
-
-function eliminarProducto(nombre) {
-
-    carrito =
-        carrito.filter(function(item) {
-
-            return item.nombre !== nombre;
-
-        });
+        const totalElemento =
+            document.getElementById("total-carrito");
 
 
-    guardarCarrito();
-
-    actualizarCarrito();
-
-}
+        lista.innerHTML = "";
 
 
+        let total = 0;
 
-function actualizarCarrito() {
-
-    const lista =
-        document.getElementById("lista-carrito");
-
-    const contador =
-        document.getElementById("contador-carrito");
-
-    const totalElemento =
-        document.getElementById("total-carrito");
+        let cantidad = 0;
 
 
-    lista.innerHTML = "";
+        if (carrito.length === 0) {
+
+            lista.innerHTML =
+                "<p>Tu carrito está vacío.</p>";
+
+        } else {
+
+            carrito.forEach(function(producto) {
+
+                let subtotal =
+                    producto.precio *
+                    producto.cantidad;
 
 
-    let total = 0;
+                total += subtotal;
 
-    let cantidad = 0;
-
-
-    if (carrito.length === 0) {
-
-        lista.innerHTML =
-            "<p>Tu carrito está vacío.</p>";
-
-    } else {
+                cantidad += producto.cantidad;
 
 
-        carrito.forEach(function(producto) {
+                lista.innerHTML += `
 
+                    <div class="item-carrito">
 
-            let subtotal =
-                producto.precio * producto.cantidad;
+                        <div class="item-carrito-nombre">
+                            ${producto.nombre}
+                        </div>
 
+                        <div>
+                            $${producto.precio} c/u
+                        </div>
 
-            total += subtotal;
+                        <div class="controles-cantidad">
 
-            cantidad += producto.cantidad;
+                            <button
+                                onclick="cambiarCantidad('${producto.nombre}', -1)"
+                            >
+                                −
+                            </button>
 
+                            <strong>
+                                ${producto.cantidad}
+                            </strong>
 
-            lista.innerHTML += `
+                            <button
+                                onclick="cambiarCantidad('${producto.nombre}', 1)"
+                            >
+                                +
+                            </button>
 
-                <div class="item-carrito">
+                            <button
+                                class="boton-eliminar"
+                                onclick="eliminarProducto('${producto.nombre}')"
+                            >
+                                Eliminar
+                            </button>
 
-                    <div class="item-carrito-nombre">
-                        ${producto.nombre}
-                    </div>
+                        </div>
 
-                    <div>
-                        $${producto.precio} c/u
-                    </div>
-
-                    <div class="controles-cantidad">
-
-                        <button
-                            onclick="cambiarCantidad('${producto.nombre}', -1)"
-                        >
-                            −
-                        </button>
-
-                        <strong>
-                            ${producto.cantidad}
-                        </strong>
-
-                        <button
-                            onclick="cambiarCantidad('${producto.nombre}', 1)"
-                        >
-                            +
-                        </button>
-
-                        <button
-                            class="boton-eliminar"
-                            onclick="eliminarProducto('${producto.nombre}')"
-                        >
-                            Eliminar
-                        </button>
+                        <div>
+                            Subtotal: $${subtotal}
+                        </div>
 
                     </div>
 
-                    <div>
-                        Subtotal: $${subtotal}
-                    </div>
+                `;
+            });
 
-                </div>
+        }
 
-            `;
 
-        });
+        contador.textContent =
+            cantidad;
 
+
+        totalElemento.textContent =
+            "Total: $" + total;
     }
 
 
-    contador.textContent = cantidad;
+    function mostrarCarrito() {
 
-    totalElemento.textContent =
-        "Total: $" + total;
+        document
+            .getElementById("carrito")
+            .classList.toggle("visible");
 
-}
-
-
-
-function mostrarCarrito() {
-
-    document.getElementById("carrito")
-        .classList.toggle("visible");
-
-    actualizarCarrito();
-
-}
-
-
-
-function continuarCotizacion() {
-    if (carrito.length === 0) {
-        alert("Agrega al menos un producto al carrito.");
-        return;
+        actualizarCarrito();
     }
 
-    window.location.href = "Cotizacion.html";
-}
+
+    function continuarCotizacion() {
+
+        if (carrito.length === 0) {
+
+            alert(
+                "Agrega al menos un producto al carrito."
+            );
+
+            return;
+        }
 
 
-function cambiarFoto(id, src) {
-
-    document.getElementById(id).src = src;
-
-}
+        window.location.href =
+            "cotizacion.html";
+    }
 
 
+    /* =========================
+       FOTOS
+    ========================= */
 
-function abrirImagen(src) {
+    function cambiarFoto(id, src) {
 
-    document.getElementById("imagen-grande").src = src;
-
-    document.getElementById("visor-imagen").style.display = "flex";
-
-}
-
-
-
-function cerrarImagen() {
-
-    document.getElementById("visor-imagen").style.display = "none";
-
-}
+        document
+            .getElementById(id)
+            .src = src;
+    }
 
 
+    function abrirImagen(src) {
 
-actualizarCarrito();
+        document
+            .getElementById("imagen-grande")
+            .src = src;
+
+        document
+            .getElementById("visor-imagen")
+            .style.display = "flex";
+    }
+
+
+    function cerrarImagen() {
+
+        document
+            .getElementById("visor-imagen")
+            .style.display = "none";
+    }
+
+
+    /* =========================
+       INICIAR
+    ========================= */
+
+    actualizarCarrito();
 
 </script>
 
-
 </body>
-
 </html>

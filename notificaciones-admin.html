@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notificaciones - Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+
+            color: var(--blanco);
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 45px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 9px 0 0;
+            color: var(--dorado-claro);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(800px, calc(100% - 30px));
+            margin: auto;
+            padding-bottom: 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .resumen-card strong {
+            display: block;
+            font-size: 25px;
+            color: var(--dorado);
+            margin-bottom: 5px;
+        }
+
+        .resumen-card span {
+            font-size: 13px;
+            color: var(--texto-suave);
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #2a2119;
+        }
+
+        .lista {
+            display: grid;
+            gap: 15px;
+        }
+
+        .notificacion {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.16);
+            border-left: 4px solid var(--dorado);
+        }
+
+        .notificacion.leida {
+            opacity: 0.68;
+            border-left-color: #cfc8be;
+        }
+
+        .notificacion-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .notificacion h3 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .fecha {
+            color: var(--texto-suave);
+            font-size: 12px;
+        }
+
+        .notificacion p {
+            margin: 7px 0;
+            color: var(--texto-suave);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .tipo {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #eee6d9;
+            color: #6d5433;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .botones button {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            text-align: center;
+            padding: 35px;
+            border-radius: 12px;
+        }
+
+        .nota {
+            margin-top: 20px;
+            color: var(--dorado-claro);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 650px) {
+
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            .notificacion-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Notificaciones</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+        <button onclick="generarNotificaciones()">
+            Actualizar
+        </button>
+    </div>
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+            <strong id="total">0</strong>
+            <span>Total</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="noLeidas">0</strong>
+            <span>No leídas</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="pedidosPendientes">0</strong>
+            <span>Pedidos pendientes</span>
+        </div>
+
+    </section>
+
+    <section id="lista" class="lista"></section>
+
+    <p class="nota">
+        Estas notificaciones se generan a partir de la información guardada
+        en pedidos, cotizaciones y ventas dentro de esta aplicación.
+        Las nuevas conversaciones de WhatsApp no pueden recibirse
+        automáticamente desde una página HTML estática.
+    </p>
+
+</main>
+
+<script>
+
+let notificaciones =
+    JSON.parse(localStorage.getItem("notificaciones")) || [];
+
+function guardarNotificaciones() {
+
+    localStorage.setItem(
+        "notificaciones",
+        JSON.stringify(notificaciones)
+    );
+}
+
+function agregarNotificacion(
+    titulo,
+    mensaje,
+    tipo,
+    fecha
+) {
+
+    const existe = notificaciones.some(function(notificacion) {
+
+        return (
+            notificacion.titulo === titulo &&
+            notificacion.mensaje === mensaje
+        );
+
+    });
+
+    if (existe) {
+        return;
+    }
+
+    notificaciones.unshift({
+
+        id: Date.now() + Math.random(),
+
+        titulo: titulo,
+
+        mensaje: mensaje,
+
+        tipo: tipo,
+
+        fecha: fecha || new Date().toLocaleString("es-MX"),
+
+        leida: false
+
+    });
+}
+
+function generarNotificaciones() {
+
+    const pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    const cotizaciones =
+        JSON.parse(localStorage.getItem("cotizaciones")) || [];
+
+    pedidos.forEach(function(pedido) {
+
+        if (
+            pedido.estado === "Pendiente" ||
+            pedido.estado === "En proceso"
+        ) {
+
+            agregarNotificacion(
+
+                "Pedido pendiente",
+
+                "El pedido de " +
+                (pedido.cliente || "cliente") +
+                " está en estado " +
+                pedido.estado +
+                ".",
+
+                "Pedido",
+
+                pedido.fecha
+
+            );
+
+        }
+
+    });
+
+    cotizaciones.forEach(function(cotizacion) {
+
+        if (
+            cotizacion.estado === "Pendiente" ||
+            cotizacion.estado === "Contactado"
+        ) {
+
+            agregarNotificacion(
+
+                "Cotización pendiente",
+
+                "Hay una cotización de " +
+                (cotizacion.cliente || "cliente") +
+                " pendiente de seguimiento.",
+
+                "Cotización",
+
+                cotizacion.fecha
+
+            );
+
+        }
+
+    });
+
+    guardarNotificaciones();
+
+    mostrarNotificaciones();
+}
+
+function marcarLeida(id) {
+
+    const notificacion =
+        notificaciones.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+    if (!notificacion) {
+        return;
+    }
+
+    notificacion.leida = true;
+
+    guardarNotificaciones();
+
+    mostrarNotificaciones();
+}
+
+function eliminarNotificacion(id) {
+
+    notificaciones =
+        notificaciones.filter(function(item) {
+
+            return item.id !== id;
+
+        });
+
+    guardarNotificaciones();
+
+    mostrarNotificaciones();
+}
+
+function mostrarNotificaciones() {
+
+    const lista =
+        document.getElementById("lista");
+
+    lista.innerHTML = "";
+
+    if (notificaciones.length === 0) {
+
+        lista.innerHTML =
+            '<div class="vacio">' +
+            'No tienes notificaciones pendientes.' +
+            '</div>';
+
+    } else {
+
+        notificaciones.forEach(function(notificacion) {
+
+            const tarjeta =
+                document.createElement("div");
+
+            tarjeta.className =
+                "notificacion" +
+                (notificacion.leida ? " leida" : "");
+
+            tarjeta.innerHTML = `
+
+                <div class="notificacion-top">
+
+                    <div>
+
+                        <h3>
+                            ${notificacion.titulo}
+                        </h3>
+
+                        <div class="fecha">
+                            ${notificacion.fecha || ""}
+                        </div>
+
+                    </div>
+
+                    <span class="tipo">
+                        ${notificacion.tipo}
+                    </span>
+
+                </div>
+
+                <p>
+                    ${notificacion.mensaje}
+                </p>
+
+                <div class="botones">
+
+                    ${
+                        !notificacion.leida
+                        ?
+                        `<button
+                            onclick="marcarLeida(${notificacion.id})">
+                            Marcar como leída
+                        </button>`
+                        :
+                        ""
+                    }
+
+                    <button
+                        onclick="eliminarNotificacion(${notificacion.id})">
+                        Eliminar
+                    </button>
+
+                </div>
+
+            `;
+
+            lista.appendChild(tarjeta);
+
+        });
+
+    }
+
+    actualizarResumen();
+}
+
+function actualizarResumen() {
+
+    document.getElementById("total").textContent =
+        notificaciones.length;
+
+    document.getElementById("noLeidas").textContent =
+        notificaciones.filter(function(notificacion) {
+
+            return !notificacion.leida;
+
+        }).length;
+
+    const pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    const pendientes =
+        pedidos.filter(function(pedido) {
+
+            return (
+                pedido.estado === "Pendiente" ||
+                pedido.estado === "En proceso"
+            );
+
+        }).length;
+
+    document.getElementById("pedidosPendientes").textContent =
+        pendientes;
+}
+
+generarNotificaciones();
+
+</script>
+
+</body>
+</html>

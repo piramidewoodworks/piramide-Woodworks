@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing - Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --negro-suave: #222222;
+            --blanco: #ffffff;
+            --crema: #f7f5f1;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            color: var(--blanco);
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 45px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 9px 0 0;
+            color: var(--dorado-claro);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(900px, calc(100% - 30px));
+            margin: auto;
+            padding-bottom: 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .volver:hover {
+            color: white;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #2a2119;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .resumen-card strong {
+            display: block;
+            font-size: 25px;
+            color: var(--dorado);
+            margin-bottom: 5px;
+        }
+
+        .resumen-card span {
+            font-size: 13px;
+            color: var(--texto-suave);
+        }
+
+        .busqueda {
+            background: rgba(255,255,255,0.96);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .busqueda input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .lista {
+            display: grid;
+            gap: 15px;
+        }
+
+        .tarjeta {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.16);
+        }
+
+        .tarjeta-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fecha {
+            color: var(--texto-suave);
+            font-size: 12px;
+        }
+
+        .estado {
+            display: inline-block;
+            margin: 8px 0;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #eee6d9;
+            color: #6d5433;
+            font-size: 12px;
+        }
+
+        .tarjeta p {
+            margin: 6px 0;
+            color: var(--texto-suave);
+            font-size: 14px;
+        }
+
+        .tarjeta strong {
+            color: var(--texto);
+        }
+
+        .botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .botones button {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            text-align: center;
+            padding: 35px;
+            border-radius: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-contenido {
+            background: white;
+            color: var(--texto);
+            width: min(550px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .modal-contenido h2 {
+            margin-top: 0;
+        }
+
+        .campo {
+            margin-bottom: 14px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: var(--texto-suave);
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cancelar {
+            background: #eeeeee;
+            color: var(--texto);
+            border-color: #cccccc;
+        }
+
+        @media (max-width: 650px) {
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            .tarjeta-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Marketing</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+        <button onclick="abrirModal()">+ Nueva publicación</button>
+    </div>
+
+    <section class="resumen">
+        <div class="resumen-card">
+            <strong id="totalPublicaciones">0</strong>
+            <span>Publicaciones</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="publicadas">0</strong>
+            <span>Publicadas</span>
+        </div>
+
+        <div class="resumen-card">
+            <strong id="pendientes">0</strong>
+            <span>Pendientes</span>
+        </div>
+    </section>
+
+    <div class="busqueda">
+        <input
+            type="text"
+            id="buscar"
+            placeholder="Buscar publicación..."
+            oninput="mostrarPublicaciones()"
+        >
+    </div>
+
+    <section id="lista" class="lista"></section>
+
+</main>
+
+<div class="modal" id="modal">
+
+    <div class="modal-contenido">
+
+        <h2>Nueva publicación</h2>
+
+        <div class="campo">
+            <label>Título</label>
+            <input type="text" id="titulo">
+        </div>
+
+        <div class="campo">
+            <label>Red social</label>
+            <select id="red">
+                <option value="Facebook">Facebook</option>
+                <option value="Instagram">Instagram</option>
+                <option value="TikTok">TikTok</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Otra">Otra</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Tipo de contenido</label>
+            <select id="tipo">
+                <option value="Publicación">Publicación</option>
+                <option value="Historia">Historia</option>
+                <option value="Video">Video</option>
+                <option value="Promoción">Promoción</option>
+                <option value="Anuncio">Anuncio</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Estado</label>
+            <select id="estado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="Publicado">Publicado</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Fecha</label>
+            <input type="date" id="fecha">
+        </div>
+
+        <div class="campo">
+            <label>Notas</label>
+            <textarea id="notas" placeholder="Texto, idea, promoción, enlace, etc."></textarea>
+        </div>
+
+        <div class="modal-botones">
+            <button class="cancelar" onclick="cerrarModal()">Cancelar</button>
+            <button onclick="guardarPublicacion()">Guardar</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let publicaciones = JSON.parse(localStorage.getItem("publicaciones")) || [];
+
+function guardarDatos() {
+    localStorage.setItem("publicaciones", JSON.stringify(publicaciones));
+}
+
+function abrirModal() {
+    document.getElementById("modal").style.display = "flex";
+
+    document.getElementById("fecha").value =
+        new Date().toISOString().split("T")[0];
+}
+
+function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
+
+    document.getElementById("titulo").value = "";
+    document.getElementById("notas").value = "";
+}
+
+function guardarPublicacion() {
+
+    const titulo = document.getElementById("titulo").value.trim();
+
+    if (!titulo) {
+        alert("Escribe un título para la publicación.");
+        return;
+    }
+
+    const publicacion = {
+        id: Date.now(),
+        titulo: titulo,
+        red: document.getElementById("red").value,
+        tipo: document.getElementById("tipo").value,
+        estado: document.getElementById("estado").value,
+        fecha: document.getElementById("fecha").value,
+        notas: document.getElementById("notas").value.trim()
+    };
+
+    publicaciones.push(publicacion);
+
+    guardarDatos();
+    cerrarModal();
+    mostrarPublicaciones();
+}
+
+function eliminarPublicacion(id) {
+
+    if (!confirm("¿Eliminar esta publicación?")) {
+        return;
+    }
+
+    publicaciones = publicaciones.filter(function(publicacion) {
+        return publicacion.id !== id;
+    });
+
+    guardarDatos();
+    mostrarPublicaciones();
+}
+
+function cambiarEstado(id) {
+
+    const publicacion = publicaciones.find(function(item) {
+        return item.id === id;
+    });
+
+    if (!publicacion) return;
+
+    publicacion.estado =
+        publicacion.estado === "Publicado"
+            ? "Pendiente"
+            : "Publicado";
+
+    guardarDatos();
+    mostrarPublicaciones();
+}
+
+function mostrarPublicaciones() {
+
+    const lista = document.getElementById("lista");
+    const busqueda =
+        document.getElementById("buscar").value.toLowerCase();
+
+    const filtradas = publicaciones.filter(function(publicacion) {
+
+        return (
+            publicacion.titulo.toLowerCase().includes(busqueda) ||
+            publicacion.red.toLowerCase().includes(busqueda) ||
+            publicacion.tipo.toLowerCase().includes(busqueda)
+        );
+
+    });
+
+    lista.innerHTML = "";
+
+    if (filtradas.length === 0) {
+
+        lista.innerHTML =
+            '<div class="vacio">No hay publicaciones registradas.</div>';
+
+    } else {
+
+        filtradas.forEach(function(publicacion) {
+
+            const tarjeta = document.createElement("div");
+
+            tarjeta.className = "tarjeta";
+
+            tarjeta.innerHTML = `
+                <div class="tarjeta-top">
+                    <div>
+                        <h3>${publicacion.titulo}</h3>
+                        <div class="fecha">${publicacion.fecha || "Sin fecha"}</div>
+                    </div>
+                </div>
+
+                <span class="estado">${publicacion.estado}</span>
+
+                <p><strong>Red:</strong> ${publicacion.red}</p>
+                <p><strong>Tipo:</strong> ${publicacion.tipo}</p>
+
+                ${
+                    publicacion.notas
+                    ? `<p><strong>Notas:</strong> ${publicacion.notas}</p>`
+                    : ""
+                }
+
+                <div class="botones">
+                    <button onclick="cambiarEstado(${publicacion.id})">
+                        Cambiar estado
+                    </button>
+
+                    <button onclick="eliminarPublicacion(${publicacion.id})">
+                        Eliminar
+                    </button>
+                </div>
+            `;
+
+            lista.appendChild(tarjeta);
+        });
+    }
+
+    actualizarResumen();
+}
+
+function actualizarResumen() {
+
+    document.getElementById("totalPublicaciones").textContent =
+        publicaciones.length;
+
+    document.getElementById("publicadas").textContent =
+        publicaciones.filter(function(publicacion) {
+            return publicacion.estado === "Publicado";
+        }).length;
+
+    document.getElementById("pendientes").textContent =
+        publicaciones.filter(function(publicacion) {
+            return publicacion.estado === "Pendiente";
+        }).length;
+}
+
+mostrarPublicaciones();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cotizaciones | Pirámide Woodworks</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --crema: #f7f5f1;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, .82),
+                    rgba(20, 14, 10, .92)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+        }
+
+
+        /* =========================
+           ENCABEZADO
+        ========================== */
+
+        header {
+            text-align: center;
+            padding: 35px 20px 25px;
+        }
+
+        header h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 8px;
+
+            color: var(--dorado-claro);
+
+            font-size: 13px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+        ========================== */
+
+        .contenedor {
+            width: min(1100px, calc(100% - 30px));
+
+            margin: auto;
+
+            padding-bottom: 60px;
+        }
+
+
+        /* =========================
+           BARRA SUPERIOR
+        ========================== */
+
+        .barra {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .volver {
+            color: rgba(255,255,255,.75);
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .volver:hover {
+            color: var(--dorado-claro);
+        }
+
+
+        .boton-nueva {
+            border: 1px solid var(--dorado);
+
+            background: var(--dorado);
+
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .boton-nueva:hover {
+            background: #9a713b;
+        }
+
+
+        /* =========================
+           RESUMEN
+        ========================== */
+
+        .resumen {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,.97);
+
+            color: var(--texto);
+
+            border-radius: 11px;
+
+            padding: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,.15);
+        }
+
+        .resumen-card span {
+            display: block;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .resumen-card strong {
+            font-size: 24px;
+        }
+
+
+        /* =========================
+           FILTROS
+        ========================== */
+
+        .filtros {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .filtros input,
+        .filtros select {
+            padding: 11px 12px;
+
+            border: 1px solid var(--linea);
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: var(--texto);
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        .filtros input {
+            flex: 1;
+
+            min-width: 220px;
+        }
+
+        .filtros input:focus,
+        .filtros select:focus {
+            border-color: var(--dorado);
+        }
+
+
+        /* =========================
+           LISTA
+        ========================== */
+
+        #lista-cotizaciones {
+            display: grid;
+
+            gap: 15px;
+        }
+
+
+        .cotizacion {
+            background: rgba(255,255,255,.97);
+
+            color: var(--texto);
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,.16);
+        }
+
+
+        .cotizacion-superior {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+        }
+
+
+        .cotizacion h2 {
+            font-size: 18px;
+
+            font-weight: 600;
+        }
+
+        .fecha {
+            margin-top: 5px;
+
+            color: var(--texto-suave);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           ESTADO
+        ========================== */
+
+        .estado {
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+        .pendiente {
+            background: #f4ece3;
+
+            color: #76553a;
+        }
+
+        .contactado {
+            background: #eee8dc;
+
+            color: #725d36;
+        }
+
+        .cotizado {
+            background: #e9eee8;
+
+            color: #4f664b;
+        }
+
+        .cerrado {
+            background: #e7e7e7;
+
+            color: #555;
+        }
+
+
+        /* =========================
+           INFORMACIÓN
+        ========================== */
+
+        .datos {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin-top: 18px;
+
+            padding-top: 17px;
+
+            border-top: 1px solid var(--linea);
+        }
+
+        .dato span {
+            display: block;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+        }
+
+        .dato strong {
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           MENSAJE
+        ========================== */
+
+        .mensaje {
+            margin-top: 15px;
+
+            padding: 13px;
+
+            background: #faf8f4;
+
+            border-radius: 8px;
+
+            color: #5f5a54;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           ACCIONES
+        ========================== */
+
+        .acciones {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 17px;
+        }
+
+        .acciones button,
+        .acciones a {
+            padding: 9px 12px;
+
+            border-radius: 6px;
+
+            border: 1px solid var(--linea);
+
+            background: white;
+
+            color: var(--texto);
+
+            text-decoration: none;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .acciones button:hover,
+        .acciones a:hover {
+            border-color: var(--dorado);
+        }
+
+        .eliminar {
+            color: #8b5f4b !important;
+        }
+
+
+        /* =========================
+           VACÍO
+        ========================== */
+
+        .vacio {
+            background: rgba(255,255,255,.97);
+
+            color: var(--texto);
+
+            border-radius: 13px;
+
+            padding: 40px 25px;
+
+            text-align: center;
+        }
+
+        .vacio h2 {
+            font-size: 20px;
+
+            margin-bottom: 8px;
+        }
+
+        .vacio p {
+            color: var(--texto-suave);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================== */
+
+        #modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,.72);
+
+            z-index: 9999;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        #modal.visible {
+            display: flex;
+        }
+
+        .modal-contenido {
+            width: min(500px, 100%);
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            color: var(--texto);
+
+            border-radius: 14px;
+
+            padding: 25px;
+        }
+
+        .modal-contenido h2 {
+            margin-bottom: 18px;
+
+            font-size: 21px;
+        }
+
+        .campo {
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid var(--linea);
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+
+            resize: vertical;
+        }
+
+        .modal-botones {
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 18px;
+        }
+
+        .modal-botones button {
+            flex: 1;
+
+            padding: 11px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+        }
+
+        .guardar {
+            background: var(--negro);
+
+            color: white;
+
+            border: 1px solid var(--negro);
+        }
+
+        .cancelar {
+            background: white;
+
+            color: var(--texto);
+
+            border: 1px solid var(--linea);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 800px) {
+
+            .resumen {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .contenedor {
+                width: calc(100% - 20px);
+            }
+
+            .barra {
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+            .boton-nueva {
+                width: 100%;
+            }
+
+            .datos {
+                grid-template-columns: 1fr;
+            }
+
+            .cotizacion-superior {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>Pirámide Woodworks</h1>
+
+    <p>Cotizaciones</p>
+
+</header>
+
+
+<main class="contenedor">
+
+
+    <div class="barra">
+
+        <a href="panel.html" class="volver">
+            ← Volver al panel
+        </a>
+
+        <button
+            class="boton-nueva"
+            onclick="abrirNuevaCotizacion()"
+        >
+            + Nueva cotización
+        </button>
+
+    </div>
+
+
+    <!-- RESUMEN -->
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="total">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="resumen-card">
+
+            <span>
+                Pendientes
+            </span>
+
+            <strong id="pendientes">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="resumen-card">
+
+            <span>
+                Cotizadas
+            </span>
+
+            <strong id="cotizadas">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="resumen-card">
+
+            <span>
+                Cerradas
+            </span>
+
+            <strong id="cerradas">
+                0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- FILTROS -->
+
+    <div class="filtros">
+
+        <input
+            type="search"
+            id="busqueda"
+            placeholder="Buscar cliente, teléfono o producto..."
+            oninput="mostrarCotizaciones()"
+        >
+
+
+        <select
+            id="filtro-estado"
+            onchange="mostrarCotizaciones()"
+        >
+
+            <option value="todos">
+                Todos los estados
+            </option>
+
+            <option value="Pendiente">
+                Pendiente
+            </option>
+
+            <option value="Contactado">
+                Contactado
+            </option>
+
+            <option value="Cotizado">
+                Cotizado
+            </option>
+
+            <option value="Cerrado">
+                Cerrado
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <section id="lista-cotizaciones"></section>
+
+
+</main>
+
+
+
+<!-- =========================
+     MODAL NUEVA COTIZACIÓN
+========================= -->
+
+<div id="modal">
+
+    <div class="modal-contenido">
+
+        <h2>Nueva cotización</h2>
+
+
+        <div class="campo">
+
+            <label>
+                Cliente
+            </label>
+
+            <input
+                id="nuevo-cliente"
+                placeholder="Nombre del cliente"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Teléfono
+            </label>
+
+            <input
+                id="nuevo-telefono"
+                placeholder="Número de WhatsApp"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Producto
+            </label>
+
+            <input
+                id="nuevo-producto"
+                placeholder="Producto solicitado"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Precio estimado
+            </label>
+
+            <input
+                id="nuevo-precio"
+                type="number"
+                placeholder="0"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Estado
+            </label>
+
+            <select id="nuevo-estado">
+
+                <option>
+                    Pendiente
+                </option>
+
+                <option>
+                    Contactado
+                </option>
+
+                <option>
+                    Cotizado
+                </option>
+
+                <option>
+                    Cerrado
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Notas
+            </label>
+
+            <textarea
+                id="nuevas-notas"
+                placeholder="Detalles de la cotización..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-botones">
+
+            <button
+                class="cancelar"
+                onclick="cerrarModal()"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="guardar"
+                onclick="guardarNuevaCotizacion()"
+            >
+                Guardar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+let cotizaciones =
+    JSON.parse(
+        localStorage.getItem("cotizaciones")
+    ) || [];
+
+
+
+function guardarDatos() {
+
+    localStorage.setItem(
+        "cotizaciones",
+        JSON.stringify(cotizaciones)
+    );
+
+}
+
+
+
+function mostrarCotizaciones() {
+
+    const lista =
+        document.getElementById(
+            "lista-cotizaciones"
+        );
+
+    const busqueda =
+        document.getElementById(
+            "busqueda"
+        ).value.toLowerCase();
+
+    const filtro =
+        document.getElementById(
+            "filtro-estado"
+        ).value;
+
+
+    lista.innerHTML = "";
+
+
+    const filtradas =
+        cotizaciones.filter(function(cotizacion) {
+
+            const texto =
+                (
+                    cotizacion.cliente +
+                    " " +
+                    cotizacion.telefono +
+                    " " +
+                    cotizacion.producto
+                ).toLowerCase();
+
+
+            const coincideTexto =
+                texto.includes(busqueda);
+
+
+            const coincideEstado =
+                filtro === "todos" ||
+                cotizacion.estado === filtro;
+
+
+            return coincideTexto &&
+                   coincideEstado;
+
+        });
+
+
+    if (filtradas.length === 0) {
+
+        lista.innerHTML = `
+
+            <div class="vacio">
+
+                <h2>
+                    No hay cotizaciones
+                </h2>
+
+                <p>
+                    Cuando agregues una cotización,
+                    aparecerá aquí.
+                </p>
+
+            </div>
+
+        `;
+
+    } else {
+
+        filtradas.forEach(function(cotizacion) {
+
+            const indice =
+                cotizaciones.indexOf(cotizacion);
+
+
+            let claseEstado =
+                cotizacion.estado
+                    .toLowerCase();
+
+
+            lista.innerHTML += `
+
+                <article class="cotizacion">
+
+                    <div class="cotizacion-superior">
+
+                        <div>
+
+                            <h2>
+                                ${cotizacion.cliente}
+                            </h2>
+
+                            <div class="fecha">
+                                ${cotizacion.fecha}
+                            </div>
+
+                        </div>
+
+                        <span
+                            class="estado ${claseEstado}"
+                        >
+                            ${cotizacion.estado}
+                        </span>
+
+                    </div>
+
+
+                    <div class="datos">
+
+                        <div class="dato">
+
+                            <span>
+                                Teléfono
+                            </span>
+
+                            <strong>
+                                ${cotizacion.telefono || "—"}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            <span>
+                                Producto
+                            </span>
+
+                            <strong>
+                                ${cotizacion.producto || "—"}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            <span>
+                                Precio estimado
+                            </span>
+
+                            <strong>
+                                ${
+                                    cotizacion.precio
+                                    ? "$" + cotizacion.precio
+                                    : "—"
+                                }
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            <span>
+                                Estado
+                            </span>
+
+                            <strong>
+                                ${cotizacion.estado}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        cotizacion.notas
+                        ? `
+                            <div class="mensaje">
+                                ${cotizacion.notas}
+                            </div>
+                        `
+                        : ""
+                    }
+
+
+                    <div class="acciones">
+
+                        ${
+                            cotizacion.telefono
+                            ? `
+                                <a
+                                    href="https://wa.me/52${limpiarTelefono(cotizacion.telefono)}"
+                                    target="_blank"
+                                >
+                                    WhatsApp
+                                </a>
+                            `
+                            : ""
+                        }
+
+
+                        <button
+                            onclick="editarCotizacion(${indice})"
+                        >
+                            Editar
+                        </button>
+
+
+                        <button
+                            class="eliminar"
+                            onclick="eliminarCotizacion(${indice})"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        });
+
+    }
+
+
+    actualizarResumen();
+
+}
+
+
+
+function actualizarResumen() {
+
+    document.getElementById("total")
+        .textContent =
+        cotizaciones.length;
+
+
+    document.getElementById("pendientes")
+        .textContent =
+        cotizaciones.filter(function(c) {
+
+            return c.estado === "Pendiente";
+
+        }).length;
+
+
+    document.getElementById("cotizadas")
+        .textContent =
+        cotizaciones.filter(function(c) {
+
+            return c.estado === "Cotizado";
+
+        }).length;
+
+
+    document.getElementById("cerradas")
+        .textContent =
+        cotizaciones.filter(function(c) {
+
+            return c.estado === "Cerrado";
+
+        }).length;
+
+}
+
+
+
+function limpiarTelefono(telefono) {
+
+    return String(telefono)
+        .replace(/\D/g, "");
+
+}
+
+
+
+function abrirNuevaCotizacion() {
+
+    document
+        .getElementById("modal")
+        .classList.add("visible");
+
+}
+
+
+
+function cerrarModal() {
+
+    document
+        .getElementById("modal")
+        .classList.remove("visible");
+
+}
+
+
+
+function guardarNuevaCotizacion() {
+
+    const cliente =
+        document.getElementById(
+            "nuevo-cliente"
+        ).value.trim();
+
+
+    const telefono =
+        document.getElementById(
+            "nuevo-telefono"
+        ).value.trim();
+
+
+    const producto =
+        document.getElementById(
+            "nuevo-producto"
+        ).value.trim();
+
+
+    const precio =
+        document.getElementById(
+            "nuevo-precio"
+        ).value.trim();
+
+
+    const estado =
+        document.getElementById(
+            "nuevo-estado"
+        ).value;
+
+
+    const notas =
+        document.getElementById(
+            "nuevas-notas"
+        ).value.trim();
+
+
+    if (!cliente) {
+
+        alert(
+            "Escribe el nombre del cliente."
+        );
+
+        return;
+
+    }
+
+
+    cotizaciones.push({
+
+        cliente: cliente,
+
+        telefono: telefono,
+
+        producto: producto,
+
+        precio: precio,
+
+        estado: estado,
+
+        notas: notas,
+
+        fecha:
+            new Date()
+                .toLocaleString("es-MX")
+
+    });
+
+
+    guardarDatos();
+
+    limpiarFormulario();
+
+    cerrarModal();
+
+    mostrarCotizaciones();
+
+}
+
+
+
+function limpiarFormulario() {
+
+    document.getElementById(
+        "nuevo-cliente"
+    ).value = "";
+
+    document.getElementById(
+        "nuevo-telefono"
+    ).value = "";
+
+    document.getElementById(
+        "nuevo-producto"
+    ).value = "";
+
+    document.getElementById(
+        "nuevo-precio"
+    ).value = "";
+
+    document.getElementById(
+        "nuevo-estado"
+    ).value = "Pendiente";
+
+    document.getElementById(
+        "nuevas-notas"
+    ).value = "";
+
+}
+
+
+
+function editarCotizacion(indice) {
+
+    const cotizacion =
+        cotizaciones[indice];
+
+
+    const nuevoEstado =
+        prompt(
+            "Estado actual: " +
+            cotizacion.estado +
+            "\n\nEscribe uno de estos:\nPendiente\nContactado\nCotizado\nCerrado",
+            cotizacion.estado
+        );
+
+
+    if (
+        nuevoEstado === null ||
+        nuevoEstado.trim() === ""
+    ) {
+
+        return;
+
+    }
+
+
+    const estadosValidos = [
+        "Pendiente",
+        "Contactado",
+        "Cotizado",
+        "Cerrado"
+    ];
+
+
+    if (
+        !estadosValidos.includes(
+            nuevoEstado.trim()
+        )
+    ) {
+
+        alert(
+            "Estado no válido."
+        );
+
+        return;
+
+    }
+
+
+    cotizacion.estado =
+        nuevoEstado.trim();
+
+
+    guardarDatos();
+
+    mostrarCotizaciones();
+
+}
+
+
+
+function eliminarCotizacion(indice) {
+
+    const confirmar =
+        confirm(
+            "¿Quieres eliminar esta cotización?"
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    cotizaciones.splice(
+        indice,
+        1
+    );
+
+
+    guardarDatos();
+
+    mostrarCotizaciones();
+
+}
+
+
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+
+    if (event.target === modal) {
+
+        cerrarModal();
+
+    }
+
+};
+
+
+
+mostrarCotizaciones();
+
+</script>
+
+
+</body>
+
+</html>

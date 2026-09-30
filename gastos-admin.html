@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gastos | Pirámide Woodworks</title>
+
+    <style>
+        :root {
+            --negro: #171717;
+            --blanco: #ffffff;
+            --texto: #26221e;
+            --texto-suave: #716b64;
+            --dorado: #b28a52;
+            --dorado-claro: #d1b27d;
+            --linea: #e7e2db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(20, 14, 10, 0.78),
+                    rgba(20, 14, 10, 0.88)
+                ),
+                repeating-linear-gradient(
+                    92deg,
+                    #3a281d 0px,
+                    #493225 55px,
+                    #34231a 58px,
+                    #52382a 115px,
+                    #39271c 118px
+                );
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--blanco);
+        }
+
+        header {
+            text-align: center;
+            padding: 42px 20px 28px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 44px);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--dorado-claro);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        main {
+            width: min(100% - 30px, 1000px);
+            margin: 0 auto 50px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--dorado-claro);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .acciones h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .boton {
+            border: 1px solid var(--dorado);
+            background: var(--negro);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .boton:hover {
+            background: #292929;
+            border-color: var(--dorado-claro);
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .resumen-card {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .resumen-card span {
+            display: block;
+            color: var(--texto-suave);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .resumen-card strong {
+            font-size: 25px;
+            font-weight: 500;
+            color: var(--dorado);
+        }
+
+        .filtros {
+            background: rgba(255,255,255,0.96);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 10px;
+        }
+
+        .filtros input,
+        .filtros select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .gasto {
+            background: rgba(255,255,255,0.97);
+            color: var(--texto);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+        }
+
+        .gasto-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .gasto h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fecha {
+            color: var(--texto-suave);
+            font-size: 12px;
+        }
+
+        .gasto-total {
+            color: #9b3d3d;
+            font-size: 20px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .gasto-info {
+            margin-top: 15px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .gasto-acciones {
+            display: flex;
+            gap: 8px;
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px solid var(--linea);
+        }
+
+        .boton-secundario {
+            border: 1px solid var(--linea);
+            background: white;
+            color: var(--texto);
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .boton-eliminar {
+            color: #9b3d3d;
+        }
+
+        .vacio {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            border-radius: 12px;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-contenido {
+            background: white;
+            color: var(--texto);
+            width: min(100%, 600px);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .modal-contenido h2 {
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        .campo {
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--texto-suave);
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--linea);
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gasto-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Gastos</h1>
+    <p>Pirámide Woodworks</p>
+</header>
+
+<main>
+
+    <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div class="acciones">
+
+        <h2>Registro de gastos</h2>
+
+        <button class="boton" onclick="abrirModal()">
+            + Nuevo gasto
+        </button>
+
+    </div>
+
+    <section class="resumen">
+
+        <div class="resumen-card">
+            <span>Gastos registrados</span>
+            <strong id="totalGastos">0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Gastos del mes</span>
+            <strong id="gastosMes">$0</strong>
+        </div>
+
+        <div class="resumen-card">
+            <span>Total gastado</span>
+            <strong id="totalGastado">$0</strong>
+        </div>
+
+    </section>
+
+    <section class="filtros">
+
+        <div class="filtros-grid">
+
+            <input
+                type="text"
+                id="busqueda"
+                placeholder="Buscar por descripción..."
+                oninput="mostrarGastos()"
+            >
+
+            <select
+                id="filtroCategoria"
+                onchange="mostrarGastos()"
+            >
+                <option value="Todas">Todas las categorías</option>
+                <option value="Materiales">Materiales</option>
+                <option value="Herramientas">Herramientas</option>
+                <option value="Equipo">Equipo</option>
+                <option value="Empaque">Empaque</option>
+                <option value="Envíos">Envíos</option>
+                <option value="Publicidad">Publicidad</option>
+                <option value="Servicios">Servicios</option>
+                <option value="Otro">Otro</option>
+            </select>
+
+        </div>
+
+    </section>
+
+    <section id="listaGastos"></section>
+
+</main>
+
+<div class="modal" id="modalGasto">
+
+    <div class="modal-contenido">
+
+        <h2>Nuevo gasto</h2>
+
+        <div class="campo">
+            <label>Descripción</label>
+            <input
+                type="text"
+                id="descripcion"
+                placeholder="Ej. Triplay Birch 4mm"
+            >
+        </div>
+
+        <div class="campo">
+
+            <label>Categoría</label>
+
+            <select id="categoria">
+
+                <option value="Materiales">
+                    Materiales
+                </option>
+
+                <option value="Herramientas">
+                    Herramientas
+                </option>
+
+                <option value="Equipo">
+                    Equipo
+                </option>
+
+                <option value="Empaque">
+                    Empaque
+                </option>
+
+                <option value="Envíos">
+                    Envíos
+                </option>
+
+                <option value="Publicidad">
+                    Publicidad
+                </option>
+
+                <option value="Servicios">
+                    Servicios
+                </option>
+
+                <option value="Otro">
+                    Otro
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Monto</label>
+
+            <input
+                type="number"
+                id="monto"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label>Método de pago</label>
+
+            <select id="metodo">
+
+                <option value="Efectivo">
+                    Efectivo
+                </option>
+
+                <option value="Transferencia">
+                    Transferencia
+                </option>
+
+                <option value="Tarjeta">
+                    Tarjeta
+                </option>
+
+                <option value="Otro">
+                    Otro
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Notas</label>
+
+            <textarea
+                id="notas"
+                placeholder="Detalles del gasto..."
+            ></textarea>
+
+        </div>
+
+        <div class="modal-botones">
+
+            <button
+                class="boton-secundario"
+                onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+            <button
+                class="boton"
+                onclick="guardarGasto()">
+                Guardar gasto
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let gastos =
+    JSON.parse(localStorage.getItem("gastos")) || [];
+
+function guardarGastos() {
+
+    localStorage.setItem(
+        "gastos",
+        JSON.stringify(gastos)
+    );
+}
+
+function abrirModal() {
+
+    document.getElementById("modalGasto").style.display =
+        "flex";
+}
+
+function cerrarModal() {
+
+    document.getElementById("modalGasto").style.display =
+        "none";
+
+    document.getElementById("descripcion").value = "";
+
+    document.getElementById("categoria").value =
+        "Materiales";
+
+    document.getElementById("monto").value = "";
+
+    document.getElementById("metodo").value =
+        "Efectivo";
+
+    document.getElementById("notas").value = "";
+}
+
+function guardarGasto() {
+
+    const descripcion =
+        document
+            .getElementById("descripcion")
+            .value
+            .trim();
+
+    const categoria =
+        document.getElementById("categoria").value;
+
+    const monto =
+        Number(
+            document.getElementById("monto").value
+        );
+
+    const metodo =
+        document.getElementById("metodo").value;
+
+    const notas =
+        document
+            .getElementById("notas")
+            .value
+            .trim();
+
+    if (!descripcion || !monto) {
+
+        alert(
+            "Completa la descripción y el monto."
+        );
+
+        return;
+    }
+
+    const gasto = {
+
+        id: Date.now(),
+
+        descripcion: descripcion,
+
+        categoria: categoria,
+
+        monto: monto,
+
+        metodo: metodo,
+
+        notas: notas,
+
+        fecha: new Date().toISOString()
+
+    };
+
+    gastos.push(gasto);
+
+    guardarGastos();
+
+    mostrarGastos();
+
+    cerrarModal();
+}
+
+function mostrarGastos() {
+
+    const contenedor =
+        document.getElementById("listaGastos");
+
+    const busqueda =
+        document
+            .getElementById("busqueda")
+            .value
+            .toLowerCase();
+
+    const filtroCategoria =
+        document.getElementById("filtroCategoria").value;
+
+    const filtrados =
+        gastos.filter(function(gasto) {
+
+            const coincideBusqueda =
+                gasto.descripcion
+                    .toLowerCase()
+                    .includes(busqueda);
+
+            const coincideCategoria =
+                filtroCategoria === "Todas" ||
+                gasto.categoria === filtroCategoria;
+
+            return (
+                coincideBusqueda &&
+                coincideCategoria
+            );
+
+        });
+
+    contenedor.innerHTML = "";
+
+    if (filtrados.length === 0) {
+
+        contenedor.innerHTML = `
+            <div class="vacio">
+                No hay gastos para mostrar.
+            </div>
+        `;
+
+    } else {
+
+        filtrados.forEach(function(gasto) {
+
+            const fecha =
+                new Date(gasto.fecha)
+                .toLocaleString("es-MX");
+
+            contenedor.innerHTML += `
+
+                <article class="gasto">
+
+                    <div class="gasto-top">
+
+                        <div>
+
+                            <h3>
+                                ${gasto.descripcion}
+                            </h3>
+
+                            <div class="fecha">
+                                ${fecha}
+                            </div>
+
+                        </div>
+
+                        <div class="gasto-total">
+                            -$${gasto.monto}
+                        </div>
+
+                    </div>
+
+                    <div class="gasto-info">
+
+                        <strong>Categoría:</strong>
+                        ${gasto.categoria}
+                        <br>
+
+                        <strong>Pago:</strong>
+                        ${gasto.metodo}
+
+                        ${
+                            gasto.notas
+                            ? `
+                                <br>
+                                <strong>Notas:</strong>
+                                ${gasto.notas}
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                    <div class="gasto-acciones">
+
+                        <button
+                            class="boton-secundario boton-eliminar"
+                            onclick="eliminarGasto(${gasto.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+        });
+    }
+
+    actualizarResumen();
+}
+
+function eliminarGasto(id) {
+
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar este gasto?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    gastos =
+        gastos.filter(function(gasto) {
+
+            return gasto.id !== id;
+
+        });
+
+    guardarGastos();
+
+    mostrarGastos();
+}
+
+function actualizarResumen() {
+
+    document.getElementById("totalGastos").textContent =
+        gastos.length;
+
+    const ahora = new Date();
+
+    const mesActual =
+        ahora.getMonth();
+
+    const añoActual =
+        ahora.getFullYear();
+
+    let totalMes = 0;
+
+    let totalGeneral = 0;
+
+    gastos.forEach(function(gasto) {
+
+        totalGeneral += Number(gasto.monto);
+
+        const fecha =
+            new Date(gasto.fecha);
+
+        if (
+            fecha.getMonth() === mesActual &&
+            fecha.getFullYear() === añoActual
+        ) {
+
+            totalMes += Number(gasto.monto);
+
+        }
+
+    });
+
+    document.getElementById("gastosMes").textContent =
+        "$" + totalMes;
+
+    document.getElementById("totalGastado").textContent =
+        "$" + totalGeneral;
+}
+
+mostrarGastos();
+
+</script>
+
+</body>
+</html>

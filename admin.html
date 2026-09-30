@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Acceso privado | Pirámide Woodworks</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --negro: #171717;
+        --blanco: #ffffff;
+        --dorado: #b28a52;
+        --dorado-claro: #d1b27d;
+        --texto: #26221e;
+        --texto-suave: #716b64;
+        --linea: #e7e2db;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        background:
+            linear-gradient(
+                rgba(20, 14, 10, 0.80),
+                rgba(20, 14, 10, 0.92)
+            ),
+            repeating-linear-gradient(
+                92deg,
+                #3a281d 0px,
+                #493225 55px,
+                #34231a 58px,
+                #52382a 115px,
+                #39271c 118px
+            );
+
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 25px;
+    }
+
+    .contenedor {
+        width: min(430px, 100%);
+        text-align: center;
+    }
+
+    .marca {
+        margin-bottom: 25px;
+    }
+
+    .marca h1 {
+        font-size: clamp(29px, 7vw, 42px);
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .marca p {
+        margin-top: 8px;
+
+        color: var(--dorado-claro);
+
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .tarjeta {
+        background: rgba(255,255,255,.97);
+
+        color: var(--texto);
+
+        border-radius: 14px;
+
+        padding: 32px 28px;
+
+        box-shadow:
+            0 18px 50px rgba(0,0,0,.35);
+
+        text-align: left;
+    }
+
+    .tarjeta h2 {
+        text-align: center;
+
+        font-size: 24px;
+        font-weight: 600;
+
+        margin-bottom: 8px;
+    }
+
+    .subtitulo {
+        text-align: center;
+
+        color: var(--texto-suave);
+
+        font-size: 14px;
+        line-height: 1.5;
+
+        margin-bottom: 27px;
+    }
+
+    label {
+        display: block;
+
+        margin-bottom: 7px;
+
+        color: var(--texto);
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    input {
+        width: 100%;
+
+        padding: 13px 14px;
+
+        margin-bottom: 17px;
+
+        border: 1px solid var(--linea);
+
+        border-radius: 7px;
+
+        background: #faf9f7;
+
+        color: var(--texto);
+
+        font-family: inherit;
+        font-size: 14px;
+
+        outline: none;
+
+        transition:
+            border-color .2s ease,
+            box-shadow .2s ease;
+    }
+
+    input:focus {
+        border-color: var(--dorado);
+
+        box-shadow:
+            0 0 0 3px rgba(178,138,82,.12);
+    }
+
+    .boton {
+        width: 100%;
+
+        padding: 13px 16px;
+
+        margin-top: 5px;
+
+        border: 1px solid var(--negro);
+
+        border-radius: 7px;
+
+        background: var(--negro);
+
+        color: white;
+
+        font-family: inherit;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+    .boton:hover {
+        background: #000;
+
+        border-color: var(--dorado);
+
+        transform: translateY(-1px);
+    }
+
+    .boton:disabled {
+        opacity: .65;
+        cursor: wait;
+        transform: none;
+    }
+
+    #mensaje {
+        display: none;
+
+        margin-top: 15px;
+
+        padding: 10px;
+
+        border-radius: 6px;
+
+        background: #f4ece3;
+
+        color: #76553a;
+
+        font-size: 13px;
+
+        text-align: center;
+    }
+
+    .pie {
+        margin-top: 22px;
+
+        color: rgba(255,255,255,.55);
+
+        font-size: 12px;
+
+        text-align: center;
+    }
+
+    @media (max-width: 450px) {
+
+        body {
+            padding: 18px;
+        }
+
+        .tarjeta {
+            padding: 27px 21px;
+        }
+
+    }
+
+</style>
+
+</head><body><div class="contenedor"><div class="marca">
+
+    <h1>Pirámide Woodworks</h1>
+
+    <p>Área privada</p>
+
+</div>
+
+
+<section class="tarjeta">
+
+
+    <h2>Bienvenida</h2>
+
+
+    <p class="subtitulo">
+        Este espacio es exclusivo para la administración
+        de Pirámide Woodworks.
+    </p>
+
+
+    <form onsubmit="iniciarSesion(event)">
+
+
+        <label for="correo">
+            Correo electrónico
+        </label>
+
+
+        <input
+            type="email"
+            id="correo"
+            placeholder="Tu correo"
+            autocomplete="username"
+            required
+        >
+
+
+        <label for="contrasena">
+            Contraseña
+        </label>
+
+
+        <input
+            type="password"
+            id="contrasena"
+            placeholder="Tu contraseña"
+            autocomplete="current-password"
+            required
+        >
+
+
+        <button
+            type="submit"
+            class="boton"
+            id="botonLogin"
+        >
+            Iniciar sesión
+        </button>
+
+
+    </form>
+
+
+    <div id="mensaje">
+        Correo o contraseña incorrectos.
+    </div>
+
+
+</section>
+
+
+<div class="pie">
+    Pirámide Woodworks · Administración
+</div>
+
+</div><!-- SUPABASE --><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+
+
+/* CONEXIÓN CON SUPABASE */
+
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* INICIAR SESIÓN */
+
+async function iniciarSesion(event) {
+
+    event.preventDefault();
+
+
+    const correo =
+        document.getElementById("correo")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const contrasena =
+        document.getElementById("contrasena")
+        .value;
+
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+
+    const boton =
+        document.getElementById("botonLogin");
+
+
+    mensaje.style.display =
+        "none";
+
+
+    boton.disabled =
+        true;
+
+
+    boton.textContent =
+        "Iniciando sesión...";
+
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: correo,
+
+            password: contrasena
+
+        });
+
+
+    if (error) {
+
+        mensaje.textContent =
+            "Correo o contraseña incorrectos.";
+
+        mensaje.style.display =
+            "block";
+
+        boton.disabled =
+            false;
+
+        boton.textContent =
+            "Iniciar sesión";
+
+        return;
+
+    }
+
+
+    /* GUARDAR QUIÉN ENTRÓ */
+
+    if (
+        data.user.email &&
+        data.user.email.toLowerCase() === correo
+    ) {
+
+        localStorage.setItem(
+            "usuario",
+            correo
+        );
+
+    }
+
+
+    /* ENTRAR AL PANEL */
+
+    window.location.href =
+        "panel.html";
+
+}
+
+
+</script>
+</body>
+</html>
