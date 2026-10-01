@@ -1,6 +1,16 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Acceso privado | Pirámide Woodworks</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acceso privado | Pirámide Woodworks</title>
+
+    <!-- ICONO DE PIRÁMIDE WOODWORKS -->
+    <link rel="icon" type="image/jpeg" href="imagenes/logo.jpeg">
+    <link rel="apple-touch-icon" href="imagenes/logo.jpeg">
 
 <style>
 
@@ -238,84 +248,89 @@
 
 </style>
 
-</head><body><div class="contenedor"><div class="marca">
+</head>
 
-    <h1>Pirámide Woodworks</h1>
+<body>
 
-    <p>Área privada</p>
+<div class="contenedor">
 
-</div>
+    <div class="marca">
 
+        <h1>Pirámide Woodworks</h1>
 
-<section class="tarjeta">
+        <p>Área privada</p>
 
-
-    <h2>Bienvenida</h2>
-
-
-    <p class="subtitulo">
-        Este espacio es exclusivo para la administración
-        de Pirámide Woodworks.
-    </p>
-
-
-    <form onsubmit="iniciarSesion(event)">
-
-
-        <label for="correo">
-            Correo electrónico
-        </label>
-
-
-        <input
-            type="email"
-            id="correo"
-            placeholder="Tu correo"
-            autocomplete="username"
-            required
-        >
-
-
-        <label for="contrasena">
-            Contraseña
-        </label>
-
-
-        <input
-            type="password"
-            id="contrasena"
-            placeholder="Tu contraseña"
-            autocomplete="current-password"
-            required
-        >
-
-
-        <button
-            type="submit"
-            class="boton"
-            id="botonLogin"
-        >
-            Iniciar sesión
-        </button>
-
-
-    </form>
-
-
-    <div id="mensaje">
-        Correo o contraseña incorrectos.
     </div>
 
 
-</section>
+    <section class="tarjeta">
+
+        <h2>Bienvenida</h2>
+
+        <p class="subtitulo">
+            Este espacio es exclusivo para la administración
+            de Pirámide Woodworks.
+        </p>
 
 
-<div class="pie">
-    Pirámide Woodworks · Administración
+        <form onsubmit="iniciarSesion(event)">
+
+            <label for="correo">
+                Correo electrónico
+            </label>
+
+            <input
+                type="email"
+                id="correo"
+                placeholder="Tu correo"
+                autocomplete="username"
+                required
+            >
+
+
+            <label for="contrasena">
+                Contraseña
+            </label>
+
+            <input
+                type="password"
+                id="contrasena"
+                placeholder="Tu contraseña"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="boton"
+                id="botonLogin"
+            >
+                Iniciar sesión
+            </button>
+
+        </form>
+
+
+        <div id="mensaje">
+            Correo o contraseña incorrectos.
+        </div>
+
+    </section>
+
+
+    <div class="pie">
+        Pirámide Woodworks · Administración
+    </div>
+
 </div>
 
-</div><!-- SUPABASE --><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
 
 /* CONEXIÓN CON SUPABASE */
 
@@ -424,7 +439,7 @@ async function iniciarSesion(event) {
 
 }
 
-
 </script>
+
 </body>
 </html>
