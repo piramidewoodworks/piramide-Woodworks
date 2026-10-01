@@ -1,0 +1,16 @@
+{
+  "name": "Pirámide Woodworks Admin",
+  "short_name": "Pirámide Admin",
+  "description": "Administración de Pirámide Woodworks",
+  "start_url": "admin.html",
+  "display": "standalone",
+  "background_color": "#171717",
+  "theme_color": "#171717",
+  "icons": [
+    {
+      "src": "imagenes/logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
