@@ -504,24 +504,156 @@
 
 </div>
 
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-let gastos =
-    JSON.parse(localStorage.getItem("gastos")) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-function guardarGastos() {
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseCliente =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let gastos = [];
+
+
+/* =========================
+   MIGRAR GASTOS ANTIGUOS
+========================= */
+
+async function migrarGastosAntiguos() {
+
+    const yaMigro =
+        localStorage.getItem("gastosMigradosSupabase");
+
+    if (yaMigro === "true") {
+        return;
+    }
+
+    const gastosAntiguos =
+        JSON.parse(
+            localStorage.getItem("gastos")
+        ) || [];
+
+    if (gastosAntiguos.length === 0) {
+
+        localStorage.setItem(
+            "gastosMigradosSupabase",
+            "true"
+        );
+
+        return;
+    }
+
+    const datosParaSubir =
+        gastosAntiguos.map(function(gasto) {
+
+            return {
+
+                descripcion:
+                    gasto.descripcion || "",
+
+                categoria:
+                    gasto.categoria || "Otro",
+
+                monto:
+                    Number(gasto.monto) || 0,
+
+                metodo:
+                    gasto.metodo || "Efectivo",
+
+                notas:
+                    gasto.notas || "",
+
+                fecha:
+                    gasto.fecha || new Date().toISOString()
+
+            };
+
+        });
+
+    const { error } =
+        await supabaseCliente
+            .from("gastos")
+            .insert(datosParaSubir);
+
+    if (error) {
+
+        console.error(
+            "Error migrando gastos:",
+            error
+        );
+
+        alert(
+            "No se pudieron sincronizar los gastos anteriores. Intenta nuevamente."
+        );
+
+        return;
+    }
 
     localStorage.setItem(
-        "gastos",
-        JSON.stringify(gastos)
+        "gastosMigradosSupabase",
+        "true"
+    );
+
+    console.log(
+        "Gastos antiguos migrados correctamente."
     );
 }
+
+
+/* =========================
+   CARGAR GASTOS
+========================= */
+
+async function cargarGastos() {
+
+    const { data, error } =
+        await supabaseCliente
+            .from("gastos")
+            .select("*")
+            .order("fecha", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error(
+            "Error cargando gastos:",
+            error
+        );
+
+        alert(
+            "No se pudieron cargar los gastos."
+        );
+
+        return;
+    }
+
+    gastos = data || [];
+
+    mostrarGastos();
+}
+
+
+/* =========================
+   MODAL
+========================= */
 
 function abrirModal() {
 
     document.getElementById("modalGasto").style.display =
         "flex";
 }
+
 
 function cerrarModal() {
 
@@ -541,7 +673,12 @@ function cerrarModal() {
     document.getElementById("notas").value = "";
 }
 
-function guardarGasto() {
+
+/* =========================
+   GUARDAR GASTO
+========================= */
+
+async function guardarGasto() {
 
     const descripcion =
         document
@@ -566,6 +703,7 @@ function guardarGasto() {
             .value
             .trim();
 
+
     if (!descripcion || !monto) {
 
         alert(
@@ -575,32 +713,61 @@ function guardarGasto() {
         return;
     }
 
-    const gasto = {
 
-        id: Date.now(),
+    const { error } =
+        await supabaseCliente
+            .from("gastos")
+            .insert({
 
-        descripcion: descripcion,
+                descripcion:
+                    descripcion,
 
-        categoria: categoria,
+                categoria:
+                    categoria,
 
-        monto: monto,
+                monto:
+                    monto,
 
-        metodo: metodo,
+                metodo:
+                    metodo,
 
-        notas: notas,
+                notas:
+                    notas,
 
-        fecha: new Date().toISOString()
+                fecha:
+                    new Date().toISOString()
 
-    };
+            });
 
-    gastos.push(gasto);
 
-    guardarGastos();
+    if (error) {
 
-    mostrarGastos();
+        console.error(
+            "Error guardando gasto:",
+            error
+        );
+
+        alert(
+            "No se pudo guardar el gasto."
+        );
+
+        return;
+    }
+
+
+    await cargarGastos();
 
     cerrarModal();
+
+    alert(
+        "☁️ Gasto guardado y sincronizado."
+    );
 }
+
+
+/* =========================
+   MOSTRAR GASTOS
+========================= */
 
 function mostrarGastos() {
 
@@ -616,11 +783,12 @@ function mostrarGastos() {
     const filtroCategoria =
         document.getElementById("filtroCategoria").value;
 
+
     const filtrados =
         gastos.filter(function(gasto) {
 
             const coincideBusqueda =
-                gasto.descripcion
+                (gasto.descripcion || "")
                     .toLowerCase()
                     .includes(busqueda);
 
@@ -635,7 +803,9 @@ function mostrarGastos() {
 
         });
 
+
     contenedor.innerHTML = "";
+
 
     if (filtrados.length === 0) {
 
@@ -651,7 +821,8 @@ function mostrarGastos() {
 
             const fecha =
                 new Date(gasto.fecha)
-                .toLocaleString("es-MX");
+                    .toLocaleString("es-MX");
+
 
             contenedor.innerHTML += `
 
@@ -672,7 +843,7 @@ function mostrarGastos() {
                         </div>
 
                         <div class="gasto-total">
-                            -$${gasto.monto}
+                            -$${Number(gasto.monto).toFixed(2)}
                         </div>
 
                     </div>
@@ -714,10 +885,16 @@ function mostrarGastos() {
         });
     }
 
+
     actualizarResumen();
 }
 
-function eliminarGasto(id) {
+
+/* =========================
+   ELIMINAR GASTO
+========================= */
+
+async function eliminarGasto(id) {
 
     const confirmar =
         confirm(
@@ -728,24 +905,46 @@ function eliminarGasto(id) {
         return;
     }
 
-    gastos =
-        gastos.filter(function(gasto) {
 
-            return gasto.id !== id;
+    const { error } =
+        await supabaseCliente
+            .from("gastos")
+            .delete()
+            .eq("id", id);
 
-        });
 
-    guardarGastos();
+    if (error) {
 
-    mostrarGastos();
+        console.error(
+            "Error eliminando gasto:",
+            error
+        );
+
+        alert(
+            "No se pudo eliminar el gasto."
+        );
+
+        return;
+    }
+
+
+    await cargarGastos();
+
 }
+
+
+/* =========================
+   RESUMEN
+========================= */
 
 function actualizarResumen() {
 
     document.getElementById("totalGastos").textContent =
         gastos.length;
 
-    const ahora = new Date();
+
+    const ahora =
+        new Date();
 
     const mesActual =
         ahora.getMonth();
@@ -753,36 +952,58 @@ function actualizarResumen() {
     const añoActual =
         ahora.getFullYear();
 
+
     let totalMes = 0;
 
     let totalGeneral = 0;
 
+
     gastos.forEach(function(gasto) {
 
-        totalGeneral += Number(gasto.monto);
+        totalGeneral +=
+            Number(gasto.monto) || 0;
+
 
         const fecha =
             new Date(gasto.fecha);
+
 
         if (
             fecha.getMonth() === mesActual &&
             fecha.getFullYear() === añoActual
         ) {
 
-            totalMes += Number(gasto.monto);
+            totalMes +=
+                Number(gasto.monto) || 0;
 
         }
 
     });
 
+
     document.getElementById("gastosMes").textContent =
-        "$" + totalMes;
+        "$" + totalMes.toFixed(2);
+
 
     document.getElementById("totalGastado").textContent =
-        "$" + totalGeneral;
+        "$" + totalGeneral.toFixed(2);
 }
 
-mostrarGastos();
+
+/* =========================
+   INICIO
+========================= */
+
+async function iniciarGastos() {
+
+    await migrarGastosAntiguos();
+
+    await cargarGastos();
+
+}
+
+
+iniciarGastos();
 
 </script>
 
