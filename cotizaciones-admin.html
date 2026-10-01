@@ -30,15 +30,9 @@
             --rojo: #8b5f4b;
         }
 
-
         body {
             min-height: 100vh;
-
-            font-family:
-                "Segoe UI",
-                Arial,
-                sans-serif;
-
+            font-family: "Segoe UI", Arial, sans-serif;
             color: white;
 
             background:
@@ -56,7 +50,6 @@
                 );
         }
 
-
         header {
             text-align: center;
             padding: 35px 20px 25px;
@@ -70,44 +63,29 @@
 
         header p {
             margin-top: 8px;
-
             color: var(--dorado-claro);
-
             font-size: 13px;
-
             letter-spacing: 3px;
-
             text-transform: uppercase;
         }
 
-
         .contenedor {
             width: min(1100px, calc(100% - 30px));
-
             margin: auto;
-
             padding-bottom: 60px;
         }
 
-
         .barra {
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
-
             gap: 15px;
-
             margin-bottom: 20px;
         }
 
-
         .volver {
             color: rgba(255,255,255,.75);
-
             text-decoration: none;
-
             font-size: 13px;
         }
 
@@ -115,24 +93,15 @@
             color: var(--dorado-claro);
         }
 
-
         .boton-nueva {
             border: 1px solid var(--dorado);
-
             background: var(--dorado);
-
             color: white;
-
             padding: 10px 16px;
-
             border-radius: 7px;
-
             cursor: pointer;
-
             font-family: inherit;
-
             font-size: 13px;
-
             font-weight: 600;
         }
 
@@ -140,433 +109,281 @@
             background: #9a713b;
         }
 
-
         .resumen {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 13px;
-
             margin-bottom: 25px;
         }
 
-
         .resumen-card {
             background: rgba(255,255,255,.97);
-
             color: var(--texto);
-
             border-radius: 11px;
-
             padding: 18px;
-
-            box-shadow:
-                0 8px 25px rgba(0,0,0,.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,.15);
         }
-
 
         .resumen-card span {
             display: block;
-
             color: var(--texto-suave);
-
             font-size: 11px;
-
             text-transform: uppercase;
-
             letter-spacing: 1px;
-
             margin-bottom: 8px;
         }
-
 
         .resumen-card strong {
             font-size: 24px;
         }
 
-
         .filtros {
             display: flex;
-
             flex-wrap: wrap;
-
             gap: 10px;
-
             margin-bottom: 18px;
         }
-
 
         .filtros input,
         .filtros select {
             padding: 11px 12px;
-
             border: 1px solid var(--linea);
-
             border-radius: 7px;
-
             background: white;
-
             color: var(--texto);
-
             font-family: inherit;
-
             font-size: 13px;
-
             outline: none;
         }
 
-
         .filtros input {
             flex: 1;
-
             min-width: 220px;
         }
-
 
         .filtros input:focus,
         .filtros select:focus {
             border-color: var(--dorado);
         }
 
-
         #lista-cotizaciones {
             display: grid;
-
             gap: 15px;
         }
-
 
         .cotizacion {
             background: rgba(255,255,255,.97);
-
             color: var(--texto);
-
             border-radius: 13px;
-
             padding: 20px;
-
-            box-shadow:
-                0 8px 25px rgba(0,0,0,.16);
+            box-shadow: 0 8px 25px rgba(0,0,0,.16);
         }
-
 
         .cotizacion-superior {
             display: flex;
-
             justify-content: space-between;
-
             align-items: flex-start;
-
             gap: 15px;
         }
 
-
         .cotizacion h2 {
             font-size: 18px;
-
             font-weight: 600;
         }
-
 
         .fecha {
             margin-top: 5px;
-
             color: var(--texto-suave);
-
             font-size: 12px;
         }
 
-
         .estado {
             padding: 6px 10px;
-
             border-radius: 20px;
-
             font-size: 11px;
-
             font-weight: 600;
-
             white-space: nowrap;
         }
 
-
         .pendiente {
             background: #f4ece3;
-
             color: #76553a;
         }
 
-
         .contactado {
             background: #eee8dc;
-
             color: #725d36;
         }
 
-
         .cotizado {
             background: #e9eee8;
-
             color: #4f664b;
         }
 
-
         .aceptada {
             background: #e5efe5;
-
             color: #456142;
         }
 
-
         .en-proceso {
             background: #e8ecef;
-
             color: #4d606d;
         }
 
-
         .entregada {
             background: #e5e5e5;
-
             color: #555;
         }
-
 
         .cancelada {
             background: #f1e5e2;
-
             color: #8b5f4b;
         }
 
-
         .cerrado {
             background: #e7e7e7;
-
             color: #555;
         }
 
-
         .datos {
             display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-
             margin-top: 18px;
-
             padding-top: 17px;
-
             border-top: 1px solid var(--linea);
         }
 
-
         .dato span {
             display: block;
-
             color: var(--texto-suave);
-
             font-size: 11px;
-
             margin-bottom: 4px;
-
             text-transform: uppercase;
-
             letter-spacing: .7px;
         }
 
-
         .dato strong {
             font-size: 14px;
-
             font-weight: 600;
         }
 
-
         .dato.total strong {
             color: var(--verde);
-
             font-size: 16px;
         }
 
-
         .mensaje {
             margin-top: 15px;
-
             padding: 13px;
-
             background: #faf8f4;
-
             border-radius: 8px;
-
             color: #5f5a54;
-
             font-size: 13px;
-
             line-height: 1.5;
         }
 
-
         .acciones {
             display: flex;
-
             flex-wrap: wrap;
-
             gap: 8px;
-
             margin-top: 17px;
         }
-
 
         .acciones button,
         .acciones a {
             padding: 9px 12px;
-
             border-radius: 6px;
-
             border: 1px solid var(--linea);
-
             background: white;
-
             color: var(--texto);
-
             text-decoration: none;
-
             font-family: inherit;
-
             font-size: 12px;
-
             cursor: pointer;
         }
-
 
         .acciones button:hover,
         .acciones a:hover {
             border-color: var(--dorado);
         }
 
-
         .eliminar {
             color: var(--rojo) !important;
         }
 
-
         .vacio {
             background: rgba(255,255,255,.97);
-
             color: var(--texto);
-
             border-radius: 13px;
-
             padding: 40px 25px;
-
             text-align: center;
         }
 
-
         .vacio h2 {
             font-size: 20px;
-
             margin-bottom: 8px;
         }
 
-
         .vacio p {
             color: var(--texto-suave);
-
             font-size: 14px;
         }
 
-
         #modal {
             display: none;
-
             position: fixed;
-
             inset: 0;
-
             background: rgba(0,0,0,.72);
-
             z-index: 9999;
-
             align-items: center;
-
             justify-content: center;
-
             padding: 20px;
         }
-
 
         #modal.visible {
             display: flex;
         }
 
-
         .modal-contenido {
             width: min(560px, 100%);
-
             max-height: 90vh;
-
             overflow-y: auto;
-
             background: white;
-
             color: var(--texto);
-
             border-radius: 14px;
-
             padding: 25px;
         }
 
-
         .modal-contenido h2 {
             margin-bottom: 18px;
-
             font-size: 21px;
         }
-
 
         .campo {
             margin-bottom: 13px;
         }
 
-
         .campo label {
             display: block;
-
             margin-bottom: 6px;
-
             font-size: 12px;
-
             font-weight: 600;
         }
-
 
         .campo input,
         .campo textarea,
         .campo select {
             width: 100%;
-
             padding: 11px;
-
             border: 1px solid var(--linea);
-
             border-radius: 7px;
-
             font-family: inherit;
-
             font-size: 13px;
-
             outline: none;
-
             background: white;
-
             color: var(--texto);
         }
-
 
         .campo input:focus,
         .campo textarea:focus,
@@ -574,123 +391,83 @@
             border-color: var(--dorado);
         }
 
-
         .campo textarea {
             min-height: 90px;
-
             resize: vertical;
         }
 
-
         .fila {
             display: grid;
-
             grid-template-columns: 1fr 1fr;
-
             gap: 12px;
         }
 
-
         .precio-info {
             margin-top: 6px;
-
             color: var(--texto-suave);
-
             font-size: 11px;
         }
-
 
         .total-modal {
             margin-top: 8px;
-
             padding: 13px;
-
             border-radius: 8px;
-
             background: #f4f1eb;
-
             text-align: right;
         }
 
-
         .total-modal span {
             display: block;
-
             color: var(--texto-suave);
-
             font-size: 11px;
-
             text-transform: uppercase;
-
             letter-spacing: .7px;
         }
 
-
         .total-modal strong {
             display: block;
-
             margin-top: 4px;
-
             color: var(--verde);
-
             font-size: 22px;
         }
 
-
         .modal-botones {
             display: flex;
-
             gap: 8px;
-
             margin-top: 18px;
         }
 
-
         .modal-botones button {
             flex: 1;
-
             padding: 11px;
-
             border-radius: 7px;
-
             cursor: pointer;
-
             font-family: inherit;
         }
 
-
         .guardar {
             background: var(--negro);
-
             color: white;
-
             border: 1px solid var(--negro);
         }
 
-
         .cancelar {
             background: white;
-
             color: var(--texto);
-
             border: 1px solid var(--linea);
         }
-
 
         @media (max-width: 800px) {
 
             .resumen {
-                grid-template-columns:
-                    1fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .datos {
-                grid-template-columns:
-                    1fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
         }
-
 
         @media (max-width: 550px) {
 
@@ -700,7 +477,6 @@
 
             .barra {
                 align-items: stretch;
-
                 flex-direction: column;
             }
 
@@ -726,9 +502,7 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -738,9 +512,7 @@
 
 </header>
 
-
 <main class="contenedor">
-
 
     <div class="barra">
 
@@ -757,54 +529,29 @@
 
     </div>
 
-
     <section class="resumen">
 
         <div class="resumen-card">
-
             <span>Total</span>
-
-            <strong id="total">
-                0
-            </strong>
-
+            <strong id="total">0</strong>
         </div>
 
-
         <div class="resumen-card">
-
             <span>Pendientes</span>
-
-            <strong id="pendientes">
-                0
-            </strong>
-
+            <strong id="pendientes">0</strong>
         </div>
 
-
         <div class="resumen-card">
-
             <span>Cotizadas</span>
-
-            <strong id="cotizadas">
-                0
-            </strong>
-
+            <strong id="cotizadas">0</strong>
         </div>
 
-
         <div class="resumen-card">
-
             <span>Cerradas</span>
-
-            <strong id="cerradas">
-                0
-            </strong>
-
+            <strong id="cerradas">0</strong>
         </div>
 
     </section>
-
 
     <div class="filtros">
 
@@ -814,7 +561,6 @@
             placeholder="Buscar cliente, teléfono o producto..."
             oninput="mostrarCotizaciones()"
         >
-
 
         <select
             id="filtro-estado"
@@ -857,12 +603,9 @@
 
     </div>
 
-
     <section id="lista-cotizaciones"></section>
 
-
 </main>
-
 
 <div id="modal">
 
@@ -872,12 +615,9 @@
             Nueva cotización
         </h2>
 
-
         <div class="campo">
 
-            <label>
-                Cliente
-            </label>
+            <label>Cliente</label>
 
             <input
                 id="nuevo-cliente"
@@ -886,12 +626,9 @@
 
         </div>
 
-
         <div class="campo">
 
-            <label>
-                Teléfono
-            </label>
+            <label>Teléfono</label>
 
             <input
                 id="nuevo-telefono"
@@ -900,12 +637,9 @@
 
         </div>
 
-
         <div class="campo">
 
-            <label>
-                Producto
-            </label>
+            <label>Producto</label>
 
             <select id="nuevo-producto" onchange="actualizarPrecio()">
 
@@ -953,14 +687,11 @@
 
         </div>
 
-
         <div class="fila">
 
             <div class="campo">
 
-                <label>
-                    Precio del producto
-                </label>
+                <label>Precio del producto</label>
 
                 <input
                     id="nuevo-precio"
@@ -977,12 +708,9 @@
 
             </div>
 
-
             <div class="campo">
 
-                <label>
-                    Descuento
-                </label>
+                <label>Descuento</label>
 
                 <input
                     id="nuevo-descuento"
@@ -998,12 +726,9 @@
 
         </div>
 
-
         <div class="total-modal">
 
-            <span>
-                Total de cotización
-            </span>
+            <span>Total de cotización</span>
 
             <strong id="nuevo-total">
                 $0
@@ -1011,14 +736,11 @@
 
         </div>
 
-
         <div class="fila">
 
             <div class="campo">
 
-                <label>
-                    Fecha de cotización
-                </label>
+                <label>Fecha de cotización</label>
 
                 <input
                     id="nueva-fecha"
@@ -1027,12 +749,9 @@
 
             </div>
 
-
             <div class="campo">
 
-                <label>
-                    Fecha de entrega
-                </label>
+                <label>Fecha de entrega</label>
 
                 <input
                     id="nueva-fecha-entrega"
@@ -1043,12 +762,9 @@
 
         </div>
 
-
         <div class="campo">
 
-            <label>
-                Estado
-            </label>
+            <label>Estado</label>
 
             <select id="nuevo-estado">
 
@@ -1084,12 +800,9 @@
 
         </div>
 
-
         <div class="campo">
 
-            <label>
-                Notas
-            </label>
+            <label>Notas</label>
 
             <textarea
                 id="nuevas-notas"
@@ -1097,7 +810,6 @@
             ></textarea>
 
         </div>
-
 
         <div class="modal-botones">
 
@@ -1121,14 +833,26 @@
 
 </div>
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-let cotizaciones =
-    JSON.parse(
-        localStorage.getItem("cotizaciones")
-    ) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseCliente =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let cotizaciones = [];
 
 let indiceEditando = null;
 
@@ -1156,15 +880,9 @@ const preciosProductos = {
 };
 
 
-function guardarDatos() {
-
-    localStorage.setItem(
-        "cotizaciones",
-        JSON.stringify(cotizaciones)
-    );
-
-}
-
+/* =========================
+   FUNCIONES GENERALES
+========================= */
 
 function formatearFecha(fecha) {
 
@@ -1173,7 +891,7 @@ function formatearFecha(fecha) {
     }
 
     const partes =
-        fecha.split("-");
+        String(fecha).split("-");
 
     if (partes.length !== 3) {
         return fecha;
@@ -1218,100 +936,6 @@ function claseEstado(estado) {
 }
 
 
-function actualizarDatosAntiguos() {
-
-    cotizaciones =
-        cotizaciones.map(function(c) {
-
-            if (!c.fechaCotizacion) {
-
-                c.fechaCotizacion =
-                    convertirFechaAntigua(c.fecha);
-
-            }
-
-            if (!c.fechaEntrega) {
-                c.fechaEntrega = "";
-            }
-
-            if (c.descuento === undefined) {
-                c.descuento = 0;
-            }
-
-            if (c.total === undefined) {
-
-                c.total =
-                    Math.max(
-                        0,
-                        (Number(c.precio) || 0) -
-                        (Number(c.descuento) || 0)
-                    );
-
-            }
-
-            if (c.estado === "Cerrado") {
-                c.estado = "Entregada";
-            }
-
-            return c;
-
-        });
-
-}
-
-
-function convertirFechaAntigua(fecha) {
-
-    if (!fecha) {
-        return obtenerFechaHoy();
-    }
-
-    const texto =
-        String(fecha);
-
-    const partes =
-        texto.split(",");
-
-    if (partes.length > 0) {
-
-        const fechaParte =
-            partes[0].trim();
-
-        const separada =
-            fechaParte.split("/");
-
-        if (separada.length === 3) {
-
-            let dia =
-                separada[0].padStart(2, "0");
-
-            let mes =
-                separada[1].padStart(2, "0");
-
-            let anio =
-                separada[2];
-
-            if (anio.length === 2) {
-                anio = "20" + anio;
-            }
-
-            return (
-                anio +
-                "-" +
-                mes +
-                "-" +
-                dia
-            );
-
-        }
-
-    }
-
-    return obtenerFechaHoy();
-
-}
-
-
 function obtenerFechaHoy() {
 
     const hoy =
@@ -1341,6 +965,265 @@ function obtenerFechaHoy() {
 }
 
 
+function limpiarTelefono(telefono) {
+
+    return String(telefono)
+        .replace(/\D/g, "");
+
+}
+
+
+/* =========================
+   MIGRACIÓN DE COTIZACIONES
+========================= */
+
+async function migrarCotizacionesAntiguas() {
+
+    const yaMigro =
+        localStorage.getItem(
+            "cotizacionesMigradasSupabase"
+        );
+
+    if (yaMigro === "true") {
+        return;
+    }
+
+
+    const cotizacionesAntiguas =
+        JSON.parse(
+            localStorage.getItem("cotizaciones")
+        ) || [];
+
+
+    if (cotizacionesAntiguas.length === 0) {
+
+        localStorage.setItem(
+            "cotizacionesMigradasSupabase",
+            "true"
+        );
+
+        return;
+    }
+
+
+    const datosParaSubir =
+        cotizacionesAntiguas.map(function(c) {
+
+            let fechaCotizacion =
+                c.fechaCotizacion;
+
+            if (!fechaCotizacion) {
+
+                fechaCotizacion =
+                    convertirFechaAntigua(c.fecha);
+
+            }
+
+
+            let estado =
+                c.estado || "Pendiente";
+
+
+            if (estado === "Cerrado") {
+                estado = "Entregada";
+            }
+
+
+            const precio =
+                Number(c.precio) || 0;
+
+            const descuento =
+                Number(c.descuento) || 0;
+
+            const total =
+                c.total !== undefined
+                ? Number(c.total) || 0
+                : Math.max(
+                    0,
+                    precio - descuento
+                );
+
+
+            return {
+
+                cliente:
+                    c.cliente || "",
+
+                telefono:
+                    c.telefono || "",
+
+                producto:
+                    c.producto || "",
+
+                precio:
+                    precio,
+
+                descuento:
+                    descuento,
+
+                total:
+                    total,
+
+                fechaCotizacion:
+                    fechaCotizacion ||
+                    obtenerFechaHoy(),
+
+                fechaEntrega:
+                    c.fechaEntrega || null,
+
+                estado:
+                    estado,
+
+                notas:
+                    c.notas || "",
+
+                fecha:
+                    fechaCotizacion ||
+                    obtenerFechaHoy()
+
+            };
+
+        });
+
+
+    const { error } =
+        await supabaseCliente
+            .from("cotizaciones")
+            .insert(datosParaSubir);
+
+
+    if (error) {
+
+        console.error(
+            "Error migrando cotizaciones:",
+            error
+        );
+
+        alert(
+            "No se pudieron sincronizar las cotizaciones anteriores."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "cotizacionesMigradasSupabase",
+        "true"
+    );
+
+
+    console.log(
+        "Cotizaciones antiguas migradas correctamente."
+    );
+
+}
+
+
+/* =========================
+   FECHAS ANTIGUAS
+========================= */
+
+function convertirFechaAntigua(fecha) {
+
+    if (!fecha) {
+        return obtenerFechaHoy();
+    }
+
+    const texto =
+        String(fecha);
+
+    const partes =
+        texto.split(",");
+
+
+    if (partes.length > 0) {
+
+        const fechaParte =
+            partes[0].trim();
+
+        const separada =
+            fechaParte.split("/");
+
+
+        if (separada.length === 3) {
+
+            let dia =
+                separada[0].padStart(2, "0");
+
+            let mes =
+                separada[1].padStart(2, "0");
+
+            let anio =
+                separada[2];
+
+
+            if (anio.length === 2) {
+                anio = "20" + anio;
+            }
+
+
+            return (
+                anio +
+                "-" +
+                mes +
+                "-" +
+                dia
+            );
+
+        }
+
+    }
+
+
+    return obtenerFechaHoy();
+
+}
+
+
+/* =========================
+   CARGAR COTIZACIONES
+========================= */
+
+async function cargarCotizaciones() {
+
+    const { data, error } =
+        await supabaseCliente
+            .from("cotizaciones")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando cotizaciones:",
+            error
+        );
+
+        alert(
+            "No se pudieron cargar las cotizaciones."
+        );
+
+        return;
+    }
+
+
+    cotizaciones =
+        data || [];
+
+
+    mostrarCotizaciones();
+
+}
+
+
+/* =========================
+   MOSTRAR COTIZACIONES
+========================= */
+
 function mostrarCotizaciones() {
 
     const lista =
@@ -1348,10 +1231,12 @@ function mostrarCotizaciones() {
             "lista-cotizaciones"
         );
 
+
     const busqueda =
         document.getElementById(
             "busqueda"
         ).value.toLowerCase();
+
 
     const filtro =
         document.getElementById(
@@ -1384,8 +1269,10 @@ function mostrarCotizaciones() {
                 cotizacion.estado === filtro;
 
 
-            return coincideTexto &&
-                   coincideEstado;
+            return (
+                coincideTexto &&
+                coincideEstado
+            );
 
         });
 
@@ -1588,6 +1475,10 @@ function mostrarCotizaciones() {
 }
 
 
+/* =========================
+   RESUMEN
+========================= */
+
 function actualizarResumen() {
 
     document.getElementById("total")
@@ -1630,13 +1521,9 @@ function actualizarResumen() {
 }
 
 
-function limpiarTelefono(telefono) {
-
-    return String(telefono)
-        .replace(/\D/g, "");
-
-}
-
+/* =========================
+   PRODUCTOS Y PRECIOS
+========================= */
 
 function actualizarPrecio() {
 
@@ -1694,6 +1581,10 @@ function calcularTotal() {
 }
 
 
+/* =========================
+   MODAL
+========================= */
+
 function abrirNuevaCotizacion() {
 
     indiceEditando = null;
@@ -1724,7 +1615,65 @@ function cerrarModal() {
 }
 
 
-function guardarNuevaCotizacion() {
+function limpiarFormulario() {
+
+    document.getElementById(
+        "nuevo-cliente"
+    ).value = "";
+
+
+    document.getElementById(
+        "nuevo-telefono"
+    ).value = "";
+
+
+    document.getElementById(
+        "nuevo-producto"
+    ).value = "";
+
+
+    document.getElementById(
+        "nuevo-precio"
+    ).value = "";
+
+
+    document.getElementById(
+        "nuevo-descuento"
+    ).value = "0";
+
+
+    document.getElementById(
+        "nueva-fecha"
+    ).value =
+        obtenerFechaHoy();
+
+
+    document.getElementById(
+        "nueva-fecha-entrega"
+    ).value = "";
+
+
+    document.getElementById(
+        "nuevo-estado"
+    ).value =
+        "Pendiente";
+
+
+    document.getElementById(
+        "nuevas-notas"
+    ).value = "";
+
+
+    calcularTotal();
+
+}
+
+
+/* =========================
+   GUARDAR / EDITAR
+========================= */
+
+async function guardarNuevaCotizacion() {
 
     const cliente =
         document.getElementById(
@@ -1837,28 +1786,36 @@ function guardarNuevaCotizacion() {
 
     const datos = {
 
-        cliente: cliente,
+        cliente:
+            cliente,
 
-        telefono: telefono,
+        telefono:
+            telefono,
 
-        producto: producto,
+        producto:
+            producto,
 
-        precio: precio,
+        precio:
+            precio,
 
-        descuento: descuento,
+        descuento:
+            descuento,
 
-        total: total,
+        total:
+            total,
 
         fechaCotizacion:
             fechaCotizacion ||
             obtenerFechaHoy(),
 
         fechaEntrega:
-            fechaEntrega,
+            fechaEntrega || null,
 
-        estado: estado,
+        estado:
+            estado,
 
-        notas: notas,
+        notas:
+            notas,
 
         fecha:
             fechaCotizacion ||
@@ -1867,80 +1824,89 @@ function guardarNuevaCotizacion() {
     };
 
 
+    /* NUEVA COTIZACIÓN */
+
     if (indiceEditando === null) {
 
-        cotizaciones.push(datos);
+        const { error } =
+            await supabaseCliente
+                .from("cotizaciones")
+                .insert(datos);
 
-    } else {
 
-        cotizaciones[indiceEditando] =
-            datos;
+        if (error) {
+
+            console.error(
+                "Error guardando cotización:",
+                error
+            );
+
+            alert(
+                "No se pudo guardar la cotización."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "☁️ Cotización guardada y sincronizada."
+        );
 
     }
 
 
-    guardarDatos();
+    /* EDITAR COTIZACIÓN */
+
+    else {
+
+        const cotizacion =
+            cotizaciones[indiceEditando];
+
+
+        const { error } =
+            await supabaseCliente
+                .from("cotizaciones")
+                .update(datos)
+                .eq("id", cotizacion.id);
+
+
+        if (error) {
+
+            console.error(
+                "Error actualizando cotización:",
+                error
+            );
+
+            alert(
+                "No se pudo actualizar la cotización."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "☁️ Cotización actualizada y sincronizada."
+        );
+
+    }
+
+
+    indiceEditando = null;
+
 
     cerrarModal();
 
-    mostrarCotizaciones();
+
+    await cargarCotizaciones();
 
 }
 
 
-function limpiarFormulario() {
-
-    document.getElementById(
-        "nuevo-cliente"
-    ).value = "";
-
-
-    document.getElementById(
-        "nuevo-telefono"
-    ).value = "";
-
-
-    document.getElementById(
-        "nuevo-producto"
-    ).value = "";
-
-
-    document.getElementById(
-        "nuevo-precio"
-    ).value = "";
-
-
-    document.getElementById(
-        "nuevo-descuento"
-    ).value = "0";
-
-
-    document.getElementById(
-        "nueva-fecha"
-    ).value =
-        obtenerFechaHoy();
-
-
-    document.getElementById(
-        "nueva-fecha-entrega"
-    ).value = "";
-
-
-    document.getElementById(
-        "nuevo-estado"
-    ).value =
-        "Pendiente";
-
-
-    document.getElementById(
-        "nuevas-notas"
-    ).value = "";
-
-
-    calcularTotal();
-
-}
-
+/* =========================
+   EDITAR
+========================= */
 
 function editarCotizacion(indice) {
 
@@ -2004,7 +1970,8 @@ function editarCotizacion(indice) {
     document.getElementById(
         "nuevo-estado"
     ).value =
-        cotizacion.estado || "Pendiente";
+        cotizacion.estado ||
+        "Pendiente";
 
 
     document.getElementById(
@@ -2023,7 +1990,11 @@ function editarCotizacion(indice) {
 }
 
 
-function eliminarCotizacion(indice) {
+/* =========================
+   ELIMINAR
+========================= */
+
+async function eliminarCotizacion(indice) {
 
     const confirmar =
         confirm(
@@ -2036,18 +2007,40 @@ function eliminarCotizacion(indice) {
     }
 
 
-    cotizaciones.splice(
-        indice,
-        1
-    );
+    const cotizacion =
+        cotizaciones[indice];
 
 
-    guardarDatos();
+    const { error } =
+        await supabaseCliente
+            .from("cotizaciones")
+            .delete()
+            .eq("id", cotizacion.id);
 
-    mostrarCotizaciones();
+
+    if (error) {
+
+        console.error(
+            "Error eliminando cotización:",
+            error
+        );
+
+        alert(
+            "No se pudo eliminar la cotización."
+        );
+
+        return;
+    }
+
+
+    await cargarCotizaciones();
 
 }
 
+
+/* =========================
+   CERRAR MODAL AL HACER CLICK FUERA
+========================= */
 
 window.onclick = function(event) {
 
@@ -2066,14 +2059,22 @@ window.onclick = function(event) {
 };
 
 
-actualizarDatosAntiguos();
+/* =========================
+   INICIO
+========================= */
 
-guardarDatos();
+async function iniciarCotizaciones() {
 
-mostrarCotizaciones();
+    await migrarCotizacionesAntiguas();
+
+    await cargarCotizaciones();
+
+}
+
+
+iniciarCotizaciones();
 
 </script>
-
 
 </body>
 
