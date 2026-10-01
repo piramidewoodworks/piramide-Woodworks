@@ -1,861 +1,1065 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
+<!DOCTYPE html><html lang="es"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Panel | Pirámide Woodworks</title>
 
-    <title>Panel | Pirámide Woodworks</title>
+<style>
 
-    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+    :root {
+        --negro: #171717;
+        --negro-suave: #222222;
+        --blanco: #ffffff;
+        --crema: #f7f5f1;
+        --texto: #26221e;
+        --texto-suave: #716b64;
+        --dorado: #b28a52;
+        --dorado-claro: #d1b27d;
+        --linea: #e7e2db;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        color: white;
+
+        background:
+            linear-gradient(
+                rgba(20, 14, 10, 0.82),
+                rgba(20, 14, 10, 0.92)
+            ),
+            repeating-linear-gradient(
+                92deg,
+                #3a281d 0px,
+                #493225 55px,
+                #34231a 58px,
+                #52382a 115px,
+                #39271c 118px
+            );
+    }
+
+
+    /* ENCABEZADO */
+
+    header {
+        text-align: center;
+        padding: 38px 20px 25px;
+    }
+
+    header h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    header p {
+        margin-top: 8px;
+        color: var(--dorado-claro);
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+
+    /* CONTENEDOR */
+
+    .panel {
+        width: min(1100px, calc(100% - 30px));
+        margin: auto;
+        padding-bottom: 60px;
+    }
+
+
+    /* BIENVENIDA */
+
+    .bienvenida {
+        background: rgba(255, 255, 255, .97);
+        color: var(--texto);
+
+        border-radius: 14px;
+
+        padding: 28px;
+
+        margin-bottom: 22px;
+
+        box-shadow:
+            0 12px 35px rgba(0, 0, 0, .20);
+    }
+
+    .bienvenida-contenido {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .bienvenida h2 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .bienvenida p {
+        margin-top: 8px;
+        color: var(--texto-suave);
+        font-size: 14px;
+    }
+
+
+    /* BOTÓN FLOTANTE DE NOTIFICACIONES */
+
+    .boton-notificaciones {
+        position: relative;
+
+        width: 52px;
+        height: 52px;
+
+        flex: 0 0 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #f4f0e9;
+
+        color: #8f6a38;
+
+        border: 1px solid #dfd5c6;
+
+        border-radius: 50%;
+
+        text-decoration: none;
+
+        font-size: 23px;
+
+        box-shadow:
+            0 5px 15px rgba(0, 0, 0, .12);
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            background .2s ease;
+    }
+
+    .boton-notificaciones:hover {
+        transform: translateY(-3px);
+
+        background: #eee7dc;
+
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, .18);
+    }
+
+    .contador-notificaciones {
+        position: absolute;
+
+        top: -5px;
+        right: -5px;
+
+        min-width: 21px;
+        height: 21px;
+
+        padding: 0 5px;
+
+        display: none;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #9b3d3d;
+
+        color: white;
+
+        border-radius: 50px;
+
+        font-size: 11px;
+        font-weight: 700;
+
+        border: 2px solid white;
+    }
+
+
+    /* RESUMEN */
+
+    .titulo-seccion {
+        margin: 25px 0 13px;
+
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .resumen {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 14px;
+    }
+
+    .tarjeta {
+        background: rgba(255, 255, 255, .97);
+
+        color: var(--texto);
+
+        border-radius: 12px;
+
+        padding: 21px;
+
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, .15);
+
+        text-decoration: none;
+
+        display: block;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease;
+    }
+
+    .tarjeta:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 11px 28px rgba(0, 0, 0, .20);
+    }
+
+    .tarjeta span {
+        display: block;
+
+        color: var(--texto-suave);
+
+        font-size: 11px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+
+        margin-bottom: 9px;
+    }
+
+    .tarjeta strong {
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    .dorado {
+        color: #9a713b;
+    }
+
+
+    /* MENÚ */
+
+    .menu {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 13px;
+    }
+
+    .menu-boton {
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        min-height: 78px;
+
+        padding: 17px;
+
+        background: rgba(255, 255, 255, .97);
+
+        color: var(--texto);
+
+        border-radius: 11px;
+
+        text-decoration: none;
+
+        transition:
+            transform .2s ease,
+            border-color .2s ease,
+            box-shadow .2s ease;
+
+        border: 1px solid transparent;
+    }
+
+    .menu-boton:hover {
+        transform: translateY(-3px);
+
+        border-color: var(--dorado);
+
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, .20);
+    }
+
+    .icono {
+        width: 42px;
+        height: 42px;
+
+        flex: 0 0 42px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f4f0e9;
+
+        color: var(--dorado);
+
+        font-size: 20px;
+
+        position: relative;
+    }
+
+    .menu-boton strong {
+        display: block;
+
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .menu-boton small {
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--texto-suave);
+
+        font-size: 12px;
+    }
+
+
+    /* CERRAR SESIÓN */
+
+    .cerrar {
+        display: block;
+
+        width: fit-content;
+
+        margin: 30px auto 0;
+
+        padding: 10px 18px;
+
+        border: 1px solid rgba(209, 178, 125, .55);
+
+        border-radius: 7px;
+
+        color: var(--dorado-claro);
+
+        text-decoration: none;
+
+        font-size: 13px;
+
+        transition: .2s ease;
+    }
+
+    .cerrar:hover {
+        background: rgba(23, 23, 23, .65);
+
+        border-color: var(--dorado);
+
+        color: white;
+    }
+
+
+    /* PIE */
+
+    footer {
+        text-align: center;
+
+        padding: 10px 20px 25px;
+
+        color: rgba(255, 255, 255, .50);
+
+        font-size: 12px;
+    }
+
+
+    /* CELULAR */
+
+    @media (max-width: 800px) {
+
+        .resumen {
+            grid-template-columns:
+                1fr 1fr;
         }
 
-        :root {
-            --negro: #171717;
-            --negro-suave: #222222;
-            --blanco: #ffffff;
-            --crema: #f7f5f1;
-            --texto: #26221e;
-            --texto-suave: #716b64;
-            --dorado: #b28a52;
-            --dorado-claro: #d1b27d;
-            --linea: #e7e2db;
+        .menu {
+            grid-template-columns:
+                1fr 1fr;
         }
-
-        body {
-            min-height: 100vh;
-
-            font-family:
-                "Segoe UI",
-                Arial,
-                sans-serif;
-
-            color: white;
-
-            background:
-                linear-gradient(
-                    rgba(20, 14, 10, 0.82),
-                    rgba(20, 14, 10, 0.92)
-                ),
-                repeating-linear-gradient(
-                    92deg,
-                    #3a281d 0px,
-                    #493225 55px,
-                    #34231a 58px,
-                    #52382a 115px,
-                    #39271c 118px
-                );
-        }
+    }
 
 
-        /* ENCABEZADO */
-
-        header {
-            text-align: center;
-            padding: 38px 20px 25px;
-        }
-
-        header h1 {
-            font-size: clamp(28px, 5vw, 42px);
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-        header p {
-            margin-top: 8px;
-            color: var(--dorado-claro);
-            font-size: 13px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-
-        /* CONTENEDOR */
+    @media (max-width: 500px) {
 
         .panel {
-            width: min(1100px, calc(100% - 30px));
-            margin: auto;
-            padding-bottom: 60px;
+            width: calc(100% - 20px);
         }
 
-
-        /* BIENVENIDA */
+        header {
+            padding-top: 30px;
+        }
 
         .bienvenida {
-            background: rgba(255, 255, 255, .97);
-            color: var(--texto);
-
-            border-radius: 14px;
-
-            padding: 28px;
-
-            margin-bottom: 22px;
-
-            box-shadow:
-                0 12px 35px rgba(0, 0, 0, .20);
-        }
-
-        .bienvenida-contenido {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+            padding: 22px;
         }
 
         .bienvenida h2 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 21px;
         }
 
         .bienvenida p {
-            margin-top: 8px;
-            color: var(--texto-suave);
-            font-size: 14px;
+            font-size: 13px;
         }
-
-
-        /* BOTÓN FLOTANTE DE NOTIFICACIONES */
 
         .boton-notificaciones {
-            position: relative;
-
-            width: 52px;
-            height: 52px;
-
-            flex: 0 0 52px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: #f4f0e9;
-
-            color: #8f6a38;
-
-            border: 1px solid #dfd5c6;
-
-            border-radius: 50%;
-
-            text-decoration: none;
-
-            font-size: 23px;
-
-            box-shadow:
-                0 5px 15px rgba(0, 0, 0, .12);
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease,
-                background .2s ease;
-        }
-
-        .boton-notificaciones:hover {
-            transform: translateY(-3px);
-
-            background: #eee7dc;
-
-            box-shadow:
-                0 8px 20px rgba(0, 0, 0, .18);
-        }
-
-        .contador-notificaciones {
-            position: absolute;
-
-            top: -5px;
-            right: -5px;
-
-            min-width: 21px;
-            height: 21px;
-
-            padding: 0 5px;
-
-            display: none;
-
-            align-items: center;
-            justify-content: center;
-
-            background: #9b3d3d;
-
-            color: white;
-
-            border-radius: 50px;
-
-            font-size: 11px;
-            font-weight: 700;
-
-            border: 2px solid white;
-        }
-
-
-        /* RESUMEN */
-
-        .titulo-seccion {
-            margin: 25px 0 13px;
-
-            font-size: 18px;
-            font-weight: 500;
+            width: 48px;
+            height: 48px;
+            flex-basis: 48px;
+            font-size: 21px;
         }
 
         .resumen {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 14px;
+            gap: 9px;
         }
 
         .tarjeta {
-            background: rgba(255, 255, 255, .97);
-
-            color: var(--texto);
-
-            border-radius: 12px;
-
-            padding: 21px;
-
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, .15);
-        }
-
-        .tarjeta span {
-            display: block;
-
-            color: var(--texto-suave);
-
-            font-size: 11px;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1px;
-
-            margin-bottom: 9px;
+            padding: 17px;
         }
 
         .tarjeta strong {
-            font-size: 25px;
-            font-weight: 600;
+            font-size: 21px;
         }
-
-        .dorado {
-            color: #9a713b;
-        }
-
-
-        /* MENÚ */
 
         .menu {
-            display: grid;
-
             grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 13px;
+                1fr;
         }
+    }
 
-        .menu-boton {
-            display: flex;
+</style>
 
-            align-items: center;
+</head><body><header><h1>Pirámide Woodworks</h1>
 
-            gap: 14px;
+<p>Administración</p>
 
-            min-height: 78px;
+</header><main class="panel"><!-- BIENVENIDA -->
 
-            padding: 17px;
+<section class="bienvenida">
 
-            background: rgba(255, 255, 255, .97);
+    <div class="bienvenida-contenido">
 
-            color: var(--texto);
+        <div>
 
-            border-radius: 11px;
+            <h2 id="saludo">
+                Bienvenida
+            </h2>
 
-            text-decoration: none;
+            <p>
+                Aquí puedes administrar y llevar el control
+                de Pirámide Woodworks.
+            </p>
 
-            transition:
-                transform .2s ease,
-                border-color .2s ease,
-                box-shadow .2s ease;
+        </div>
 
-            border: 1px solid transparent;
-        }
 
-        .menu-boton:hover {
-            transform: translateY(-3px);
+        <a
+            href="notificaciones-admin.html"
+            class="boton-notificaciones"
+            aria-label="Ver notificaciones"
+        >
 
-            border-color: var(--dorado);
+            🔔
 
-            box-shadow:
-                0 10px 25px rgba(0, 0, 0, .20);
-        }
-
-        .icono {
-            width: 42px;
-            height: 42px;
-
-            flex: 0 0 42px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 9px;
-
-            background: #f4f0e9;
-
-            color: var(--dorado);
-
-            font-size: 20px;
-
-            position: relative;
-        }
-
-        .menu-boton strong {
-            display: block;
-
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .menu-boton small {
-            display: block;
-
-            margin-top: 3px;
-
-            color: var(--texto-suave);
-
-            font-size: 12px;
-        }
-
-
-        /* CERRAR SESIÓN */
-
-        .cerrar {
-            display: block;
-
-            width: fit-content;
-
-            margin: 30px auto 0;
-
-            padding: 10px 18px;
-
-            border: 1px solid rgba(209, 178, 125, .55);
-
-            border-radius: 7px;
-
-            color: var(--dorado-claro);
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            transition: .2s ease;
-        }
-
-        .cerrar:hover {
-            background: rgba(23, 23, 23, .65);
-
-            border-color: var(--dorado);
-
-            color: white;
-        }
-
-
-        /* PIE */
-
-        footer {
-            text-align: center;
-
-            padding: 10px 20px 25px;
-
-            color: rgba(255, 255, 255, .50);
-
-            font-size: 12px;
-        }
-
-
-        /* CELULAR */
-
-        @media (max-width: 800px) {
-
-            .resumen {
-                grid-template-columns:
-                    1fr 1fr;
-            }
-
-            .menu {
-                grid-template-columns:
-                    1fr 1fr;
-            }
-        }
-
-
-        @media (max-width: 500px) {
-
-            .panel {
-                width: calc(100% - 20px);
-            }
-
-            header {
-                padding-top: 30px;
-            }
-
-            .bienvenida {
-                padding: 22px;
-            }
-
-            .bienvenida h2 {
-                font-size: 21px;
-            }
-
-            .bienvenida p {
-                font-size: 13px;
-            }
-
-            .boton-notificaciones {
-                width: 48px;
-                height: 48px;
-                flex-basis: 48px;
-                font-size: 21px;
-            }
-
-            .resumen {
-                gap: 9px;
-            }
-
-            .tarjeta {
-                padding: 17px;
-            }
-
-            .tarjeta strong {
-                font-size: 21px;
-            }
-
-            .menu {
-                grid-template-columns:
-                    1fr;
-            }
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-<header>
-
-    <h1>Pirámide Woodworks</h1>
-
-    <p>Administración</p>
-
-</header>
-
-
-<main class="panel">
-
-
-    <!-- BIENVENIDA -->
-
-    <section class="bienvenida">
-
-        <div class="bienvenida-contenido">
-
-            <div>
-
-                <h2 id="saludo">
-                    Bienvenida
-                </h2>
-
-                <p>
-                    Aquí puedes administrar y llevar el control
-                    de Pirámide Woodworks.
-                </p>
-
-            </div>
-
-
-            <a
-                href="notificaciones-admin.html"
-                class="boton-notificaciones"
-                aria-label="Ver notificaciones"
+            <span
+                id="contadorNotificaciones"
+                class="contador-notificaciones"
             >
-
-                🔔
-
-                <span
-                    id="contadorNotificaciones"
-                    class="contador-notificaciones"
-                >
-                    0
-                </span>
-
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- RESUMEN -->
-
-    <h3 class="titulo-seccion">
-        Resumen del negocio
-    </h3>
-
-
-    <section class="resumen">
-
-
-        <div class="tarjeta">
-
-            <span>
-                Ventas del mes
-            </span>
-
-            <strong class="dorado">
-                $0
-            </strong>
-
-        </div>
-
-
-        <div class="tarjeta">
-
-            <span>
-                Cotizaciones
-            </span>
-
-            <strong>
                 0
-            </strong>
-
-        </div>
-
-
-        <div class="tarjeta">
-
-            <span>
-                Pedidos activos
             </span>
 
-            <strong>
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="tarjeta">
-
-            <span>
-                Gastos del mes
-            </span>
-
-            <strong class="dorado">
-                $0
-            </strong>
-
-        </div>
-
-
-    </section>
-
-
-    <!-- ADMINISTRACIÓN -->
-
-    <h3 class="titulo-seccion">
-        Administración
-    </h3>
-
-
-    <section class="menu">
-
-
-        <a href="productos.html" class="menu-boton">
-
-            <div class="icono">
-                📦
-            </div>
-
-            <div>
-
-                <strong>
-                    Productos
-                </strong>
-
-                <small>
-                    Catálogo, fotos y precios
-                </small>
-
-            </div>
-
         </a>
 
+    </div>
 
-        <a href="cotizaciones-admin.html" class="menu-boton">
+</section>
 
-            <div class="icono">
-                📝
-            </div>
 
-            <div>
+<!-- RESUMEN -->
 
-                <strong>
-                    Cotizaciones
-                </strong>
+<h3 class="titulo-seccion">
+    Resumen del negocio
+</h3>
 
-                <small>
-                    Solicitudes de clientes
-                </small>
 
-            </div>
+<section class="resumen">
 
-        </a>
 
+    <div class="tarjeta">
 
-        <a href="pedidos-admin.html" class="menu-boton">
+        <span>
+            Ventas del mes
+        </span>
 
-            <div class="icono">
-                🛒
-            </div>
+        <strong
+            id="resumenVentas"
+            class="dorado"
+        >
+            $0
+        </strong>
 
-            <div>
+    </div>
 
-                <strong>
-                    Pedidos
-                </strong>
 
-                <small>
-                    Trabajos en proceso
-                </small>
+    <div class="tarjeta">
 
-            </div>
+        <span>
+            Cotizaciones
+        </span>
 
-        </a>
+        <strong id="resumenCotizaciones">
+            0
+        </strong>
 
+    </div>
 
-        <a href="ventas-admin.html" class="menu-boton">
 
-            <div class="icono">
-                💰
-            </div>
+    <a
+        href="cotizaciones-admin.html"
+        class="tarjeta"
+    >
 
-            <div>
+        <span>
+            Pendientes
+        </span>
 
-                <strong>
-                    Ventas
-                </strong>
+        <strong
+            id="resumenPendientes"
+            class="dorado"
+        >
+            0
+        </strong>
 
-                <small>
-                    Ventas realizadas
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <a href="clientes-admin.html" class="menu-boton">
-
-            <div class="icono">
-                👥
-            </div>
-
-            <div>
-
-                <strong>
-                    Clientes
-                </strong>
-
-                <small>
-                    Clientes e historial
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <a href="gastos-admin.html" class="menu-boton">
-
-            <div class="icono">
-                💸
-            </div>
-
-            <div>
-
-                <strong>
-                    Gastos
-                </strong>
-
-                <small>
-                    Compras e inversiones
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <a href="marketing-admin.html" class="menu-boton">
-
-            <div class="icono">
-                📣
-            </div>
-
-            <div>
-
-                <strong>
-                    Marketing
-                </strong>
-
-                <small>
-                    Publicidad y promociones
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <a href="finanzas-admin.html" class="menu-boton">
-
-            <div class="icono">
-                📊
-            </div>
-
-            <div>
-
-                <strong>
-                    Finanzas
-                </strong>
-
-                <small>
-                    Ingresos y egresos
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <!-- NOTIFICACIONES -->
-
-        <a href="notificaciones-admin.html" class="menu-boton">
-
-            <div class="icono">
-
-                🔔
-
-            </div>
-
-            <div>
-
-                <strong>
-                    Notificaciones
-                </strong>
-
-                <small>
-                    Actividad reciente
-                </small>
-
-            </div>
-
-        </a>
-
-
-    </section>
-
-
-    <a href="admin.html" class="cerrar">
-        ← Cerrar sesión
     </a>
 
 
-</main>
+    <div class="tarjeta">
+
+        <span>
+            Gastos del mes
+        </span>
+
+        <strong
+            id="resumenGastos"
+            class="dorado"
+        >
+            $0
+        </strong>
+
+    </div>
 
 
-<footer>
-
-    Pirámide Woodworks · Administración
-
-</footer>
+</section>
 
 
-<script>
+<!-- ADMINISTRACIÓN -->
+
+<h3 class="titulo-seccion">
+    Administración
+</h3>
 
 
-/* SALUDO */
+<section class="menu">
+
+
+    <a href="productos.html" class="menu-boton">
+
+        <div class="icono">
+            📦
+        </div>
+
+        <div>
+
+            <strong>
+                Productos
+            </strong>
+
+            <small>
+                Catálogo, fotos y precios
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="cotizaciones-admin.html" class="menu-boton">
+
+        <div class="icono">
+            📝
+        </div>
+
+        <div>
+
+            <strong>
+                Cotizaciones
+            </strong>
+
+            <small>
+                Solicitudes de clientes
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="ventas-admin.html" class="menu-boton">
+
+        <div class="icono">
+            💰
+        </div>
+
+        <div>
+
+            <strong>
+                Ventas
+            </strong>
+
+            <small>
+                Ventas realizadas
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="clientes-admin.html" class="menu-boton">
+
+        <div class="icono">
+            👥
+        </div>
+
+        <div>
+
+            <strong>
+                Clientes
+            </strong>
+
+            <small>
+                Clientes e historial
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="gastos-admin.html" class="menu-boton">
+
+        <div class="icono">
+            💸
+        </div>
+
+        <div>
+
+            <strong>
+                Gastos
+            </strong>
+
+            <small>
+                Compras e inversiones
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="marketing-admin.html" class="menu-boton">
+
+        <div class="icono">
+            📣
+        </div>
+
+        <div>
+
+            <strong>
+                Marketing
+            </strong>
+
+            <small>
+                Publicidad y promociones
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a href="finanzas-admin.html" class="menu-boton">
+
+        <div class="icono">
+            📊
+        </div>
+
+        <div>
+
+            <strong>
+                Finanzas
+            </strong>
+
+            <small>
+                Ingresos y egresos
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <!-- NOTIFICACIONES -->
+
+    <a href="notificaciones-admin.html" class="menu-boton">
+
+        <div class="icono">
+            🔔
+        </div>
+
+        <div>
+
+            <strong>
+                Notificaciones
+            </strong>
+
+            <small>
+                Actividad reciente
+            </small>
+
+        </div>
+
+    </a>
+
+
+</section>
+
+
+<a href="admin.html" class="cerrar">
+    ← Cerrar sesión
+</a>
+
+</main><footer>Pirámide Woodworks · Administración
+
+</footer><script>
+
+
+/* =========================
+   SALUDO
+========================= */
 
 const usuario = localStorage.getItem("usuario");
 const saludo = document.getElementById("saludo");
 
 if (usuario === "jorgefernando408@hotmail.com") {
+
     saludo.textContent = "Bienvenido, Jorge";
+
 } else if (usuario === "armentanatalia5@gmail.com") {
+
     saludo.textContent = "Bienvenida, Nat";
+
 } else {
+
     saludo.textContent = "Bienvenido";
+
 }
 
-/* CONTADOR DE NOTIFICACIONES */
 
-function actualizarContadorNotificaciones() {
+/* =========================
+   FUNCIONES AUXILIARES
+========================= */
 
-    const pedidos =
-        JSON.parse(
-            localStorage.getItem("pedidos")
+function obtenerDatos(nombre) {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(nombre)
         ) || [];
 
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function obtenerNumero(valor) {
+
+    if (
+        valor === undefined ||
+        valor === null ||
+        valor === ""
+    ) {
+
+        return 0;
+
+    }
+
+    if (typeof valor === "number") {
+
+        return valor;
+
+    }
+
+    return Number(
+        String(valor)
+            .replace("$", "")
+            .replace(/,/g, "")
+    ) || 0;
+
+}
+
+
+function obtenerFecha(item) {
+
+    return (
+        item.fechaVenta ||
+        item.fecha ||
+        item.fechaCotizacion ||
+        item.fechaGasto ||
+        item.created_at ||
+        item.createdAt ||
+        ""
+    );
+
+}
+
+
+/* =========================
+   VENTAS DEL MES
+========================= */
+
+function actualizarVentas() {
+
+    const ventas =
+        obtenerDatos("ventas");
+
+    const ahora =
+        new Date();
+
+    const mesActual =
+        ahora.getMonth();
+
+    const añoActual =
+        ahora.getFullYear();
+
+    let total = 0;
+
+
+    ventas.forEach(function(venta) {
+
+        const fechaTexto =
+            obtenerFecha(venta);
+
+        if (!fechaTexto) {
+            return;
+        }
+
+        const fecha =
+            new Date(fechaTexto);
+
+        if (
+            fecha.getMonth() === mesActual &&
+            fecha.getFullYear() === añoActual
+        ) {
+
+            total += obtenerNumero(
+                venta.total ??
+                venta.precio ??
+                venta.monto ??
+                venta.importe
+            );
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "resumenVentas"
+    ).textContent =
+        "$" +
+        total.toLocaleString(
+            "es-MX"
+        );
+
+}
+
+
+/* =========================
+   COTIZACIONES
+========================= */
+
+function actualizarCotizaciones() {
 
     const cotizaciones =
-        JSON.parse(
-            localStorage.getItem("cotizaciones")
-        ) || [];
+        obtenerDatos("cotizaciones");
+
+
+    document.getElementById(
+        "resumenCotizaciones"
+    ).textContent =
+        cotizaciones.length;
 
 
     let pendientes = 0;
 
 
-    /* PEDIDOS PENDIENTES */
+    cotizaciones.forEach(
+        function(cotizacion) {
 
-    pedidos.forEach(function(pedido) {
+            const estado =
+                cotizacion.estado ||
+                "Pendiente";
+
+
+            if (
+                estado === "Pendiente" ||
+                estado === "Contactado" ||
+                estado === "Cotizado" ||
+                estado === "Aceptada" ||
+                estado === "En proceso"
+            ) {
+
+                pendientes++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "resumenPendientes"
+    ).textContent =
+        pendientes;
+
+}
+
+
+/* =========================
+   GASTOS DEL MES
+========================= */
+
+function actualizarGastos() {
+
+    const gastos =
+        obtenerDatos("gastos");
+
+    const ahora =
+        new Date();
+
+    const mesActual =
+        ahora.getMonth();
+
+    const añoActual =
+        ahora.getFullYear();
+
+    let total = 0;
+
+
+    gastos.forEach(function(gasto) {
+
+        const fechaTexto =
+            obtenerFecha(gasto);
+
+        if (!fechaTexto) {
+            return;
+        }
+
+        const fecha =
+            new Date(fechaTexto);
 
         if (
-            pedido.estado === "Pendiente" ||
-            pedido.estado === "En proceso"
+            fecha.getMonth() === mesActual &&
+            fecha.getFullYear() === añoActual
         ) {
 
-            pendientes++;
+            total += obtenerNumero(
+                gasto.monto ??
+                gasto.total ??
+                gasto.precio ??
+                gasto.importe
+            );
 
         }
 
     });
 
 
-    /* COTIZACIONES PENDIENTES */
+    document.getElementById(
+        "resumenGastos"
+    ).textContent =
+        "$" +
+        total.toLocaleString(
+            "es-MX"
+        );
 
-    cotizaciones.forEach(function(cotizacion) {
+}
 
-        if (
-            cotizacion.estado === "Pendiente" ||
-            cotizacion.estado === "Contactado"
-        ) {
 
-            pendientes++;
+/* =========================
+   NOTIFICACIONES
+========================= */
+
+function actualizarContadorNotificaciones() {
+
+    const cotizaciones =
+        obtenerDatos("cotizaciones");
+
+
+    let pendientes = 0;
+
+
+    cotizaciones.forEach(
+        function(cotizacion) {
+
+            const estado =
+                cotizacion.estado ||
+                "Pendiente";
+
+
+            if (
+                estado === "Pendiente" ||
+                estado === "Contactado"
+            ) {
+
+                pendientes++;
+
+            }
 
         }
-
-    });
+    );
 
 
     const contador =
@@ -884,11 +1088,14 @@ function actualizarContadorNotificaciones() {
 }
 
 
+/* =========================
+   ACTUALIZAR TODO
+========================= */
+
+actualizarVentas();
+actualizarCotizaciones();
+actualizarGastos();
 actualizarContadorNotificaciones();
 
 
-</script>
-
-</body>
-
-</html>
+</script></body></html>

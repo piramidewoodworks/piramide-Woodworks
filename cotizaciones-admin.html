@@ -2,7 +2,9 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Cotizaciones | Pirámide Woodworks</title>
@@ -24,6 +26,8 @@
             --dorado: #b28a52;
             --dorado-claro: #d1b27d;
             --linea: #e7e2db;
+            --verde: #4f664b;
+            --rojo: #8b5f4b;
         }
 
 
@@ -53,10 +57,6 @@
         }
 
 
-        /* =========================
-           ENCABEZADO
-        ========================== */
-
         header {
             text-align: center;
             padding: 35px 20px 25px;
@@ -81,10 +81,6 @@
         }
 
 
-        /* =========================
-           CONTENEDOR
-        ========================== */
-
         .contenedor {
             width: min(1100px, calc(100% - 30px));
 
@@ -93,10 +89,6 @@
             padding-bottom: 60px;
         }
 
-
-        /* =========================
-           BARRA SUPERIOR
-        ========================== */
 
         .barra {
             display: flex;
@@ -109,6 +101,7 @@
 
             margin-bottom: 20px;
         }
+
 
         .volver {
             color: rgba(255,255,255,.75);
@@ -148,10 +141,6 @@
         }
 
 
-        /* =========================
-           RESUMEN
-        ========================== */
-
         .resumen {
             display: grid;
 
@@ -162,6 +151,7 @@
 
             margin-bottom: 25px;
         }
+
 
         .resumen-card {
             background: rgba(255,255,255,.97);
@@ -175,6 +165,7 @@
             box-shadow:
                 0 8px 25px rgba(0,0,0,.15);
         }
+
 
         .resumen-card span {
             display: block;
@@ -190,14 +181,11 @@
             margin-bottom: 8px;
         }
 
+
         .resumen-card strong {
             font-size: 24px;
         }
 
-
-        /* =========================
-           FILTROS
-        ========================== */
 
         .filtros {
             display: flex;
@@ -208,6 +196,7 @@
 
             margin-bottom: 18px;
         }
+
 
         .filtros input,
         .filtros select {
@@ -228,21 +217,19 @@
             outline: none;
         }
 
+
         .filtros input {
             flex: 1;
 
             min-width: 220px;
         }
 
+
         .filtros input:focus,
         .filtros select:focus {
             border-color: var(--dorado);
         }
 
-
-        /* =========================
-           LISTA
-        ========================== */
 
         #lista-cotizaciones {
             display: grid;
@@ -282,6 +269,7 @@
             font-weight: 600;
         }
 
+
         .fecha {
             margin-top: 5px;
 
@@ -290,10 +278,6 @@
             font-size: 12px;
         }
 
-
-        /* =========================
-           ESTADO
-        ========================== */
 
         .estado {
             padding: 6px 10px;
@@ -307,11 +291,13 @@
             white-space: nowrap;
         }
 
+
         .pendiente {
             background: #f4ece3;
 
             color: #76553a;
         }
+
 
         .contactado {
             background: #eee8dc;
@@ -319,11 +305,41 @@
             color: #725d36;
         }
 
+
         .cotizado {
             background: #e9eee8;
 
             color: #4f664b;
         }
+
+
+        .aceptada {
+            background: #e5efe5;
+
+            color: #456142;
+        }
+
+
+        .en-proceso {
+            background: #e8ecef;
+
+            color: #4d606d;
+        }
+
+
+        .entregada {
+            background: #e5e5e5;
+
+            color: #555;
+        }
+
+
+        .cancelada {
+            background: #f1e5e2;
+
+            color: #8b5f4b;
+        }
+
 
         .cerrado {
             background: #e7e7e7;
@@ -332,15 +348,11 @@
         }
 
 
-        /* =========================
-           INFORMACIÓN
-        ========================== */
-
         .datos {
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(3, 1fr);
 
             gap: 12px;
 
@@ -350,6 +362,7 @@
 
             border-top: 1px solid var(--linea);
         }
+
 
         .dato span {
             display: block;
@@ -365,6 +378,7 @@
             letter-spacing: .7px;
         }
 
+
         .dato strong {
             font-size: 14px;
 
@@ -372,9 +386,12 @@
         }
 
 
-        /* =========================
-           MENSAJE
-        ========================== */
+        .dato.total strong {
+            color: var(--verde);
+
+            font-size: 16px;
+        }
+
 
         .mensaje {
             margin-top: 15px;
@@ -393,10 +410,6 @@
         }
 
 
-        /* =========================
-           ACCIONES
-        ========================== */
-
         .acciones {
             display: flex;
 
@@ -406,6 +419,7 @@
 
             margin-top: 17px;
         }
+
 
         .acciones button,
         .acciones a {
@@ -428,19 +442,17 @@
             cursor: pointer;
         }
 
+
         .acciones button:hover,
         .acciones a:hover {
             border-color: var(--dorado);
         }
 
+
         .eliminar {
-            color: #8b5f4b !important;
+            color: var(--rojo) !important;
         }
 
-
-        /* =========================
-           VACÍO
-        ========================== */
 
         .vacio {
             background: rgba(255,255,255,.97);
@@ -454,11 +466,13 @@
             text-align: center;
         }
 
+
         .vacio h2 {
             font-size: 20px;
 
             margin-bottom: 8px;
         }
+
 
         .vacio p {
             color: var(--texto-suave);
@@ -466,10 +480,6 @@
             font-size: 14px;
         }
 
-
-        /* =========================
-           MODAL
-        ========================== */
 
         #modal {
             display: none;
@@ -489,12 +499,14 @@
             padding: 20px;
         }
 
+
         #modal.visible {
             display: flex;
         }
 
+
         .modal-contenido {
-            width: min(500px, 100%);
+            width: min(560px, 100%);
 
             max-height: 90vh;
 
@@ -509,15 +521,18 @@
             padding: 25px;
         }
 
+
         .modal-contenido h2 {
             margin-bottom: 18px;
 
             font-size: 21px;
         }
 
+
         .campo {
             margin-bottom: 13px;
         }
+
 
         .campo label {
             display: block;
@@ -528,6 +543,7 @@
 
             font-weight: 600;
         }
+
 
         .campo input,
         .campo textarea,
@@ -545,13 +561,81 @@
             font-size: 13px;
 
             outline: none;
+
+            background: white;
+
+            color: var(--texto);
         }
+
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            border-color: var(--dorado);
+        }
+
 
         .campo textarea {
             min-height: 90px;
 
             resize: vertical;
         }
+
+
+        .fila {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+
+        .precio-info {
+            margin-top: 6px;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+        }
+
+
+        .total-modal {
+            margin-top: 8px;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            background: #f4f1eb;
+
+            text-align: right;
+        }
+
+
+        .total-modal span {
+            display: block;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+        }
+
+
+        .total-modal strong {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--verde);
+
+            font-size: 22px;
+        }
+
 
         .modal-botones {
             display: flex;
@@ -560,6 +644,7 @@
 
             margin-top: 18px;
         }
+
 
         .modal-botones button {
             flex: 1;
@@ -573,6 +658,7 @@
             font-family: inherit;
         }
 
+
         .guardar {
             background: var(--negro);
 
@@ -580,6 +666,7 @@
 
             border: 1px solid var(--negro);
         }
+
 
         .cancelar {
             background: white;
@@ -590,13 +677,14 @@
         }
 
 
-        /* =========================
-           RESPONSIVE
-        ========================== */
-
         @media (max-width: 800px) {
 
             .resumen {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .datos {
                 grid-template-columns:
                     1fr 1fr;
             }
@@ -626,6 +714,10 @@
 
             .cotizacion-superior {
                 flex-direction: column;
+            }
+
+            .fila {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -666,15 +758,11 @@
     </div>
 
 
-    <!-- RESUMEN -->
-
     <section class="resumen">
 
         <div class="resumen-card">
 
-            <span>
-                Total
-            </span>
+            <span>Total</span>
 
             <strong id="total">
                 0
@@ -685,9 +773,7 @@
 
         <div class="resumen-card">
 
-            <span>
-                Pendientes
-            </span>
+            <span>Pendientes</span>
 
             <strong id="pendientes">
                 0
@@ -698,9 +784,7 @@
 
         <div class="resumen-card">
 
-            <span>
-                Cotizadas
-            </span>
+            <span>Cotizadas</span>
 
             <strong id="cotizadas">
                 0
@@ -711,9 +795,7 @@
 
         <div class="resumen-card">
 
-            <span>
-                Cerradas
-            </span>
+            <span>Cerradas</span>
 
             <strong id="cerradas">
                 0
@@ -723,8 +805,6 @@
 
     </section>
 
-
-    <!-- FILTROS -->
 
     <div class="filtros">
 
@@ -757,8 +837,20 @@
                 Cotizado
             </option>
 
-            <option value="Cerrado">
-                Cerrado
+            <option value="Aceptada">
+                Aceptada
+            </option>
+
+            <option value="En proceso">
+                En proceso
+            </option>
+
+            <option value="Entregada">
+                Entregada
+            </option>
+
+            <option value="Cancelada">
+                Cancelada
             </option>
 
         </select>
@@ -766,24 +858,19 @@
     </div>
 
 
-    <!-- LISTA -->
-
     <section id="lista-cotizaciones"></section>
 
 
 </main>
 
 
-
-<!-- =========================
-     MODAL NUEVA COTIZACIÓN
-========================= -->
-
 <div id="modal">
 
     <div class="modal-contenido">
 
-        <h2>Nueva cotización</h2>
+        <h2 id="titulo-modal">
+            Nueva cotización
+        </h2>
 
 
         <div class="campo">
@@ -820,25 +907,139 @@
                 Producto
             </label>
 
-            <input
-                id="nuevo-producto"
-                placeholder="Producto solicitado"
-            >
+            <select id="nuevo-producto" onchange="actualizarPrecio()">
+
+                <option value="">
+                    Selecciona un producto
+                </option>
+
+                <option value="BottleBox">
+                    BottleBox
+                </option>
+
+                <option value="TequilaBox">
+                    TequilaBox
+                </option>
+
+                <option value="TequilaBox sin botella">
+                    TequilaBox sin botella
+                </option>
+
+                <option value="GiftBox">
+                    GiftBox
+                </option>
+
+                <option value="SlidingBox">
+                    SlidingBox
+                </option>
+
+                <option value="Portallaves Home">
+                    Portallaves Home
+                </option>
+
+                <option value="Mostrador QR & Códigos Personalizado">
+                    Mostrador QR & Códigos Personalizado
+                </option>
+
+                <option value="Carruaje de Cenicienta">
+                    Carruaje de Cenicienta
+                </option>
+
+                <option value="Mesa Carruaje Gigante">
+                    Mesa Carruaje Gigante
+                </option>
+
+            </select>
 
         </div>
 
 
-        <div class="campo">
+        <div class="fila">
 
-            <label>
-                Precio estimado
-            </label>
+            <div class="campo">
 
-            <input
-                id="nuevo-precio"
-                type="number"
-                placeholder="0"
-            >
+                <label>
+                    Precio del producto
+                </label>
+
+                <input
+                    id="nuevo-precio"
+                    type="number"
+                    min="0"
+                    step="1"
+                    placeholder="0"
+                    oninput="calcularTotal()"
+                >
+
+                <div class="precio-info">
+                    Puedes modificarlo si esta cotización lleva un precio especial.
+                </div>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    Descuento
+                </label>
+
+                <input
+                    id="nuevo-descuento"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0"
+                    placeholder="0"
+                    oninput="calcularTotal()"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="total-modal">
+
+            <span>
+                Total de cotización
+            </span>
+
+            <strong id="nuevo-total">
+                $0
+            </strong>
+
+        </div>
+
+
+        <div class="fila">
+
+            <div class="campo">
+
+                <label>
+                    Fecha de cotización
+                </label>
+
+                <input
+                    id="nueva-fecha"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    Fecha de entrega
+                </label>
+
+                <input
+                    id="nueva-fecha-entrega"
+                    type="date"
+                >
+
+            </div>
 
         </div>
 
@@ -851,20 +1052,32 @@
 
             <select id="nuevo-estado">
 
-                <option>
+                <option value="Pendiente">
                     Pendiente
                 </option>
 
-                <option>
+                <option value="Contactado">
                     Contactado
                 </option>
 
-                <option>
+                <option value="Cotizado">
                     Cotizado
                 </option>
 
-                <option>
-                    Cerrado
+                <option value="Aceptada">
+                    Aceptada
+                </option>
+
+                <option value="En proceso">
+                    En proceso
+                </option>
+
+                <option value="Entregada">
+                    Entregada
+                </option>
+
+                <option value="Cancelada">
+                    Cancelada
                 </option>
 
             </select>
@@ -909,7 +1122,6 @@
 </div>
 
 
-
 <script>
 
 let cotizaciones =
@@ -917,6 +1129,31 @@ let cotizaciones =
         localStorage.getItem("cotizaciones")
     ) || [];
 
+
+let indiceEditando = null;
+
+
+const preciosProductos = {
+
+    "BottleBox": 600,
+
+    "TequilaBox": 1200,
+
+    "TequilaBox sin botella": 480,
+
+    "GiftBox": 550,
+
+    "SlidingBox": 400,
+
+    "Portallaves Home": 130,
+
+    "Mostrador QR & Códigos Personalizado": 120,
+
+    "Carruaje de Cenicienta": 155,
+
+    "Mesa Carruaje Gigante": 2500
+
+};
 
 
 function guardarDatos() {
@@ -928,6 +1165,180 @@ function guardarDatos() {
 
 }
 
+
+function formatearFecha(fecha) {
+
+    if (!fecha) {
+        return "—";
+    }
+
+    const partes =
+        fecha.split("-");
+
+    if (partes.length !== 3) {
+        return fecha;
+    }
+
+    return (
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
+    );
+
+}
+
+
+function dinero(valor) {
+
+    const numero =
+        Number(valor) || 0;
+
+    return "$" +
+        numero.toLocaleString(
+            "es-MX",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }
+        );
+
+}
+
+
+function claseEstado(estado) {
+
+    return String(estado || "")
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+}
+
+
+function actualizarDatosAntiguos() {
+
+    cotizaciones =
+        cotizaciones.map(function(c) {
+
+            if (!c.fechaCotizacion) {
+
+                c.fechaCotizacion =
+                    convertirFechaAntigua(c.fecha);
+
+            }
+
+            if (!c.fechaEntrega) {
+                c.fechaEntrega = "";
+            }
+
+            if (c.descuento === undefined) {
+                c.descuento = 0;
+            }
+
+            if (c.total === undefined) {
+
+                c.total =
+                    Math.max(
+                        0,
+                        (Number(c.precio) || 0) -
+                        (Number(c.descuento) || 0)
+                    );
+
+            }
+
+            if (c.estado === "Cerrado") {
+                c.estado = "Entregada";
+            }
+
+            return c;
+
+        });
+
+}
+
+
+function convertirFechaAntigua(fecha) {
+
+    if (!fecha) {
+        return obtenerFechaHoy();
+    }
+
+    const texto =
+        String(fecha);
+
+    const partes =
+        texto.split(",");
+
+    if (partes.length > 0) {
+
+        const fechaParte =
+            partes[0].trim();
+
+        const separada =
+            fechaParte.split("/");
+
+        if (separada.length === 3) {
+
+            let dia =
+                separada[0].padStart(2, "0");
+
+            let mes =
+                separada[1].padStart(2, "0");
+
+            let anio =
+                separada[2];
+
+            if (anio.length === 2) {
+                anio = "20" + anio;
+            }
+
+            return (
+                anio +
+                "-" +
+                mes +
+                "-" +
+                dia
+            );
+
+        }
+
+    }
+
+    return obtenerFechaHoy();
+
+}
+
+
+function obtenerFechaHoy() {
+
+    const hoy =
+        new Date();
+
+    const anio =
+        hoy.getFullYear();
+
+    const mes =
+        String(
+            hoy.getMonth() + 1
+        ).padStart(2, "0");
+
+    const dia =
+        String(
+            hoy.getDate()
+        ).padStart(2, "0");
+
+    return (
+        anio +
+        "-" +
+        mes +
+        "-" +
+        dia
+    );
+
+}
 
 
 function mostrarCotizaciones() {
@@ -1006,11 +1417,6 @@ function mostrarCotizaciones() {
                 cotizaciones.indexOf(cotizacion);
 
 
-            let claseEstado =
-                cotizacion.estado
-                    .toLowerCase();
-
-
             lista.innerHTML += `
 
                 <article class="cotizacion">
@@ -1024,13 +1430,14 @@ function mostrarCotizaciones() {
                             </h2>
 
                             <div class="fecha">
-                                ${cotizacion.fecha}
+                                Cotización:
+                                ${formatearFecha(cotizacion.fechaCotizacion)}
                             </div>
 
                         </div>
 
                         <span
-                            class="estado ${claseEstado}"
+                            class="estado ${claseEstado(cotizacion.estado)}"
                         >
                             ${cotizacion.estado}
                         </span>
@@ -1069,15 +1476,11 @@ function mostrarCotizaciones() {
                         <div class="dato">
 
                             <span>
-                                Precio estimado
+                                Precio
                             </span>
 
                             <strong>
-                                ${
-                                    cotizacion.precio
-                                    ? "$" + cotizacion.precio
-                                    : "—"
-                                }
+                                ${dinero(cotizacion.precio)}
                             </strong>
 
                         </div>
@@ -1086,11 +1489,41 @@ function mostrarCotizaciones() {
                         <div class="dato">
 
                             <span>
-                                Estado
+                                Descuento
                             </span>
 
                             <strong>
-                                ${cotizacion.estado}
+                                ${
+                                    Number(cotizacion.descuento) > 0
+                                    ? dinero(cotizacion.descuento)
+                                    : "Sin descuento"
+                                }
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ${dinero(cotizacion.total)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            <span>
+                                Entrega
+                            </span>
+
+                            <strong>
+                                ${formatearFecha(cotizacion.fechaEntrega)}
                             </strong>
 
                         </div>
@@ -1155,7 +1588,6 @@ function mostrarCotizaciones() {
 }
 
 
-
 function actualizarResumen() {
 
     document.getElementById("total")
@@ -1167,7 +1599,10 @@ function actualizarResumen() {
         .textContent =
         cotizaciones.filter(function(c) {
 
-            return c.estado === "Pendiente";
+            return (
+                c.estado === "Pendiente" ||
+                c.estado === "Contactado"
+            );
 
         }).length;
 
@@ -1185,12 +1620,14 @@ function actualizarResumen() {
         .textContent =
         cotizaciones.filter(function(c) {
 
-            return c.estado === "Cerrado";
+            return (
+                c.estado === "Entregada" ||
+                c.estado === "Cancelada"
+            );
 
         }).length;
 
 }
-
 
 
 function limpiarTelefono(telefono) {
@@ -1201,25 +1638,90 @@ function limpiarTelefono(telefono) {
 }
 
 
+function actualizarPrecio() {
 
-function abrirNuevaCotizacion() {
+    const producto =
+        document.getElementById(
+            "nuevo-producto"
+        ).value;
 
-    document
-        .getElementById("modal")
-        .classList.add("visible");
+
+    const precio =
+        preciosProductos[producto] || 0;
+
+
+    document.getElementById(
+        "nuevo-precio"
+    ).value =
+        precio || "";
+
+
+    calcularTotal();
 
 }
 
+
+function calcularTotal() {
+
+    const precio =
+        Number(
+            document.getElementById(
+                "nuevo-precio"
+            ).value
+        ) || 0;
+
+
+    const descuento =
+        Number(
+            document.getElementById(
+                "nuevo-descuento"
+            ).value
+        ) || 0;
+
+
+    const total =
+        Math.max(
+            0,
+            precio - descuento
+        );
+
+
+    document.getElementById(
+        "nuevo-total"
+    ).textContent =
+        dinero(total);
+
+}
+
+
+function abrirNuevaCotizacion() {
+
+    indiceEditando = null;
+
+
+    document.getElementById(
+        "titulo-modal"
+    ).textContent =
+        "Nueva cotización";
+
+
+    limpiarFormulario();
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("visible");
+
+}
 
 
 function cerrarModal() {
 
-    document
-        .getElementById("modal")
-        .classList.remove("visible");
+    document.getElementById(
+        "modal"
+    ).classList.remove("visible");
 
 }
-
 
 
 function guardarNuevaCotizacion() {
@@ -1239,13 +1741,35 @@ function guardarNuevaCotizacion() {
     const producto =
         document.getElementById(
             "nuevo-producto"
-        ).value.trim();
+        ).value;
 
 
     const precio =
+        Number(
+            document.getElementById(
+                "nuevo-precio"
+            ).value
+        ) || 0;
+
+
+    const descuento =
+        Number(
+            document.getElementById(
+                "nuevo-descuento"
+            ).value
+        ) || 0;
+
+
+    const fechaCotizacion =
         document.getElementById(
-            "nuevo-precio"
-        ).value.trim();
+            "nueva-fecha"
+        ).value;
+
+
+    const fechaEntrega =
+        document.getElementById(
+            "nueva-fecha-entrega"
+        ).value;
 
 
     const estado =
@@ -1260,6 +1784,13 @@ function guardarNuevaCotizacion() {
         ).value.trim();
 
 
+    const total =
+        Math.max(
+            0,
+            precio - descuento
+        );
+
+
     if (!cliente) {
 
         alert(
@@ -1271,7 +1802,40 @@ function guardarNuevaCotizacion() {
     }
 
 
-    cotizaciones.push({
+    if (!producto) {
+
+        alert(
+            "Selecciona un producto."
+        );
+
+        return;
+
+    }
+
+
+    if (precio <= 0) {
+
+        alert(
+            "Agrega el precio del producto."
+        );
+
+        return;
+
+    }
+
+
+    if (descuento > precio) {
+
+        alert(
+            "El descuento no puede ser mayor que el precio."
+        );
+
+        return;
+
+    }
+
+
+    const datos = {
 
         cliente: cliente,
 
@@ -1281,20 +1845,41 @@ function guardarNuevaCotizacion() {
 
         precio: precio,
 
+        descuento: descuento,
+
+        total: total,
+
+        fechaCotizacion:
+            fechaCotizacion ||
+            obtenerFechaHoy(),
+
+        fechaEntrega:
+            fechaEntrega,
+
         estado: estado,
 
         notas: notas,
 
         fecha:
-            new Date()
-                .toLocaleString("es-MX")
+            fechaCotizacion ||
+            obtenerFechaHoy()
 
-    });
+    };
+
+
+    if (indiceEditando === null) {
+
+        cotizaciones.push(datos);
+
+    } else {
+
+        cotizaciones[indiceEditando] =
+            datos;
+
+    }
 
 
     guardarDatos();
-
-    limpiarFormulario();
 
     cerrarModal();
 
@@ -1303,35 +1888,58 @@ function guardarNuevaCotizacion() {
 }
 
 
-
 function limpiarFormulario() {
 
     document.getElementById(
         "nuevo-cliente"
     ).value = "";
 
+
     document.getElementById(
         "nuevo-telefono"
     ).value = "";
+
 
     document.getElementById(
         "nuevo-producto"
     ).value = "";
 
+
     document.getElementById(
         "nuevo-precio"
     ).value = "";
 
+
+    document.getElementById(
+        "nuevo-descuento"
+    ).value = "0";
+
+
+    document.getElementById(
+        "nueva-fecha"
+    ).value =
+        obtenerFechaHoy();
+
+
+    document.getElementById(
+        "nueva-fecha-entrega"
+    ).value = "";
+
+
     document.getElementById(
         "nuevo-estado"
-    ).value = "Pendiente";
+    ).value =
+        "Pendiente";
+
 
     document.getElementById(
         "nuevas-notas"
     ).value = "";
 
-}
 
+    calcularTotal();
+
+}
 
 
 function editarCotizacion(indice) {
@@ -1340,58 +1948,79 @@ function editarCotizacion(indice) {
         cotizaciones[indice];
 
 
-    const nuevoEstado =
-        prompt(
-            "Estado actual: " +
-            cotizacion.estado +
-            "\n\nEscribe uno de estos:\nPendiente\nContactado\nCotizado\nCerrado",
-            cotizacion.estado
-        );
+    indiceEditando =
+        indice;
 
 
-    if (
-        nuevoEstado === null ||
-        nuevoEstado.trim() === ""
-    ) {
-
-        return;
-
-    }
+    document.getElementById(
+        "titulo-modal"
+    ).textContent =
+        "Editar cotización";
 
 
-    const estadosValidos = [
-        "Pendiente",
-        "Contactado",
-        "Cotizado",
-        "Cerrado"
-    ];
+    document.getElementById(
+        "nuevo-cliente"
+    ).value =
+        cotizacion.cliente || "";
 
 
-    if (
-        !estadosValidos.includes(
-            nuevoEstado.trim()
-        )
-    ) {
-
-        alert(
-            "Estado no válido."
-        );
-
-        return;
-
-    }
+    document.getElementById(
+        "nuevo-telefono"
+    ).value =
+        cotizacion.telefono || "";
 
 
-    cotizacion.estado =
-        nuevoEstado.trim();
+    document.getElementById(
+        "nuevo-producto"
+    ).value =
+        cotizacion.producto || "";
 
 
-    guardarDatos();
+    document.getElementById(
+        "nuevo-precio"
+    ).value =
+        cotizacion.precio || "";
 
-    mostrarCotizaciones();
+
+    document.getElementById(
+        "nuevo-descuento"
+    ).value =
+        cotizacion.descuento || 0;
+
+
+    document.getElementById(
+        "nueva-fecha"
+    ).value =
+        cotizacion.fechaCotizacion ||
+        obtenerFechaHoy();
+
+
+    document.getElementById(
+        "nueva-fecha-entrega"
+    ).value =
+        cotizacion.fechaEntrega || "";
+
+
+    document.getElementById(
+        "nuevo-estado"
+    ).value =
+        cotizacion.estado || "Pendiente";
+
+
+    document.getElementById(
+        "nuevas-notas"
+    ).value =
+        cotizacion.notas || "";
+
+
+    calcularTotal();
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("visible");
 
 }
-
 
 
 function eliminarCotizacion(indice) {
@@ -1403,9 +2032,7 @@ function eliminarCotizacion(indice) {
 
 
     if (!confirmar) {
-
         return;
-
     }
 
 
@@ -1422,11 +2049,12 @@ function eliminarCotizacion(indice) {
 }
 
 
-
 window.onclick = function(event) {
 
     const modal =
-        document.getElementById("modal");
+        document.getElementById(
+            "modal"
+        );
 
 
     if (event.target === modal) {
@@ -1438,6 +2066,9 @@ window.onclick = function(event) {
 };
 
 
+actualizarDatosAntiguos();
+
+guardarDatos();
 
 mostrarCotizaciones();
 
