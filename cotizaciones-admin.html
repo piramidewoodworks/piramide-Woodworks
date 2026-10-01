@@ -58,9 +58,6 @@
                 );
         }
 
-
-        /* ENCABEZADO */
-
         header {
             text-align: center;
             padding: 34px 20px 24px;
@@ -80,17 +77,11 @@
             text-transform: uppercase;
         }
 
-
-        /* CONTENEDOR */
-
         .panel {
             width: min(1100px, calc(100% - 30px));
             margin: auto;
             padding-bottom: 60px;
         }
-
-
-        /* NAVEGACIÓN */
 
         .barra-superior {
             display: flex;
@@ -113,24 +104,17 @@
         .boton-principal {
             border: 0;
             border-radius: 7px;
-
             padding: 11px 17px;
-
             background: var(--dorado);
             color: white;
-
             font-size: 13px;
             cursor: pointer;
-
             transition: .2s ease;
         }
 
         .boton-principal:hover {
             background: #9a713b;
         }
-
-
-        /* RESUMEN */
 
         .resumen {
             display: grid;
@@ -142,23 +126,18 @@
         .tarjeta {
             background: rgba(255, 255, 255, .97);
             color: var(--texto);
-
             border-radius: 11px;
             padding: 18px;
-
             box-shadow:
                 0 8px 25px rgba(0, 0, 0, .15);
         }
 
         .tarjeta span {
             display: block;
-
             color: var(--texto-suave);
-
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-
             margin-bottom: 8px;
         }
 
@@ -171,9 +150,6 @@
             color: #9a713b;
         }
 
-
-        /* HERRAMIENTAS */
-
         .herramientas {
             display: flex;
             gap: 10px;
@@ -185,13 +161,10 @@
             border: 1px solid var(--linea);
             background: white;
             color: var(--texto);
-
             border-radius: 7px;
             padding: 11px 13px;
-
             font-family: inherit;
             font-size: 13px;
-
             outline: none;
         }
 
@@ -208,9 +181,6 @@
             border-color: var(--dorado);
         }
 
-
-        /* COTIZACIONES */
-
         #listaCotizaciones {
             display: grid;
             gap: 13px;
@@ -219,10 +189,8 @@
         .cotizacion {
             background: rgba(255, 255, 255, .97);
             color: var(--texto);
-
             border-radius: 12px;
             padding: 20px;
-
             box-shadow:
                 0 8px 25px rgba(0, 0, 0, .15);
         }
@@ -232,7 +200,6 @@
             justify-content: space-between;
             align-items: flex-start;
             gap: 15px;
-
             padding-bottom: 14px;
             border-bottom: 1px solid var(--linea);
         }
@@ -251,13 +218,10 @@
         .estado {
             padding: 5px 9px;
             border-radius: 20px;
-
             font-size: 10px;
             font-weight: 600;
-
             text-transform: uppercase;
             letter-spacing: .5px;
-
             white-space: nowrap;
         }
 
@@ -288,24 +252,17 @@
 
         .datos {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 14px;
-
             padding: 16px 0;
         }
 
         .dato span {
             display: block;
-
             color: var(--texto-suave);
-
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: .8px;
-
             margin-bottom: 5px;
         }
 
@@ -319,10 +276,18 @@
             font-size: 18px;
         }
 
+        .dato-restante strong {
+            color: var(--rojo);
+            font-size: 17px;
+        }
+
+        .dato-abono strong {
+            color: var(--verde);
+        }
+
         .notas {
             padding-top: 13px;
             border-top: 1px solid var(--linea);
-
             color: var(--texto-suave);
             font-size: 13px;
             line-height: 1.5;
@@ -332,19 +297,15 @@
             display: flex;
             justify-content: flex-end;
             gap: 8px;
-
             margin-top: 15px;
         }
 
         .boton-secundario,
         .boton-eliminar {
             border-radius: 6px;
-
             padding: 8px 12px;
-
             font-family: inherit;
             font-size: 12px;
-
             cursor: pointer;
         }
 
@@ -371,32 +332,20 @@
         .vacio {
             background: rgba(255,255,255,.97);
             color: var(--texto-suave);
-
             border-radius: 12px;
             padding: 40px 20px;
-
             text-align: center;
-
             font-size: 14px;
         }
 
-
-        /* MODAL */
-
         .modal {
             position: fixed;
-
             inset: 0;
-
             display: none;
-
             align-items: center;
             justify-content: center;
-
             padding: 20px;
-
             background: rgba(0,0,0,.68);
-
             z-index: 1000;
         }
 
@@ -408,14 +357,10 @@
             width: min(620px, 100%);
             max-height: 90vh;
             overflow-y: auto;
-
             background: var(--crema);
             color: var(--texto);
-
             border-radius: 13px;
-
             padding: 25px;
-
             box-shadow:
                 0 20px 60px rgba(0,0,0,.35);
         }
@@ -424,7 +369,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             margin-bottom: 22px;
         }
 
@@ -436,15 +380,11 @@
         .cerrar-modal {
             width: 32px;
             height: 32px;
-
             border: 0;
             border-radius: 50%;
-
             background: #ebe6df;
             color: var(--texto);
-
             font-size: 20px;
-
             cursor: pointer;
         }
 
@@ -461,7 +401,6 @@
         .campo label {
             font-size: 11px;
             color: var(--texto-suave);
-
             text-transform: uppercase;
             letter-spacing: .7px;
         }
@@ -470,19 +409,13 @@
         .campo select,
         .campo textarea {
             width: 100%;
-
             border: 1px solid var(--linea);
-
             border-radius: 7px;
-
             padding: 11px 12px;
-
             background: white;
             color: var(--texto);
-
             font-family: inherit;
             font-size: 13px;
-
             outline: none;
         }
 
@@ -509,14 +442,17 @@
             gap: 12px;
         }
 
+        .fila-calculo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
         .total-formulario {
             background: white;
-
             border: 1px solid var(--linea);
             border-radius: 8px;
-
             padding: 13px;
-
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -532,11 +468,14 @@
             font-size: 20px;
         }
 
+        .total-formulario.restante strong {
+            color: var(--rojo);
+        }
+
         .botones-formulario {
             display: flex;
             justify-content: flex-end;
             gap: 9px;
-
             margin-top: 5px;
         }
 
@@ -544,14 +483,10 @@
             border: 1px solid var(--linea);
             background: white;
             color: var(--texto);
-
             border-radius: 7px;
-
             padding: 10px 16px;
-
             font-family: inherit;
             font-size: 13px;
-
             cursor: pointer;
         }
 
@@ -559,14 +494,10 @@
             border: 0;
             background: var(--dorado);
             color: white;
-
             border-radius: 7px;
-
             padding: 10px 18px;
-
             font-family: inherit;
             font-size: 13px;
-
             cursor: pointer;
         }
 
@@ -574,21 +505,12 @@
             background: #9a713b;
         }
 
-
-        /* PIE */
-
         footer {
             text-align: center;
-
             padding: 10px 20px 25px;
-
             color: rgba(255,255,255,.50);
-
             font-size: 12px;
         }
-
-
-        /* CELULAR */
 
         @media (max-width: 800px) {
 
@@ -605,7 +527,6 @@
             }
 
         }
-
 
         @media (max-width: 500px) {
 
@@ -655,7 +576,8 @@
             }
 
             .fila,
-            .fila-tres {
+            .fila-tres,
+            .fila-calculo {
                 grid-template-columns: 1fr;
             }
 
@@ -709,15 +631,10 @@
     </div>
 
 
-    <!-- RESUMEN -->
-
     <section class="resumen">
 
         <div class="tarjeta">
-
-            <span>
-                Total
-            </span>
+            <span>Total</span>
 
             <strong
                 id="totalCotizaciones"
@@ -725,52 +642,34 @@
             >
                 0
             </strong>
-
         </div>
 
-
         <div class="tarjeta">
-
-            <span>
-                Pendientes
-            </span>
+            <span>Pendientes</span>
 
             <strong id="totalPendientes">
                 0
             </strong>
-
         </div>
 
-
         <div class="tarjeta">
-
-            <span>
-                Cotizadas
-            </span>
+            <span>Cotizadas</span>
 
             <strong id="totalCotizadas">
                 0
             </strong>
-
         </div>
 
-
         <div class="tarjeta">
-
-            <span>
-                Entregadas
-            </span>
+            <span>Entregadas</span>
 
             <strong id="totalEntregadas">
                 0
             </strong>
-
         </div>
 
     </section>
 
-
-    <!-- HERRAMIENTAS -->
 
     <section class="herramientas">
 
@@ -830,13 +729,9 @@
 
 
 <footer>
-
     Pirámide Woodworks · Cotizaciones
-
 </footer>
 
-
-<!-- MODAL -->
 
 <div
     id="modalCotizacion"
@@ -1005,14 +900,15 @@
 
                 <div class="campo">
 
-                    <label for="descuento">
-                        Descuento
+                    <label for="descuentoPorcentaje">
+                        Descuento %
                     </label>
 
                     <input
                         type="number"
-                        id="descuento"
+                        id="descuentoPorcentaje"
                         min="0"
+                        max="100"
                         step="0.01"
                         value="0"
                         oninput="calcularTotal()"
@@ -1023,13 +919,43 @@
             </div>
 
 
+            <div class="fila-calculo">
+
+                <div class="total-formulario">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <div class="total-formulario">
+
+                    <span>
+                        Descuento
+                    </span>
+
+                    <strong id="montoDescuento">
+                        $0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
             <div class="total-formulario">
 
                 <span>
-                    Subtotal
+                    Precio final por pieza
                 </span>
 
-                <strong id="subtotal">
+                <strong id="precioFinal">
                     $0
                 </strong>
 
@@ -1045,6 +971,41 @@
                 <strong id="total">
                     $0
                 </strong>
+
+            </div>
+
+
+            <div class="fila-calculo">
+
+                <div class="campo">
+
+                    <label for="abono">
+                        Abono
+                    </label>
+
+                    <input
+                        type="number"
+                        id="abono"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calcularTotal()"
+                    >
+
+                </div>
+
+
+                <div class="total-formulario restante">
+
+                    <span>
+                        Restante
+                    </span>
+
+                    <strong id="restante">
+                        $0
+                    </strong>
+
+                </div>
 
             </div>
 
@@ -1161,8 +1122,6 @@
 <script>
 
 
-/* SUPABASE */
-
 const SUPABASE_URL =
     "https://ighcydtijeumeqyhuvkh.supabase.co";
 
@@ -1176,14 +1135,10 @@ const supabaseClient =
     );
 
 
-/* DATOS */
-
 let cotizaciones = [];
 
 let editandoId = null;
 
-
-/* PRECIOS */
 
 const preciosProductos = {
 
@@ -1207,8 +1162,6 @@ const preciosProductos = {
 
 };
 
-
-/* FORMATO */
 
 function dinero(valor) {
 
@@ -1235,8 +1188,6 @@ function escapar(texto) {
 
 }
 
-
-/* ESTADO */
 
 function claseEstado(estado) {
 
@@ -1265,8 +1216,6 @@ function claseEstado(estado) {
 
 }
 
-
-/* FECHA */
 
 function mostrarFecha(fecha) {
 
@@ -1303,7 +1252,7 @@ function mostrarFecha(fecha) {
 }
 
 
-/* MIGRAR COTIZACIONES ANTIGUAS */
+/* MIGRACIÓN */
 
 async function migrarCotizacionesAntiguas() {
 
@@ -1349,19 +1298,34 @@ async function migrarCotizacionesAntiguas() {
             Number(c.precio) || 0;
 
 
-        const descuento =
-            Number(c.descuento) || 0;
-
-
         const subtotal =
             precio * cantidad;
 
 
-        const total =
+        /*
+            Las cotizaciones antiguas
+            guardaban el descuento
+            directamente en pesos.
+
+            Para no alterar su información,
+            se conserva ese descuento.
+        */
+
+        const descuentoAntiguo =
             Math.max(
                 0,
-                subtotal - descuento
+                Number(c.descuento) || 0
             );
+
+
+        const total =
+            c.total !== undefined &&
+            c.total !== null
+                ? Number(c.total) || 0
+                : Math.max(
+                    0,
+                    subtotal - descuentoAntiguo
+                );
 
 
         let estado =
@@ -1396,7 +1360,13 @@ async function migrarCotizacionesAntiguas() {
                 precio,
 
             descuento:
-                descuento,
+                descuentoAntiguo,
+
+            descuentoporcentaje:
+                0,
+
+            abono:
+                Number(c.abono) || 0,
 
             total:
                 total,
@@ -1498,12 +1468,25 @@ async function cargarCotizaciones() {
                     Number(c.precio) || 0;
 
 
-                const descuento =
+                const subtotal =
+                    precio * cantidad;
+
+
+                const porcentaje =
+                    Math.max(
+                        0,
+                        Number(c.descuentoporcentaje) || 0
+                    );
+
+
+                const descuentoGuardado =
                     Number(c.descuento) || 0;
 
 
-                const subtotal =
-                    precio * cantidad;
+                const descuentoCalculado =
+                    porcentaje > 0
+                        ? subtotal * porcentaje / 100
+                        : descuentoGuardado;
 
 
                 const total =
@@ -1512,8 +1495,25 @@ async function cargarCotizaciones() {
                         ? Number(c.total) || 0
                         : Math.max(
                             0,
-                            subtotal - descuento
+                            subtotal - descuentoCalculado
                         );
+
+
+                const abono =
+                    Math.min(
+                        Math.max(
+                            0,
+                            Number(c.abono) || 0
+                        ),
+                        total
+                    );
+
+
+                const restante =
+                    Math.max(
+                        0,
+                        total - abono
+                    );
 
 
                 return {
@@ -1527,13 +1527,22 @@ async function cargarCotizaciones() {
                         precio,
 
                     descuento:
-                        descuento,
+                        descuentoCalculado,
+
+                    descuentoporcentaje:
+                        porcentaje,
 
                     subtotal:
                         subtotal,
 
                     total:
-                        total
+                        total,
+
+                    abono:
+                        abono,
+
+                    restante:
+                        restante
 
                 };
 
@@ -1569,7 +1578,7 @@ function mostrarCotizaciones() {
         ).value;
 
 
-    let filtradas =
+    const filtradas =
         cotizaciones.filter(function(c) {
 
             const coincideTexto =
@@ -1716,7 +1725,28 @@ function mostrarCotizaciones() {
                             </span>
 
                             <strong>
-                                ${dinero(c.descuento)}
+                                ${Number(c.descuentoporcentaje || 0).toLocaleString("es-MX", {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 2
+                                })}%
+                                · ${dinero(c.descuento)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            <span>
+                                Precio final por pieza
+                            </span>
+
+                            <strong>
+                                ${dinero(
+                                    c.cantidad > 0
+                                        ? c.total / c.cantidad
+                                        : 0
+                                )}
                             </strong>
 
                         </div>
@@ -1730,6 +1760,32 @@ function mostrarCotizaciones() {
 
                             <strong>
                                 ${dinero(c.total)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato dato-abono">
+
+                            <span>
+                                Abono
+                            </span>
+
+                            <strong>
+                                ${dinero(c.abono)}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="dato dato-restante">
+
+                            <span>
+                                Restante
+                            </span>
+
+                            <strong>
+                                ${dinero(c.restante)}
                             </strong>
 
                         </div>
@@ -1878,7 +1934,12 @@ function abrirNuevaCotizacion() {
 
 
     document.getElementById(
-        "descuento"
+        "descuentoPorcentaje"
+    ).value = 0;
+
+
+    document.getElementById(
+        "abono"
     ).value = 0;
 
 
@@ -1897,7 +1958,25 @@ function abrirNuevaCotizacion() {
 
 
     document.getElementById(
+        "montoDescuento"
+    ).textContent =
+        "$0";
+
+
+    document.getElementById(
+        "precioFinal"
+    ).textContent =
+        "$0";
+
+
+    document.getElementById(
         "total"
+    ).textContent =
+        "$0";
+
+
+    document.getElementById(
+        "restante"
     ).textContent =
         "$0";
 
@@ -1974,22 +2053,63 @@ function calcularTotal() {
         ) || 0;
 
 
-    const descuento =
-        Number(
-            document.getElementById(
-                "descuento"
-            ).value
-        ) || 0;
+    const porcentaje =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                Number(
+                    document.getElementById(
+                        "descuentoPorcentaje"
+                    ).value
+                ) || 0
+            )
+        );
+
+
+    const abono =
+        Math.max(
+            0,
+            Number(
+                document.getElementById(
+                    "abono"
+                ).value
+            ) || 0
+        );
 
 
     const subtotal =
         precio * cantidad;
 
 
+    const montoDescuento =
+        subtotal * porcentaje / 100;
+
+
     const total =
         Math.max(
             0,
-            subtotal - descuento
+            subtotal - montoDescuento
+        );
+
+
+    const precioFinal =
+        cantidad > 0
+            ? total / cantidad
+            : 0;
+
+
+    const abonoAplicado =
+        Math.min(
+            abono,
+            total
+        );
+
+
+    const restante =
+        Math.max(
+            0,
+            total - abonoAplicado
         );
 
 
@@ -2000,9 +2120,27 @@ function calcularTotal() {
 
 
     document.getElementById(
+        "montoDescuento"
+    ).textContent =
+        dinero(montoDescuento);
+
+
+    document.getElementById(
+        "precioFinal"
+    ).textContent =
+        dinero(precioFinal);
+
+
+    document.getElementById(
         "total"
     ).textContent =
         dinero(total);
+
+
+    document.getElementById(
+        "restante"
+    ).textContent =
+        dinero(restante);
 
 }
 
@@ -2070,9 +2208,15 @@ function editarCotizacion(id) {
 
 
     document.getElementById(
-        "descuento"
+        "descuentoPorcentaje"
     ).value =
-        c.descuento || 0;
+        c.descuentoporcentaje || 0;
+
+
+    document.getElementById(
+        "abono"
+    ).value =
+        c.abono || 0;
 
 
     document.getElementById(
@@ -2168,14 +2312,17 @@ async function guardarNuevaCotizacion(evento) {
             ) || 0;
 
 
-        const descuento =
-            Math.max(
-                0,
-                Number(
-                    document.getElementById(
-                        "descuento"
-                    ).value
-                ) || 0
+        const descuentoPorcentaje =
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    Number(
+                        document.getElementById(
+                            "descuentoPorcentaje"
+                        ).value
+                    ) || 0
+                )
             );
 
 
@@ -2183,10 +2330,30 @@ async function guardarNuevaCotizacion(evento) {
             precio * cantidad;
 
 
+        const descuento =
+            subtotal *
+            descuentoPorcentaje /
+            100;
+
+
         const total =
             Math.max(
                 0,
                 subtotal - descuento
+            );
+
+
+        const abono =
+            Math.min(
+                total,
+                Math.max(
+                    0,
+                    Number(
+                        document.getElementById(
+                            "abono"
+                        ).value
+                    ) || 0
+                )
             );
 
 
@@ -2231,11 +2398,17 @@ async function guardarNuevaCotizacion(evento) {
             precio:
                 precio,
 
+            descuentoporcentaje:
+                descuentoPorcentaje,
+
             descuento:
                 descuento,
 
             total:
                 total,
+
+            abono:
+                abono,
 
             fechacotizacion:
                 fechacotizacion,
@@ -2358,7 +2531,7 @@ async function eliminarCotizacion(id) {
 }
 
 
-/* CERRAR MODAL AL HACER CLICK AFUERA */
+/* CERRAR MODAL AFUERA */
 
 document
     .getElementById("modalCotizacion")
