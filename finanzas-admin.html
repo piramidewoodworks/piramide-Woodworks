@@ -162,6 +162,13 @@
             margin-top: 15px;
         }
 
+        .estado {
+            text-align: center;
+            color: var(--dorado-claro);
+            font-size: 12px;
+            margin: 0 0 18px;
+        }
+
         @media (max-width: 750px) {
             .resumen {
                 grid-template-columns: repeat(2, 1fr);
@@ -194,6 +201,10 @@
 <main>
 
     <a href="panel.html" class="volver">← Volver al panel</a>
+
+    <div id="estadoConexion" class="estado">
+        ☁️ Cargando información financiera...
+    </div>
 
     <section class="resumen">
 
@@ -262,13 +273,24 @@
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-const ventas =
-    JSON.parse(localStorage.getItem("ventas")) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-const gastos =
-    JSON.parse(localStorage.getItem("gastos")) || [];
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+let ventas = [];
+let gastos = [];
 
 function numero(valor) {
     return Number(valor) || 0;
@@ -286,24 +308,88 @@ function esEsteMes(fecha) {
     if (!fecha) return false;
 
     const ahora = new Date();
-    const fechaVenta = new Date(fecha);
+    const fechaRegistro = new Date(fecha);
 
     return (
-        fechaVenta.getMonth() === ahora.getMonth() &&
-        fechaVenta.getFullYear() === ahora.getFullYear()
+        fechaRegistro.getMonth() === ahora.getMonth() &&
+        fechaRegistro.getFullYear() === ahora.getFullYear()
     );
 }
 
 function obtenerMontoVenta(venta) {
-    return numero(
-        venta.total !== undefined
-            ? venta.total
-            : venta.precio
-    );
+
+    if (venta.total !== undefined && venta.total !== null) {
+        return numero(venta.total);
+    }
+
+    const precio = numero(venta.precio);
+    const cantidad = numero(venta.cantidad) || 1;
+
+    return precio * cantidad;
 }
 
 function obtenerMontoGasto(gasto) {
     return numero(gasto.monto);
+}
+
+async function cargarDatos() {
+
+    const estado =
+        document.getElementById("estadoConexion");
+
+    try {
+
+        const resultadoVentas =
+            await supabaseClient
+                .from("ventas")
+                .select("*")
+                .order("fecha", {
+                    ascending: false
+                });
+
+        if (resultadoVentas.error) {
+            throw resultadoVentas.error;
+        }
+
+        const resultadoGastos =
+            await supabaseClient
+                .from("gastos")
+                .select("*")
+                .order("fecha", {
+                    ascending: false
+                });
+
+        if (resultadoGastos.error) {
+            throw resultadoGastos.error;
+        }
+
+        ventas =
+            resultadoVentas.data || [];
+
+        gastos =
+            resultadoGastos.data || [];
+
+        estado.textContent =
+            "☁️ Finanzas sincronizadas";
+
+        calcularFinanzas();
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando finanzas:",
+            error
+        );
+
+        estado.textContent =
+            "⚠️ No se pudo cargar la información financiera.";
+
+        document.getElementById("metodosPago").innerHTML =
+            '<div class="vacio">No se pudieron cargar las ventas.</div>';
+
+        document.getElementById("categoriasGasto").innerHTML =
+            '<div class="vacio">No se pudieron cargar los gastos.</div>';
+    }
 }
 
 function calcularFinanzas() {
@@ -313,7 +399,8 @@ function calcularFinanzas() {
 
     ventas.forEach(function(venta) {
 
-        const monto = obtenerMontoVenta(venta);
+        const monto =
+            obtenerMontoVenta(venta);
 
         totalVendido += monto;
 
@@ -327,7 +414,8 @@ function calcularFinanzas() {
 
     gastos.forEach(function(gasto) {
 
-        const monto = obtenerMontoGasto(gasto);
+        const monto =
+            obtenerMontoGasto(gasto);
 
         totalGastado += monto;
 
@@ -426,12 +514,26 @@ function mostrarMetodosPago() {
 
     nombres.forEach(function(metodo) {
 
-        contenedor.innerHTML += `
-            <div class="fila">
-                <span>${metodo}</span>
-                <strong>${dinero(metodos[metodo])}</strong>
-            </div>
-        `;
+        const fila =
+            document.createElement("div");
+
+        fila.className = "fila";
+
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent = metodo;
+
+        const monto =
+            document.createElement("strong");
+
+        monto.textContent =
+            dinero(metodos[metodo]);
+
+        fila.appendChild(nombre);
+        fila.appendChild(monto);
+
+        contenedor.appendChild(fila);
     });
 }
 
@@ -470,16 +572,30 @@ function mostrarCategoriasGasto() {
 
     nombres.forEach(function(categoria) {
 
-        contenedor.innerHTML += `
-            <div class="fila">
-                <span>${categoria}</span>
-                <strong>${dinero(categorias[categoria])}</strong>
-            </div>
-        `;
+        const fila =
+            document.createElement("div");
+
+        fila.className = "fila";
+
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent = categoria;
+
+        const monto =
+            document.createElement("strong");
+
+        monto.textContent =
+            dinero(categorias[categoria]);
+
+        fila.appendChild(nombre);
+        fila.appendChild(monto);
+
+        contenedor.appendChild(fila);
     });
 }
 
-calcularFinanzas();
+cargarDatos();
 
 </script>
 

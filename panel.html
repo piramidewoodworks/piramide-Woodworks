@@ -119,7 +119,7 @@
         }
 
 
-        /* BOTÓN FLOTANTE DE NOTIFICACIONES */
+        /* BOTÓN DE NOTIFICACIONES */
 
         .boton-notificaciones {
             position: relative;
@@ -143,8 +143,6 @@
 
             text-decoration: none;
 
-            font-size: 23px;
-
             box-shadow:
                 0 5px 15px rgba(0, 0, 0, .12);
 
@@ -161,6 +159,16 @@
 
             box-shadow:
                 0 8px 20px rgba(0, 0, 0, .18);
+        }
+
+        .icono-campana {
+            width: 21px;
+            height: 21px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .contador-notificaciones {
@@ -311,9 +319,20 @@
 
             color: var(--dorado);
 
-            font-size: 20px;
-
             position: relative;
+        }
+
+        .icono svg {
+            width: 21px;
+            height: 21px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 1.6;
+
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .menu-boton strong {
@@ -356,6 +375,8 @@
             font-size: 13px;
 
             transition: .2s ease;
+
+            cursor: pointer;
         }
 
         .cerrar:hover {
@@ -422,7 +443,6 @@
                 width: 48px;
                 height: 48px;
                 flex-basis: 48px;
-                font-size: 21px;
             }
 
             .resumen {
@@ -441,6 +461,7 @@
                 grid-template-columns:
                     1fr;
             }
+
         }
 
     </style>
@@ -462,8 +483,6 @@
 
 <main class="panel">
 
-
-    <!-- BIENVENIDA -->
 
     <section class="bienvenida">
 
@@ -489,7 +508,13 @@
                 aria-label="Ver notificaciones"
             >
 
-                🔔
+                <svg
+                    class="icono-campana"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
 
                 <span
                     id="contadorNotificaciones"
@@ -505,8 +530,6 @@
     </section>
 
 
-    <!-- RESUMEN -->
-
     <h3 class="titulo-seccion">
         Resumen del negocio
     </h3>
@@ -521,7 +544,10 @@
                 Ventas del mes
             </span>
 
-            <strong class="dorado">
+            <strong
+                id="ventasMes"
+                class="dorado"
+            >
                 $0
             </strong>
 
@@ -534,7 +560,7 @@
                 Cotizaciones
             </span>
 
-            <strong>
+            <strong id="totalCotizaciones">
                 0
             </strong>
 
@@ -544,10 +570,10 @@
         <div class="tarjeta">
 
             <span>
-                Pedidos activos
+                Clientes
             </span>
 
-            <strong>
+            <strong id="totalClientes">
                 0
             </strong>
 
@@ -560,7 +586,10 @@
                 Gastos del mes
             </span>
 
-            <strong class="dorado">
+            <strong
+                id="gastosMes"
+                class="dorado"
+            >
                 $0
             </strong>
 
@@ -570,8 +599,6 @@
     </section>
 
 
-    <!-- ADMINISTRACIÓN -->
-
     <h3 class="titulo-seccion">
         Administración
     </h3>
@@ -580,10 +607,18 @@
     <section class="menu">
 
 
+        <!-- PRODUCTOS -->
+
         <a href="productos.html" class="menu-boton">
 
             <div class="icono">
-                📦
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 7.5 12 3l8 4.5-8 4.5z"></path>
+                    <path d="M4 7.5v9L12 21l8-4.5v-9"></path>
+                    <path d="M12 12v9"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -601,10 +636,19 @@
         </a>
 
 
+        <!-- COTIZACIONES -->
+
         <a href="cotizaciones-admin.html" class="menu-boton">
 
             <div class="icono">
-                📝
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 3.5h12v17H6z"></path>
+                    <path d="M9 7h6"></path>
+                    <path d="M9 11h6"></path>
+                    <path d="M9 15h4"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -622,31 +666,18 @@
         </a>
 
 
-        <a href="pedidos-admin.html" class="menu-boton">
-
-            <div class="icono">
-                🛒
-            </div>
-
-            <div>
-
-                <strong>
-                    Pedidos
-                </strong>
-
-                <small>
-                    Trabajos en proceso
-                </small>
-
-            </div>
-
-        </a>
-
+        <!-- VENTAS -->
 
         <a href="ventas-admin.html" class="menu-boton">
 
             <div class="icono">
-                💰
+
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8.5"></circle>
+                    <path d="M12 7v10"></path>
+                    <path d="M15 9.5c-.7-.7-1.7-1-3-1-1.6 0-2.7.8-2.7 2s1 1.8 2.7 2.2 2.7.8 2.7 2-1.1 2-2.7 2c-1.3 0-2.4-.4-3.1-1.1"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -664,10 +695,17 @@
         </a>
 
 
+        <!-- CLIENTES -->
+
         <a href="clientes-admin.html" class="menu-boton">
 
             <div class="icono">
-                👥
+
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="3"></circle>
+                    <path d="M6.5 20c.6-3.2 2.5-5 5.5-5s4.9 1.8 5.5 5"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -685,10 +723,19 @@
         </a>
 
 
+        <!-- GASTOS -->
+
         <a href="gastos-admin.html" class="menu-boton">
 
             <div class="icono">
-                💸
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 7h16v12H4z"></path>
+                    <path d="M7 7V5h10v2"></path>
+                    <path d="M8 12h8"></path>
+                    <path d="M8 15h5"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -706,10 +753,19 @@
         </a>
 
 
+        <!-- MARKETING -->
+
         <a href="marketing-admin.html" class="menu-boton">
 
             <div class="icono">
-                📣
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 11v2"></path>
+                    <path d="M7 9v6"></path>
+                    <path d="M10 7v10"></path>
+                    <path d="M13 9l7-4v14l-7-4z"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -727,10 +783,19 @@
         </a>
 
 
+        <!-- FINANZAS -->
+
         <a href="finanzas-admin.html" class="menu-boton">
 
             <div class="icono">
-                📊
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M5 19V9"></path>
+                    <path d="M10 19V5"></path>
+                    <path d="M15 19v-7"></path>
+                    <path d="M20 19V3"></path>
+                </svg>
+
             </div>
 
             <div>
@@ -754,7 +819,10 @@
 
             <div class="icono">
 
-                🔔
+                <svg viewBox="0 0 24 24">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
 
             </div>
 
@@ -776,7 +844,11 @@
     </section>
 
 
-    <a href="admin.html" class="cerrar">
+    <a
+        href="#"
+        class="cerrar"
+        id="cerrarSesion"
+    >
         ← Cerrar sesión
     </a>
 
@@ -791,72 +863,261 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* FORMATO DE DINERO */
+
+function numero(valor) {
+    return Number(valor) || 0;
+}
+
+
+function dinero(valor) {
+
+    return "$" + numero(valor).toLocaleString("es-MX", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+
+}
+
+
+/* FECHA DEL MES ACTUAL */
+
+function esEsteMes(fecha) {
+
+    if (!fecha) return false;
+
+    const ahora = new Date();
+    const fechaRegistro = new Date(fecha);
+
+    return (
+        fechaRegistro.getMonth() === ahora.getMonth() &&
+        fechaRegistro.getFullYear() === ahora.getFullYear()
+    );
+
+}
+
+
+/* MONTO DE VENTA */
+
+function obtenerMontoVenta(venta) {
+
+    if (
+        venta.total !== undefined &&
+        venta.total !== null
+    ) {
+        return numero(venta.total);
+    }
+
+    const precio =
+        numero(venta.precio);
+
+    const cantidad =
+        numero(venta.cantidad) || 1;
+
+    return precio * cantidad;
+
+}
 
 
 /* SALUDO */
 
-const usuario = localStorage.getItem("usuario");
-const saludo = document.getElementById("saludo");
+async function cargarUsuario() {
 
-if (usuario === "jorgefernando408@hotmail.com") {
-    saludo.textContent = "Bienvenido, Jorge";
-} else if (usuario === "armentanatalia5@gmail.com") {
-    saludo.textContent = "Bienvenida, Nat";
-} else {
-    saludo.textContent = "Bienvenido";
+    const saludo =
+        document.getElementById("saludo");
+
+    const resultado =
+        await supabaseClient.auth.getUser();
+
+    const usuario =
+        resultado.data?.user;
+
+    if (!usuario) {
+
+        window.location.href =
+            "admin.html";
+
+        return;
+    }
+
+    const correo =
+        (usuario.email || "").toLowerCase();
+
+    if (
+        correo ===
+        "jorgefernando408@hotmail.com"
+    ) {
+
+        saludo.textContent =
+            "Bienvenido, Jorge";
+
+    } else if (
+        correo ===
+        "armentanatalia5@gmail.com"
+    ) {
+
+        saludo.textContent =
+            "Bienvenida, Nat";
+
+    } else {
+
+        saludo.textContent =
+            "Bienvenido";
+
+    }
+
 }
+
+
+/* CARGAR RESUMEN */
+
+async function cargarResumen() {
+
+    try {
+
+        const [
+            resultadoVentas,
+            resultadoCotizaciones,
+            resultadoClientes,
+            resultadoGastos
+        ] = await Promise.all([
+
+            supabaseClient
+                .from("ventas")
+                .select("*"),
+
+            supabaseClient
+                .from("cotizaciones")
+                .select("id"),
+
+            supabaseClient
+                .from("clientes")
+                .select("id"),
+
+            supabaseClient
+                .from("gastos")
+                .select("*")
+
+        ]);
+
+
+        if (resultadoVentas.error) {
+            throw resultadoVentas.error;
+        }
+
+        if (resultadoCotizaciones.error) {
+            throw resultadoCotizaciones.error;
+        }
+
+        if (resultadoClientes.error) {
+            throw resultadoClientes.error;
+        }
+
+        if (resultadoGastos.error) {
+            throw resultadoGastos.error;
+        }
+
+
+        const ventas =
+            resultadoVentas.data || [];
+
+        const cotizaciones =
+            resultadoCotizaciones.data || [];
+
+        const clientes =
+            resultadoClientes.data || [];
+
+        const gastos =
+            resultadoGastos.data || [];
+
+
+        let ventasMes = 0;
+
+        ventas.forEach(function(venta) {
+
+            if (esEsteMes(venta.fecha)) {
+
+                ventasMes +=
+                    obtenerMontoVenta(venta);
+
+            }
+
+        });
+
+
+        let gastosMes = 0;
+
+        gastos.forEach(function(gasto) {
+
+            if (esEsteMes(gasto.fecha)) {
+
+                gastosMes +=
+                    numero(gasto.monto);
+
+            }
+
+        });
+
+
+        document.getElementById(
+            "ventasMes"
+        ).textContent =
+            dinero(ventasMes);
+
+
+        document.getElementById(
+            "gastosMes"
+        ).textContent =
+            dinero(gastosMes);
+
+
+        document.getElementById(
+            "totalCotizaciones"
+        ).textContent =
+            cotizaciones.length;
+
+
+        document.getElementById(
+            "totalClientes"
+        ).textContent =
+            clientes.length;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando resumen:",
+            error
+        );
+
+    }
+
+}
+
 
 /* CONTADOR DE NOTIFICACIONES */
 
-function actualizarContadorNotificaciones() {
-
-    const pedidos =
-        JSON.parse(
-            localStorage.getItem("pedidos")
-        ) || [];
-
-
-    const cotizaciones =
-        JSON.parse(
-            localStorage.getItem("cotizaciones")
-        ) || [];
-
-
-    let pendientes = 0;
-
-
-    /* PEDIDOS PENDIENTES */
-
-    pedidos.forEach(function(pedido) {
-
-        if (
-            pedido.estado === "Pendiente" ||
-            pedido.estado === "En proceso"
-        ) {
-
-            pendientes++;
-
-        }
-
-    });
-
-
-    /* COTIZACIONES PENDIENTES */
-
-    cotizaciones.forEach(function(cotizacion) {
-
-        if (
-            cotizacion.estado === "Pendiente" ||
-            cotizacion.estado === "Contactado"
-        ) {
-
-            pendientes++;
-
-        }
-
-    });
-
+async function actualizarContadorNotificaciones() {
 
     const contador =
         document.getElementById(
@@ -864,17 +1125,64 @@ function actualizarContadorNotificaciones() {
         );
 
 
-    if (pendientes > 0) {
+    try {
 
-        contador.textContent =
-            pendientes > 99
-            ? "99+"
-            : pendientes;
+        const resultado =
+            await supabaseClient
+                .from("cotizaciones")
+                .select("id, estado");
 
-        contador.style.display =
-            "flex";
 
-    } else {
+        if (resultado.error) {
+            throw resultado.error;
+        }
+
+
+        const cotizaciones =
+            resultado.data || [];
+
+
+        let pendientes = 0;
+
+
+        cotizaciones.forEach(function(cotizacion) {
+
+            if (
+                cotizacion.estado === "Pendiente" ||
+                cotizacion.estado === "Contactado"
+            ) {
+
+                pendientes++;
+
+            }
+
+        });
+
+
+        if (pendientes > 0) {
+
+            contador.textContent =
+                pendientes > 99
+                    ? "99+"
+                    : pendientes;
+
+            contador.style.display =
+                "flex";
+
+        } else {
+
+            contador.style.display =
+                "none";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando notificaciones:",
+            error
+        );
 
         contador.style.display =
             "none";
@@ -884,7 +1192,96 @@ function actualizarContadorNotificaciones() {
 }
 
 
-actualizarContadorNotificaciones();
+/* CERRAR SESIÓN */
+
+async function cerrarSesion(evento) {
+
+    evento.preventDefault();
+
+
+    const boton =
+        document.getElementById(
+            "cerrarSesion"
+        );
+
+
+    boton.textContent =
+        "Cerrando sesión...";
+
+
+    const resultado =
+        await supabaseClient.auth.signOut();
+
+
+    if (resultado.error) {
+
+        console.error(
+            "Error cerrando sesión:",
+            resultado.error
+        );
+
+        boton.textContent =
+            "← Cerrar sesión";
+
+        alert(
+            "No se pudo cerrar la sesión. Inténtalo nuevamente."
+        );
+
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "usuario"
+    );
+
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+/* INICIO */
+
+async function iniciarPanel() {
+
+    const resultado =
+        await supabaseClient.auth.getSession();
+
+
+    const sesion =
+        resultado.data?.session;
+
+
+    if (!sesion) {
+
+        window.location.href =
+            "admin.html";
+
+        return;
+
+    }
+
+
+    await cargarUsuario();
+
+    await cargarResumen();
+
+    await actualizarContadorNotificaciones();
+
+}
+
+
+document
+    .getElementById("cerrarSesion")
+    .addEventListener(
+        "click",
+        cerrarSesion
+    );
+
+
+iniciarPanel();
 
 
 </script>

@@ -1,6 +1,16 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Productos | Pirámide Woodworks</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Productos | Pirámide Woodworks</title>
+
+    <link rel="icon" type="image/jpeg" href="imagenes/logo.jpeg">
+    <link rel="apple-touch-icon" href="imagenes/logo.jpeg">
+    <link rel="manifest" href="manifest.json">
 
 <style>
 
@@ -76,7 +86,6 @@
         align-items: center;
         justify-content: space-between;
         gap: 15px;
-
         margin-bottom: 20px;
     }
 
@@ -84,7 +93,6 @@
         color: rgba(255,255,255,.75);
         text-decoration: none;
         font-size: 13px;
-
         transition: color .2s ease;
     }
 
@@ -122,9 +130,7 @@
         color: var(--texto);
 
         border-radius: 14px;
-
         padding: 27px;
-
         margin-bottom: 22px;
 
         box-shadow:
@@ -145,10 +151,7 @@
 
     .productos {
         display: grid;
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
+        grid-template-columns: repeat(2, 1fr);
         gap: 17px;
     }
 
@@ -157,7 +160,6 @@
         color: var(--texto);
 
         border-radius: 13px;
-
         padding: 18px;
 
         box-shadow:
@@ -256,9 +258,7 @@
 
     .acciones {
         display: flex;
-
         gap: 8px;
-
         margin-top: 15px;
     }
 
@@ -385,7 +385,6 @@
 
     .campo textarea {
         min-height: 90px;
-
         resize: vertical;
     }
 
@@ -441,6 +440,11 @@
         border-color: var(--dorado);
     }
 
+    .guardar:disabled {
+        opacity: .65;
+        cursor: wait;
+    }
+
     .cancelar {
         background: white;
         color: var(--texto);
@@ -479,6 +483,18 @@
         margin-bottom: 7px;
     }
 
+    .estado {
+        grid-column: 1 / -1;
+
+        text-align: center;
+
+        color: rgba(255,255,255,.75);
+
+        font-size: 13px;
+
+        padding: 20px;
+    }
+
     @media (max-width: 700px) {
 
         .productos {
@@ -515,391 +531,672 @@
 
 </style>
 
-</head><body><header><h1>Pirámide Woodworks</h1>
+</head>
 
-<p>Administración · Productos</p>
+<body>
 
-</header><main class="contenedor"><div class="barra-superior">
+<header>
 
-    <a href="panel.html" class="volver">
-        ← Volver al panel
-    </a>
+    <h1>Pirámide Woodworks</h1>
 
-    <button
-        class="boton-agregar"
-        onclick="abrirFormulario()"
-    >
-        + Agregar producto
-    </button>
+    <p>Administración · Productos</p>
 
-</div>
+</header>
 
-<section class="introduccion">
 
-    <h2>Productos</h2>
+<main class="contenedor">
 
-    <p>
-        Desde aquí podrás administrar los productos que
-        manejas en Pirámide Woodworks: nombres, categorías,
-        precios, medidas, materiales, fotografías y
-        descripciones.
-    </p>
+    <div class="barra-superior">
 
-</section>
+        <a href="panel.html" class="volver">
+            ← Volver al panel
+        </a>
 
-<section
-    id="lista-productos"
-    class="productos"
-></section>
+        <button
+            class="boton-agregar"
+            onclick="abrirFormulario()"
+        >
+            + Agregar producto
+        </button>
 
-</main><div id="modal"><div class="modal-contenido">
+    </div>
 
-    <h2 id="titulo-modal">
-        Agregar producto
-    </h2>
 
-    <form
-        id="form-producto"
-        onsubmit="guardarProducto(event)"
-    >
+    <section class="introduccion">
 
-        <input
-            type="hidden"
-            id="producto-id"
+        <h2>Productos</h2>
+
+        <p>
+            Desde aquí podrás administrar los productos que
+            manejas en Pirámide Woodworks: nombres, categorías,
+            precios, medidas, materiales, fotografías y
+            descripciones.
+        </p>
+
+    </section>
+
+
+    <section
+        id="lista-productos"
+        class="productos"
+    ></section>
+
+</main>
+
+
+<div id="modal">
+
+    <div class="modal-contenido">
+
+        <h2 id="titulo-modal">
+            Agregar producto
+        </h2>
+
+
+        <form
+            id="form-producto"
+            onsubmit="guardarProducto(event)"
         >
 
-        <div class="campo">
-
-            <label for="nombre">
-                Nombre del producto
-            </label>
-
             <input
-                type="text"
-                id="nombre"
-                placeholder="Ej. TequilaBox"
-                required
+                type="hidden"
+                id="producto-id"
             >
 
-        </div>
-
-        <div class="fila">
 
             <div class="campo">
 
-                <label for="categoria">
-                    Categoría
-                </label>
-
-                <select
-                    id="categoria"
-                    required
-                >
-
-                    <option value="">
-                        Seleccionar
-                    </option>
-
-                    <option value="Tequileras">
-                        Cajas para Tequila & Botellas
-                    </option>
-
-                    <option value="Regalo">
-                        Cajas de Regalo
-                    </option>
-
-                    <option value="Portallaves">
-                        Portallaves
-                    </option>
-
-                    <option value="Centros">
-                        Centros de Mesa
-                    </option>
-
-                    <option value="Mesas">
-                        Mesas
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="campo">
-
-                <label for="precio">
-                    Precio
+                <label for="nombre">
+                    Nombre del producto
                 </label>
 
                 <input
-                    type="number"
-                    id="precio"
-                    min="0"
-                    step="1"
-                    placeholder="0"
+                    type="text"
+                    id="nombre"
+                    placeholder="Ej. TequilaBox"
                     required
                 >
 
             </div>
 
-        </div>
 
-        <div class="campo">
+            <div class="fila">
 
-            <label for="descripcion">
-                Descripción
-            </label>
+                <div class="campo">
 
-            <textarea
-                id="descripcion"
-                placeholder="Describe el producto..."
-                required
-            ></textarea>
+                    <label for="categoria">
+                        Categoría
+                    </label>
 
-        </div>
+                    <select
+                        id="categoria"
+                        required
+                    >
 
-        <div class="fila">
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="Tequileras">
+                            Cajas para Tequila & Botellas
+                        </option>
+
+                        <option value="Regalo">
+                            Cajas de Regalo
+                        </option>
+
+                        <option value="Portallaves">
+                            Portallaves
+                        </option>
+
+                        <option value="Centros">
+                            Centros de Mesa
+                        </option>
+
+                        <option value="Mesas">
+                            Mesas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="precio">
+                        Precio
+                    </label>
+
+                    <input
+                        type="number"
+                        id="precio"
+                        min="0"
+                        step="1"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
 
             <div class="campo">
 
-                <label for="medidas">
-                    Medidas
+                <label for="descripcion">
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcion"
+                    placeholder="Describe el producto..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="fila">
+
+                <div class="campo">
+
+                    <label for="medidas">
+                        Medidas
+                    </label>
+
+                    <input
+                        type="text"
+                        id="medidas"
+                        placeholder="Ej. 30 × 20 × 10 cm"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="material">
+                        Material
+                    </label>
+
+                    <input
+                        type="text"
+                        id="material"
+                        placeholder="Ej. Triplay Birch 4 mm"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="imagen">
+                    Ruta de imagen
                 </label>
 
                 <input
                     type="text"
-                    id="medidas"
-                    placeholder="Ej. 30 × 20 × 10 cm"
+                    id="imagen"
+                    placeholder="Ej. imagenes/producto.jpeg"
                 >
 
             </div>
 
-            <div class="campo">
 
-                <label for="material">
-                    Material
-                </label>
+            <div class="modal-botones">
 
-                <input
-                    type="text"
-                    id="material"
-                    placeholder="Ej. Triplay Birch 4 mm"
+                <button
+                    type="button"
+                    class="cancelar"
+                    onclick="cerrarFormulario()"
                 >
+                    Cancelar
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="guardar"
+                    id="botonGuardar"
+                >
+                    Guardar producto
+                </button>
 
             </div>
 
-        </div>
+        </form>
 
-        <div class="campo">
-
-            <label for="imagen">
-                Ruta de imagen
-            </label>
-
-            <input
-                type="text"
-                id="imagen"
-                placeholder="Ej. imagenes/producto.jpeg"
-            >
-
-        </div>
-
-        <div class="modal-botones">
-
-            <button
-                type="button"
-                class="cancelar"
-                onclick="cerrarFormulario()"
-            >
-                Cancelar
-            </button>
-
-            <button
-                type="submit"
-                class="guardar"
-            >
-                Guardar producto
-            </button>
-
-        </div>
-
-    </form>
+    </div>
 
 </div>
 
-</div><script>
 
-/* =========================
-   PRODUCTOS INICIALES
-========================= */
+<!-- SUPABASE -->
 
-let productos =
-    JSON.parse(
-        localStorage.getItem("productos")
-    ) || [
-
-        {
-            id: 1,
-            nombre: "BottleBox",
-            categoria: "Tequileras",
-            precio: 600,
-            descripcion:
-                "Caja personalizada sin tequila para cualquier otro tamaño o marca.",
-            medidas:
-                "A elegir",
-            material:
-                "Madera Triplay Birch 4 mm",
-            imagen:
-                "imagenes/botllebox.jpeg"
-        },
-
-        {
-            id: 2,
-            nombre: "TequilaBox",
-            categoria: "Tequileras",
-            precio: 1200,
-            descripcion:
-                "Caja personalizada por dentro y fuera.",
-            medidas:
-                "",
-            material:
-                "Triplay Birch 4 mm",
-            imagen:
-                "imagenes/TequilaBox.jpeg"
-        },
-
-        {
-            id: 3,
-            nombre: "GiftBox",
-            categoria: "Regalo",
-            precio: 550,
-            descripcion:
-                "Caja de madera personalizada para regalos.",
-            medidas:
-                "30 × 20 × 10 cm",
-            material:
-                "Triplay Birch 4 mm",
-            imagen:
-                "imagenes/GiftBox.jpeg"
-        },
-
-        {
-            id: 4,
-            nombre: "SlidingBox",
-            categoria: "Regalo",
-            precio: 400,
-            descripcion:
-                "Caja deslizante personalizada.",
-            medidas:
-                "30 × 20 × 10 cm",
-            material:
-                "Triplay Birch 4 mm",
-            imagen:
-                "imagenes/slidingBox.jpeg"
-        },
-
-        {
-            id: 5,
-            nombre: "Portallaves Home",
-            categoria: "Portallaves",
-            precio: 130,
-            descripcion:
-                "Portallaves de pared decorativo y funcional.",
-            medidas:
-                "30 × 20 × 10 cm",
-            material:
-                "Madera",
-            imagen:
-                "imagenes/portallaves.jpeg"
-        },
-
-        {
-            id: 6,
-            nombre: "Carruaje de Cenicienta",
-            categoria: "Centros",
-            precio: 155,
-            descripcion:
-                "Centro de mesa con diseño de carruaje de Cenicienta.",
-            medidas:
-                "",
-            material:
-                "MDF",
-            imagen:
-                "imagenes/cenicienta.png"
-        },
-
-        {
-            id: 7,
-            nombre: "Mesa Carruaje Gigante",
-            categoria: "Mesas",
-            precio: 2500,
-            descripcion:
-                "Mesa decorativa con forma de carruaje clásico para eventos.",
-            medidas:
-                "2 m × 1.5 m",
-            material:
-                "Madera",
-            imagen:
-                "imagenes/mesa.png"
-        }
-
-    ];
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-/* =========================
-   CORREGIR FOTOS EXISTENTES
-========================= */
+<script>
 
-const fotosProductos = {
+/* ==========================================
+   CONEXIÓN CON SUPABASE
+========================================== */
 
-    1: "imagenes/botllebox.jpeg",
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-    2: "imagenes/TequilaBox.jpeg",
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
 
-    3: "imagenes/GiftBox.jpeg",
-
-    4: "imagenes/slidingBox.jpeg",
-
-    5: "imagenes/portallaves.jpeg",
-
-    6: "imagenes/cenicienta.png",
-
-    7: "imagenes/mesa.png"
-
-};
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
-productos.forEach(function(producto) {
+/* ==========================================
+   PRODUCTOS
+========================================== */
 
-    if (fotosProductos[producto.id]) {
+let productos = [];
 
-        producto.imagen =
-            fotosProductos[producto.id];
+
+/* ==========================================
+   ESCAPAR TEXTO PARA HTML
+========================================== */
+
+function escaparHTML(valor) {
+
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ==========================================
+   PRODUCTOS ANTIGUOS
+========================================== */
+
+const productosIniciales = [
+
+    {
+        nombre: "BottleBox",
+        categoria: "Tequileras",
+        precio: 600,
+        descripcion:
+            "Caja personalizada sin tequila para cualquier otro tamaño o marca.",
+        medidas:
+            "A elegir",
+        material:
+            "Madera Triplay Birch 4 mm",
+        imagen:
+            "imagenes/botllebox.jpeg"
+    },
+
+    {
+        nombre: "TequilaBox",
+        categoria: "Tequileras",
+        precio: 1200,
+        descripcion:
+            "Caja personalizada por dentro y fuera.",
+        medidas:
+            "",
+        material:
+            "Triplay Birch 4 mm",
+        imagen:
+            "imagenes/TequilaBox.jpeg"
+    },
+
+    {
+        nombre: "GiftBox",
+        categoria: "Regalo",
+        precio: 550,
+        descripcion:
+            "Caja de madera personalizada para regalos.",
+        medidas:
+            "30 × 20 × 10 cm",
+        material:
+            "Triplay Birch 4 mm",
+        imagen:
+            "imagenes/GiftBox.jpeg"
+    },
+
+    {
+        nombre: "SlidingBox",
+        categoria: "Regalo",
+        precio: 400,
+        descripcion:
+            "Caja deslizante personalizada.",
+        medidas:
+            "30 × 20 × 10 cm",
+        material:
+            "Triplay Birch 4 mm",
+        imagen:
+            "imagenes/slidingBox.jpeg"
+    },
+
+    {
+        nombre: "Portallaves Home",
+        categoria: "Portallaves",
+        precio: 130,
+        descripcion:
+            "Portallaves de pared decorativo y funcional.",
+        medidas:
+            "30 × 20 × 10 cm",
+        material:
+            "Madera",
+        imagen:
+            "imagenes/portallaves.jpeg"
+    },
+
+    {
+        nombre: "Carruaje de Cenicienta",
+        categoria: "Centros",
+        precio: 155,
+        descripcion:
+            "Centro de mesa con diseño de carruaje de Cenicienta.",
+        medidas:
+            "",
+        material:
+            "MDF",
+        imagen:
+            "imagenes/cenicienta.png"
+    },
+
+    {
+        nombre: "Mesa Carruaje Gigante",
+        categoria: "Mesas",
+        precio: 2500,
+        descripcion:
+            "Mesa decorativa con forma de carruaje clásico para eventos.",
+        medidas:
+            "2 m × 1.5 m",
+        material:
+            "Madera",
+        imagen:
+            "imagenes/mesa.png"
+    }
+
+];
+
+
+/* ==========================================
+   COMPROBAR SESIÓN
+========================================== */
+
+async function comprobarSesion() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
+
+
+    if (
+        error ||
+        !data ||
+        !data.session ||
+        !data.session.user
+    ) {
+
+        window.location.href =
+            "admin.html";
+
+        return false;
 
     }
 
-});
+
+    return true;
+
+}
 
 
-/* =========================
-   GUARDAR
-========================= */
+/* ==========================================
+   MIGRAR PRODUCTOS DEL LOCALSTORAGE
+========================================== */
 
-function guardarDatos() {
+async function migrarProductosAntiguos() {
+
+    const yaMigrados =
+        localStorage.getItem(
+            "productosMigradosSupabase"
+        );
+
+
+    if (yaMigrados === "true") {
+        return;
+    }
+
+
+    const {
+        data: productosSupabase,
+        error: errorConsulta
+    } = await supabaseClient
+        .from("productos")
+        .select("id")
+        .limit(1);
+
+
+    if (errorConsulta) {
+
+        console.error(
+            "Error consultando productos:",
+            errorConsulta
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Si Supabase ya tiene productos,
+       no volvemos a insertar los antiguos.
+    */
+
+    if (
+        productosSupabase &&
+        productosSupabase.length > 0
+    ) {
+
+        localStorage.setItem(
+            "productosMigradosSupabase",
+            "true"
+        );
+
+        return;
+
+    }
+
+
+    let productosLocales = [];
+
+
+    try {
+
+        productosLocales =
+            JSON.parse(
+                localStorage.getItem("productos")
+            ) || [];
+
+    } catch (error) {
+
+        productosLocales = [];
+
+    }
+
+
+    /*
+       Si no hay productos locales,
+       utilizamos los productos que ya tenía
+       esta página.
+    */
+
+    if (
+        !Array.isArray(productosLocales) ||
+        productosLocales.length === 0
+    ) {
+
+        productosLocales =
+            productosIniciales;
+
+    }
+
+
+    const productosParaInsertar =
+        productosLocales.map(function(producto) {
+
+            return {
+
+                nombre:
+                    producto.nombre || "",
+
+                categoria:
+                    producto.categoria || "",
+
+                precio:
+                    Number(producto.precio) || 0,
+
+                descripcion:
+                    producto.descripcion || "",
+
+                medidas:
+                    producto.medidas || "",
+
+                material:
+                    producto.material || "",
+
+                imagen:
+                    producto.imagen || ""
+
+            };
+
+        });
+
+
+    if (
+        productosParaInsertar.length === 0
+    ) {
+
+        localStorage.setItem(
+            "productosMigradosSupabase",
+            "true"
+        );
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("productos")
+        .insert(productosParaInsertar);
+
+
+    if (error) {
+
+        console.error(
+            "Error migrando productos:",
+            error
+        );
+
+        return;
+
+    }
+
 
     localStorage.setItem(
-        "productos",
-        JSON.stringify(productos)
+        "productosMigradosSupabase",
+        "true"
     );
 
 }
 
 
-guardarDatos();
+/* ==========================================
+   CARGAR PRODUCTOS
+========================================== */
+
+async function cargarProductos() {
+
+    const contenedor =
+        document.getElementById(
+            "lista-productos"
+        );
 
 
-/* =========================
+    contenedor.innerHTML = `
+
+        <div class="estado">
+            Cargando productos...
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("id", {
+            ascending: true
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+
+            <div class="vacio">
+
+                <strong>
+                    No se pudieron cargar los productos
+                </strong>
+
+                Revisa tu conexión con Supabase.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    productos =
+        Array.isArray(data)
+        ? data
+        : [];
+
+
+    mostrarProductos();
+
+}
+
+
+/* ==========================================
    MOSTRAR PRODUCTOS
-========================= */
+========================================== */
 
 function mostrarProductos() {
 
@@ -930,6 +1227,7 @@ function mostrarProductos() {
         `;
 
         return;
+
     }
 
 
@@ -943,8 +1241,8 @@ function mostrarProductos() {
             imagenHTML = `
 
                 <img
-                    src="${producto.imagen}"
-                    alt="${producto.nombre}"
+                    src="${escaparHTML(producto.imagen)}"
+                    alt="${escaparHTML(producto.nombre)}"
                     onerror="this.parentElement.innerHTML='Sin fotografía'"
                 >
 
@@ -970,17 +1268,17 @@ function mostrarProductos() {
 
 
                 <h3>
-                    ${producto.nombre}
+                    ${escaparHTML(producto.nombre)}
                 </h3>
 
 
                 <span class="categoria">
-                    ${producto.categoria}
+                    ${escaparHTML(producto.categoria)}
                 </span>
 
 
                 <p class="producto-descripcion">
-                    ${producto.descripcion}
+                    ${escaparHTML(producto.descripcion)}
                 </p>
 
 
@@ -990,7 +1288,7 @@ function mostrarProductos() {
                         producto.medidas
                         ? `<div>
                             <strong>Medidas:</strong>
-                            ${producto.medidas}
+                            ${escaparHTML(producto.medidas)}
                            </div>`
                         : ""
                     }
@@ -1000,7 +1298,7 @@ function mostrarProductos() {
                         producto.material
                         ? `<div>
                             <strong>Material:</strong>
-                            ${producto.material}
+                            ${escaparHTML(producto.material)}
                            </div>`
                         : ""
                     }
@@ -1009,7 +1307,7 @@ function mostrarProductos() {
 
 
                 <div class="producto-precio">
-                    $${Number(producto.precio).toLocaleString("es-MX")} MXN
+                    $${Number(producto.precio || 0).toLocaleString("es-MX")} MXN
                 </div>
 
 
@@ -1017,7 +1315,7 @@ function mostrarProductos() {
 
                     <button
                         class="accion editar"
-                        onclick="editarProducto(${producto.id})"
+                        onclick="editarProducto(${Number(producto.id)})"
                     >
                         Editar
                     </button>
@@ -1025,7 +1323,7 @@ function mostrarProductos() {
 
                     <button
                         class="accion eliminar"
-                        onclick="eliminarProducto(${producto.id})"
+                        onclick="eliminarProducto(${Number(producto.id)})"
                     >
                         Eliminar
                     </button>
@@ -1041,9 +1339,9 @@ function mostrarProductos() {
 }
 
 
-/* =========================
+/* ==========================================
    ABRIR FORMULARIO
-========================= */
+========================================== */
 
 function abrirFormulario() {
 
@@ -1070,9 +1368,9 @@ function abrirFormulario() {
 }
 
 
-/* =========================
+/* ==========================================
    CERRAR FORMULARIO
-========================= */
+========================================== */
 
 function cerrarFormulario() {
 
@@ -1083,13 +1381,19 @@ function cerrarFormulario() {
 }
 
 
-/* =========================
+/* ==========================================
    GUARDAR PRODUCTO
-========================= */
+========================================== */
 
-function guardarProducto(event) {
+async function guardarProducto(event) {
 
     event.preventDefault();
+
+
+    const boton =
+        document.getElementById(
+            "botonGuardar"
+        );
 
 
     const id =
@@ -1099,11 +1403,6 @@ function guardarProducto(event) {
 
 
     const producto = {
-
-        id:
-            id
-            ? Number(id)
-            : Date.now(),
 
         nombre:
             document.getElementById(
@@ -1120,7 +1419,7 @@ function guardarProducto(event) {
                 document.getElementById(
                     "precio"
                 ).value
-            ),
+            ) || 0,
 
         descripcion:
             document.getElementById(
@@ -1145,44 +1444,79 @@ function guardarProducto(event) {
     };
 
 
+    boton.disabled = true;
+    boton.textContent =
+        "Guardando...";
+
+
+    let error;
+
+
     if (id) {
 
-        const indice =
-            productos.findIndex(
-                function(item) {
-
-                    return item.id === Number(id);
-
-                }
-            );
+        const resultado =
+            await supabaseClient
+                .from("productos")
+                .update(producto)
+                .eq("id", Number(id));
 
 
-        if (indice !== -1) {
-
-            productos[indice] =
-                producto;
-
-        }
+        error =
+            resultado.error;
 
     } else {
 
-        productos.push(producto);
+        const resultado =
+            await supabaseClient
+                .from("productos")
+                .insert([producto]);
+
+
+        error =
+            resultado.error;
 
     }
 
 
-    guardarDatos();
+    if (error) {
 
-    mostrarProductos();
+        console.error(
+            "Error guardando producto:",
+            error
+        );
+
+
+        alert(
+            "No se pudo guardar el producto."
+        );
+
+
+        boton.disabled = false;
+
+        boton.textContent =
+            "Guardar producto";
+
+        return;
+
+    }
+
+
+    await cargarProductos();
 
     cerrarFormulario();
+
+
+    boton.disabled = false;
+
+    boton.textContent =
+        "Guardar producto";
 
 }
 
 
-/* =========================
-   EDITAR
-========================= */
+/* ==========================================
+   EDITAR PRODUCTO
+========================================== */
 
 function editarProducto(id) {
 
@@ -1190,7 +1524,7 @@ function editarProducto(id) {
         productos.find(
             function(item) {
 
-                return item.id === id;
+                return Number(item.id) === Number(id);
 
             }
         );
@@ -1203,42 +1537,50 @@ function editarProducto(id) {
 
     document.getElementById(
         "producto-id"
-    ).value = producto.id;
+    ).value =
+        producto.id;
 
 
     document.getElementById(
         "nombre"
-    ).value = producto.nombre;
+    ).value =
+        producto.nombre || "";
 
 
     document.getElementById(
         "categoria"
-    ).value = producto.categoria;
+    ).value =
+        producto.categoria || "";
 
 
     document.getElementById(
         "precio"
-    ).value = producto.precio;
+    ).value =
+        producto.precio || 0;
 
 
     document.getElementById(
         "descripcion"
-    ).value = producto.descripcion;
+    ).value =
+        producto.descripcion || "";
 
 
     document.getElementById(
         "medidas"
-    ).value = producto.medidas;
+    ).value =
+        producto.medidas || "";
 
 
     document.getElementById(
         "material"
-    ).value = producto.material;
+    ).value =
+        producto.material || "";
 
 
     document.getElementById(
         "imagen"
-    ).value = producto.imagen;
+    ).value =
+        producto.imagen || "";
 
 
     document.getElementById(
@@ -1254,17 +1596,17 @@ function editarProducto(id) {
 }
 
 
-/* =========================
-   ELIMINAR
-========================= */
+/* ==========================================
+   ELIMINAR PRODUCTO
+========================================== */
 
-function eliminarProducto(id) {
+async function eliminarProducto(id) {
 
     const producto =
         productos.find(
             function(item) {
 
-                return item.id === id;
+                return Number(item.id) === Number(id);
 
             }
         );
@@ -1288,27 +1630,61 @@ function eliminarProducto(id) {
     }
 
 
-    productos =
-        productos.filter(
-            function(item) {
+    const {
+        error
+    } = await supabaseClient
+        .from("productos")
+        .delete()
+        .eq("id", Number(id));
 
-                return item.id !== id;
 
-            }
+    if (error) {
+
+        console.error(
+            "Error eliminando producto:",
+            error
         );
 
 
-    guardarDatos();
+        alert(
+            "No se pudo eliminar el producto."
+        );
 
-    mostrarProductos();
+        return;
+
+    }
+
+
+    await cargarProductos();
 
 }
 
 
-/* =========================
+/* ==========================================
    INICIO
-========================= */
+========================================= */
 
-mostrarProductos();
+async function iniciarProductos() {
 
-</script></body></html>
+    const sesion =
+        await comprobarSesion();
+
+
+    if (!sesion) {
+        return;
+    }
+
+
+    await migrarProductosAntiguos();
+
+    await cargarProductos();
+
+}
+
+
+iniciarProductos();
+
+</script>
+
+</body>
+</html>

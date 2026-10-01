@@ -248,8 +248,8 @@
         </div>
 
         <div class="resumen-card">
-            <strong id="pedidosPendientes">0</strong>
-            <span>Pedidos pendientes</span>
+            <strong id="cotizacionesPendientes">0</strong>
+            <span>Cotizaciones pendientes</span>
         </div>
 
     </section>
@@ -257,171 +257,307 @@
     <section id="lista" class="lista"></section>
 
     <p class="nota">
-        Estas notificaciones se generan a partir de la información guardada
-        en pedidos, cotizaciones y ventas dentro de esta aplicación.
+        Estas notificaciones se generan a partir de la información
+        de cotizaciones y ventas registrada en Pirámide Woodworks.
         Las nuevas conversaciones de WhatsApp no pueden recibirse
         automáticamente desde una página HTML estática.
     </p>
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-let notificaciones =
-    JSON.parse(localStorage.getItem("notificaciones")) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-function guardarNotificaciones() {
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
 
-    localStorage.setItem(
-        "notificaciones",
-        JSON.stringify(notificaciones)
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
+
+let notificaciones = [];
+let cotizaciones = [];
+
+/* --------------------------------------------------
+   SESIÓN
+-------------------------------------------------- */
+
+async function verificarSesion() {
+
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+        window.location.href = "admin.html";
+        return false;
+    }
+
+    return true;
 }
 
-function agregarNotificacion(
-    titulo,
-    mensaje,
-    tipo,
-    fecha
-) {
+/* --------------------------------------------------
+   CARGAR NOTIFICACIONES
+-------------------------------------------------- */
 
-    const existe = notificaciones.some(function(notificacion) {
+async function cargarNotificaciones() {
 
-        return (
-            notificacion.titulo === titulo &&
-            notificacion.mensaje === mensaje
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("notificaciones")
+        .select("*")
+        .order("fecha", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(
+            "Error cargando notificaciones:",
+            error
         );
 
-    });
+        alert(
+            "No se pudieron cargar las notificaciones."
+        );
 
-    if (existe) {
         return;
     }
 
-    notificaciones.unshift({
-
-        id: Date.now() + Math.random(),
-
-        titulo: titulo,
-
-        mensaje: mensaje,
-
-        tipo: tipo,
-
-        fecha: fecha || new Date().toLocaleString("es-MX"),
-
-        leida: false
-
-    });
-}
-
-function generarNotificaciones() {
-
-    const pedidos =
-        JSON.parse(localStorage.getItem("pedidos")) || [];
-
-    const cotizaciones =
-        JSON.parse(localStorage.getItem("cotizaciones")) || [];
-
-    pedidos.forEach(function(pedido) {
-
-        if (
-            pedido.estado === "Pendiente" ||
-            pedido.estado === "En proceso"
-        ) {
-
-            agregarNotificacion(
-
-                "Pedido pendiente",
-
-                "El pedido de " +
-                (pedido.cliente || "cliente") +
-                " está en estado " +
-                pedido.estado +
-                ".",
-
-                "Pedido",
-
-                pedido.fecha
-
-            );
-
-        }
-
-    });
-
-    cotizaciones.forEach(function(cotizacion) {
-
-        if (
-            cotizacion.estado === "Pendiente" ||
-            cotizacion.estado === "Contactado"
-        ) {
-
-            agregarNotificacion(
-
-                "Cotización pendiente",
-
-                "Hay una cotización de " +
-                (cotizacion.cliente || "cliente") +
-                " pendiente de seguimiento.",
-
-                "Cotización",
-
-                cotizacion.fecha
-
-            );
-
-        }
-
-    });
-
-    guardarNotificaciones();
+    notificaciones = data || [];
 
     mostrarNotificaciones();
 }
 
-function marcarLeida(id) {
+/* --------------------------------------------------
+   CARGAR COTIZACIONES
+-------------------------------------------------- */
 
-    const notificacion =
-        notificaciones.find(function(item) {
+async function cargarCotizaciones() {
 
-            return item.id === id;
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("cotizaciones")
+        .select("*");
 
-        });
+    if (error) {
 
-    if (!notificacion) {
+        console.error(
+            "Error cargando cotizaciones:",
+            error
+        );
+
+        return [];
+    }
+
+    cotizaciones = data || [];
+
+    return cotizaciones;
+}
+
+/* --------------------------------------------------
+   GENERAR NOTIFICACIONES
+-------------------------------------------------- */
+
+async function generarNotificaciones() {
+
+    await cargarCotizaciones();
+
+    let cambios = false;
+
+    const pendientes =
+        cotizaciones.filter(
+            function(cotizacion) {
+
+                return (
+                    cotizacion.estado === "Pendiente" ||
+                    cotizacion.estado === "Contactado"
+                );
+
+            }
+        );
+
+    for (
+        const cotizacion of pendientes
+    ) {
+
+        const cliente =
+            cotizacion.cliente ||
+            "cliente";
+
+        const referencia =
+            cotizacion.id;
+
+        const titulo =
+            "Cotización pendiente";
+
+        const mensaje =
+            "Hay una cotización de " +
+            cliente +
+            " pendiente de seguimiento.";
+
+        const existe =
+            notificaciones.some(
+                function(notificacion) {
+
+                    return (
+                        notificacion.tipo ===
+                            "Cotización" &&
+
+                        Number(
+                            notificacion.referencia_id
+                        ) ===
+                            Number(referencia)
+                    );
+
+                }
+            );
+
+        if (existe) {
+            continue;
+        }
+
+        const {
+            error
+        } = await supabaseClient
+            .from("notificaciones")
+            .insert({
+
+                tipo: "Cotización",
+
+                titulo: titulo,
+
+                mensaje: mensaje,
+
+                referencia_id: referencia,
+
+                leida: false,
+
+                fecha:
+                    cotizacion.fechacotizacion
+                    ? new Date(
+                        cotizacion.fechacotizacion
+                      ).toISOString()
+                    : new Date().toISOString()
+
+            });
+
+        if (error) {
+
+            console.error(
+                "Error creando notificación:",
+                error
+            );
+
+            continue;
+        }
+
+        cambios = true;
+    }
+
+    if (cambios) {
+        await cargarNotificaciones();
+    } else {
+        mostrarNotificaciones();
+    }
+}
+
+/* --------------------------------------------------
+   MARCAR LEÍDA
+-------------------------------------------------- */
+
+async function marcarLeida(id) {
+
+    const {
+        error
+    } = await supabaseClient
+        .from("notificaciones")
+        .update({
+            leida: true
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Error marcando notificación:",
+            error
+        );
+
+        alert(
+            "No se pudo marcar como leída."
+        );
+
         return;
     }
 
-    notificacion.leida = true;
-
-    guardarNotificaciones();
-
-    mostrarNotificaciones();
+    await cargarNotificaciones();
 }
 
-function eliminarNotificacion(id) {
+/* --------------------------------------------------
+   ELIMINAR
+-------------------------------------------------- */
 
-    notificaciones =
-        notificaciones.filter(function(item) {
+async function eliminarNotificacion(id) {
 
-            return item.id !== id;
+    if (
+        !confirm(
+            "¿Eliminar esta notificación?"
+        )
+    ) {
+        return;
+    }
 
-        });
+    const {
+        error
+    } = await supabaseClient
+        .from("notificaciones")
+        .delete()
+        .eq("id", id);
 
-    guardarNotificaciones();
+    if (error) {
 
-    mostrarNotificaciones();
+        console.error(
+            "Error eliminando notificación:",
+            error
+        );
+
+        alert(
+            "No se pudo eliminar la notificación."
+        );
+
+        return;
+    }
+
+    await cargarNotificaciones();
 }
+
+/* --------------------------------------------------
+   MOSTRAR
+-------------------------------------------------- */
 
 function mostrarNotificaciones() {
 
     const lista =
-        document.getElementById("lista");
+        document.getElementById(
+            "lista"
+        );
 
     lista.innerHTML = "";
 
-    if (notificaciones.length === 0) {
+    if (
+        notificaciones.length === 0
+    ) {
 
         lista.innerHTML =
             '<div class="vacio">' +
@@ -430,102 +566,226 @@ function mostrarNotificaciones() {
 
     } else {
 
-        notificaciones.forEach(function(notificacion) {
+        notificaciones.forEach(
+            function(notificacion) {
 
-            const tarjeta =
-                document.createElement("div");
+                const tarjeta =
+                    document.createElement(
+                        "div"
+                    );
 
-            tarjeta.className =
-                "notificacion" +
-                (notificacion.leida ? " leida" : "");
+                tarjeta.className =
+                    "notificacion" +
+                    (
+                        notificacion.leida
+                        ? " leida"
+                        : ""
+                    );
 
-            tarjeta.innerHTML = `
+                const titulo =
+                    escaparHTML(
+                        notificacion.titulo ||
+                        ""
+                    );
 
-                <div class="notificacion-top">
+                const mensaje =
+                    escaparHTML(
+                        notificacion.mensaje ||
+                        ""
+                    );
 
-                    <div>
+                const tipo =
+                    escaparHTML(
+                        notificacion.tipo ||
+                        ""
+                    );
 
-                        <h3>
-                            ${notificacion.titulo}
-                        </h3>
+                const fecha =
+                    formatearFecha(
+                        notificacion.fecha
+                    );
 
-                        <div class="fecha">
-                            ${notificacion.fecha || ""}
+                tarjeta.innerHTML = `
+
+                    <div class="notificacion-top">
+
+                        <div>
+
+                            <h3>
+                                ${titulo}
+                            </h3>
+
+                            <div class="fecha">
+                                ${fecha}
+                            </div>
+
                         </div>
+
+                        <span class="tipo">
+                            ${tipo}
+                        </span>
 
                     </div>
 
-                    <span class="tipo">
-                        ${notificacion.tipo}
-                    </span>
+                    <p>
+                        ${mensaje}
+                    </p>
 
-                </div>
+                    <div class="botones">
 
-                <p>
-                    ${notificacion.mensaje}
-                </p>
+                        ${
+                            !notificacion.leida
+                            ?
+                            `
+                                <button
+                                    onclick="marcarLeida(${notificacion.id})">
+                                    Marcar como leída
+                                </button>
+                            `
+                            :
+                            ""
+                        }
 
-                <div class="botones">
+                        <button
+                            onclick="eliminarNotificacion(${notificacion.id})">
+                            Eliminar
+                        </button>
 
-                    ${
-                        !notificacion.leida
-                        ?
-                        `<button
-                            onclick="marcarLeida(${notificacion.id})">
-                            Marcar como leída
-                        </button>`
-                        :
-                        ""
-                    }
+                    </div>
 
-                    <button
-                        onclick="eliminarNotificacion(${notificacion.id})">
-                        Eliminar
-                    </button>
+                `;
 
-                </div>
-
-            `;
-
-            lista.appendChild(tarjeta);
-
-        });
-
+                lista.appendChild(
+                    tarjeta
+                );
+            }
+        );
     }
 
     actualizarResumen();
 }
 
+/* --------------------------------------------------
+   RESUMEN
+-------------------------------------------------- */
+
 function actualizarResumen() {
 
-    document.getElementById("total").textContent =
+    document.getElementById(
+        "total"
+    ).textContent =
         notificaciones.length;
 
-    document.getElementById("noLeidas").textContent =
-        notificaciones.filter(function(notificacion) {
+    document.getElementById(
+        "noLeidas"
+    ).textContent =
+        notificaciones.filter(
+            function(notificacion) {
 
-            return !notificacion.leida;
+                return !notificacion.leida;
 
-        }).length;
-
-    const pedidos =
-        JSON.parse(localStorage.getItem("pedidos")) || [];
+            }
+        ).length;
 
     const pendientes =
-        pedidos.filter(function(pedido) {
+        cotizaciones.filter(
+            function(cotizacion) {
 
-            return (
-                pedido.estado === "Pendiente" ||
-                pedido.estado === "En proceso"
-            );
+                return (
+                    cotizacion.estado ===
+                        "Pendiente" ||
 
-        }).length;
+                    cotizacion.estado ===
+                        "Contactado"
+                );
 
-    document.getElementById("pedidosPendientes").textContent =
+            }
+        ).length;
+
+    document.getElementById(
+        "cotizacionesPendientes"
+    ).textContent =
         pendientes;
 }
 
-generarNotificaciones();
+/* --------------------------------------------------
+   FECHA
+-------------------------------------------------- */
+
+function formatearFecha(fecha) {
+
+    if (!fecha) {
+        return "Sin fecha";
+    }
+
+    const fechaObjeto =
+        new Date(fecha);
+
+    if (
+        isNaN(
+            fechaObjeto.getTime()
+        )
+    ) {
+        return "Sin fecha";
+    }
+
+    return fechaObjeto.toLocaleString(
+        "es-MX",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
+}
+
+/* --------------------------------------------------
+   SEGURIDAD
+-------------------------------------------------- */
+
+function escaparHTML(texto) {
+
+    return String(texto)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+/* --------------------------------------------------
+   INICIO
+-------------------------------------------------- */
+
+async function iniciarNotificaciones() {
+
+    const sesionActiva =
+        await verificarSesion();
+
+    if (!sesionActiva) {
+        return;
+    }
+
+    await cargarCotizaciones();
+
+    await generarNotificaciones();
+}
+
+iniciarNotificaciones();
 
 </script>
 

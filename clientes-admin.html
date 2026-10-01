@@ -216,6 +216,16 @@
             text-align: center;
         }
 
+        .estado {
+            background: rgba(255,255,255,0.96);
+            color: var(--texto-suave);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            display: none;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -284,6 +294,10 @@
             .cliente-top {
                 flex-direction: column;
             }
+
+            .cliente-numero {
+                white-space: normal;
+            }
         }
     </style>
 </head>
@@ -306,6 +320,8 @@
             + Nuevo cliente
         </button>
     </div>
+
+    <div class="estado" id="estado"></div>
 
     <section class="resumen">
 
@@ -392,25 +408,105 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-let clientes =
-    JSON.parse(localStorage.getItem("clientes")) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-function guardarClientes() {
-    localStorage.setItem(
-        "clientes",
-        JSON.stringify(clientes)
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
+
+let clientes = [];
+
+/* =========================
+   AUTENTICACIÓN
+========================= */
+
+async function verificarSesion() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error || !data.session) {
+
+        window.location.href = "admin.html";
+
+        return false;
+    }
+
+    return true;
 }
 
+/* =========================
+   ESTADO
+========================= */
+
+function mostrarEstado(mensaje, tipo = "normal") {
+
+    const estado =
+        document.getElementById("estado");
+
+    estado.textContent = mensaje;
+    estado.style.display = "block";
+
+    if (tipo === "error") {
+        estado.style.color = "#9b3d3d";
+    } else {
+        estado.style.color = "#716b64";
+    }
+
+    clearTimeout(window.estadoTimer);
+
+    window.estadoTimer =
+        setTimeout(function() {
+            estado.style.display = "none";
+        }, 3500);
+}
+
+/* =========================
+   SEGURIDAD HTML
+========================= */
+
+function escaparHTML(valor) {
+
+    if (valor === null || valor === undefined) {
+        return "";
+    }
+
+    return String(valor)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================
+   MODAL
+========================= */
+
 function abrirModal() {
-    document.getElementById("modalCliente").style.display = "flex";
+
+    document.getElementById("modalCliente").style.display =
+        "flex";
+
+    document.getElementById("nombre").focus();
 }
 
 function cerrarModal() {
 
-    document.getElementById("modalCliente").style.display = "none";
+    document.getElementById("modalCliente").style.display =
+        "none";
 
     document.getElementById("nombre").value = "";
     document.getElementById("telefono").value = "";
@@ -419,83 +515,262 @@ function cerrarModal() {
     document.getElementById("notas").value = "";
 }
 
-function guardarCliente() {
+/* =========================
+   MIGRACIÓN LOCAL
+========================= */
 
-    const nombre =
-        document.getElementById("nombre").value.trim();
+async function migrarClientesAntiguos() {
 
-    const telefono =
-        document.getElementById("telefono").value.trim();
+    const migrados =
+        localStorage.getItem(
+            "clientesMigradosSupabase"
+        );
 
-    const correo =
-        document.getElementById("correo").value.trim();
-
-    const direccion =
-        document.getElementById("direccion").value.trim();
-
-    const notas =
-        document.getElementById("notas").value.trim();
-
-    if (!nombre) {
-        alert("Escribe el nombre del cliente.");
+    if (migrados === "true") {
         return;
     }
 
-    const cliente = {
+    const clientesLocales =
+        JSON.parse(
+            localStorage.getItem("clientes")
+        ) || [];
 
-        id: Date.now(),
+    if (!clientesLocales.length) {
 
-        nombre: nombre,
+        localStorage.setItem(
+            "clientesMigradosSupabase",
+            "true"
+        );
 
-        telefono: telefono,
+        return;
+    }
 
-        correo: correo,
+    try {
 
-        direccion: direccion,
+        for (const cliente of clientesLocales) {
 
-        notas: notas,
+            const {
+                error
+            } = await supabaseClient
+                .from("clientes")
+                .insert({
+                    nombre: cliente.nombre || "",
+                    telefono: cliente.telefono || "",
+                    correo: cliente.correo || "",
+                    direccion: cliente.direccion || "",
+                    notas: cliente.notas || "",
+                    fecha: cliente.fecha
+                        ? new Date(cliente.fecha).toISOString()
+                        : new Date().toISOString()
+                });
 
-        fecha: new Date().toLocaleString("es-MX")
+            if (error) {
+                console.error(
+                    "Error migrando cliente:",
+                    error
+                );
+            }
+        }
 
-    };
+        localStorage.setItem(
+            "clientesMigradosSupabase",
+            "true"
+        );
 
-    clientes.push(cliente);
+        mostrarEstado(
+            "Clientes anteriores sincronizados."
+        );
 
-    guardarClientes();
+    } catch (error) {
+
+        console.error(error);
+
+        mostrarEstado(
+            "No se pudieron migrar los clientes anteriores.",
+            "error"
+        );
+    }
+}
+
+/* =========================
+   CARGAR CLIENTES
+========================= */
+
+async function cargarClientes() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("clientes")
+        .select("*")
+        .order("fecha", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        mostrarEstado(
+            "No se pudieron cargar los clientes.",
+            "error"
+        );
+
+        return;
+    }
+
+    clientes = data || [];
 
     mostrarClientes();
-
-    cerrarModal();
 }
+
+/* =========================
+   GUARDAR CLIENTE
+========================= */
+
+async function guardarCliente() {
+
+    const nombre =
+        document
+            .getElementById("nombre")
+            .value
+            .trim();
+
+    const telefono =
+        document
+            .getElementById("telefono")
+            .value
+            .trim();
+
+    const correo =
+        document
+            .getElementById("correo")
+            .value
+            .trim();
+
+    const direccion =
+        document
+            .getElementById("direccion")
+            .value
+            .trim();
+
+    const notas =
+        document
+            .getElementById("notas")
+            .value
+            .trim();
+
+    if (!nombre) {
+
+        alert(
+            "Escribe el nombre del cliente."
+        );
+
+        return;
+    }
+
+    const boton =
+        document.querySelector(
+            '.modal-botones .boton'
+        );
+
+    boton.disabled = true;
+    boton.textContent = "Guardando...";
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .from("clientes")
+            .insert({
+                nombre: nombre,
+                telefono: telefono,
+                correo: correo,
+                direccion: direccion,
+                notas: notas,
+                fecha: new Date().toISOString()
+            });
+
+        if (error) {
+
+            console.error(error);
+
+            alert(
+                "No se pudo guardar el cliente."
+            );
+
+            return;
+        }
+
+        cerrarModal();
+
+        await cargarClientes();
+
+        mostrarEstado(
+            "Cliente guardado y sincronizado."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Ocurrió un error al guardar el cliente."
+        );
+
+    } finally {
+
+        boton.disabled = false;
+        boton.textContent = "Guardar cliente";
+    }
+}
+
+/* =========================
+   MOSTRAR CLIENTES
+========================= */
 
 function mostrarClientes() {
 
     const contenedor =
-        document.getElementById("listaClientes");
+        document.getElementById(
+            "listaClientes"
+        );
+
+    const campoBusqueda =
+        document.getElementById(
+            "busqueda"
+        );
 
     const busqueda =
-        document
-            .getElementById("busqueda")
-            .value
-            .toLowerCase();
+        campoBusqueda.value
+            .toLowerCase()
+            .trim();
 
     const filtrados =
         clientes.filter(function(cliente) {
 
+            const nombre =
+                String(
+                    cliente.nombre || ""
+                ).toLowerCase();
+
+            const telefono =
+                String(
+                    cliente.telefono || ""
+                ).toLowerCase();
+
+            const correo =
+                String(
+                    cliente.correo || ""
+                ).toLowerCase();
+
             return (
-                cliente.nombre
-                    .toLowerCase()
-                    .includes(busqueda) ||
-
-                cliente.telefono
-                    .toLowerCase()
-                    .includes(busqueda) ||
-
-                cliente.correo
-                    .toLowerCase()
-                    .includes(busqueda)
+                nombre.includes(busqueda) ||
+                telefono.includes(busqueda) ||
+                correo.includes(busqueda)
             );
-
         });
 
     contenedor.innerHTML = "";
@@ -512,6 +787,96 @@ function mostrarClientes() {
 
         filtrados.forEach(function(cliente) {
 
+            const nombre =
+                escaparHTML(
+                    cliente.nombre
+                );
+
+            const telefono =
+                escaparHTML(
+                    cliente.telefono
+                );
+
+            const correo =
+                escaparHTML(
+                    cliente.correo
+                );
+
+            const direccion =
+                escaparHTML(
+                    cliente.direccion
+                );
+
+            const notas =
+                escaparHTML(
+                    cliente.notas
+                );
+
+            const id =
+                escaparHTML(
+                    cliente.id
+                );
+
+            let contactoHTML = "";
+
+            if (telefono) {
+
+                contactoHTML += `
+                    <div>
+                        Teléfono: ${telefono}
+                    </div>
+                `;
+            }
+
+            if (correo) {
+
+                contactoHTML += `
+                    <div>
+                        Correo: ${correo}
+                    </div>
+                `;
+            }
+
+            if (direccion) {
+
+                contactoHTML += `
+                    <div>
+                        Dirección: ${direccion}
+                    </div>
+                `;
+            }
+
+            let notasHTML = "";
+
+            if (notas) {
+
+                notasHTML = `
+                    <div
+                        class="cliente-info"
+                        style="margin-top:12px;"
+                    >
+                        <strong>Notas:</strong>
+                        ${notas}
+                    </div>
+                `;
+            }
+
+            let whatsappHTML = "";
+
+            if (telefono) {
+
+                whatsappHTML = `
+                    <button
+                        class="boton-secundario"
+                        onclick="abrirWhatsApp(
+                            '${escaparAtributo(cliente.telefono)}',
+                            '${escaparAtributo(cliente.nombre)}'
+                        )">
+                        WhatsApp
+                    </button>
+                `;
+            }
+
             contenedor.innerHTML += `
 
                 <article class="cliente">
@@ -521,67 +886,30 @@ function mostrarClientes() {
                         <div>
 
                             <h3>
-                                ${cliente.nombre}
+                                ${nombre}
                             </h3>
 
                             <div class="cliente-info">
-
-                                ${
-                                    cliente.telefono
-                                    ? "📞 " + cliente.telefono + "<br>"
-                                    : ""
-                                }
-
-                                ${
-                                    cliente.correo
-                                    ? "✉️ " + cliente.correo + "<br>"
-                                    : ""
-                                }
-
-                                ${
-                                    cliente.direccion
-                                    ? "📍 " + cliente.direccion
-                                    : ""
-                                }
-
+                                ${contactoHTML}
                             </div>
 
                         </div>
 
                         <div class="cliente-numero">
-                            Cliente #${cliente.id}
+                            Cliente #${id}
                         </div>
 
                     </div>
 
-                    ${
-                        cliente.notas
-                        ? `
-                            <div class="cliente-info" style="margin-top:12px;">
-                                <strong>Notas:</strong>
-                                ${cliente.notas}
-                            </div>
-                        `
-                        : ""
-                    }
+                    ${notasHTML}
 
                     <div class="cliente-acciones">
 
-                        ${
-                            cliente.telefono
-                            ? `
-                                <button
-                                    class="boton-secundario"
-                                    onclick="abrirWhatsApp('${cliente.telefono}', '${cliente.nombre}')">
-                                    WhatsApp
-                                </button>
-                            `
-                            : ""
-                        }
+                        ${whatsappHTML}
 
                         <button
                             class="boton-secundario boton-eliminar"
-                            onclick="eliminarCliente(${cliente.id})">
+                            onclick="eliminarCliente('${escaparAtributo(cliente.id)}')">
                             Eliminar
                         </button>
 
@@ -596,7 +924,29 @@ function mostrarClientes() {
     actualizarResumen();
 }
 
-function eliminarCliente(id) {
+/* =========================
+   ESCAPE PARA ATRIBUTOS
+========================= */
+
+function escaparAtributo(valor) {
+
+    if (valor === null || valor === undefined) {
+        return "";
+    }
+
+    return String(valor)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, "&quot;")
+        .replace(/\r/g, "")
+        .replace(/\n/g, " ");
+}
+
+/* =========================
+   ELIMINAR CLIENTE
+========================= */
+
+async function eliminarCliente(id) {
 
     const confirmar =
         confirm(
@@ -607,20 +957,58 @@ function eliminarCliente(id) {
         return;
     }
 
-    clientes =
-        clientes.filter(function(cliente) {
-            return cliente.id !== id;
-        });
+    try {
 
-    guardarClientes();
+        const {
+            error
+        } = await supabaseClient
+            .from("clientes")
+            .delete()
+            .eq("id", id);
 
-    mostrarClientes();
+        if (error) {
+
+            console.error(error);
+
+            alert(
+                "No se pudo eliminar el cliente."
+            );
+
+            return;
+        }
+
+        await cargarClientes();
+
+        mostrarEstado(
+            "Cliente eliminado."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Ocurrió un error al eliminar el cliente."
+        );
+    }
 }
 
-function abrirWhatsApp(telefono, nombre) {
+/* =========================
+   WHATSAPP
+========================= */
+
+function abrirWhatsApp(
+    telefono,
+    nombre
+) {
 
     const numero =
-        telefono.replace(/\D/g, "");
+        String(telefono)
+            .replace(/\D/g, "");
+
+    if (!numero) {
+        return;
+    }
 
     const texto =
         "Hola " +
@@ -636,23 +1024,59 @@ function abrirWhatsApp(telefono, nombre) {
     );
 }
 
+/* =========================
+   RESUMEN
+========================= */
+
 function actualizarResumen() {
 
-    document.getElementById("totalClientes").textContent =
+    document.getElementById(
+        "totalClientes"
+    ).textContent =
         clientes.length;
 
-    document.getElementById("conTelefono").textContent =
+    document.getElementById(
+        "conTelefono"
+    ).textContent =
         clientes.filter(function(cliente) {
-            return cliente.telefono.trim() !== "";
+
+            return String(
+                cliente.telefono || ""
+            ).trim() !== "";
+
         }).length;
 
-    document.getElementById("conCorreo").textContent =
+    document.getElementById(
+        "conCorreo"
+    ).textContent =
         clientes.filter(function(cliente) {
-            return cliente.correo.trim() !== "";
+
+            return String(
+                cliente.correo || ""
+            ).trim() !== "";
+
         }).length;
 }
 
-mostrarClientes();
+/* =========================
+   INICIO
+========================= */
+
+async function iniciar() {
+
+    const sesion =
+        await verificarSesion();
+
+    if (!sesion) {
+        return;
+    }
+
+    await migrarClientesAntiguos();
+
+    await cargarClientes();
+}
+
+iniciar();
 
 </script>
 

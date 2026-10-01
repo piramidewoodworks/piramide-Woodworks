@@ -385,112 +385,435 @@
 
         <div class="campo">
             <label>Notas</label>
-            <textarea id="notas" placeholder="Texto, idea, promoción, enlace, etc."></textarea>
+            <textarea
+                id="notas"
+                placeholder="Texto, idea, promoción, enlace, etc."
+            ></textarea>
         </div>
 
         <div class="modal-botones">
-            <button class="cancelar" onclick="cerrarModal()">Cancelar</button>
-            <button onclick="guardarPublicacion()">Guardar</button>
+            <button class="cancelar" onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+            <button onclick="guardarPublicacion()">
+                Guardar
+            </button>
         </div>
 
     </div>
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-let publicaciones = JSON.parse(localStorage.getItem("publicaciones")) || [];
+const SUPABASE_URL =
+    "https://ighcydtijeumeqyhuvkh.supabase.co";
 
-function guardarDatos() {
-    localStorage.setItem("publicaciones", JSON.stringify(publicaciones));
+const SUPABASE_KEY =
+    "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+let publicaciones = [];
+
+/* --------------------------------------------------
+   SESIÓN
+-------------------------------------------------- */
+
+async function verificarSesion() {
+
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+        window.location.href = "admin.html";
+        return false;
+    }
+
+    return true;
 }
 
-function abrirModal() {
-    document.getElementById("modal").style.display = "flex";
+/* --------------------------------------------------
+   MIGRAR PUBLICACIONES ANTIGUAS
+-------------------------------------------------- */
 
-    document.getElementById("fecha").value =
-        new Date().toISOString().split("T")[0];
+async function migrarPublicacionesAntiguas() {
+
+    const migracionRealizada =
+        localStorage.getItem(
+            "publicacionesMigradasSupabase"
+        );
+
+    if (migracionRealizada === "true") {
+        return;
+    }
+
+    const antiguas =
+        JSON.parse(
+            localStorage.getItem("publicaciones")
+        ) || [];
+
+    if (antiguas.length === 0) {
+
+        localStorage.setItem(
+            "publicacionesMigradasSupabase",
+            "true"
+        );
+
+        return;
+    }
+
+    const datos =
+        antiguas.map(function(publicacion) {
+
+            return {
+                titulo: publicacion.titulo || "",
+                red: publicacion.red || "",
+                tipo: publicacion.tipo || "",
+                estado: publicacion.estado || "Pendiente",
+                fecha: convertirFecha(
+                    publicacion.fecha
+                ),
+                notas: publicacion.notas || ""
+            };
+
+        });
+
+    const {
+        error
+    } = await supabaseClient
+        .from("publicaciones")
+        .insert(datos);
+
+    if (error) {
+
+        console.error(
+            "Error migrando publicaciones:",
+            error
+        );
+
+        return;
+    }
+
+    localStorage.setItem(
+        "publicacionesMigradasSupabase",
+        "true"
+    );
+}
+
+/* --------------------------------------------------
+   FECHA
+-------------------------------------------------- */
+
+function convertirFecha(fecha) {
+
+    if (!fecha) {
+        return new Date().toISOString();
+    }
+
+    const fechaConvertida =
+        new Date(fecha);
+
+    if (
+        !isNaN(
+            fechaConvertida.getTime()
+        )
+    ) {
+        return fechaConvertida.toISOString();
+    }
+
+    return new Date().toISOString();
+}
+
+/* --------------------------------------------------
+   CARGAR
+-------------------------------------------------- */
+
+async function cargarPublicaciones() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("publicaciones")
+        .select("*")
+        .order("fecha", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(
+            "Error cargando publicaciones:",
+            error
+        );
+
+        alert(
+            "No se pudieron cargar las publicaciones."
+        );
+
+        return;
+    }
+
+    publicaciones = data || [];
+
+    mostrarPublicaciones();
+}
+
+/* --------------------------------------------------
+   MODAL
+-------------------------------------------------- */
+
+function abrirModal() {
+
+    document.getElementById(
+        "modal"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "fecha"
+    ).value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
 }
 
 function cerrarModal() {
-    document.getElementById("modal").style.display = "none";
 
-    document.getElementById("titulo").value = "";
-    document.getElementById("notas").value = "";
+    document.getElementById(
+        "modal"
+    ).style.display = "none";
+
+    document.getElementById(
+        "titulo"
+    ).value = "";
+
+    document.getElementById(
+        "notas"
+    ).value = "";
 }
 
-function guardarPublicacion() {
+/* --------------------------------------------------
+   GUARDAR
+-------------------------------------------------- */
 
-    const titulo = document.getElementById("titulo").value.trim();
+async function guardarPublicacion() {
+
+    const titulo =
+        document.getElementById(
+            "titulo"
+        ).value.trim();
 
     if (!titulo) {
-        alert("Escribe un título para la publicación.");
+
+        alert(
+            "Escribe un título para la publicación."
+        );
+
         return;
     }
 
-    const publicacion = {
-        id: Date.now(),
+    const fecha =
+        document.getElementById(
+            "fecha"
+        ).value;
+
+    const datos = {
+
         titulo: titulo,
-        red: document.getElementById("red").value,
-        tipo: document.getElementById("tipo").value,
-        estado: document.getElementById("estado").value,
-        fecha: document.getElementById("fecha").value,
-        notas: document.getElementById("notas").value.trim()
+
+        red:
+            document.getElementById(
+                "red"
+            ).value,
+
+        tipo:
+            document.getElementById(
+                "tipo"
+            ).value,
+
+        estado:
+            document.getElementById(
+                "estado"
+            ).value,
+
+        fecha:
+            fecha
+            ? new Date(
+                fecha + "T12:00:00"
+              ).toISOString()
+            : new Date().toISOString(),
+
+        notas:
+            document.getElementById(
+                "notas"
+            ).value.trim()
+
     };
 
-    publicaciones.push(publicacion);
+    const {
+        error
+    } = await supabaseClient
+        .from("publicaciones")
+        .insert(datos);
 
-    guardarDatos();
-    cerrarModal();
-    mostrarPublicaciones();
-}
+    if (error) {
 
-function eliminarPublicacion(id) {
+        console.error(
+            "Error guardando publicación:",
+            error
+        );
 
-    if (!confirm("¿Eliminar esta publicación?")) {
+        alert(
+            "No se pudo guardar la publicación."
+        );
+
         return;
     }
 
-    publicaciones = publicaciones.filter(function(publicacion) {
-        return publicacion.id !== id;
-    });
+    cerrarModal();
 
-    guardarDatos();
-    mostrarPublicaciones();
+    await cargarPublicaciones();
 }
 
-function cambiarEstado(id) {
+/* --------------------------------------------------
+   ELIMINAR
+-------------------------------------------------- */
 
-    const publicacion = publicaciones.find(function(item) {
-        return item.id === id;
-    });
+async function eliminarPublicacion(id) {
 
-    if (!publicacion) return;
+    if (
+        !confirm(
+            "¿Eliminar esta publicación?"
+        )
+    ) {
+        return;
+    }
 
-    publicacion.estado =
+    const {
+        error
+    } = await supabaseClient
+        .from("publicaciones")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Error eliminando publicación:",
+            error
+        );
+
+        alert(
+            "No se pudo eliminar la publicación."
+        );
+
+        return;
+    }
+
+    await cargarPublicaciones();
+}
+
+/* --------------------------------------------------
+   CAMBIAR ESTADO
+-------------------------------------------------- */
+
+async function cambiarEstado(id) {
+
+    const publicacion =
+        publicaciones.find(
+            function(item) {
+                return item.id === id;
+            }
+        );
+
+    if (!publicacion) {
+        return;
+    }
+
+    const nuevoEstado =
         publicacion.estado === "Publicado"
             ? "Pendiente"
             : "Publicado";
 
-    guardarDatos();
-    mostrarPublicaciones();
+    const {
+        error
+    } = await supabaseClient
+        .from("publicaciones")
+        .update({
+            estado: nuevoEstado
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Error cambiando estado:",
+            error
+        );
+
+        alert(
+            "No se pudo cambiar el estado."
+        );
+
+        return;
+    }
+
+    await cargarPublicaciones();
 }
+
+/* --------------------------------------------------
+   MOSTRAR
+-------------------------------------------------- */
 
 function mostrarPublicaciones() {
 
-    const lista = document.getElementById("lista");
-    const busqueda =
-        document.getElementById("buscar").value.toLowerCase();
-
-    const filtradas = publicaciones.filter(function(publicacion) {
-
-        return (
-            publicacion.titulo.toLowerCase().includes(busqueda) ||
-            publicacion.red.toLowerCase().includes(busqueda) ||
-            publicacion.tipo.toLowerCase().includes(busqueda)
+    const lista =
+        document.getElementById(
+            "lista"
         );
 
-    });
+    const busqueda =
+        document.getElementById(
+            "buscar"
+        ).value
+        .toLowerCase()
+        .trim();
+
+    const filtradas =
+        publicaciones.filter(
+            function(publicacion) {
+
+                return (
+
+                    (publicacion.titulo || "")
+                        .toLowerCase()
+                        .includes(busqueda)
+
+                    ||
+
+                    (publicacion.red || "")
+                        .toLowerCase()
+                        .includes(busqueda)
+
+                    ||
+
+                    (publicacion.tipo || "")
+                        .toLowerCase()
+                        .includes(busqueda)
+
+                );
+
+            }
+        );
 
     lista.innerHTML = "";
 
@@ -501,66 +824,234 @@ function mostrarPublicaciones() {
 
     } else {
 
-        filtradas.forEach(function(publicacion) {
+        filtradas.forEach(
+            function(publicacion) {
 
-            const tarjeta = document.createElement("div");
+                const tarjeta =
+                    document.createElement(
+                        "div"
+                    );
 
-            tarjeta.className = "tarjeta";
+                tarjeta.className =
+                    "tarjeta";
 
-            tarjeta.innerHTML = `
-                <div class="tarjeta-top">
-                    <div>
-                        <h3>${publicacion.titulo}</h3>
-                        <div class="fecha">${publicacion.fecha || "Sin fecha"}</div>
+                const titulo =
+                    escaparHTML(
+                        publicacion.titulo || ""
+                    );
+
+                const red =
+                    escaparHTML(
+                        publicacion.red || ""
+                    );
+
+                const tipo =
+                    escaparHTML(
+                        publicacion.tipo || ""
+                    );
+
+                const estado =
+                    escaparHTML(
+                        publicacion.estado || ""
+                    );
+
+                const notas =
+                    escaparHTML(
+                        publicacion.notas || ""
+                    );
+
+                const fecha =
+                    formatearFecha(
+                        publicacion.fecha
+                    );
+
+                tarjeta.innerHTML = `
+
+                    <div class="tarjeta-top">
+
+                        <div>
+
+                            <h3>
+                                ${titulo}
+                            </h3>
+
+                            <div class="fecha">
+                                ${fecha}
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
 
-                <span class="estado">${publicacion.estado}</span>
+                    <span class="estado">
+                        ${estado}
+                    </span>
 
-                <p><strong>Red:</strong> ${publicacion.red}</p>
-                <p><strong>Tipo:</strong> ${publicacion.tipo}</p>
+                    <p>
+                        <strong>Red:</strong>
+                        ${red}
+                    </p>
 
-                ${
-                    publicacion.notas
-                    ? `<p><strong>Notas:</strong> ${publicacion.notas}</p>`
-                    : ""
-                }
+                    <p>
+                        <strong>Tipo:</strong>
+                        ${tipo}
+                    </p>
 
-                <div class="botones">
-                    <button onclick="cambiarEstado(${publicacion.id})">
-                        Cambiar estado
-                    </button>
+                    ${
+                        notas
+                        ? `
+                            <p>
+                                <strong>Notas:</strong>
+                                ${notas}
+                            </p>
+                        `
+                        : ""
+                    }
 
-                    <button onclick="eliminarPublicacion(${publicacion.id})">
-                        Eliminar
-                    </button>
-                </div>
-            `;
+                    <div class="botones">
 
-            lista.appendChild(tarjeta);
-        });
+                        <button
+                            onclick="cambiarEstado(${publicacion.id})">
+                            Cambiar estado
+                        </button>
+
+                        <button
+                            onclick="eliminarPublicacion(${publicacion.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+                `;
+
+                lista.appendChild(
+                    tarjeta
+                );
+            }
+        );
     }
 
     actualizarResumen();
 }
 
-function actualizarResumen() {
+/* --------------------------------------------------
+   FECHA MOSTRADA
+-------------------------------------------------- */
 
-    document.getElementById("totalPublicaciones").textContent =
-        publicaciones.length;
+function formatearFecha(fecha) {
 
-    document.getElementById("publicadas").textContent =
-        publicaciones.filter(function(publicacion) {
-            return publicacion.estado === "Publicado";
-        }).length;
+    if (!fecha) {
+        return "Sin fecha";
+    }
 
-    document.getElementById("pendientes").textContent =
-        publicaciones.filter(function(publicacion) {
-            return publicacion.estado === "Pendiente";
-        }).length;
+    const fechaObjeto =
+        new Date(fecha);
+
+    if (
+        isNaN(
+            fechaObjeto.getTime()
+        )
+    ) {
+        return "Sin fecha";
+    }
+
+    return fechaObjeto.toLocaleDateString(
+        "es-MX",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }
+    );
 }
 
-mostrarPublicaciones();
+/* --------------------------------------------------
+   RESUMEN
+-------------------------------------------------- */
+
+function actualizarResumen() {
+
+    document.getElementById(
+        "totalPublicaciones"
+    ).textContent =
+        publicaciones.length;
+
+    document.getElementById(
+        "publicadas"
+    ).textContent =
+        publicaciones.filter(
+            function(publicacion) {
+
+                return (
+                    publicacion.estado ===
+                    "Publicado"
+                );
+
+            }
+        ).length;
+
+    document.getElementById(
+        "pendientes"
+    ).textContent =
+        publicaciones.filter(
+            function(publicacion) {
+
+                return (
+                    publicacion.estado ===
+                    "Pendiente"
+                );
+
+            }
+        ).length;
+}
+
+/* --------------------------------------------------
+   SEGURIDAD
+-------------------------------------------------- */
+
+function escaparHTML(texto) {
+
+    return String(texto)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+/* --------------------------------------------------
+   INICIO
+-------------------------------------------------- */
+
+async function iniciarMarketing() {
+
+    const sesionActiva =
+        await verificarSesion();
+
+    if (!sesionActiva) {
+        return;
+    }
+
+    await migrarPublicacionesAntiguas();
+
+    await cargarPublicaciones();
+}
+
+iniciarMarketing();
 
 </script>
 
