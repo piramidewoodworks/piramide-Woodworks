@@ -125,10 +125,6 @@
       overflow: hidden;
     }
 
-    /* =========================================================
-       ENCABEZADO DE CADA COTIZACIÓN
-    ========================================================= */
-
     .cotizacion-cabecera {
       display: flex;
       justify-content: space-between;
@@ -220,10 +216,6 @@
       background: #493426;
     }
 
-    /* =========================================================
-       CONTENIDO DESPLEGABLE
-    ========================================================= */
-
     .cotizacion-detalle {
       display: none;
       padding: 0 20px 20px;
@@ -267,6 +259,14 @@
       font-size: 18px;
     }
 
+    .dato-pagado strong {
+      color: #8fd18f;
+    }
+
+    .dato-restante strong {
+      color: #e7a69c;
+    }
+
     .notas {
       margin-top: 14px;
       padding: 12px;
@@ -277,10 +277,64 @@
       line-height: 1.4;
     }
 
+    .historial {
+      margin-top: 14px;
+      padding: 14px;
+      background: #18110d;
+      border: 1px solid #3e2e23;
+      border-radius: 9px;
+    }
+
+    .historial-titulo {
+      color: #f3c27b;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .abono-item {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 0;
+      border-top: 1px solid #33251c;
+      font-size: 12px;
+    }
+
+    .abono-item:first-of-type {
+      border-top: 0;
+    }
+
+    .abono-fecha {
+      color: #a99c91;
+    }
+
+    .abono-info {
+      color: #cfc3b8;
+    }
+
+    .abono-info small {
+      display: block;
+      color: #887c73;
+      margin-top: 3px;
+    }
+
+    .abono-monto {
+      color: #8fd18f;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .sin-abonos {
+      color: #887c73;
+      font-size: 12px;
+    }
+
     .acciones {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
-      flex-wrap: wrap;
       margin-top: 18px;
     }
 
@@ -302,6 +356,16 @@
       background: #493426;
     }
 
+    .boton-abono {
+      background: #315032;
+      color: #bce5bd;
+      border: 1px solid #477449;
+    }
+
+    .boton-abono:hover {
+      background: #3b633d;
+    }
+
     .boton-eliminar {
       background: #3b1e1b;
       color: #e7a69c;
@@ -316,10 +380,6 @@
       border: 1px solid #463529;
       border-radius: 13px;
     }
-
-    /* =========================================================
-       MODAL
-    ========================================================= */
 
     .modal {
       position: fixed;
@@ -385,6 +445,11 @@
       font-family: inherit;
     }
 
+    .campo input:read-only {
+      color: #a99c91;
+      background: #211710;
+    }
+
     .campo textarea {
       min-height: 90px;
       resize: vertical;
@@ -417,12 +482,18 @@
       margin-top: 20px;
     }
 
-    /* =========================================================
-       TABLET
-    ========================================================= */
+    .mensaje-info {
+      grid-column: 1 / -1;
+      background: #33251c;
+      border: 1px solid #594331;
+      border-radius: 8px;
+      padding: 10px;
+      color: #cdbba7;
+      font-size: 12px;
+      line-height: 1.4;
+    }
 
     @media (max-width: 800px) {
-
       .contenedor {
         width: 94%;
         padding: 22px 0 45px;
@@ -460,34 +531,17 @@
         gap: 10px;
       }
 
-      .dato {
-        min-width: 0;
-        padding: 11px;
-      }
-
       .acciones {
-        gap: 8px;
-      }
-
-      .boton-secundario,
-      .boton-eliminar {
-        flex: 1 1 0;
-        min-width: 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    /* =========================================================
-       CELULAR
-    ========================================================= */
-
     @media (max-width: 560px) {
-
       .contenedor {
         width: 94%;
         padding-top: 16px;
       }
 
-      /* Encabezado compacto */
       .encabezado {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
@@ -517,7 +571,6 @@
         white-space: nowrap;
       }
 
-      /* Buscador + filtro juntos */
       .barra {
         display: grid;
         grid-template-columns: minmax(0, 1.45fr) minmax(110px, .8fr);
@@ -533,7 +586,6 @@
         font-size: 12px;
       }
 
-      /* Resumen */
       .resumen {
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 5px;
@@ -554,7 +606,6 @@
         font-size: 18px;
       }
 
-      /* Cotización cerrada */
       .lista {
         gap: 8px;
       }
@@ -570,7 +621,6 @@
 
       .cliente-linea {
         gap: 5px;
-        flex-wrap: wrap;
       }
 
       .folio {
@@ -605,7 +655,6 @@
         font-size: 12px;
       }
 
-      /* Detalle desplegado */
       .cotizacion-detalle {
         padding: 0 11px 12px;
       }
@@ -642,10 +691,31 @@
         font-size: 10px;
       }
 
-      /* Botones */
+      .historial {
+        margin-top: 8px;
+        padding: 9px;
+      }
+
+      .historial-titulo {
+        font-size: 10px;
+      }
+
+      .abono-item {
+        grid-template-columns: 65px 1fr auto;
+        gap: 5px;
+        font-size: 9px;
+      }
+
+      .abono-info small {
+        font-size: 8px;
+      }
+
+      .abono-monto {
+        font-size: 10px;
+      }
+
       .acciones {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 5px;
         margin-top: 10px;
       }
@@ -654,12 +724,11 @@
       .boton-eliminar {
         width: 100%;
         min-width: 0;
-        padding: 8px 3px;
-        font-size: 10px;
+        padding: 8px 2px;
+        font-size: 9px;
         white-space: nowrap;
       }
 
-      /* Modal */
       .modal {
         padding: 10px;
       }
@@ -674,7 +743,9 @@
         gap: 12px;
       }
 
-      .campo.completo {
+      .campo.completo,
+      .mensaje-info,
+      .total-formulario {
         grid-column: auto;
       }
 
@@ -687,12 +758,7 @@
       }
     }
 
-    /* =========================================================
-       PANTALLAS MUY PEQUEÑAS
-    ========================================================= */
-
     @media (max-width: 380px) {
-
       .titulo {
         font-size: 20px;
       }
@@ -736,12 +802,7 @@
       }
 
       .acciones {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .boton-secundario,
-      .boton-eliminar {
-        font-size: 9px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -802,44 +863,25 @@
       id="filtroEstado"
       onchange="mostrarCotizaciones()">
 
-      <option value="">
-        Todos los estados
-      </option>
-
-      <option value="Pendiente">
-        Pendiente
-      </option>
-
-      <option value="Contactado">
-        Contactado
-      </option>
-
-      <option value="Cotizado">
-        Cotizado
-      </option>
-
-      <option value="Cerrado">
-        Cerrado
-      </option>
+      <option value="">Todos los estados</option>
+      <option value="Pendiente">Pendiente</option>
+      <option value="Contactado">Contactado</option>
+      <option value="Cotizado">Cotizado</option>
+      <option value="Cerrado">Cerrado</option>
 
     </select>
 
   </div>
 
-  <div
-    id="listaCotizaciones"
-    class="lista">
-  </div>
+  <div id="listaCotizaciones" class="lista"></div>
 
 </div>
 
 <!-- =========================================================
-     MODAL
+     MODAL COTIZACIÓN
 ========================================================= -->
 
-<div
-  id="modal"
-  class="modal">
+<div id="modal" class="modal">
 
   <div class="modal-contenido">
 
@@ -850,84 +892,33 @@
     <div class="formulario">
 
       <div class="campo">
-
-        <label>
-          Cliente
-        </label>
-
-        <input
-          type="text"
-          id="cliente">
-
+        <label>Cliente</label>
+        <input type="text" id="cliente">
       </div>
 
       <div class="campo">
-
-        <label>
-          Teléfono
-        </label>
-
-        <input
-          type="text"
-          id="telefono">
-
+        <label>Teléfono</label>
+        <input type="text" id="telefono">
       </div>
 
       <div class="campo">
+        <label>Producto</label>
 
-        <label>
-          Producto
-        </label>
-
-        <select
-          id="producto"
-          onchange="actualizarPrecioProducto()">
-
-          <option value="BottleBox">
-            BottleBox
-          </option>
-
-          <option value="TequilaBox">
-            TequilaBox
-          </option>
-
-          <option value="TequilaBox sin botella">
-            TequilaBox sin botella
-          </option>
-
-          <option value="GiftBox">
-            GiftBox
-          </option>
-
-          <option value="SlidingBox">
-            SlidingBox
-          </option>
-
-          <option value="Portallaves Home">
-            Portallaves Home
-          </option>
-
-          <option value="Mostrador QR & Códigos Personalizado">
-            Mostrador QR & Códigos Personalizado
-          </option>
-
-          <option value="Carruaje de Cenicienta">
-            Carruaje de Cenicienta
-          </option>
-
-          <option value="Mesa Carruaje Gigante">
-            Mesa Carruaje Gigante
-          </option>
-
+        <select id="producto" onchange="actualizarPrecioProducto()">
+          <option value="BottleBox">BottleBox</option>
+          <option value="TequilaBox">TequilaBox</option>
+          <option value="TequilaBox sin botella">TequilaBox sin botella</option>
+          <option value="GiftBox">GiftBox</option>
+          <option value="SlidingBox">SlidingBox</option>
+          <option value="Portallaves Home">Portallaves Home</option>
+          <option value="Mostrador QR & Códigos Personalizado">Mostrador QR & Códigos Personalizado</option>
+          <option value="Carruaje de Cenicienta">Carruaje de Cenicienta</option>
+          <option value="Mesa Carruaje Gigante">Mesa Carruaje Gigante</option>
         </select>
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Cantidad
-        </label>
+        <label>Cantidad</label>
 
         <input
           type="number"
@@ -935,27 +926,19 @@
           min="1"
           value="1"
           oninput="calcularTotal()">
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Precio unitario
-        </label>
+        <label>Precio unitario</label>
 
         <input
           type="number"
           id="precio"
           readonly>
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Descuento (%)
-        </label>
+        <label>Descuento (%)</label>
 
         <input
           type="number"
@@ -965,13 +948,11 @@
           step="0.01"
           value="0"
           oninput="calcularTotal()">
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Abono
+        <label id="etiquetaAbonoCotizacion">
+          Abono inicial
         </label>
 
         <input
@@ -981,115 +962,77 @@
           step="0.01"
           value="0"
           oninput="calcularTotal()">
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Fecha de cotización
-        </label>
+        <label>Fecha de cotización</label>
 
         <input
           type="date"
           id="fechaCotizacion">
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Fecha de entrega
-        </label>
+        <label>Fecha de entrega</label>
 
         <input
           type="date"
           id="fechaEntrega">
-
       </div>
 
       <div class="campo">
-
-        <label>
-          Estado
-        </label>
+        <label>Estado</label>
 
         <select id="estado">
-
-          <option value="Pendiente">
-            Pendiente
-          </option>
-
-          <option value="Contactado">
-            Contactado
-          </option>
-
-          <option value="Cotizado">
-            Cotizado
-          </option>
-
-          <option value="Cerrado">
-            Cerrado
-          </option>
-
+          <option value="Pendiente">Pendiente</option>
+          <option value="Contactado">Contactado</option>
+          <option value="Cotizado">Cotizado</option>
+          <option value="Cerrado">Cerrado</option>
         </select>
-
       </div>
 
       <div class="campo completo">
+        <label>Notas</label>
 
-        <label>
-          Notas
-        </label>
+        <textarea id="notas"></textarea>
+      </div>
 
-        <textarea
-          id="notas">
-        </textarea>
-
+      <div
+        id="mensajeHistorialEdicion"
+        class="mensaje-info"
+        style="display:none;">
       </div>
 
       <div class="total-formulario">
 
         <div class="linea-total">
           <span>Subtotal</span>
-          <strong id="mostrarSubtotal">
-            $0.00
-          </strong>
+          <strong id="mostrarSubtotal">$0.00</strong>
         </div>
 
         <div class="linea-total">
           <span>Descuento</span>
-          <strong id="mostrarDescuento">
-            $0.00
-          </strong>
+          <strong id="mostrarDescuento">$0.00</strong>
         </div>
 
         <div class="linea-total">
           <span>Precio final por pieza</span>
-          <strong id="mostrarPrecioFinal">
-            $0.00
-          </strong>
+          <strong id="mostrarPrecioFinal">$0.00</strong>
         </div>
 
         <div class="linea-total">
           <span>Total</span>
-          <strong id="mostrarTotal">
-            $0.00
-          </strong>
+          <strong id="mostrarTotal">$0.00</strong>
         </div>
 
         <div class="linea-total">
-          <span>Abono</span>
-          <strong id="mostrarAbono">
-            $0.00
-          </strong>
+          <span>Abonado</span>
+          <strong id="mostrarAbono">$0.00</strong>
         </div>
 
         <div class="linea-total">
           <span>Restante</span>
-          <strong id="mostrarRestante">
-            $0.00
-          </strong>
+          <strong id="mostrarRestante">$0.00</strong>
         </div>
 
       </div>
@@ -1115,6 +1058,117 @@
   </div>
 </div>
 
+<!-- =========================================================
+     MODAL ABONO
+========================================================= -->
+
+<div id="modalAbono" class="modal">
+
+  <div class="modal-contenido">
+
+    <h2 id="tituloModalAbono">
+      Registrar abono
+    </h2>
+
+    <div class="formulario">
+
+      <div class="mensaje-info">
+        <strong id="folioAbono"></strong><br>
+        <span id="clienteAbono"></span>
+      </div>
+
+      <div class="total-formulario">
+
+        <div class="linea-total">
+          <span>Total de la cotización</span>
+          <strong id="abonoTotalCotizacion">$0.00</strong>
+        </div>
+
+        <div class="linea-total">
+          <span>Abonado anteriormente</span>
+          <strong id="abonoAnterior">$0.00</strong>
+        </div>
+
+        <div class="linea-total">
+          <span>Restante antes del abono</span>
+          <strong id="abonoRestanteAntes">$0.00</strong>
+        </div>
+
+      </div>
+
+      <div class="campo">
+        <label>Monto del abono</label>
+
+        <input
+          type="number"
+          id="montoAbono"
+          min="0.01"
+          step="0.01"
+          oninput="actualizarResumenAbono()">
+      </div>
+
+      <div class="campo">
+        <label>Método de pago</label>
+
+        <select id="metodoAbono">
+          <option value="Efectivo">Efectivo</option>
+          <option value="Transferencia">Transferencia</option>
+          <option value="Tarjeta">Tarjeta</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>Fecha</label>
+
+        <input
+          type="date"
+          id="fechaAbono">
+      </div>
+
+      <div class="campo completo">
+        <label>Notas del pago</label>
+
+        <textarea
+          id="notasAbono"
+          placeholder="Ej. Anticipo, segundo pago, liquidación..."></textarea>
+      </div>
+
+      <div class="total-formulario">
+
+        <div class="linea-total">
+          <span>Nuevo abonado acumulado</span>
+          <strong id="abonoAcumulado">$0.00</strong>
+        </div>
+
+        <div class="linea-total">
+          <span>Nuevo restante</span>
+          <strong id="abonoRestanteDespues">$0.00</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-acciones">
+
+      <button
+        class="boton-secundario"
+        onclick="cerrarModalAbono()">
+        Cancelar
+      </button>
+
+      <button
+        class="boton-principal"
+        onclick="guardarAbono()">
+        Registrar abono
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
 <script>
 
 const SUPABASE_URL =
@@ -1130,27 +1184,20 @@ const supabaseClient =
   );
 
 let cotizaciones = [];
-
+let abonos = [];
 let editandoId = null;
+let cotizacionAbonoActual = null;
 
 const preciosProductos = {
 
   "BottleBox": 600,
-
   "TequilaBox": 1200,
-
   "TequilaBox sin botella": 480,
-
   "GiftBox": 550,
-
   "SlidingBox": 400,
-
   "Portallaves Home": 130,
-
   "Mostrador QR & Códigos Personalizado": 120,
-
   "Carruaje de Cenicienta": 155,
-
   "Mesa Carruaje Gigante": 2500
 
 };
@@ -1175,24 +1222,57 @@ function fechaBonita(fecha) {
 
   if (!fecha) return "—";
 
-  const partes =
-    String(fecha).split("-");
+  const texto = String(fecha);
 
-  if (partes.length !== 3) {
-    return fecha;
+  if (texto.includes("T")) {
+
+    const fechaParte =
+      texto.split("T")[0];
+
+    return fechaBonita(
+      fechaParte
+    );
   }
 
-  return `
-    ${partes[2]}/${partes[1]}/${partes[0]}
-  `;
+  const partes =
+    texto.split("-");
+
+  if (partes.length !== 3) {
+    return texto;
+  }
+
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
-/*
- * Folio visible.
- *
- * Se utiliza el ID real de Supabase para que el folio
- * permanezca estable aunque la cotización se edite.
- */
+function fechaParaInput(fecha) {
+
+  if (!fecha) return "";
+
+  return String(fecha)
+    .split("T")[0];
+}
+
+function hoyLocalInput() {
+
+  const ahora =
+    new Date();
+
+  const año =
+    ahora.getFullYear();
+
+  const mes =
+    String(
+      ahora.getMonth() + 1
+    ).padStart(2, "0");
+
+  const dia =
+    String(
+      ahora.getDate()
+    ).padStart(2, "0");
+
+  return `${año}-${mes}-${dia}`;
+}
+
 function obtenerFolio(cotizacion) {
 
   const numero =
@@ -1204,6 +1284,72 @@ function obtenerFolio(cotizacion) {
   );
 }
 
+function escapeHtml(text) {
+
+  return String(
+    text ?? ""
+  )
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function detenerDespliegue(event) {
+
+  if (event) {
+    event.stopPropagation();
+  }
+}
+
+function obtenerAbonosCotizacion(id) {
+
+  return abonos
+    .filter(
+      a =>
+        Number(a.cotizacion_id) ===
+        Number(id)
+    )
+    .sort(
+      (a, b) =>
+        new Date(
+          a.fecha || a.created_at
+        ) -
+        new Date(
+          b.fecha || b.created_at
+        )
+    );
+}
+
+function obtenerTotalAbonado(cotizacion) {
+
+  const historial =
+    obtenerAbonosCotizacion(
+      cotizacion.id
+    );
+
+  if (historial.length > 0) {
+
+    return historial.reduce(
+      (suma, abono) =>
+        suma +
+        Number(
+          abono.monto || 0
+        ),
+      0
+    );
+  }
+
+  return Number(
+    cotizacion.abono || 0
+  );
+}
+
+/* =========================================================
+   PRECIO
+========================================================= */
+
 function actualizarPrecioProducto() {
 
   const producto =
@@ -1214,7 +1360,9 @@ function actualizarPrecioProducto() {
   document.getElementById(
     "precio"
   ).value =
-    preciosProductos[producto] || 0;
+    preciosProductos[
+      producto
+    ] || 0;
 
   calcularTotal();
 }
@@ -1258,10 +1406,8 @@ function calcularTotal() {
 
   const montoDescuento =
     subtotal *
-    (
-      descuentoPorcentaje /
-      100
-    );
+    descuentoPorcentaje /
+    100;
 
   const total =
     Math.max(
@@ -1338,8 +1484,7 @@ function actualizarResumen() {
   ).textContent =
     cotizaciones.filter(
       c =>
-        c.estado ===
-        "Pendiente"
+        c.estado === "Pendiente"
     ).length;
 
   document.getElementById(
@@ -1347,8 +1492,7 @@ function actualizarResumen() {
   ).textContent =
     cotizaciones.filter(
       c =>
-        c.estado ===
-        "Cotizado"
+        c.estado === "Cotizado"
     ).length;
 
   document.getElementById(
@@ -1356,13 +1500,12 @@ function actualizarResumen() {
   ).textContent =
     cotizaciones.filter(
       c =>
-        c.estado ===
-        "Cerrado"
+        c.estado === "Cerrado"
     ).length;
 }
 
 /* =========================================================
-   DESPLEGAR / CONTRAER
+   MOSTRAR COTIZACIONES
 ========================================================= */
 
 function alternarCotizacion(id) {
@@ -1378,21 +1521,6 @@ function alternarCotizacion(id) {
     "abierta"
   );
 }
-
-/*
- * Evita que al tocar Editar, Ticket o Eliminar
- * también se abra/cierre la cotización.
- */
-function detenerDespliegue(event) {
-
-  if (event) {
-    event.stopPropagation();
-  }
-}
-
-/* =========================================================
-   MOSTRAR COTIZACIONES
-========================================================= */
 
 function mostrarCotizaciones() {
 
@@ -1513,11 +1641,9 @@ function mostrarCotizaciones() {
             ? total / cantidad
             : 0;
 
-        const abono =
+        const abonado =
           Math.min(
-            Number(
-              c.abono || 0
-            ),
+            obtenerTotalAbonado(c),
             total
           );
 
@@ -1525,24 +1651,22 @@ function mostrarCotizaciones() {
           Math.max(
             0,
             total -
-            abono
+            abonado
+          );
+
+        const historial =
+          obtenerAbonosCotizacion(
+            c.id
           );
 
         const folio =
           obtenerFolio(c);
-
-        const fecha =
-          fechaBonita(
-            c.fechacotizacion
-          );
 
         return `
 
           <div
             class="cotizacion"
             id="cotizacion-${c.id}">
-
-            <!-- ENCABEZADO CLICKEABLE -->
 
             <div
               class="cotizacion-cabecera"
@@ -1564,18 +1688,18 @@ function mostrarCotizaciones() {
                   </span>
 
                   <span class="fecha-cabecera">
-                    ${fecha}
+                    ${fechaBonita(
+                      c.fechacotizacion
+                    )}
                   </span>
 
                 </div>
 
                 <div class="telefono">
-
                   ${escapeHtml(
                     c.telefono ||
                     "Sin teléfono"
                   )}
-
                 </div>
 
               </div>
@@ -1597,164 +1721,177 @@ function mostrarCotizaciones() {
 
             </div>
 
-            <!-- CONTENIDO DESPLEGABLE -->
-
             <div class="cotizacion-detalle">
 
               <div class="datos">
 
                 <div class="dato">
-
-                  <small>
-                    Producto
-                  </small>
-
+                  <small>Producto</small>
                   <strong>
                     ${escapeHtml(
-                      c.producto ||
-                      "—"
+                      c.producto || "—"
                     )}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Cantidad
-                  </small>
-
+                  <small>Cantidad</small>
                   <strong>
                     ${cantidad}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Precio unitario
-                  </small>
-
+                  <small>Precio unitario</small>
                   <strong>
                     ${dinero(precio)}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Subtotal
-                  </small>
-
+                  <small>Subtotal</small>
                   <strong>
                     ${dinero(subtotal)}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Descuento
-                  </small>
-
+                  <small>Descuento</small>
                   <strong>
                     ${porcentaje.toFixed(2)}%
                     ·
                     ${dinero(descuento)}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Precio final por pieza
-                  </small>
-
+                  <small>Precio final por pieza</small>
                   <strong>
                     ${dinero(precioFinal)}
                   </strong>
-
                 </div>
 
                 <div class="dato dato-total">
-
-                  <small>
-                    Total
-                  </small>
-
+                  <small>Total</small>
                   <strong>
                     ${dinero(total)}
                   </strong>
-
                 </div>
 
-                <div class="dato">
+                <div class="dato dato-pagado">
+                  <small>Abonado</small>
+                  <strong>
+                    ${dinero(abonado)}
+                  </strong>
+                </div>
 
+                <div class="dato dato-restante">
                   <small>
-                    Abono
+                    ${restante <= 0 ? "Estado de pago" : "Restante"}
                   </small>
 
                   <strong>
-                    ${dinero(abono)}
+                    ${
+                      restante <= 0
+                        ? "PAGADO"
+                        : dinero(restante)
+                    }
                   </strong>
-
-                </div>
-
-                <div class="dato dato-total">
-
-                  <small>
-                    Restante
-                  </small>
-
-                  <strong>
-                    ${dinero(restante)}
-                  </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Fecha de cotización
-                  </small>
-
+                  <small>Fecha de cotización</small>
                   <strong>
                     ${fechaBonita(
                       c.fechacotizacion
                     )}
                   </strong>
-
                 </div>
 
                 <div class="dato">
-
-                  <small>
-                    Fecha de entrega
-                  </small>
-
+                  <small>Fecha de entrega</small>
                   <strong>
                     ${fechaBonita(
                       c.fechaentrega
                     )}
                   </strong>
-
                 </div>
 
               </div>
 
               ${
+                historial.length
+                  ? `
+                    <div class="historial">
+
+                      <div class="historial-titulo">
+                        Historial de pagos
+                      </div>
+
+                      ${historial.map(
+                        (a, indice) => `
+                          <div class="abono-item">
+
+                            <div class="abono-fecha">
+                              ${fechaBonita(
+                                a.fecha ||
+                                a.created_at
+                              )}
+                            </div>
+
+                            <div class="abono-info">
+
+                              ${escapeHtml(
+                                a.metodo ||
+                                "Sin método"
+                              )}
+
+                              ${
+                                a.notas
+                                  ? `
+                                    <small>
+                                      ${escapeHtml(
+                                        a.notas
+                                      )}
+                                    </small>
+                                  `
+                                  : ""
+                              }
+
+                            </div>
+
+                            <div class="abono-monto">
+                              ${dinero(
+                                a.monto
+                              )}
+                            </div>
+
+                          </div>
+                        `
+                      ).join("")}
+
+                    </div>
+                  `
+                  : `
+                    <div class="historial">
+                      <div class="historial-titulo">
+                        Historial de pagos
+                      </div>
+
+                      <div class="sin-abonos">
+                        Aún no hay pagos registrados en el historial.
+                      </div>
+                    </div>
+                  `
+              }
+
+              ${
                 c.notas
                   ? `
                     <div class="notas">
-
                       ${escapeHtml(
                         c.notas
                       )}
-
                     </div>
                   `
                   : ""
@@ -1764,14 +1901,22 @@ function mostrarCotizaciones() {
 
                 <button
                   type="button"
+                  class="boton-secundario boton-abono"
+                  onclick="
+                    detenerDespliegue(event);
+                    abrirAbono(${c.id});
+                  ">
+                  Abono
+                </button>
+
+                <button
+                  type="button"
                   class="boton-secundario"
                   onclick="
                     detenerDespliegue(event);
                     editarCotizacion(${c.id});
                   ">
-
                   Editar
-
                 </button>
 
                 <button
@@ -1781,9 +1926,7 @@ function mostrarCotizaciones() {
                     detenerDespliegue(event);
                     descargarTicketCotizacion(${c.id});
                   ">
-
                   Ticket
-
                 </button>
 
                 <button
@@ -1793,9 +1936,7 @@ function mostrarCotizaciones() {
                     detenerDespliegue(event);
                     eliminarCotizacion(${c.id});
                   ">
-
                   Eliminar
-
                 </button>
 
               </div>
@@ -1810,38 +1951,7 @@ function mostrarCotizaciones() {
 }
 
 /* =========================================================
-   SEGURIDAD HTML
-========================================================= */
-
-function escapeHtml(text) {
-
-  return String(
-    text ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-}
-
-/* =========================================================
-   NUEVA COTIZACIÓN
+   NUEVA COTIZACION
 ========================================================= */
 
 function abrirNuevaCotizacion() {
@@ -1868,33 +1978,38 @@ function abrirNuevaCotizacion() {
 
   document.getElementById(
     "cantidad"
-  ).value =
-    1;
+  ).value = 1;
 
   document.getElementById(
     "descuentoPorcentaje"
-  ).value =
-    0;
+  ).value = 0;
+
+  const campoAbono =
+    document.getElementById(
+      "abono"
+    );
+
+  campoAbono.value = 0;
+  campoAbono.readOnly = false;
 
   document.getElementById(
-    "abono"
-  ).value =
-    0;
+    "etiquetaAbonoCotizacion"
+  ).textContent =
+    "Abono inicial";
 
-  const hoy =
-    new Date()
-      .toISOString()
-      .split("T")[0];
+  document.getElementById(
+    "mensajeHistorialEdicion"
+  ).style.display =
+    "none";
 
   document.getElementById(
     "fechaCotizacion"
   ).value =
-    hoy;
+    hoyLocalInput();
 
   document.getElementById(
     "fechaEntrega"
-  ).value =
-    "";
+  ).value = "";
 
   document.getElementById(
     "estado"
@@ -1903,8 +2018,7 @@ function abrirNuevaCotizacion() {
 
   document.getElementById(
     "notas"
-  ).value =
-    "";
+  ).value = "";
 
   actualizarPrecioProducto();
 
@@ -1914,10 +2028,6 @@ function abrirNuevaCotizacion() {
     "activo"
   );
 }
-
-/* =========================================================
-   CERRAR MODAL
-========================================================= */
 
 function cerrarModal() {
 
@@ -1987,23 +2097,77 @@ function editarCotizacion(id) {
     c.descuentoporcentaje ||
     0;
 
-  document.getElementById(
-    "abono"
-  ).value =
-    c.abono ||
-    0;
+  const historial =
+    obtenerAbonosCotizacion(
+      c.id
+    );
+
+  const totalAbonado =
+    obtenerTotalAbonado(c);
+
+  const campoAbono =
+    document.getElementById(
+      "abono"
+    );
+
+  campoAbono.value =
+    totalAbonado;
+
+  /*
+   * Si ya existe historial, no permitimos cambiar
+   * manualmente el acumulado desde "Editar".
+   * Los nuevos pagos se registran desde "Abono".
+   */
+  if (historial.length > 0) {
+
+    campoAbono.readOnly = true;
+
+    document.getElementById(
+      "etiquetaAbonoCotizacion"
+    ).textContent =
+      "Abonado acumulado";
+
+    const mensaje =
+      document.getElementById(
+        "mensajeHistorialEdicion"
+      );
+
+    mensaje.style.display =
+      "block";
+
+    mensaje.innerHTML =
+      "Esta cotización ya tiene historial de pagos. " +
+      "Para agregar otro pago utiliza el botón <strong>Abono</strong>. " +
+      "Así no se pierde el historial.";
+
+  } else {
+
+    campoAbono.readOnly = false;
+
+    document.getElementById(
+      "etiquetaAbonoCotizacion"
+    ).textContent =
+      "Abono inicial";
+
+    document.getElementById(
+      "mensajeHistorialEdicion"
+    ).style.display =
+      "none";
+  }
 
   document.getElementById(
     "fechaCotizacion"
   ).value =
-    c.fechacotizacion ||
-    "";
+    fechaParaInput(
+      c.fechacotizacion
+    );
 
   document.getElementById(
     "fechaEntrega"
   ).value =
-    c.fechaentrega ||
-    "";
+    fechaParaInput(
+      c.fechaentrega
+    );
 
   document.getElementById(
     "estado"
@@ -2027,7 +2191,7 @@ function editarCotizacion(id) {
 }
 
 /* =========================================================
-   GUARDAR
+   GUARDAR COTIZACION
 ========================================================= */
 
 async function guardarNuevaCotizacion() {
@@ -2052,6 +2216,15 @@ async function guardarNuevaCotizacion() {
         "cantidad"
       ).value
     ) || 0;
+
+  if (cantidad <= 0) {
+
+    alert(
+      "La cantidad debe ser mayor que cero."
+    );
+
+    return;
+  }
 
   const precio =
     Number(
@@ -2080,10 +2253,8 @@ async function guardarNuevaCotizacion() {
 
   const montoDescuento =
     subtotal *
-    (
-      descuentoPorcentaje /
-      100
-    );
+    descuentoPorcentaje /
+    100;
 
   const total =
     Math.max(
@@ -2092,14 +2263,61 @@ async function guardarNuevaCotizacion() {
       montoDescuento
     );
 
-  const abono =
-    Math.min(
-      Math.max(
-        0,
-        abonoIngresado
-      ),
-      total
-    );
+  let abono = 0;
+
+  /*
+   * En edición con historial, conservamos
+   * el acumulado real.
+   */
+  if (editandoId) {
+
+    const existente =
+      cotizaciones.find(
+        c =>
+          Number(c.id) ===
+          Number(editandoId)
+      );
+
+    const historial =
+      existente
+        ? obtenerAbonosCotizacion(
+            existente.id
+          )
+        : [];
+
+    if (historial.length > 0) {
+
+      abono =
+        Math.min(
+          obtenerTotalAbonado(
+            existente
+          ),
+          total
+        );
+
+    } else {
+
+      abono =
+        Math.min(
+          Math.max(
+            0,
+            abonoIngresado
+          ),
+          total
+        );
+    }
+
+  } else {
+
+    abono =
+      Math.min(
+        Math.max(
+          0,
+          abonoIngresado
+        ),
+        total
+      );
+  }
 
   const datos = {
 
@@ -2154,7 +2372,8 @@ async function guardarNuevaCotizacion() {
       ).value.trim()
   };
 
-  let error;
+  let error = null;
+  let cotizacionGuardada = null;
 
   if (editandoId) {
 
@@ -2163,14 +2382,21 @@ async function guardarNuevaCotizacion() {
         .from(
           "cotizaciones"
         )
-        .update(datos)
+        .update(
+          datos
+        )
         .eq(
           "id",
           editandoId
-        );
+        )
+        .select()
+        .single();
 
     error =
       respuesta.error;
+
+    cotizacionGuardada =
+      respuesta.data;
 
   } else {
 
@@ -2181,10 +2407,15 @@ async function guardarNuevaCotizacion() {
         )
         .insert(
           datos
-        );
+        )
+        .select()
+        .single();
 
     error =
       respuesta.error;
+
+    cotizacionGuardada =
+      respuesta.data;
   }
 
   if (error) {
@@ -2200,13 +2431,492 @@ async function guardarNuevaCotizacion() {
     return;
   }
 
+  /*
+   * Si es una NUEVA cotización y se capturó un abono inicial,
+   * lo registramos también como evento en la tabla abonos.
+   */
+  if (
+    !editandoId &&
+    abono > 0 &&
+    cotizacionGuardada
+  ) {
+
+    const { error: errorAbono } =
+      await supabaseClient
+        .from(
+          "abonos"
+        )
+        .insert({
+          cotizacion_id:
+            cotizacionGuardada.id,
+
+          monto:
+            abono,
+
+          metodo:
+            "Pendiente de método",
+
+          notas:
+            "Abono inicial registrado al crear la cotización.",
+
+          fecha:
+            datos.fechacotizacion ||
+            hoyLocalInput()
+        });
+
+    if (errorAbono) {
+
+      console.error(
+        "Error registrando abono inicial:",
+        errorAbono
+      );
+
+      alert(
+        "La cotización se guardó, pero no se pudo registrar el abono inicial en el historial."
+      );
+    }
+  }
+
   cerrarModal();
 
   await cargarCotizaciones();
 }
 
 /* =========================================================
-   ELIMINAR
+   ABONOS
+========================================================= */
+
+function abrirAbono(id) {
+
+  const c =
+    cotizaciones.find(
+      x =>
+        Number(x.id) ===
+        Number(id)
+    );
+
+  if (!c) return;
+
+  cotizacionAbonoActual =
+    c;
+
+  const total =
+    Number(
+      c.total || 0
+    );
+
+  const abonado =
+    Math.min(
+      obtenerTotalAbonado(c),
+      total
+    );
+
+  const restante =
+    Math.max(
+      0,
+      total -
+      abonado
+    );
+
+  if (restante <= 0) {
+
+    alert(
+      "Esta cotización ya está completamente pagada."
+    );
+
+    return;
+  }
+
+  document.getElementById(
+    "tituloModalAbono"
+  ).textContent =
+    restante === total
+      ? "Registrar anticipo"
+      : "Registrar abono";
+
+  document.getElementById(
+    "folioAbono"
+  ).textContent =
+    obtenerFolio(c);
+
+  document.getElementById(
+    "clienteAbono"
+  ).textContent =
+    c.cliente ||
+    "Sin nombre";
+
+  document.getElementById(
+    "abonoTotalCotizacion"
+  ).textContent =
+    dinero(total);
+
+  document.getElementById(
+    "abonoAnterior"
+  ).textContent =
+    dinero(abonado);
+
+  document.getElementById(
+    "abonoRestanteAntes"
+  ).textContent =
+    dinero(restante);
+
+  document.getElementById(
+    "montoAbono"
+  ).value =
+    restante.toFixed(2);
+
+  document.getElementById(
+    "metodoAbono"
+  ).value =
+    "Efectivo";
+
+  document.getElementById(
+    "fechaAbono"
+  ).value =
+    hoyLocalInput();
+
+  document.getElementById(
+    "notasAbono"
+  ).value =
+    "";
+
+  actualizarResumenAbono();
+
+  document.getElementById(
+    "modalAbono"
+  ).classList.add(
+    "activo"
+  );
+}
+
+function cerrarModalAbono() {
+
+  document.getElementById(
+    "modalAbono"
+  ).classList.remove(
+    "activo"
+  );
+
+  cotizacionAbonoActual =
+    null;
+}
+
+function actualizarResumenAbono() {
+
+  if (!cotizacionAbonoActual) {
+    return;
+  }
+
+  const total =
+    Number(
+      cotizacionAbonoActual.total ||
+      0
+    );
+
+  const anterior =
+    Math.min(
+      obtenerTotalAbonado(
+        cotizacionAbonoActual
+      ),
+      total
+    );
+
+  let monto =
+    Number(
+      document.getElementById(
+        "montoAbono"
+      ).value
+    ) || 0;
+
+  monto =
+    Math.max(
+      0,
+      Math.min(
+        monto,
+        Math.max(
+          0,
+          total -
+          anterior
+        )
+      )
+    );
+
+  const acumulado =
+    anterior +
+    monto;
+
+  const restante =
+    Math.max(
+      0,
+      total -
+      acumulado
+    );
+
+  document.getElementById(
+    "abonoAcumulado"
+  ).textContent =
+    dinero(acumulado);
+
+  document.getElementById(
+    "abonoRestanteDespues"
+  ).textContent =
+    dinero(restante);
+}
+
+async function guardarAbono() {
+
+  if (!cotizacionAbonoActual) {
+    return;
+  }
+
+  const c =
+    cotizacionAbonoActual;
+
+  const total =
+    Number(
+      c.total || 0
+    );
+
+  const anterior =
+    Math.min(
+      obtenerTotalAbonado(c),
+      total
+    );
+
+  const monto =
+    Number(
+      document.getElementById(
+        "montoAbono"
+      ).value
+    ) || 0;
+
+  if (monto <= 0) {
+
+    alert(
+      "Escribe un monto válido."
+    );
+
+    return;
+  }
+
+  const restanteAntes =
+    Math.max(
+      0,
+      total -
+      anterior
+    );
+
+  if (monto > restanteAntes) {
+
+    alert(
+      "El abono no puede ser mayor que el restante."
+    );
+
+    return;
+  }
+
+  const metodo =
+    document.getElementById(
+      "metodoAbono"
+    ).value;
+
+  const fecha =
+    document.getElementById(
+      "fechaAbono"
+    ).value ||
+    hoyLocalInput();
+
+  const notas =
+    document.getElementById(
+      "notasAbono"
+    ).value.trim();
+
+  const nuevoAcumulado =
+    anterior +
+    monto;
+
+  const nuevoRestante =
+    Math.max(
+      0,
+      total -
+      nuevoAcumulado
+    );
+
+  /*
+   * 1. Si la cotización es antigua y tiene un abono guardado
+   *    solamente en cotizaciones.abono, lo pasamos al historial
+   *    antes de registrar el nuevo pago. Así nunca se pierde
+   *    ni se duplica el dinero abonado.
+   */
+  const historialActual =
+    obtenerAbonosCotizacion(c.id);
+
+  if (
+    historialActual.length === 0 &&
+    Number(c.abono || 0) > 0
+  ) {
+
+    const { error: errorMigracion } =
+      await supabaseClient
+        .from(
+          "abonos"
+        )
+        .insert({
+          cotizacion_id:
+            c.id,
+
+          monto:
+            Math.min(
+              Number(c.abono || 0),
+              total
+            ),
+
+          metodo:
+            "Anterior",
+
+          notas:
+            "Abono existente antes de activar el historial de pagos.",
+
+          fecha:
+            c.fechacotizacion ||
+            hoyLocalInput()
+        });
+
+    if (errorMigracion) {
+
+      console.error(
+        "Error migrando abono anterior:",
+        errorMigracion
+      );
+
+      alert(
+        "No se pudo preparar el historial del abono anterior. No se registró el nuevo pago."
+      );
+
+      return;
+    }
+  }
+
+  /*
+   * 2. Guardamos el nuevo evento de pago.
+   */
+  const {
+    data: abonoGuardado,
+    error: errorAbono
+  } =
+    await supabaseClient
+      .from(
+        "abonos"
+      )
+      .insert({
+        cotizacion_id:
+          c.id,
+
+        monto,
+
+        metodo,
+
+        notas,
+
+        fecha
+      })
+      .select()
+      .single();
+
+  if (errorAbono) {
+
+    console.error(
+      errorAbono
+    );
+
+    alert(
+      "No se pudo registrar el abono."
+    );
+
+    return;
+  }
+
+  /*
+   * 3. Actualizamos el acumulado de la cotización
+   * para mantener compatibilidad con el sistema anterior.
+   */
+  const {
+    error: errorCotizacion
+  } =
+    await supabaseClient
+      .from(
+        "cotizaciones"
+      )
+      .update({
+        abono:
+          nuevoAcumulado
+      })
+      .eq(
+        "id",
+        c.id
+      );
+
+  if (errorCotizacion) {
+
+    console.error(
+      errorCotizacion
+    );
+
+    alert(
+      "El abono se registró, pero no se pudo actualizar el acumulado de la cotización."
+    );
+
+    await cargarCotizaciones();
+
+    return;
+  }
+
+  cerrarModalAbono();
+
+  await cargarCotizaciones();
+
+  /*
+   * 4. Generamos el comprobante del pago.
+   */
+  const cotizacionActualizada =
+    cotizaciones.find(
+      x =>
+        Number(x.id) ===
+        Number(c.id)
+    ) || {
+      ...c,
+      abono:
+        nuevoAcumulado
+    };
+
+  const tipoRecibo =
+    nuevoRestante <= 0
+      ? "pago final"
+      : "abono";
+
+  const deseaRecibo =
+    confirm(
+      `Pago registrado correctamente.\n\n` +
+      `Monto: ${dinero(monto)}\n` +
+      `Abonado acumulado: ${dinero(nuevoAcumulado)}\n` +
+      `Restante: ${dinero(nuevoRestante)}\n\n` +
+      `¿Quieres generar el recibo de ${tipoRecibo}?`
+    );
+
+  if (deseaRecibo) {
+
+    await descargarReciboAbono(
+      cotizacionActualizada,
+      abonoGuardado,
+      anterior,
+      nuevoAcumulado,
+      nuevoRestante
+    );
+  }
+}
+
+/* =========================================================
+   ELIMINAR COTIZACION
 ========================================================= */
 
 async function eliminarCotizacion(id) {
@@ -2217,6 +2927,35 @@ async function eliminarCotizacion(id) {
     );
 
   if (!confirmar) return;
+
+  /*
+   * Primero eliminamos los abonos relacionados.
+   */
+  const {
+    error: errorAbonos
+  } =
+    await supabaseClient
+      .from(
+        "abonos"
+      )
+      .delete()
+      .eq(
+        "cotizacion_id",
+        id
+      );
+
+  if (errorAbonos) {
+
+    console.error(
+      errorAbonos
+    );
+
+    alert(
+      "No se pudieron eliminar los abonos relacionados."
+    );
+
+    return;
+  }
 
   const {
     error
@@ -2248,7 +2987,7 @@ async function eliminarCotizacion(id) {
 }
 
 /* =========================================================
-   CREAR PDF
+   PDF COTIZACION
 ========================================================= */
 
 async function crearPdfCotizacion(
@@ -2270,8 +3009,7 @@ async function crearPdfCotizacion(
         "letter"
     });
 
-  const ancho =
-    215.9;
+  const ancho = 215.9;
 
   const colorCafe =
     [39, 27, 19];
@@ -2300,8 +3038,7 @@ async function crearPdfCotizacion(
   const subtotal =
     Number(
       cotizacion.subtotal ||
-      cantidad *
-      precio
+      cantidad * precio
     );
 
   const porcentaje =
@@ -2335,10 +3072,7 @@ async function crearPdfCotizacion(
 
   const abono =
     Math.min(
-      Number(
-        cotizacion.abono ||
-        0
-      ),
+      obtenerTotalAbonado(cotizacion),
       total
     );
 
@@ -2397,9 +3131,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    18
-  );
+  doc.setFontSize(18);
 
   doc.text(
     "PIRÁMIDE WOODWORKS",
@@ -2407,9 +3139,7 @@ async function crearPdfCotizacion(
     20
   );
 
-  doc.setFontSize(
-    10
-  );
+  doc.setFontSize(10);
 
   doc.setFont(
     "helvetica",
@@ -2427,9 +3157,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    17
-  );
+  doc.setFontSize(17);
 
   doc.text(
     "COTIZACIÓN",
@@ -2446,9 +3174,7 @@ async function crearPdfCotizacion(
       cotizacion
     );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     folio,
@@ -2471,9 +3197,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    11
-  );
+  doc.setFontSize(11);
 
   doc.text(
     "DATOS DEL CLIENTE",
@@ -2505,9 +3229,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     "Cliente",
@@ -2524,9 +3246,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    11
-  );
+  doc.setFontSize(11);
 
   doc.text(
     String(
@@ -2548,9 +3268,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     "Teléfono",
@@ -2587,9 +3305,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    11
-  );
+  doc.setFontSize(11);
 
   doc.text(
     "DETALLE DE LA COTIZACIÓN",
@@ -2633,9 +3349,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    8
-  );
+  doc.setFontSize(8);
 
   doc.text(
     "PRODUCTO",
@@ -2672,9 +3386,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   const producto =
     String(
@@ -2736,9 +3448,7 @@ async function crearPdfCotizacion(
     ...colorGris
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     "Subtotal",
@@ -2777,8 +3487,7 @@ async function crearPdfCotizacion(
   );
 
   doc.text(
-    "-" +
-    dinero(descuento),
+    "-" + dinero(descuento),
     195,
     y,
     {
@@ -2814,9 +3523,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    11
-  );
+  doc.setFontSize(11);
 
   doc.text(
     "TOTAL",
@@ -2841,9 +3548,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.setTextColor(
     ...colorGris
@@ -2876,7 +3581,7 @@ async function crearPdfCotizacion(
   );
 
   doc.text(
-    "Abono",
+    "Abonado",
     130,
     y
   );
@@ -2937,9 +3642,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    10
-  );
+  doc.setFontSize(10);
 
   doc.text(
     "FECHAS",
@@ -2971,9 +3674,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     "Fecha de cotización:",
@@ -3078,9 +3779,7 @@ async function crearPdfCotizacion(
       "bold"
     );
 
-    doc.setFontSize(
-      10
-    );
+    doc.setFontSize(10);
 
     doc.text(
       "NOTAS",
@@ -3112,9 +3811,7 @@ async function crearPdfCotizacion(
       "normal"
     );
 
-    doc.setFontSize(
-      9
-    );
+    doc.setFontSize(9);
 
     const notas =
       doc.splitTextToSize(
@@ -3131,8 +3828,7 @@ async function crearPdfCotizacion(
     );
   }
 
-  const pieY =
-    260;
+  const pieY = 260;
 
   doc.setFillColor(
     ...colorCafe
@@ -3155,9 +3851,7 @@ async function crearPdfCotizacion(
     "bold"
   );
 
-  doc.setFontSize(
-    9
-  );
+  doc.setFontSize(9);
 
   doc.text(
     "Pirámide Woodworks",
@@ -3170,9 +3864,7 @@ async function crearPdfCotizacion(
     "normal"
   );
 
-  doc.setFontSize(
-    8
-  );
+  doc.setFontSize(8);
 
   doc.text(
     "Tel. 899 119 4289",
@@ -3204,9 +3896,7 @@ async function crearPdfCotizacion(
     ...colorGris
   );
 
-  doc.setFontSize(
-    7
-  );
+  doc.setFontSize(7);
 
   doc.text(
     "Gracias por confiar en Pirámide Woodworks.",
@@ -3222,7 +3912,7 @@ async function crearPdfCotizacion(
 }
 
 /* =========================================================
-   TICKET
+   TICKET DE COTIZACION
 ========================================================= */
 
 async function descargarTicketCotizacion(id) {
@@ -3238,18 +3928,6 @@ async function descargarTicketCotizacion(id) {
 
     alert(
       "No se encontró la cotización."
-    );
-
-    return;
-  }
-
-  if (
-    !window.jspdf ||
-    !window.jspdf.jsPDF
-  ) {
-
-    alert(
-      "No se pudo cargar el generador de PDF. Revisa tu conexión a internet."
     );
 
     return;
@@ -3311,9 +3989,7 @@ async function descargarTicketCotizacion(id) {
       );
 
     const pdfBlob =
-      doc.output(
-        "blob"
-      );
+      doc.output("blob");
 
     const folio =
       obtenerFolio(
@@ -3350,12 +4026,7 @@ async function descargarTicketCotizacion(id) {
     if (subida.error) {
 
       console.error(
-        "Error al subir PDF:",
         subida.error
-      );
-
-      alert(
-        "El PDF se generó, pero no se pudo guardar en Supabase.\n\nSe descargará normalmente."
       );
 
       descargarBlob(
@@ -3363,8 +4034,23 @@ async function descargarTicketCotizacion(id) {
         nombreArchivo
       );
 
+      alert(
+        "El PDF se generó, pero no se pudo guardar en Supabase."
+      );
+
       return;
     }
+
+    const abono =
+      obtenerTotalAbonado(
+        cotizacion
+      );
+
+    const total =
+      Number(
+        cotizacion.total ||
+        0
+      );
 
     const registro = {
 
@@ -3388,29 +4074,15 @@ async function descargarTicketCotizacion(id) {
         cotizacion.producto ||
         "",
 
-      total:
-        Number(
-          cotizacion.total ||
-          0
-        ),
+      total,
 
-      abono:
-        Number(
-          cotizacion.abono ||
-          0
-        ),
+      abono,
 
       restante:
         Math.max(
           0,
-          Number(
-            cotizacion.total ||
-            0
-          ) -
-          Number(
-            cotizacion.abono ||
-            0
-          )
+          total -
+          abono
         ),
 
       archivo_url:
@@ -3429,17 +4101,16 @@ async function descargarTicketCotizacion(id) {
     if (guardado.error) {
 
       console.error(
-        "Error al registrar comprobante:",
         guardado.error
-      );
-
-      alert(
-        "El PDF se guardó en Storage, pero no se pudo registrar en la tabla de comprobantes.\n\nSe descargará normalmente."
       );
 
       descargarBlob(
         pdfBlob,
         nombreArchivo
+      );
+
+      alert(
+        "El PDF se guardó, pero no se pudo registrar en comprobantes."
       );
 
       return;
@@ -3451,24 +4122,1028 @@ async function descargarTicketCotizacion(id) {
     );
 
     alert(
-      "Ticket guardado correctamente en Supabase y descargado."
+      "Ticket guardado y descargado correctamente."
     );
 
   } catch (error) {
 
     console.error(
-      "Error completo del ticket:",
       error
     );
 
     alert(
-      "Hubo un problema al guardar el ticket. Revisa la consola."
+      "Hubo un problema al generar el ticket."
     );
   }
 }
 
 /* =========================================================
-   DESCARGAR BLOB
+   PDF RECIBO DE ABONO
+========================================================= */
+
+async function crearPdfReciboAbono(
+  cotizacion,
+  abonoRegistro,
+  anterior,
+  acumulado,
+  restante
+) {
+
+  const {
+    jsPDF
+  } =
+    window.jspdf;
+
+  const doc =
+    new jsPDF({
+      orientation:
+        "portrait",
+      unit:
+        "mm",
+      format:
+        "letter"
+    });
+
+  const ancho = 215.9;
+
+  const cafe =
+    [39, 27, 19];
+
+  const dorado =
+    [200, 138, 61];
+
+  const crema =
+    [244, 238, 231];
+
+  const gris =
+    [105, 94, 84];
+
+  const total =
+    Number(
+      cotizacion.total || 0
+    );
+
+  const monto =
+    Number(
+      abonoRegistro.monto || 0
+    );
+
+  const folio =
+    obtenerFolio(
+      cotizacion
+    );
+
+  const esFinal =
+    restante <= 0;
+
+  const numeroAbono =
+    obtenerAbonosCotizacion(
+      cotizacion.id
+    ).findIndex(
+      a =>
+        Number(a.id) ===
+        Number(abonoRegistro.id)
+    ) + 1;
+
+  const folioRecibo =
+    `${folio}-AB-${String(
+      numeroAbono
+    ).padStart(2, "0")}`;
+
+  doc.setFillColor(
+    ...cafe
+  );
+
+  doc.rect(
+    0,
+    0,
+    ancho,
+    52,
+    "F"
+  );
+
+  try {
+
+    const logoData =
+      await cargarImagenBase64(
+        "imagenes/logo.jpeg"
+      );
+
+    if (logoData) {
+
+      doc.addImage(
+        logoData,
+        "JPEG",
+        18,
+        10,
+        30,
+        30
+      );
+    }
+
+  } catch (e) {
+    console.warn(
+      e
+    );
+  }
+
+  doc.setTextColor(
+    ...crema
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(18);
+
+  doc.text(
+    "PIRÁMIDE WOODWORKS",
+    55,
+    21
+  );
+
+  doc.setFontSize(10);
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Fabricamos lo que llegue a tu imaginación",
+    55,
+    29
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(15);
+
+  doc.text(
+    esFinal
+      ? "RECIBO DE PAGO FINAL"
+      : "RECIBO DE ABONO",
+    ancho - 18,
+    20,
+    {
+      align:
+        "right"
+    }
+  );
+
+  doc.setFontSize(9);
+
+  doc.text(
+    folioRecibo,
+    ancho - 18,
+    29,
+    {
+      align:
+        "right"
+    }
+  );
+
+  let y = 68;
+
+  doc.setTextColor(
+    ...dorado
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(11);
+
+  doc.text(
+    "DATOS DEL CLIENTE",
+    18,
+    y
+  );
+
+  y += 8;
+
+  doc.setDrawColor(
+    ...dorado
+  );
+
+  doc.line(
+    18,
+    y,
+    ancho - 18,
+    y
+  );
+
+  y += 11;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Cliente:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    String(
+      cotizacion.cliente ||
+      "Sin nombre"
+    ),
+    48,
+    y
+  );
+
+  y += 8;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Teléfono:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    String(
+      cotizacion.telefono ||
+      "Sin teléfono"
+    ),
+    48,
+    y
+  );
+
+  y += 8;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Cotización:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    folio,
+    48,
+    y
+  );
+
+  y += 17;
+
+  doc.setTextColor(
+    ...dorado
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(11);
+
+  doc.text(
+    "DETALLE DEL PAGO",
+    18,
+    y
+  );
+
+  y += 8;
+
+  doc.line(
+    18,
+    y,
+    ancho - 18,
+    y
+  );
+
+  y += 13;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Producto:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    String(
+      cotizacion.producto ||
+      "—"
+    ),
+    55,
+    y
+  );
+
+  y += 10;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Total de cotización:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    dinero(total),
+    75,
+    y
+  );
+
+  y += 10;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Pago realizado:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...dorado
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(13);
+
+  doc.text(
+    dinero(monto),
+    75,
+    y
+  );
+
+  y += 10;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Abonado anteriormente:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    dinero(anterior),
+    75,
+    y
+  );
+
+  y += 10;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Abonado acumulado:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    dinero(acumulado),
+    75,
+    y
+  );
+
+  y += 10;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Restante:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    esFinal
+      ? 80
+      : dorado[0],
+    esFinal
+      ? 160
+      : dorado[1],
+    esFinal
+      ? 80
+      : dorado[2]
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    esFinal
+      ? "PAGADO"
+      : dinero(restante),
+    75,
+    y
+  );
+
+  y += 20;
+
+  doc.setTextColor(
+    ...dorado
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "INFORMACIÓN DEL PAGO",
+    18,
+    y
+  );
+
+  y += 8;
+
+  doc.line(
+    18,
+    y,
+    ancho - 18,
+    y
+  );
+
+  y += 12;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    "Fecha:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    fechaBonita(
+      abonoRegistro.fecha ||
+      abonoRegistro.created_at
+    ),
+    50,
+    y
+  );
+
+  y += 9;
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.text(
+    "Método:",
+    18,
+    y
+  );
+
+  doc.setTextColor(
+    ...cafe
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.text(
+    String(
+      abonoRegistro.metodo ||
+      "—"
+    ),
+    50,
+    y
+  );
+
+  if (abonoRegistro.notas) {
+
+    y += 16;
+
+    doc.setTextColor(
+      ...dorado
+    );
+
+    doc.setFont(
+      "helvetica",
+      "bold"
+    );
+
+    doc.text(
+      "NOTAS",
+      18,
+      y
+    );
+
+    y += 8;
+
+    doc.setTextColor(
+      ...gris
+    );
+
+    doc.setFont(
+      "helvetica",
+      "normal"
+    );
+
+    const notas =
+      doc.splitTextToSize(
+        String(
+          abonoRegistro.notas
+        ),
+        ancho - 36
+      );
+
+    doc.text(
+      notas,
+      18,
+      y
+    );
+  }
+
+  const pieY = 260;
+
+  doc.setFillColor(
+    ...cafe
+  );
+
+  doc.rect(
+    0,
+    pieY,
+    ancho,
+    17,
+    "F"
+  );
+
+  doc.setTextColor(
+    ...crema
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(9);
+
+  doc.text(
+    "Pirámide Woodworks",
+    18,
+    pieY + 7
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(8);
+
+  doc.text(
+    "Tel. 899 119 4289",
+    18,
+    pieY + 12
+  );
+
+  doc.text(
+    "Facebook: Pirámide Woodworks",
+    ancho - 18,
+    pieY + 7,
+    {
+      align:
+        "right"
+    }
+  );
+
+  doc.text(
+    "TikTok: @pirmide.woodworks",
+    ancho - 18,
+    pieY + 12,
+    {
+      align:
+        "right"
+    }
+  );
+
+  doc.setTextColor(
+    ...gris
+  );
+
+  doc.setFontSize(7);
+
+  doc.text(
+    esFinal
+      ? "Gracias por completar tu pago."
+      : "Gracias por tu confianza.",
+    ancho / 2,
+    285,
+    {
+      align:
+        "center"
+    }
+  );
+
+  return {
+    doc,
+    folioRecibo
+  };
+}
+
+/* =========================================================
+   DESCARGAR / ARCHIVAR RECIBO
+========================================================= */
+
+async function descargarReciboAbono(
+  cotizacion,
+  abonoRegistro,
+  anterior,
+  acumulado,
+  restante
+) {
+
+  try {
+
+    const {
+      doc,
+      folioRecibo
+    } =
+      await crearPdfReciboAbono(
+        cotizacion,
+        abonoRegistro,
+        anterior,
+        acumulado,
+        restante
+      );
+
+    const existente =
+      await supabaseClient
+        .from(
+          "comprobantes"
+        )
+        .select("*")
+        .eq(
+          "cotizacion_id",
+          cotizacion.id
+        )
+        .eq(
+          "tipo",
+          "abono"
+        )
+        .eq(
+          "folio",
+          folioRecibo
+        )
+        .limit(1)
+        .maybeSingle();
+
+    if (
+      existente.data &&
+      existente.data.archivo_url
+    ) {
+
+      const descarga =
+        await supabaseClient
+          .storage
+          .from(
+            "comprobantes"
+          )
+          .download(
+            existente.data.archivo_url
+          );
+
+      if (
+        !descarga.error &&
+        descarga.data
+      ) {
+
+        descargarBlob(
+          descarga.data,
+          generarNombreRecibo(
+            cotizacion,
+            folioRecibo
+          )
+        );
+
+        return;
+      }
+    }
+
+    const pdfBlob =
+      doc.output(
+        "blob"
+      );
+
+    const ruta =
+      "abonos/" +
+      folioRecibo +
+      ".pdf";
+
+    const subida =
+      await supabaseClient
+        .storage
+        .from(
+          "comprobantes"
+        )
+        .upload(
+          ruta,
+          pdfBlob,
+          {
+            contentType:
+              "application/pdf",
+            upsert:
+              false
+          }
+        );
+
+    if (subida.error) {
+
+      console.error(
+        subida.error
+      );
+
+      descargarBlob(
+        pdfBlob,
+        generarNombreRecibo(
+          cotizacion,
+          folioRecibo
+        )
+      );
+
+      alert(
+        "El recibo se generó, pero no se pudo guardar en Supabase."
+      );
+
+      return;
+    }
+
+    const registro = {
+
+      tipo:
+        "abono",
+
+      cotizacion_id:
+        cotizacion.id,
+
+      folio:
+        folioRecibo,
+
+      cliente:
+        cotizacion.cliente ||
+        "",
+
+      telefono:
+        cotizacion.telefono ||
+        "",
+
+      producto:
+        cotizacion.producto ||
+        "",
+
+      total:
+        Number(
+          cotizacion.total ||
+          0
+        ),
+
+      abono:
+        Number(
+          acumulado ||
+          0
+        ),
+
+      restante:
+        Number(
+          restante ||
+          0
+        ),
+
+      archivo_url:
+        ruta
+    };
+
+    const guardado =
+      await supabaseClient
+        .from(
+          "comprobantes"
+        )
+        .insert(
+          registro
+        );
+
+    if (guardado.error) {
+
+      console.error(
+        guardado.error
+      );
+
+      descargarBlob(
+        pdfBlob,
+        generarNombreRecibo(
+          cotizacion,
+          folioRecibo
+        )
+      );
+
+      alert(
+        "El recibo se guardó en Storage, pero no se pudo registrar en comprobantes."
+      );
+
+      return;
+    }
+
+    descargarBlob(
+      pdfBlob,
+      generarNombreRecibo(
+        cotizacion,
+        folioRecibo
+      )
+    );
+
+    alert(
+      "Recibo guardado y descargado correctamente."
+    );
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      "No se pudo generar el recibo."
+    );
+  }
+}
+
+/* =========================================================
+   ARCHIVOS
 ========================================================= */
 
 function descargarBlob(
@@ -3503,19 +5178,13 @@ function descargarBlob(
 
   setTimeout(
     () => {
-
       URL.revokeObjectURL(
         url
       );
-
     },
     1000
   );
 }
-
-/* =========================================================
-   NOMBRE DEL PDF
-========================================================= */
 
 function generarNombreArchivo(
   cotizacion
@@ -3549,8 +5218,39 @@ function generarNombreArchivo(
   );
 }
 
+function generarNombreRecibo(
+  cotizacion,
+  folioRecibo
+) {
+
+  const cliente =
+    String(
+      cotizacion.cliente ||
+      "cliente"
+    )
+      .replace(
+        /[^a-z0-9áéíóúñ ]/gi,
+        ""
+      )
+      .trim()
+      .replace(
+        /\s+/g,
+        "-"
+      );
+
+  return (
+    "Recibo-" +
+    folioRecibo +
+    "-" +
+    (
+      cliente ||
+      "cliente"
+    )
+  );
+}
+
 /* =========================================================
-   CARGAR LOGO PARA PDF
+   LOGO
 ========================================================= */
 
 async function cargarImagenBase64(
@@ -3598,6 +5298,45 @@ async function cargarImagenBase64(
 }
 
 /* =========================================================
+   CARGAR ABONOS
+========================================================= */
+
+async function cargarAbonos() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "abonos"
+      )
+      .select("*")
+      .order(
+        "fecha",
+        {
+          ascending:
+            true
+        }
+      );
+
+  if (error) {
+
+    console.error(
+      "Error cargando abonos:",
+      error
+    );
+
+    abonos = [];
+
+    return;
+  }
+
+  abonos =
+    data || [];
+}
+
+/* =========================================================
    CARGAR COTIZACIONES
 ========================================================= */
 
@@ -3639,6 +5378,8 @@ async function cargarCotizaciones() {
 
   cotizaciones =
     data || [];
+
+  await cargarAbonos();
 
   actualizarResumen();
 
