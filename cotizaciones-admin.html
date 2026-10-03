@@ -115,34 +115,80 @@
 
     .lista {
       display: grid;
-      gap: 16px;
+      gap: 12px;
     }
 
     .cotizacion {
       background: #211710;
       border: 1px solid #463529;
       border-radius: 13px;
-      padding: 20px;
+      overflow: hidden;
     }
+
+    /* =========================================================
+       ENCABEZADO DE CADA COTIZACIÓN
+    ========================================================= */
 
     .cotizacion-cabecera {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 15px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background .2s ease;
+    }
+
+    .cotizacion-cabecera:hover {
+      background: #291d15;
+    }
+
+    .cotizacion-identidad {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .cliente-linea {
+      display: flex;
+      align-items: center;
+      gap: 9px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      min-width: 0;
+    }
+
+    .folio {
+      color: #c88a3d;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+      letter-spacing: .3px;
     }
 
     .cliente {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: bold;
       color: #f3c27b;
+      overflow-wrap: anywhere;
+    }
+
+    .fecha-cabecera {
+      color: #a99c91;
+      font-size: 12px;
+      white-space: nowrap;
     }
 
     .telefono {
       color: #aaa099;
-      font-size: 14px;
+      font-size: 13px;
       margin-top: 5px;
+    }
+
+    .cabecera-derecha {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
     .estado {
@@ -156,16 +202,50 @@
       height: fit-content;
     }
 
+    .flecha {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #33251c;
+      color: #e7b96f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .cotizacion.abierta .flecha {
+      transform: rotate(180deg);
+      background: #493426;
+    }
+
+    /* =========================================================
+       CONTENIDO DESPLEGABLE
+    ========================================================= */
+
+    .cotizacion-detalle {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid #3c2d23;
+    }
+
+    .cotizacion.abierta .cotizacion-detalle {
+      display: block;
+    }
+
     .datos {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
+      padding-top: 18px;
     }
 
     .dato {
       background: #18110d;
       border-radius: 8px;
       padding: 12px;
+      min-width: 0;
     }
 
     .dato small {
@@ -178,6 +258,8 @@
     .dato strong {
       color: #eee5dc;
       font-size: 14px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .dato-total strong {
@@ -192,6 +274,7 @@
       background: #18110d;
       color: #c8beb5;
       font-size: 13px;
+      line-height: 1.4;
     }
 
     .acciones {
@@ -229,7 +312,14 @@
       text-align: center;
       padding: 50px 20px;
       color: #9e938a;
+      background: #211710;
+      border: 1px solid #463529;
+      border-radius: 13px;
     }
+
+    /* =========================================================
+       MODAL
+    ========================================================= */
 
     .modal {
       position: fixed;
@@ -340,7 +430,7 @@
 
       .encabezado {
         gap: 14px;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
       }
 
       .titulo {
@@ -373,13 +463,6 @@
       .dato {
         min-width: 0;
         padding: 11px;
-        overflow: hidden;
-      }
-
-      .dato strong {
-        display: block;
-        overflow-wrap: anywhere;
-        word-break: break-word;
       }
 
       .acciones {
@@ -401,27 +484,25 @@
 
       .contenedor {
         width: 94%;
-        padding-top: 18px;
+        padding-top: 16px;
       }
 
-      /* Titulo + Nueva cotización juntos */
+      /* Encabezado compacto */
       .encabezado {
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        flex-wrap: nowrap;
-        margin-bottom: 18px;
+        gap: 8px;
+        margin-bottom: 16px;
       }
 
       .encabezado > div {
-        width: auto;
         min-width: 0;
-        flex: 1;
+        width: auto;
       }
 
       .titulo {
-        font-size: 23px;
+        font-size: 22px;
         white-space: nowrap;
       }
 
@@ -431,125 +512,150 @@
 
       .encabezado .boton-principal {
         width: auto;
-        flex-shrink: 0;
-        padding: 10px 12px;
-        font-size: 12px;
+        padding: 9px 11px;
+        font-size: 11px;
         white-space: nowrap;
       }
 
-      /* Buscador */
+      /* Buscador + filtro juntos */
       .barra {
-        gap: 8px;
-        margin-bottom: 16px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(110px, .8fr);
+        gap: 7px;
+        margin-bottom: 14px;
       }
 
       .barra input,
       .barra select {
         min-width: 0;
         width: 100%;
-        flex: 1 1 100%;
-        padding: 11px 12px;
+        padding: 10px 9px;
+        font-size: 12px;
       }
 
-      /* Resumen compacto */
+      /* Resumen */
       .resumen {
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 6px;
-        margin-bottom: 18px;
+        gap: 5px;
+        margin-bottom: 15px;
       }
 
       .tarjeta-resumen {
-        padding: 9px 4px;
-        border-radius: 9px;
-        text-align: center;
+        padding: 8px 3px;
+        border-radius: 8px;
       }
 
       .tarjeta-resumen span {
-        font-size: 9px;
-        margin-bottom: 5px;
-        white-space: nowrap;
-      }
-
-      .tarjeta-resumen strong {
-        font-size: 19px;
-      }
-
-      /* Si la pantalla es muy pequeña, 2 x 2 */
-      .cotizacion {
-        padding: 13px;
-        border-radius: 11px;
-      }
-
-      .cotizacion-cabecera {
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 13px;
-        flex-wrap: nowrap;
-      }
-
-      .cliente {
-        font-size: 17px;
-        overflow-wrap: anywhere;
-      }
-
-      .telefono {
-        font-size: 12px;
-        margin-top: 4px;
-      }
-
-      .estado {
-        flex-shrink: 0;
-        padding: 5px 8px;
-        font-size: 10px;
-      }
-
-      /* Dos columnas */
-      .datos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 7px;
-      }
-
-      .dato {
-        padding: 9px;
-        border-radius: 7px;
-        min-height: 53px;
-      }
-
-      .dato small {
-        font-size: 9px;
+        font-size: 8px;
         margin-bottom: 4px;
       }
 
-      .dato strong {
+      .tarjeta-resumen strong {
+        font-size: 18px;
+      }
+
+      /* Cotización cerrada */
+      .lista {
+        gap: 8px;
+      }
+
+      .cotizacion {
+        border-radius: 10px;
+      }
+
+      .cotizacion-cabecera {
+        padding: 12px 11px;
+        gap: 7px;
+      }
+
+      .cliente-linea {
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+
+      .folio {
+        font-size: 9px;
+      }
+
+      .cliente {
+        font-size: 14px;
+      }
+
+      .fecha-cabecera {
+        font-size: 9px;
+      }
+
+      .telefono {
+        font-size: 10px;
+        margin-top: 3px;
+      }
+
+      .cabecera-derecha {
+        gap: 5px;
+      }
+
+      .estado {
+        padding: 4px 6px;
+        font-size: 8px;
+      }
+
+      .flecha {
+        width: 23px;
+        height: 23px;
         font-size: 12px;
+      }
+
+      /* Detalle desplegado */
+      .cotizacion-detalle {
+        padding: 0 11px 12px;
+      }
+
+      .datos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        padding-top: 11px;
+      }
+
+      .dato {
+        padding: 8px;
+        border-radius: 6px;
+        min-height: 48px;
+      }
+
+      .dato small {
+        font-size: 8px;
+        margin-bottom: 3px;
+      }
+
+      .dato strong {
+        font-size: 11px;
         line-height: 1.25;
       }
 
       .dato-total strong {
-        font-size: 15px;
+        font-size: 14px;
       }
 
       .notas {
-        margin-top: 10px;
-        padding: 10px;
-        font-size: 11px;
-        line-height: 1.4;
+        margin-top: 8px;
+        padding: 9px;
+        font-size: 10px;
       }
 
-      /* Botones compactos en una fila */
+      /* Botones */
       .acciones {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
-        margin-top: 12px;
+        gap: 5px;
+        margin-top: 10px;
       }
 
       .boton-secundario,
       .boton-eliminar {
         width: 100%;
         min-width: 0;
-        padding: 9px 4px;
-        font-size: 11px;
+        padding: 8px 3px;
+        font-size: 10px;
         white-space: nowrap;
       }
 
@@ -581,42 +687,61 @@
       }
     }
 
-    /* Pantallas muy pequeñas */
+    /* =========================================================
+       PANTALLAS MUY PEQUEÑAS
+    ========================================================= */
+
     @media (max-width: 380px) {
 
       .titulo {
-        font-size: 21px;
+        font-size: 20px;
       }
 
       .encabezado .boton-principal {
-        font-size: 11px;
-        padding: 9px 10px;
+        font-size: 10px;
+        padding: 8px 9px;
+      }
+
+      .barra {
+        grid-template-columns: minmax(0, 1.3fr) minmax(100px, .8fr);
       }
 
       .resumen {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 7px;
+        gap: 6px;
       }
 
       .tarjeta-resumen {
-        padding: 9px;
+        padding: 8px;
       }
 
       .tarjeta-resumen span {
-        font-size: 10px;
+        font-size: 9px;
       }
 
       .tarjeta-resumen strong {
-        font-size: 19px;
+        font-size: 18px;
+      }
+
+      .cliente {
+        font-size: 13px;
+      }
+
+      .fecha-cabecera {
+        width: 100%;
+      }
+
+      .estado {
+        display: none;
       }
 
       .acciones {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .boton-secundario,
       .boton-eliminar {
-        font-size: 12px;
+        font-size: 9px;
       }
     }
   </style>
@@ -629,15 +754,20 @@
   <div class="encabezado">
     <div>
       <h1 class="titulo">Cotizaciones</h1>
-      <p class="subtitulo">Administración de cotizaciones de Pirámide Woodworks</p>
+      <p class="subtitulo">
+        Administración de cotizaciones de Pirámide Woodworks
+      </p>
     </div>
 
-    <button class="boton-principal" onclick="abrirNuevaCotizacion()">
+    <button
+      class="boton-principal"
+      onclick="abrirNuevaCotizacion()">
       Nueva cotización
     </button>
   </div>
 
   <div class="resumen">
+
     <div class="tarjeta-resumen">
       <span>Total</span>
       <strong id="resumenTotal">0</strong>
@@ -657,136 +787,309 @@
       <span>Entregadas</span>
       <strong id="resumenEntregadas">0</strong>
     </div>
+
   </div>
 
   <div class="barra">
+
     <input
       type="text"
       id="buscador"
-      placeholder="Buscar por cliente, teléfono o producto..."
-      oninput="mostrarCotizaciones()"
-    >
+      placeholder="Buscar cliente, teléfono o producto..."
+      oninput="mostrarCotizaciones()">
 
-    <select id="filtroEstado" onchange="mostrarCotizaciones()">
-      <option value="">Todos los estados</option>
-      <option value="Pendiente">Pendiente</option>
-      <option value="Contactado">Contactado</option>
-      <option value="Cotizado">Cotizado</option>
-      <option value="Cerrado">Cerrado</option>
+    <select
+      id="filtroEstado"
+      onchange="mostrarCotizaciones()">
+
+      <option value="">
+        Todos los estados
+      </option>
+
+      <option value="Pendiente">
+        Pendiente
+      </option>
+
+      <option value="Contactado">
+        Contactado
+      </option>
+
+      <option value="Cotizado">
+        Cotizado
+      </option>
+
+      <option value="Cerrado">
+        Cerrado
+      </option>
+
     </select>
+
   </div>
 
-  <div id="listaCotizaciones" class="lista"></div>
+  <div
+    id="listaCotizaciones"
+    class="lista">
+  </div>
 
 </div>
 
-<div id="modal" class="modal">
+<!-- =========================================================
+     MODAL
+========================================================= -->
+
+<div
+  id="modal"
+  class="modal">
+
   <div class="modal-contenido">
 
-    <h2 id="tituloModal">Nueva cotización</h2>
+    <h2 id="tituloModal">
+      Nueva cotización
+    </h2>
 
     <div class="formulario">
 
       <div class="campo">
-        <label>Cliente</label>
-        <input type="text" id="cliente">
+
+        <label>
+          Cliente
+        </label>
+
+        <input
+          type="text"
+          id="cliente">
+
       </div>
 
       <div class="campo">
-        <label>Teléfono</label>
-        <input type="text" id="telefono">
+
+        <label>
+          Teléfono
+        </label>
+
+        <input
+          type="text"
+          id="telefono">
+
       </div>
 
       <div class="campo">
-        <label>Producto</label>
-        <select id="producto" onchange="actualizarPrecioProducto()">
-          <option value="BottleBox">BottleBox</option>
-          <option value="TequilaBox">TequilaBox</option>
-          <option value="TequilaBox sin botella">TequilaBox sin botella</option>
-          <option value="GiftBox">GiftBox</option>
-          <option value="SlidingBox">SlidingBox</option>
-          <option value="Portallaves Home">Portallaves Home</option>
-          <option value="Mostrador QR & Códigos Personalizado">Mostrador QR & Códigos Personalizado</option>
-          <option value="Carruaje de Cenicienta">Carruaje de Cenicienta</option>
-          <option value="Mesa Carruaje Gigante">Mesa Carruaje Gigante</option>
+
+        <label>
+          Producto
+        </label>
+
+        <select
+          id="producto"
+          onchange="actualizarPrecioProducto()">
+
+          <option value="BottleBox">
+            BottleBox
+          </option>
+
+          <option value="TequilaBox">
+            TequilaBox
+          </option>
+
+          <option value="TequilaBox sin botella">
+            TequilaBox sin botella
+          </option>
+
+          <option value="GiftBox">
+            GiftBox
+          </option>
+
+          <option value="SlidingBox">
+            SlidingBox
+          </option>
+
+          <option value="Portallaves Home">
+            Portallaves Home
+          </option>
+
+          <option value="Mostrador QR & Códigos Personalizado">
+            Mostrador QR & Códigos Personalizado
+          </option>
+
+          <option value="Carruaje de Cenicienta">
+            Carruaje de Cenicienta
+          </option>
+
+          <option value="Mesa Carruaje Gigante">
+            Mesa Carruaje Gigante
+          </option>
+
         </select>
+
       </div>
 
       <div class="campo">
-        <label>Cantidad</label>
-        <input type="number" id="cantidad" min="1" value="1" oninput="calcularTotal()">
+
+        <label>
+          Cantidad
+        </label>
+
+        <input
+          type="number"
+          id="cantidad"
+          min="1"
+          value="1"
+          oninput="calcularTotal()">
+
       </div>
 
       <div class="campo">
-        <label>Precio unitario</label>
-        <input type="number" id="precio" readonly>
+
+        <label>
+          Precio unitario
+        </label>
+
+        <input
+          type="number"
+          id="precio"
+          readonly>
+
       </div>
 
       <div class="campo">
-        <label>Descuento (%)</label>
-        <input type="number" id="descuentoPorcentaje" min="0" max="100" step="0.01" value="0" oninput="calcularTotal()">
+
+        <label>
+          Descuento (%)
+        </label>
+
+        <input
+          type="number"
+          id="descuentoPorcentaje"
+          min="0"
+          max="100"
+          step="0.01"
+          value="0"
+          oninput="calcularTotal()">
+
       </div>
 
       <div class="campo">
-        <label>Abono</label>
-        <input type="number" id="abono" min="0" step="0.01" value="0" oninput="calcularTotal()">
+
+        <label>
+          Abono
+        </label>
+
+        <input
+          type="number"
+          id="abono"
+          min="0"
+          step="0.01"
+          value="0"
+          oninput="calcularTotal()">
+
       </div>
 
       <div class="campo">
-        <label>Fecha de cotización</label>
-        <input type="date" id="fechaCotizacion">
+
+        <label>
+          Fecha de cotización
+        </label>
+
+        <input
+          type="date"
+          id="fechaCotizacion">
+
       </div>
 
       <div class="campo">
-        <label>Fecha de entrega</label>
-        <input type="date" id="fechaEntrega">
+
+        <label>
+          Fecha de entrega
+        </label>
+
+        <input
+          type="date"
+          id="fechaEntrega">
+
       </div>
 
       <div class="campo">
-        <label>Estado</label>
+
+        <label>
+          Estado
+        </label>
+
         <select id="estado">
-          <option value="Pendiente">Pendiente</option>
-          <option value="Contactado">Contactado</option>
-          <option value="Cotizado">Cotizado</option>
-          <option value="Cerrado">Cerrado</option>
+
+          <option value="Pendiente">
+            Pendiente
+          </option>
+
+          <option value="Contactado">
+            Contactado
+          </option>
+
+          <option value="Cotizado">
+            Cotizado
+          </option>
+
+          <option value="Cerrado">
+            Cerrado
+          </option>
+
         </select>
+
       </div>
 
       <div class="campo completo">
-        <label>Notas</label>
-        <textarea id="notas"></textarea>
+
+        <label>
+          Notas
+        </label>
+
+        <textarea
+          id="notas">
+        </textarea>
+
       </div>
 
       <div class="total-formulario">
 
         <div class="linea-total">
           <span>Subtotal</span>
-          <strong id="mostrarSubtotal">$0.00</strong>
+          <strong id="mostrarSubtotal">
+            $0.00
+          </strong>
         </div>
 
         <div class="linea-total">
           <span>Descuento</span>
-          <strong id="mostrarDescuento">$0.00</strong>
+          <strong id="mostrarDescuento">
+            $0.00
+          </strong>
         </div>
 
         <div class="linea-total">
           <span>Precio final por pieza</span>
-          <strong id="mostrarPrecioFinal">$0.00</strong>
+          <strong id="mostrarPrecioFinal">
+            $0.00
+          </strong>
         </div>
 
         <div class="linea-total">
           <span>Total</span>
-          <strong id="mostrarTotal">$0.00</strong>
+          <strong id="mostrarTotal">
+            $0.00
+          </strong>
         </div>
 
         <div class="linea-total">
           <span>Abono</span>
-          <strong id="mostrarAbono">$0.00</strong>
+          <strong id="mostrarAbono">
+            $0.00
+          </strong>
         </div>
 
         <div class="linea-total">
           <span>Restante</span>
-          <strong id="mostrarRestante">$0.00</strong>
+          <strong id="mostrarRestante">
+            $0.00
+          </strong>
         </div>
 
       </div>
@@ -795,11 +1098,15 @@
 
     <div class="modal-acciones">
 
-      <button class="boton-secundario" onclick="cerrarModal()">
+      <button
+        class="boton-secundario"
+        onclick="cerrarModal()">
         Cancelar
       </button>
 
-      <button class="boton-principal" onclick="guardarNuevaCotizacion()">
+      <button
+        class="boton-principal"
+        onclick="guardarNuevaCotizacion()">
         Guardar cotización
       </button>
 
@@ -809,77 +1116,141 @@
 </div>
 
 <script>
-const SUPABASE_URL = "https://ighcydtijeumeqyhuvkh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_URL =
+  "https://ighcydtijeumeqyhuvkh.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 let cotizaciones = [];
+
 let editandoId = null;
 
 const preciosProductos = {
+
   "BottleBox": 600,
+
   "TequilaBox": 1200,
+
   "TequilaBox sin botella": 480,
+
   "GiftBox": 550,
+
   "SlidingBox": 400,
+
   "Portallaves Home": 130,
+
   "Mostrador QR & Códigos Personalizado": 120,
+
   "Carruaje de Cenicienta": 155,
+
   "Mesa Carruaje Gigante": 2500
+
 };
 
+/* =========================================================
+   UTILIDADES
+========================================================= */
+
 function dinero(valor) {
-  return Number(valor || 0).toLocaleString("es-MX", {
-    style: "currency",
-    currency: "MXN"
-  });
+
+  return Number(valor || 0)
+    .toLocaleString(
+      "es-MX",
+      {
+        style: "currency",
+        currency: "MXN"
+      }
+    );
 }
 
 function fechaBonita(fecha) {
+
   if (!fecha) return "—";
 
-  const partes = String(fecha).split("-");
+  const partes =
+    String(fecha).split("-");
 
-  if (partes.length !== 3) return fecha;
+  if (partes.length !== 3) {
+    return fecha;
+  }
 
-  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+  return `
+    ${partes[2]}/${partes[1]}/${partes[0]}
+  `;
+}
+
+/*
+ * Folio visible.
+ *
+ * Se utiliza el ID real de Supabase para que el folio
+ * permanezca estable aunque la cotización se edite.
+ */
+function obtenerFolio(cotizacion) {
+
+  const numero =
+    Number(cotizacion.id || 0);
+
+  return (
+    "COT-" +
+    String(numero).padStart(3, "0")
+  );
 }
 
 function actualizarPrecioProducto() {
 
   const producto =
-    document.getElementById("producto").value;
+    document.getElementById(
+      "producto"
+    ).value;
 
-  document.getElementById("precio").value =
+  document.getElementById(
+    "precio"
+  ).value =
     preciosProductos[producto] || 0;
 
   calcularTotal();
 }
 
+/* =========================================================
+   CALCULOS
+========================================================= */
+
 function calcularTotal() {
 
   const cantidad =
     Number(
-      document.getElementById("cantidad").value
+      document.getElementById(
+        "cantidad"
+      ).value
     ) || 0;
 
   const precio =
     Number(
-      document.getElementById("precio").value
+      document.getElementById(
+        "precio"
+      ).value
     ) || 0;
 
   const descuentoPorcentaje =
     Number(
-      document.getElementById("descuentoPorcentaje").value
+      document.getElementById(
+        "descuentoPorcentaje"
+      ).value
     ) || 0;
 
   const abono =
     Number(
-      document.getElementById("abono").value
+      document.getElementById(
+        "abono"
+      ).value
     ) || 0;
 
   const subtotal =
@@ -887,12 +1258,16 @@ function calcularTotal() {
 
   const montoDescuento =
     subtotal *
-    (descuentoPorcentaje / 100);
+    (
+      descuentoPorcentaje /
+      100
+    );
 
   const total =
     Math.max(
       0,
-      subtotal - montoDescuento
+      subtotal -
+      montoDescuento
     );
 
   const precioFinal =
@@ -902,326 +1277,572 @@ function calcularTotal() {
 
   const abonoReal =
     Math.min(
-      Math.max(0, abono),
+      Math.max(
+        0,
+        abono
+      ),
       total
     );
 
   const restante =
     Math.max(
       0,
-      total - abonoReal
+      total -
+      abonoReal
     );
 
-  document.getElementById("mostrarSubtotal").textContent =
+  document.getElementById(
+    "mostrarSubtotal"
+  ).textContent =
     dinero(subtotal);
 
-  document.getElementById("mostrarDescuento").textContent =
+  document.getElementById(
+    "mostrarDescuento"
+  ).textContent =
     dinero(montoDescuento);
 
-  document.getElementById("mostrarPrecioFinal").textContent =
+  document.getElementById(
+    "mostrarPrecioFinal"
+  ).textContent =
     dinero(precioFinal);
 
-  document.getElementById("mostrarTotal").textContent =
+  document.getElementById(
+    "mostrarTotal"
+  ).textContent =
     dinero(total);
 
-  document.getElementById("mostrarAbono").textContent =
+  document.getElementById(
+    "mostrarAbono"
+  ).textContent =
     dinero(abonoReal);
 
-  document.getElementById("mostrarRestante").textContent =
+  document.getElementById(
+    "mostrarRestante"
+  ).textContent =
     dinero(restante);
 }
 
+/* =========================================================
+   RESUMEN
+========================================================= */
+
 function actualizarResumen() {
 
-  document.getElementById("resumenTotal").textContent =
+  document.getElementById(
+    "resumenTotal"
+  ).textContent =
     cotizaciones.length;
 
-  document.getElementById("resumenPendientes").textContent =
+  document.getElementById(
+    "resumenPendientes"
+  ).textContent =
     cotizaciones.filter(
-      c => c.estado === "Pendiente"
+      c =>
+        c.estado ===
+        "Pendiente"
     ).length;
 
-  document.getElementById("resumenCotizadas").textContent =
+  document.getElementById(
+    "resumenCotizadas"
+  ).textContent =
     cotizaciones.filter(
-      c => c.estado === "Cotizado"
+      c =>
+        c.estado ===
+        "Cotizado"
     ).length;
 
-  document.getElementById("resumenEntregadas").textContent =
+  document.getElementById(
+    "resumenEntregadas"
+  ).textContent =
     cotizaciones.filter(
-      c => c.estado === "Cerrado"
+      c =>
+        c.estado ===
+        "Cerrado"
     ).length;
 }
+
+/* =========================================================
+   DESPLEGAR / CONTRAER
+========================================================= */
+
+function alternarCotizacion(id) {
+
+  const elemento =
+    document.getElementById(
+      "cotizacion-" + id
+    );
+
+  if (!elemento) return;
+
+  elemento.classList.toggle(
+    "abierta"
+  );
+}
+
+/*
+ * Evita que al tocar Editar, Ticket o Eliminar
+ * también se abra/cierre la cotización.
+ */
+function detenerDespliegue(event) {
+
+  if (event) {
+    event.stopPropagation();
+  }
+}
+
+/* =========================================================
+   MOSTRAR COTIZACIONES
+========================================================= */
 
 function mostrarCotizaciones() {
 
   const lista =
-    document.getElementById("listaCotizaciones");
+    document.getElementById(
+      "listaCotizaciones"
+    );
 
   const texto =
-    document.getElementById("buscador").value
+    document.getElementById(
+      "buscador"
+    ).value
       .toLowerCase()
       .trim();
 
   const filtro =
-    document.getElementById("filtroEstado").value;
+    document.getElementById(
+      "filtroEstado"
+    ).value;
 
   const filtradas =
-    cotizaciones.filter(c => {
+    cotizaciones.filter(
+      c => {
 
-      const coincideTexto =
-        !texto ||
-        String(c.cliente || "")
-          .toLowerCase()
-          .includes(texto) ||
+        const coincideTexto =
+          !texto ||
 
-        String(c.telefono || "")
-          .toLowerCase()
-          .includes(texto) ||
+          String(
+            c.cliente || ""
+          )
+            .toLowerCase()
+            .includes(texto) ||
 
-        String(c.producto || "")
-          .toLowerCase()
-          .includes(texto);
+          String(
+            c.telefono || ""
+          )
+            .toLowerCase()
+            .includes(texto) ||
 
-      const coincideEstado =
-        !filtro ||
-        c.estado === filtro;
+          String(
+            c.producto || ""
+          )
+            .toLowerCase()
+            .includes(texto) ||
 
-      return coincideTexto && coincideEstado;
-    });
+          obtenerFolio(c)
+            .toLowerCase()
+            .includes(texto);
+
+        const coincideEstado =
+          !filtro ||
+          c.estado === filtro;
+
+        return (
+          coincideTexto &&
+          coincideEstado
+        );
+      }
+    );
 
   if (!filtradas.length) {
 
-    lista.innerHTML =
-      `<div class="vacio">
+    lista.innerHTML = `
+      <div class="vacio">
         No hay cotizaciones para mostrar.
-      </div>`;
+      </div>
+    `;
 
     return;
   }
 
   lista.innerHTML =
-    filtradas.map(c => {
+    filtradas.map(
+      c => {
 
-      const cantidad =
-        Number(c.cantidad || 0);
+        const cantidad =
+          Number(
+            c.cantidad || 0
+          );
 
-      const precio =
-        Number(c.precio || 0);
+        const precio =
+          Number(
+            c.precio || 0
+          );
 
-      const subtotal =
-        Number(
-          c.subtotal ||
-          cantidad * precio
-        );
+        const subtotal =
+          Number(
+            c.subtotal ||
+            cantidad * precio
+          );
 
-      const porcentaje =
-        Number(
-          c.descuentoporcentaje || 0
-        );
+        const porcentaje =
+          Number(
+            c.descuentoporcentaje ||
+            0
+          );
 
-      const descuento =
-        Number(
-          c.monto_descuento ||
-          subtotal * porcentaje / 100
-        );
+        const descuento =
+          Number(
+            c.monto_descuento ||
+            subtotal *
+            porcentaje /
+            100
+          );
 
-      const total =
-        Number(
-          c.total ||
+        const total =
+          Number(
+            c.total ||
+            Math.max(
+              0,
+              subtotal -
+              descuento
+            )
+          );
+
+        const precioFinal =
+          cantidad > 0
+            ? total / cantidad
+            : 0;
+
+        const abono =
+          Math.min(
+            Number(
+              c.abono || 0
+            ),
+            total
+          );
+
+        const restante =
           Math.max(
             0,
-            subtotal - descuento
-          )
-        );
+            total -
+            abono
+          );
 
-      const precioFinal =
-        cantidad > 0
-          ? total / cantidad
-          : 0;
+        const folio =
+          obtenerFolio(c);
 
-      const abono =
-        Math.min(
-          Number(c.abono || 0),
-          total
-        );
+        const fecha =
+          fechaBonita(
+            c.fechacotizacion
+          );
 
-      const restante =
-        Math.max(
-          0,
-          total - abono
-        );
+        return `
 
-      return `
-        <div class="cotizacion">
+          <div
+            class="cotizacion"
+            id="cotizacion-${c.id}">
 
-          <div class="cotizacion-cabecera">
+            <!-- ENCABEZADO CLICKEABLE -->
 
-            <div>
+            <div
+              class="cotizacion-cabecera"
+              onclick="alternarCotizacion(${c.id})">
 
-              <div class="cliente">
-                ${escapeHtml(
-                  c.cliente ||
-                  "Sin nombre"
-                )}
-              </div>
+              <div class="cotizacion-identidad">
 
-              <div class="telefono">
-                ${escapeHtml(
-                  c.telefono ||
-                  "Sin teléfono"
-                )}
-              </div>
+                <div class="cliente-linea">
 
-            </div>
+                  <span class="folio">
+                    ${folio}
+                  </span>
 
-            <div class="estado">
-              ${escapeHtml(
-                c.estado ||
-                "Pendiente"
-              )}
-            </div>
+                  <span class="cliente">
+                    ${escapeHtml(
+                      c.cliente ||
+                      "Sin nombre"
+                    )}
+                  </span>
 
-          </div>
+                  <span class="fecha-cabecera">
+                    ${fecha}
+                  </span>
 
-          <div class="datos">
-
-            <div class="dato">
-              <small>Producto</small>
-              <strong>
-                ${escapeHtml(
-                  c.producto ||
-                  "—"
-                )}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Cantidad</small>
-              <strong>
-                ${cantidad}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Precio unitario</small>
-              <strong>
-                ${dinero(precio)}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Subtotal</small>
-              <strong>
-                ${dinero(subtotal)}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Descuento</small>
-              <strong>
-                ${porcentaje.toFixed(2)}% ·
-                ${dinero(descuento)}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Precio final por pieza</small>
-              <strong>
-                ${dinero(precioFinal)}
-              </strong>
-            </div>
-
-            <div class="dato dato-total">
-              <small>Total</small>
-              <strong>
-                ${dinero(total)}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Abono</small>
-              <strong>
-                ${dinero(abono)}
-              </strong>
-            </div>
-
-            <div class="dato dato-total">
-              <small>Restante</small>
-              <strong>
-                ${dinero(restante)}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Fecha de cotización</small>
-              <strong>
-                ${fechaBonita(
-                  c.fechacotizacion
-                )}
-              </strong>
-            </div>
-
-            <div class="dato">
-              <small>Fecha de entrega</small>
-              <strong>
-                ${fechaBonita(
-                  c.fechaentrega
-                )}
-              </strong>
-            </div>
-
-          </div>
-
-          ${
-            c.notas
-              ? `
-                <div class="notas">
-                  ${escapeHtml(c.notas)}
                 </div>
-              `
-              : ""
-          }
 
-          <div class="acciones">
+                <div class="telefono">
 
-            <button
-              type="button"
-              class="boton-secundario"
-              onclick="editarCotizacion(${c.id})">
-              Editar
-            </button>
+                  ${escapeHtml(
+                    c.telefono ||
+                    "Sin teléfono"
+                  )}
 
-            <button
-              type="button"
-              class="boton-secundario"
-              onclick="descargarTicketCotizacion(${c.id})">
-              Ticket
-            </button>
+                </div>
 
-            <button
-              type="button"
-              class="boton-eliminar"
-              onclick="eliminarCotizacion(${c.id})">
-              Eliminar
-            </button>
+              </div>
+
+              <div class="cabecera-derecha">
+
+                <div class="estado">
+                  ${escapeHtml(
+                    c.estado ||
+                    "Pendiente"
+                  )}
+                </div>
+
+                <div class="flecha">
+                  ▼
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- CONTENIDO DESPLEGABLE -->
+
+            <div class="cotizacion-detalle">
+
+              <div class="datos">
+
+                <div class="dato">
+
+                  <small>
+                    Producto
+                  </small>
+
+                  <strong>
+                    ${escapeHtml(
+                      c.producto ||
+                      "—"
+                    )}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Cantidad
+                  </small>
+
+                  <strong>
+                    ${cantidad}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Precio unitario
+                  </small>
+
+                  <strong>
+                    ${dinero(precio)}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Subtotal
+                  </small>
+
+                  <strong>
+                    ${dinero(subtotal)}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Descuento
+                  </small>
+
+                  <strong>
+                    ${porcentaje.toFixed(2)}%
+                    ·
+                    ${dinero(descuento)}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Precio final por pieza
+                  </small>
+
+                  <strong>
+                    ${dinero(precioFinal)}
+                  </strong>
+
+                </div>
+
+                <div class="dato dato-total">
+
+                  <small>
+                    Total
+                  </small>
+
+                  <strong>
+                    ${dinero(total)}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Abono
+                  </small>
+
+                  <strong>
+                    ${dinero(abono)}
+                  </strong>
+
+                </div>
+
+                <div class="dato dato-total">
+
+                  <small>
+                    Restante
+                  </small>
+
+                  <strong>
+                    ${dinero(restante)}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Fecha de cotización
+                  </small>
+
+                  <strong>
+                    ${fechaBonita(
+                      c.fechacotizacion
+                    )}
+                  </strong>
+
+                </div>
+
+                <div class="dato">
+
+                  <small>
+                    Fecha de entrega
+                  </small>
+
+                  <strong>
+                    ${fechaBonita(
+                      c.fechaentrega
+                    )}
+                  </strong>
+
+                </div>
+
+              </div>
+
+              ${
+                c.notas
+                  ? `
+                    <div class="notas">
+
+                      ${escapeHtml(
+                        c.notas
+                      )}
+
+                    </div>
+                  `
+                  : ""
+              }
+
+              <div class="acciones">
+
+                <button
+                  type="button"
+                  class="boton-secundario"
+                  onclick="
+                    detenerDespliegue(event);
+                    editarCotizacion(${c.id});
+                  ">
+
+                  Editar
+
+                </button>
+
+                <button
+                  type="button"
+                  class="boton-secundario"
+                  onclick="
+                    detenerDespliegue(event);
+                    descargarTicketCotizacion(${c.id});
+                  ">
+
+                  Ticket
+
+                </button>
+
+                <button
+                  type="button"
+                  class="boton-eliminar"
+                  onclick="
+                    detenerDespliegue(event);
+                    eliminarCotizacion(${c.id});
+                  ">
+
+                  Eliminar
+
+                </button>
+
+              </div>
+
+            </div>
 
           </div>
 
-        </div>
-      `;
-
-    }).join("");
+        `;
+      }
+    ).join("");
 }
+
+/* =========================================================
+   SEGURIDAD HTML
+========================================================= */
 
 function escapeHtml(text) {
 
-  return String(text ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(
+    text ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
+
+/* =========================================================
+   NUEVA COTIZACIÓN
+========================================================= */
 
 function abrirNuevaCotizacion() {
 
@@ -1247,15 +1868,18 @@ function abrirNuevaCotizacion() {
 
   document.getElementById(
     "cantidad"
-  ).value = 1;
+  ).value =
+    1;
 
   document.getElementById(
     "descuentoPorcentaje"
-  ).value = 0;
+  ).value =
+    0;
 
   document.getElementById(
     "abono"
-  ).value = 0;
+  ).value =
+    0;
 
   const hoy =
     new Date()
@@ -1264,11 +1888,13 @@ function abrirNuevaCotizacion() {
 
   document.getElementById(
     "fechaCotizacion"
-  ).value = hoy;
+  ).value =
+    hoy;
 
   document.getElementById(
     "fechaEntrega"
-  ).value = "";
+  ).value =
+    "";
 
   document.getElementById(
     "estado"
@@ -1277,21 +1903,34 @@ function abrirNuevaCotizacion() {
 
   document.getElementById(
     "notas"
-  ).value = "";
+  ).value =
+    "";
 
   actualizarPrecioProducto();
 
   document.getElementById(
     "modal"
-  ).classList.add("activo");
+  ).classList.add(
+    "activo"
+  );
 }
+
+/* =========================================================
+   CERRAR MODAL
+========================================================= */
 
 function cerrarModal() {
 
   document.getElementById(
     "modal"
-  ).classList.remove("activo");
+  ).classList.remove(
+    "activo"
+  );
 }
+
+/* =========================================================
+   EDITAR
+========================================================= */
 
 function editarCotizacion(id) {
 
@@ -1304,7 +1943,8 @@ function editarCotizacion(id) {
 
   if (!c) return;
 
-  editandoId = c.id;
+  editandoId =
+    c.id;
 
   document.getElementById(
     "tituloModal"
@@ -1350,17 +1990,20 @@ function editarCotizacion(id) {
   document.getElementById(
     "abono"
   ).value =
-    c.abono || 0;
+    c.abono ||
+    0;
 
   document.getElementById(
     "fechaCotizacion"
   ).value =
-    c.fechacotizacion || "";
+    c.fechacotizacion ||
+    "";
 
   document.getElementById(
     "fechaEntrega"
   ).value =
-    c.fechaentrega || "";
+    c.fechaentrega ||
+    "";
 
   document.getElementById(
     "estado"
@@ -1371,14 +2014,21 @@ function editarCotizacion(id) {
   document.getElementById(
     "notas"
   ).value =
-    c.notas || "";
+    c.notas ||
+    "";
 
   calcularTotal();
 
   document.getElementById(
     "modal"
-  ).classList.add("activo");
+  ).classList.add(
+    "activo"
+  );
 }
+
+/* =========================================================
+   GUARDAR
+========================================================= */
 
 async function guardarNuevaCotizacion() {
 
@@ -1425,7 +2075,8 @@ async function guardarNuevaCotizacion() {
     ) || 0;
 
   const subtotal =
-    cantidad * precio;
+    cantidad *
+    precio;
 
   const montoDescuento =
     subtotal *
@@ -1483,12 +2134,14 @@ async function guardarNuevaCotizacion() {
     fechacotizacion:
       document.getElementById(
         "fechaCotizacion"
-      ).value || null,
+      ).value ||
+      null,
 
     fechaentrega:
       document.getElementById(
         "fechaEntrega"
-      ).value || null,
+      ).value ||
+      null,
 
     estado:
       document.getElementById(
@@ -1507,7 +2160,9 @@ async function guardarNuevaCotizacion() {
 
     const respuesta =
       await supabaseClient
-        .from("cotizaciones")
+        .from(
+          "cotizaciones"
+        )
         .update(datos)
         .eq(
           "id",
@@ -1521,8 +2176,12 @@ async function guardarNuevaCotizacion() {
 
     const respuesta =
       await supabaseClient
-        .from("cotizaciones")
-        .insert(datos);
+        .from(
+          "cotizaciones"
+        )
+        .insert(
+          datos
+        );
 
     error =
       respuesta.error;
@@ -1530,7 +2189,9 @@ async function guardarNuevaCotizacion() {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       "No se pudo guardar la cotización."
@@ -1544,6 +2205,10 @@ async function guardarNuevaCotizacion() {
   await cargarCotizaciones();
 }
 
+/* =========================================================
+   ELIMINAR
+========================================================= */
+
 async function eliminarCotizacion(id) {
 
   const confirmar =
@@ -1553,9 +2218,13 @@ async function eliminarCotizacion(id) {
 
   if (!confirmar) return;
 
-  const { error } =
+  const {
+    error
+  } =
     await supabaseClient
-      .from("cotizaciones")
+      .from(
+        "cotizaciones"
+      )
       .delete()
       .eq(
         "id",
@@ -1564,7 +2233,9 @@ async function eliminarCotizacion(id) {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       "No se pudo eliminar."
@@ -1580,35 +2251,57 @@ async function eliminarCotizacion(id) {
    CREAR PDF
 ========================================================= */
 
-async function crearPdfCotizacion(cotizacion) {
+async function crearPdfCotizacion(
+  cotizacion
+) {
 
-  const { jsPDF } =
+  const {
+    jsPDF
+  } =
     window.jspdf;
 
   const doc =
     new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "letter"
+      orientation:
+        "portrait",
+      unit:
+        "mm",
+      format:
+        "letter"
     });
 
-  const ancho = 215.9;
+  const ancho =
+    215.9;
 
-  const colorCafe = [39, 27, 19];
-  const colorDorado = [200, 138, 61];
-  const colorCrema = [244, 238, 231];
-  const colorGris = [105, 94, 84];
+  const colorCafe =
+    [39, 27, 19];
+
+  const colorDorado =
+    [200, 138, 61];
+
+  const colorCrema =
+    [244, 238, 231];
+
+  const colorGris =
+    [105, 94, 84];
 
   const cantidad =
-    Number(cotizacion.cantidad || 0);
+    Number(
+      cotizacion.cantidad ||
+      0
+    );
 
   const precio =
-    Number(cotizacion.precio || 0);
+    Number(
+      cotizacion.precio ||
+      0
+    );
 
   const subtotal =
     Number(
       cotizacion.subtotal ||
-      cantidad * precio
+      cantidad *
+      precio
     );
 
   const porcentaje =
@@ -1620,7 +2313,9 @@ async function crearPdfCotizacion(cotizacion) {
   const descuento =
     Number(
       cotizacion.monto_descuento ||
-      subtotal * porcentaje / 100
+      subtotal *
+      porcentaje /
+      100
     );
 
   const total =
@@ -1628,7 +2323,8 @@ async function crearPdfCotizacion(cotizacion) {
       cotizacion.total ||
       Math.max(
         0,
-        subtotal - descuento
+        subtotal -
+        descuento
       )
     );
 
@@ -1639,17 +2335,23 @@ async function crearPdfCotizacion(cotizacion) {
 
   const abono =
     Math.min(
-      Number(cotizacion.abono || 0),
+      Number(
+        cotizacion.abono ||
+        0
+      ),
       total
     );
 
   const restante =
     Math.max(
       0,
-      total - abono
+      total -
+      abono
     );
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
 
   doc.rect(
     0,
@@ -1686,14 +2388,18 @@ async function crearPdfCotizacion(cotizacion) {
     );
   }
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(18);
+  doc.setFontSize(
+    18
+  );
 
   doc.text(
     "PIRÁMIDE WOODWORKS",
@@ -1701,7 +2407,9 @@ async function crearPdfCotizacion(cotizacion) {
     20
   );
 
-  doc.setFontSize(10);
+  doc.setFontSize(
+    10
+  );
 
   doc.setFont(
     "helvetica",
@@ -1719,47 +2427,53 @@ async function crearPdfCotizacion(cotizacion) {
     "bold"
   );
 
-  doc.setFontSize(17);
+  doc.setFontSize(
+    17
+  );
 
   doc.text(
     "COTIZACIÓN",
     ancho - 18,
     20,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   const folio =
-    "COT-" +
-    String(
-      cotizacion.id
-    ).padStart(
-      4,
-      "0"
+    obtenerFolio(
+      cotizacion
     );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     folio,
     ancho - 18,
     28,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   let y = 62;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(11);
+  doc.setFontSize(
+    11
+  );
 
   doc.text(
     "DATOS DEL CLIENTE",
@@ -1769,7 +2483,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -1780,14 +2496,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 9;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.setFont(
     "helvetica",
     "normal"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     "Cliente",
@@ -1795,14 +2515,18 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(11);
+  doc.setFontSize(
+    11
+  );
 
   doc.text(
     String(
@@ -1815,14 +2539,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.setFont(
     "helvetica",
     "normal"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     "Teléfono",
@@ -1830,7 +2558,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
@@ -1848,14 +2578,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 14;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(11);
+  doc.setFontSize(
+    11
+  );
 
   doc.text(
     "DETALLE DE LA COTIZACIÓN",
@@ -1865,7 +2599,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -1876,7 +2612,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
 
   doc.rect(
     18,
@@ -1886,14 +2624,18 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(8);
+  doc.setFontSize(
+    8
+  );
 
   doc.text(
     "PRODUCTO",
@@ -1921,14 +2663,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 13;
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
     "normal"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   const producto =
     String(
@@ -1986,9 +2732,13 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 10;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     "Subtotal",
@@ -1996,20 +2746,25 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(subtotal),
     195,
     y,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   y += 7;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     `Descuento (${porcentaje.toFixed(2)}%)`,
@@ -2017,14 +2772,18 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
-    "-" + dinero(descuento),
+    "-" +
+    dinero(descuento),
     195,
     y,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
@@ -2046,14 +2805,18 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(11);
+  doc.setFontSize(
+    11
+  );
 
   doc.text(
     "TOTAL",
@@ -2066,7 +2829,8 @@ async function crearPdfCotizacion(cotizacion) {
     190,
     y + 3,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
@@ -2077,9 +2841,13 @@ async function crearPdfCotizacion(cotizacion) {
     "normal"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Precio final por pieza",
@@ -2087,20 +2855,25 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(precioFinal),
     195,
     y,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Abono",
@@ -2108,20 +2881,25 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(abono),
     195,
     y,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Restante",
@@ -2129,7 +2907,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
 
   doc.setFont(
     "helvetica",
@@ -2141,20 +2921,25 @@ async function crearPdfCotizacion(cotizacion) {
     195,
     y,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
   y += 16;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(10);
+  doc.setFontSize(
+    10
+  );
 
   doc.text(
     "FECHAS",
@@ -2164,7 +2949,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -2175,14 +2962,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.setFont(
     "helvetica",
     "normal"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     "Fecha de cotización:",
@@ -2190,7 +2981,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
@@ -2205,7 +2998,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.setFont(
     "helvetica",
@@ -2218,7 +3013,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.setFont(
     "helvetica",
@@ -2235,7 +3032,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 15;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.setFont(
     "helvetica",
@@ -2248,7 +3047,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
 
   doc.setFont(
     "helvetica",
@@ -2268,14 +3069,18 @@ async function crearPdfCotizacion(cotizacion) {
 
   if (cotizacion.notas) {
 
-    doc.setTextColor(...colorDorado);
+    doc.setTextColor(
+      ...colorDorado
+    );
 
     doc.setFont(
       "helvetica",
       "bold"
     );
 
-    doc.setFontSize(10);
+    doc.setFontSize(
+      10
+    );
 
     doc.text(
       "NOTAS",
@@ -2285,7 +3090,9 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 7;
 
-    doc.setDrawColor(...colorDorado);
+    doc.setDrawColor(
+      ...colorDorado
+    );
 
     doc.line(
       18,
@@ -2296,14 +3103,18 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 8;
 
-    doc.setTextColor(...colorGris);
+    doc.setTextColor(
+      ...colorGris
+    );
 
     doc.setFont(
       "helvetica",
       "normal"
     );
 
-    doc.setFontSize(9);
+    doc.setFontSize(
+      9
+    );
 
     const notas =
       doc.splitTextToSize(
@@ -2320,9 +3131,12 @@ async function crearPdfCotizacion(cotizacion) {
     );
   }
 
-  const pieY = 260;
+  const pieY =
+    260;
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
 
   doc.rect(
     0,
@@ -2332,14 +3146,18 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
 
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(9);
+  doc.setFontSize(
+    9
+  );
 
   doc.text(
     "Pirámide Woodworks",
@@ -2352,7 +3170,9 @@ async function crearPdfCotizacion(cotizacion) {
     "normal"
   );
 
-  doc.setFontSize(8);
+  doc.setFontSize(
+    8
+  );
 
   doc.text(
     "Tel. 899 119 4289",
@@ -2365,7 +3185,8 @@ async function crearPdfCotizacion(cotizacion) {
     ancho - 18,
     pieY + 7,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
@@ -2374,20 +3195,26 @@ async function crearPdfCotizacion(cotizacion) {
     ancho - 18,
     pieY + 12,
     {
-      align: "right"
+      align:
+        "right"
     }
   );
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
-  doc.setFontSize(7);
+  doc.setFontSize(
+    7
+  );
 
   doc.text(
     "Gracias por confiar en Pirámide Woodworks.",
     ancho / 2,
     285,
     {
-      align: "center"
+      align:
+        "center"
     }
   );
 
@@ -2395,7 +3222,7 @@ async function crearPdfCotizacion(cotizacion) {
 }
 
 /* =========================================================
-   GUARDAR / DESCARGAR TICKET
+   TICKET
 ========================================================= */
 
 async function descargarTicketCotizacion(id) {
@@ -2432,7 +3259,9 @@ async function descargarTicketCotizacion(id) {
 
     const existente =
       await supabaseClient
-        .from("comprobantes")
+        .from(
+          "comprobantes"
+        )
         .select("*")
         .eq(
           "cotizacion_id",
@@ -2453,7 +3282,9 @@ async function descargarTicketCotizacion(id) {
       const descargaExistente =
         await supabaseClient
           .storage
-          .from("comprobantes")
+          .from(
+            "comprobantes"
+          )
           .download(
             existente.data.archivo_url
           );
@@ -2480,15 +3311,13 @@ async function descargarTicketCotizacion(id) {
       );
 
     const pdfBlob =
-      doc.output("blob");
+      doc.output(
+        "blob"
+      );
 
     const folio =
-      "COT-" +
-      String(
-        cotizacion.id
-      ).padStart(
-        4,
-        "0"
+      obtenerFolio(
+        cotizacion
       );
 
     const nombreArchivo =
@@ -2504,14 +3333,17 @@ async function descargarTicketCotizacion(id) {
     const subida =
       await supabaseClient
         .storage
-        .from("comprobantes")
+        .from(
+          "comprobantes"
+        )
         .upload(
           ruta,
           pdfBlob,
           {
             contentType:
               "application/pdf",
-            upsert: false
+            upsert:
+              false
           }
         );
 
@@ -2587,7 +3419,9 @@ async function descargarTicketCotizacion(id) {
 
     const guardado =
       await supabaseClient
-        .from("comprobantes")
+        .from(
+          "comprobantes"
+        )
         .insert(
           registro
         );
@@ -2633,6 +3467,10 @@ async function descargarTicketCotizacion(id) {
   }
 }
 
+/* =========================================================
+   DESCARGAR BLOB
+========================================================= */
+
 function descargarBlob(
   blob,
   nombreArchivo
@@ -2665,13 +3503,19 @@ function descargarBlob(
 
   setTimeout(
     () => {
+
       URL.revokeObjectURL(
         url
       );
+
     },
     1000
   );
 }
+
+/* =========================================================
+   NOMBRE DEL PDF
+========================================================= */
 
 function generarNombreArchivo(
   cotizacion
@@ -2694,11 +3538,8 @@ function generarNombreArchivo(
 
   return (
     "Cotizacion-" +
-    String(
-      cotizacion.id
-    ).padStart(
-      4,
-      "0"
+    obtenerFolio(
+      cotizacion
     ) +
     "-" +
     (
@@ -2707,6 +3548,10 @@ function generarNombreArchivo(
     )
   );
 }
+
+/* =========================================================
+   CARGAR LOGO PARA PDF
+========================================================= */
 
 async function cargarImagenBase64(
   url
@@ -2763,12 +3608,15 @@ async function cargarCotizaciones() {
     error
   } =
     await supabaseClient
-      .from("cotizaciones")
+      .from(
+        "cotizaciones"
+      )
       .select("*")
       .order(
         "fechacotizacion",
         {
-          ascending: false
+          ascending:
+            false
         }
       );
 
@@ -2780,10 +3628,11 @@ async function cargarCotizaciones() {
 
     document.getElementById(
       "listaCotizaciones"
-    ).innerHTML =
-      `<div class="vacio">
+    ).innerHTML = `
+      <div class="vacio">
         No se pudieron cargar las cotizaciones.
-      </div>`;
+      </div>
+    `;
 
     return;
   }
@@ -2823,6 +3672,7 @@ async function iniciar() {
 }
 
 iniciar();
+
 </script>
 
 </body>
