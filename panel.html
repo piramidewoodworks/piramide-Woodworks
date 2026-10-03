@@ -2,10 +2,16 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Panel | Pirámide Woodworks</title>
+
 
     <style>
 
@@ -15,19 +21,31 @@
             padding: 0;
         }
 
+
         :root {
+
             --negro: #171717;
             --negro-suave: #222222;
+
             --blanco: #ffffff;
             --crema: #f7f5f1;
+
             --texto: #26221e;
             --texto-suave: #716b64;
+
             --dorado: #b28a52;
             --dorado-claro: #d1b27d;
+
             --linea: #e7e2db;
+
+            --verde: #557b5d;
+            --rojo: #9b3d3d;
+            --azul: #526c82;
         }
 
+
         body {
+
             min-height: 100vh;
 
             font-family:
@@ -53,41 +71,70 @@
         }
 
 
-        /* ENCABEZADO */
+        /* =========================
+           ENCABEZADO
+        ========================= */
 
         header {
+
             text-align: center;
+
             padding: 38px 20px 25px;
         }
 
+
         header h1 {
-            font-size: clamp(28px, 5vw, 42px);
+
+            font-size:
+                clamp(28px, 5vw, 42px);
+
             font-weight: 500;
+
             letter-spacing: 1px;
         }
 
+
         header p {
+
             margin-top: 8px;
+
             color: var(--dorado-claro);
+
             font-size: 13px;
+
             letter-spacing: 3px;
+
             text-transform: uppercase;
         }
 
 
-        /* CONTENEDOR */
+        /* =========================
+           CONTENEDOR
+        ========================= */
 
         .panel {
-            width: min(1100px, calc(100% - 30px));
+
+            width:
+                min(
+                    1100px,
+                    calc(100% - 30px)
+                );
+
             margin: auto;
+
             padding-bottom: 60px;
         }
 
 
-        /* BIENVENIDA */
+        /* =========================
+           BIENVENIDA
+        ========================= */
 
         .bienvenida {
-            background: rgba(255, 255, 255, .97);
+
+            background:
+                rgba(255, 255, 255, .97);
+
             color: var(--texto);
 
             border-radius: 14px;
@@ -100,28 +147,43 @@
                 0 12px 35px rgba(0, 0, 0, .20);
         }
 
+
         .bienvenida-contenido {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             gap: 20px;
         }
 
+
         .bienvenida h2 {
+
             font-size: 24px;
+
             font-weight: 600;
         }
 
+
         .bienvenida p {
+
             margin-top: 8px;
+
             color: var(--texto-suave);
+
             font-size: 14px;
         }
 
 
-        /* BOTÓN DE NOTIFICACIONES */
+        /* =========================
+           NOTIFICACIONES
+        ========================= */
 
         .boton-notificaciones {
+
             position: relative;
 
             width: 52px;
@@ -130,14 +192,17 @@
             flex: 0 0 52px;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             background: #f4f0e9;
 
             color: #8f6a38;
 
-            border: 1px solid #dfd5c6;
+            border:
+                1px solid #dfd5c6;
 
             border-radius: 50%;
 
@@ -152,8 +217,11 @@
                 background .2s ease;
         }
 
+
         .boton-notificaciones:hover {
-            transform: translateY(-3px);
+
+            transform:
+                translateY(-3px);
 
             background: #eee7dc;
 
@@ -161,17 +229,26 @@
                 0 8px 20px rgba(0, 0, 0, .18);
         }
 
+
         .icono-campana {
+
             width: 21px;
             height: 21px;
+
             stroke: currentColor;
+
             fill: none;
+
             stroke-width: 1.7;
+
             stroke-linecap: round;
+
             stroke-linejoin: round;
         }
 
+
         .contador-notificaciones {
+
             position: absolute;
 
             top: -5px;
@@ -185,41 +262,58 @@
             display: none;
 
             align-items: center;
+
             justify-content: center;
 
-            background: #9b3d3d;
+            background: var(--rojo);
 
             color: white;
 
             border-radius: 50px;
 
             font-size: 11px;
+
             font-weight: 700;
 
-            border: 2px solid white;
+            border:
+                2px solid white;
         }
 
 
-        /* RESUMEN */
+        /* =========================
+           TÍTULOS
+        ========================= */
 
         .titulo-seccion {
-            margin: 25px 0 13px;
+
+            margin:
+                25px 0 13px;
 
             font-size: 18px;
+
             font-weight: 500;
         }
 
+
+        /* =========================
+           RESUMEN
+        ========================= */
+
         .resumen {
+
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(3, 1fr);
 
             gap: 14px;
         }
 
+
         .tarjeta {
-            background: rgba(255, 255, 255, .97);
+
+            background:
+                rgba(255, 255, 255, .97);
 
             color: var(--texto);
 
@@ -229,9 +323,13 @@
 
             box-shadow:
                 0 8px 25px rgba(0, 0, 0, .15);
+
+            min-width: 0;
         }
 
+
         .tarjeta span {
+
             display: block;
 
             color: var(--texto-suave);
@@ -245,19 +343,338 @@
             margin-bottom: 9px;
         }
 
+
         .tarjeta strong {
+
             font-size: 25px;
+
             font-weight: 600;
         }
 
+
         .dorado {
+
             color: #9a713b;
         }
 
 
-        /* MENÚ */
+        .verde {
+
+            color: var(--verde);
+        }
+
+
+        .rojo {
+
+            color: var(--rojo);
+        }
+
+
+        .azul {
+
+            color: var(--azul);
+        }
+
+
+        /* =========================
+           ACTIVIDAD
+        ========================= */
+
+        .actividad {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 14px;
+        }
+
+
+        .actividad-card {
+
+            background:
+                rgba(255, 255, 255, .97);
+
+            color: var(--texto);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, .15);
+
+            min-width: 0;
+        }
+
+
+        .actividad-card h4 {
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            margin-bottom: 14px;
+        }
+
+
+        .lista {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+
+        .actividad-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            padding: 11px 12px;
+
+            background: #f7f4ef;
+
+            border:
+                1px solid #ebe4da;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            color: var(--texto);
+
+            transition:
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+
+        .actividad-item:hover {
+
+            background: #f1ebe2;
+
+            border-color:
+                #d7c4a8;
+        }
+
+
+        .actividad-principal {
+
+            min-width: 0;
+        }
+
+
+        .actividad-titulo {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .actividad-subtitulo {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .actividad-monto {
+
+            flex-shrink: 0;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #8f6a38;
+        }
+
+
+        .estado-mini {
+
+            flex-shrink: 0;
+
+            padding: 4px 8px;
+
+            border-radius: 20px;
+
+            background: #eee7dc;
+
+            color: #765a35;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .sin-actividad {
+
+            padding: 15px 5px;
+
+            color: var(--texto-suave);
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           PRÓXIMAS ENTREGAS
+        ========================= */
+
+        .entregas {
+
+            margin-top: 14px;
+
+            background:
+                rgba(255, 255, 255, .97);
+
+            color: var(--texto);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, .15);
+        }
+
+
+        .entregas-cabecera {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .entregas h4 {
+
+            font-size: 16px;
+
+            font-weight: 600;
+        }
+
+
+        .ver-todo {
+
+            color: #8f6a38;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .ver-todo:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .lista-entregas {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .entrega {
+
+            padding: 13px;
+
+            background: #f7f4ef;
+
+            border:
+                1px solid #ebe4da;
+
+            border-radius: 9px;
+        }
+
+
+        .entrega-fecha {
+
+            color: #8f6a38;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+
+        .entrega-cliente {
+
+            margin-top: 5px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .entrega-producto {
+
+            margin-top: 3px;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+            line-height: 1.35;
+        }
+
+
+        /* =========================
+           MENÚ
+        ========================= */
 
         .menu {
+
             display: grid;
 
             grid-template-columns:
@@ -266,7 +683,9 @@
             gap: 13px;
         }
 
+
         .menu-boton {
+
             display: flex;
 
             align-items: center;
@@ -277,7 +696,8 @@
 
             padding: 17px;
 
-            background: rgba(255, 255, 255, .97);
+            background:
+                rgba(255, 255, 255, .97);
 
             color: var(--texto);
 
@@ -290,19 +710,26 @@
                 border-color .2s ease,
                 box-shadow .2s ease;
 
-            border: 1px solid transparent;
+            border:
+                1px solid transparent;
         }
 
-        .menu-boton:hover {
-            transform: translateY(-3px);
 
-            border-color: var(--dorado);
+        .menu-boton:hover {
+
+            transform:
+                translateY(-3px);
+
+            border-color:
+                var(--dorado);
 
             box-shadow:
                 0 10px 25px rgba(0, 0, 0, .20);
         }
 
+
         .icono {
+
             width: 42px;
             height: 42px;
 
@@ -311,6 +738,7 @@
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             border-radius: 9px;
@@ -322,27 +750,36 @@
             position: relative;
         }
 
+
         .icono svg {
+
             width: 21px;
             height: 21px;
 
             stroke: currentColor;
+
             fill: none;
 
             stroke-width: 1.6;
 
             stroke-linecap: round;
+
             stroke-linejoin: round;
         }
 
+
         .menu-boton strong {
+
             display: block;
 
             font-size: 15px;
+
             font-weight: 600;
         }
 
+
         .menu-boton small {
+
             display: block;
 
             margin-top: 3px;
@@ -353,9 +790,12 @@
         }
 
 
-        /* CERRAR SESIÓN */
+        /* =========================
+           CERRAR SESIÓN
+        ========================= */
 
         .cerrar {
+
             display: block;
 
             width: fit-content;
@@ -364,7 +804,8 @@
 
             padding: 10px 18px;
 
-            border: 1px solid rgba(209, 178, 125, .55);
+            border:
+                1px solid rgba(209, 178, 125, .55);
 
             border-radius: 7px;
 
@@ -379,40 +820,71 @@
             cursor: pointer;
         }
 
-        .cerrar:hover {
-            background: rgba(23, 23, 23, .65);
 
-            border-color: var(--dorado);
+        .cerrar:hover {
+
+            background:
+                rgba(23, 23, 23, .65);
+
+            border-color:
+                var(--dorado);
 
             color: white;
         }
 
 
-        /* PIE */
+        /* =========================
+           PIE
+        ========================= */
 
         footer {
+
             text-align: center;
 
-            padding: 10px 20px 25px;
+            padding:
+                10px 20px 25px;
 
-            color: rgba(255, 255, 255, .50);
+            color:
+                rgba(255, 255, 255, .50);
 
             font-size: 12px;
         }
 
 
-        /* CELULAR */
+        /* =========================
+           CELULAR
+        ========================= */
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
 
             .resumen {
+
                 grid-template-columns:
-                    1fr 1fr;
+                    repeat(2, 1fr);
             }
 
+
             .menu {
+
                 grid-template-columns:
-                    1fr 1fr;
+                    repeat(2, 1fr);
+            }
+
+
+            .lista-entregas {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .actividad {
+
+                grid-template-columns:
+                    1fr;
             }
         }
 
@@ -420,49 +892,109 @@
         @media (max-width: 500px) {
 
             .panel {
-                width: calc(100% - 20px);
+
+                width:
+                    calc(100% - 20px);
             }
 
+
             header {
+
                 padding-top: 30px;
             }
 
+
             .bienvenida {
+
                 padding: 22px;
             }
 
+
             .bienvenida h2 {
+
                 font-size: 21px;
             }
 
+
             .bienvenida p {
+
                 font-size: 13px;
             }
 
+
             .boton-notificaciones {
+
                 width: 48px;
                 height: 48px;
+
                 flex-basis: 48px;
             }
 
+
             .resumen {
+
                 gap: 9px;
             }
 
+
             .tarjeta {
+
                 padding: 17px;
             }
 
-            .tarjeta strong {
-                font-size: 21px;
+
+            .tarjeta span {
+
+                font-size: 10px;
             }
 
+
+            .tarjeta strong {
+
+                font-size: 20px;
+            }
+
+
             .menu {
+
                 grid-template-columns:
                     1fr;
             }
 
+
+            .actividad-card,
+            .entregas {
+
+                padding: 17px;
+            }
+
+
+            .lista-entregas {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .actividad-item {
+
+                padding: 10px;
+            }
+
+
+            .actividad-titulo {
+
+                font-size: 12px;
+            }
+
+
+            .actividad-subtitulo {
+
+                font-size: 10px;
+            }
+
         }
+
 
     </style>
 
@@ -474,15 +1006,23 @@
 
 <header>
 
-    <h1>Pirámide Woodworks</h1>
+    <h1>
+        Pirámide Woodworks
+    </h1>
 
-    <p>Administración</p>
+    <p>
+        Administración
+    </p>
 
 </header>
 
 
 <main class="panel">
 
+
+    <!-- =========================
+         BIENVENIDA
+    ========================= -->
 
     <section class="bienvenida">
 
@@ -512,9 +1052,17 @@
                     class="icono-campana"
                     viewBox="0 0 24 24"
                 >
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-                    <path d="M10 21h4"></path>
+
+                    <path
+                        d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                    ></path>
+
+                    <path
+                        d="M10 21h4"
+                    ></path>
+
                 </svg>
+
 
                 <span
                     id="contadorNotificaciones"
@@ -529,6 +1077,10 @@
 
     </section>
 
+
+    <!-- =========================
+         RESUMEN
+    ========================= -->
 
     <h3 class="titulo-seccion">
         Resumen del negocio
@@ -560,7 +1112,9 @@
                 Cotizaciones
             </span>
 
-            <strong id="totalCotizaciones">
+            <strong
+                id="totalCotizaciones"
+            >
                 0
             </strong>
 
@@ -570,11 +1124,14 @@
         <div class="tarjeta">
 
             <span>
-                Clientes
+                Por cobrar
             </span>
 
-            <strong id="totalClientes">
-                0
+            <strong
+                id="porCobrar"
+                class="rojo"
+            >
+                $0
             </strong>
 
         </div>
@@ -596,8 +1153,134 @@
         </div>
 
 
+        <div class="tarjeta">
+
+            <span>
+                Ganancia aproximada
+            </span>
+
+            <strong
+                id="gananciaMes"
+                class="verde"
+            >
+                $0
+            </strong>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <span>
+                Clientes
+            </span>
+
+            <strong
+                id="totalClientes"
+            >
+                0
+            </strong>
+
+        </div>
+
+
     </section>
 
+
+    <!-- =========================
+         ACTIVIDAD RECIENTE
+    ========================= -->
+
+    <h3 class="titulo-seccion">
+        Actividad reciente
+    </h3>
+
+
+    <section class="actividad">
+
+
+        <div class="actividad-card">
+
+            <h4>
+                Últimas cotizaciones
+            </h4>
+
+            <div
+                id="listaCotizaciones"
+                class="lista"
+            >
+
+                <div class="sin-actividad">
+                    Cargando...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="actividad-card">
+
+            <h4>
+                Últimas ventas
+            </h4>
+
+            <div
+                id="listaVentas"
+                class="lista"
+            >
+
+                <div class="sin-actividad">
+                    Cargando...
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         PRÓXIMAS ENTREGAS
+    ========================= -->
+
+    <section class="entregas">
+
+        <div class="entregas-cabecera">
+
+            <h4>
+                Próximas entregas
+            </h4>
+
+            <a
+                href="cotizaciones-admin.html"
+                class="ver-todo"
+            >
+                Ver cotizaciones
+            </a>
+
+        </div>
+
+
+        <div
+            id="listaEntregas"
+            class="lista-entregas"
+        >
+
+            <div class="sin-actividad">
+                Cargando...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ADMINISTRACIÓN
+    ========================= -->
 
     <h3 class="titulo-seccion">
         Administración
@@ -609,17 +1292,31 @@
 
         <!-- PRODUCTOS -->
 
-        <a href="productos.html" class="menu-boton">
+        <a
+            href="productos.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M4 7.5 12 3l8 4.5-8 4.5z"></path>
-                    <path d="M4 7.5v9L12 21l8-4.5v-9"></path>
-                    <path d="M12 12v9"></path>
+
+                    <path
+                        d="M4 7.5 12 3l8 4.5-8 4.5z"
+                    ></path>
+
+                    <path
+                        d="M4 7.5v9L12 21l8-4.5v-9"
+                    ></path>
+
+                    <path
+                        d="M12 12v9"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -638,18 +1335,35 @@
 
         <!-- COTIZACIONES -->
 
-        <a href="cotizaciones-admin.html" class="menu-boton">
+        <a
+            href="cotizaciones-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M6 3.5h12v17H6z"></path>
-                    <path d="M9 7h6"></path>
-                    <path d="M9 11h6"></path>
-                    <path d="M9 15h4"></path>
+
+                    <path
+                        d="M6 3.5h12v17H6z"
+                    ></path>
+
+                    <path
+                        d="M9 7h6"
+                    ></path>
+
+                    <path
+                        d="M9 11h6"
+                    ></path>
+
+                    <path
+                        d="M9 15h4"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -668,17 +1382,33 @@
 
         <!-- VENTAS -->
 
-        <a href="ventas-admin.html" class="menu-boton">
+        <a
+            href="ventas-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="8.5"></circle>
-                    <path d="M12 7v10"></path>
-                    <path d="M15 9.5c-.7-.7-1.7-1-3-1-1.6 0-2.7.8-2.7 2s1 1.8 2.7 2.2 2.7.8 2.7 2-1.1 2-2.7 2c-1.3 0-2.4-.4-3.1-1.1"></path>
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="8.5"
+                    ></circle>
+
+                    <path
+                        d="M12 7v10"
+                    ></path>
+
+                    <path
+                        d="M15 9.5c-.7-.7-1.7-1-3-1-1.6 0-2.7.8-2.7 2s1 1.8 2.7 2.2 2.7.8 2.7 2-1.1 2-2.7 2c-1.3 0-2.4-.4-3.1-1.1"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -697,16 +1427,29 @@
 
         <!-- CLIENTES -->
 
-        <a href="clientes-admin.html" class="menu-boton">
+        <a
+            href="clientes-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="3"></circle>
-                    <path d="M6.5 20c.6-3.2 2.5-5 5.5-5s4.9 1.8 5.5 5"></path>
+
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="3"
+                    ></circle>
+
+                    <path
+                        d="M6.5 20c.6-3.2 2.5-5 5.5-5s4.9 1.8 5.5 5"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -725,18 +1468,35 @@
 
         <!-- GASTOS -->
 
-        <a href="gastos-admin.html" class="menu-boton">
+        <a
+            href="gastos-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M4 7h16v12H4z"></path>
-                    <path d="M7 7V5h10v2"></path>
-                    <path d="M8 12h8"></path>
-                    <path d="M8 15h5"></path>
+
+                    <path
+                        d="M4 7h16v12H4z"
+                    ></path>
+
+                    <path
+                        d="M7 7V5h10v2"
+                    ></path>
+
+                    <path
+                        d="M8 12h8"
+                    ></path>
+
+                    <path
+                        d="M8 15h5"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -755,18 +1515,35 @@
 
         <!-- MARKETING -->
 
-        <a href="marketing-admin.html" class="menu-boton">
+        <a
+            href="marketing-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M4 11v2"></path>
-                    <path d="M7 9v6"></path>
-                    <path d="M10 7v10"></path>
-                    <path d="M13 9l7-4v14l-7-4z"></path>
+
+                    <path
+                        d="M4 11v2"
+                    ></path>
+
+                    <path
+                        d="M7 9v6"
+                    ></path>
+
+                    <path
+                        d="M10 7v10"
+                    ></path>
+
+                    <path
+                        d="M13 9l7-4v14l-7-4z"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -785,18 +1562,35 @@
 
         <!-- FINANZAS -->
 
-        <a href="finanzas-admin.html" class="menu-boton">
+        <a
+            href="finanzas-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M5 19V9"></path>
-                    <path d="M10 19V5"></path>
-                    <path d="M15 19v-7"></path>
-                    <path d="M20 19V3"></path>
+
+                    <path
+                        d="M5 19V9"
+                    ></path>
+
+                    <path
+                        d="M10 19V5"
+                    ></path>
+
+                    <path
+                        d="M15 19v-7"
+                    ></path>
+
+                    <path
+                        d="M20 19V3"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -815,16 +1609,27 @@
 
         <!-- NOTIFICACIONES -->
 
-        <a href="notificaciones-admin.html" class="menu-boton">
+        <a
+            href="notificaciones-admin.html"
+            class="menu-boton"
+        >
 
             <div class="icono">
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-                    <path d="M10 21h4"></path>
+
+                    <path
+                        d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                    ></path>
+
+                    <path
+                        d="M10 21h4"
+                    ></path>
+
                 </svg>
 
             </div>
+
 
             <div>
 
@@ -843,6 +1648,10 @@
 
     </section>
 
+
+    <!-- =========================
+         CERRAR SESIÓN
+    ========================= -->
 
     <a
         href="#"
@@ -865,16 +1674,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
 
-/* SUPABASE */
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://ighcydtijeumeqyhuvkh.supabase.co";
 
+
 const SUPABASE_KEY =
     "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -883,41 +1697,83 @@ const supabaseClient =
     );
 
 
-/* FORMATO DE DINERO */
+/* =========================
+   UTILIDADES
+========================= */
 
 function numero(valor) {
+
     return Number(valor) || 0;
+
 }
 
 
 function dinero(valor) {
 
-    return "$" + numero(valor).toLocaleString("es-MX", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-    });
+    return "$" +
+        numero(valor).toLocaleString(
+            "es-MX",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }
+        );
 
 }
 
 
-/* FECHA DEL MES ACTUAL */
+function escaparHtml(texto) {
 
-function esEsteMes(fecha) {
+    return String(
+        texto ?? ""
+    )
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-    if (!fecha) return false;
+}
 
-    const ahora = new Date();
-    const fechaRegistro = new Date(fecha);
+
+function fechaBonita(fecha) {
+
+    if (!fecha) {
+        return "—";
+    }
+
+
+    const texto =
+        String(fecha);
+
+
+    const soloFecha =
+        texto.includes("T")
+            ? texto.split("T")[0]
+            : texto;
+
+
+    const partes =
+        soloFecha.split("-");
+
+
+    if (partes.length !== 3) {
+
+        return soloFecha;
+
+    }
+
 
     return (
-        fechaRegistro.getMonth() === ahora.getMonth() &&
-        fechaRegistro.getFullYear() === ahora.getFullYear()
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
     );
 
 }
 
-
-/* MONTO DE VENTA */
 
 function obtenerMontoVenta(venta) {
 
@@ -925,32 +1781,191 @@ function obtenerMontoVenta(venta) {
         venta.total !== undefined &&
         venta.total !== null
     ) {
-        return numero(venta.total);
+
+        return numero(
+            venta.total
+        );
+
     }
+
 
     const precio =
         numero(venta.precio);
 
+
     const cantidad =
         numero(venta.cantidad) || 1;
+
 
     return precio * cantidad;
 
 }
 
 
-/* SALUDO */
+function obtenerTotalCotizacion(cotizacion) {
+
+    if (
+        cotizacion.total !== undefined &&
+        cotizacion.total !== null
+    ) {
+
+        return numero(
+            cotizacion.total
+        );
+
+    }
+
+
+    const cantidad =
+        numero(cotizacion.cantidad) || 1;
+
+
+    const precio =
+        numero(cotizacion.precio);
+
+
+    const descuentoPorcentaje =
+        numero(
+            cotizacion.descuentoporcentaje
+        );
+
+
+    const descuentoPeso =
+        numero(
+            cotizacion.descuento
+        );
+
+
+    const subtotal =
+        cantidad * precio;
+
+
+    if (descuentoPorcentaje > 0) {
+
+        return Math.max(
+            0,
+            subtotal -
+            (
+                subtotal *
+                descuentoPorcentaje /
+                100
+            )
+        );
+
+    }
+
+
+    return Math.max(
+        0,
+        subtotal -
+        descuentoPeso
+    );
+
+}
+
+
+function obtenerRestanteCotizacion(cotizacion) {
+
+    const total =
+        obtenerTotalCotizacion(
+            cotizacion
+        );
+
+
+    const abono =
+        numero(
+            cotizacion.abono
+        );
+
+
+    return Math.max(
+        0,
+        total - abono
+    );
+
+}
+
+
+function fechaComoObjeto(fecha) {
+
+    if (!fecha) {
+        return null;
+    }
+
+
+    const texto =
+        String(fecha);
+
+
+    const soloFecha =
+        texto.includes("T")
+            ? texto.split("T")[0]
+            : texto;
+
+
+    const partes =
+        soloFecha.split("-");
+
+
+    if (partes.length !== 3) {
+        return null;
+    }
+
+
+    return new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+
+}
+
+
+function esEsteMes(fecha) {
+
+    const fechaRegistro =
+        fechaComoObjeto(fecha);
+
+
+    if (!fechaRegistro) {
+        return false;
+    }
+
+
+    const ahora =
+        new Date();
+
+
+    return (
+        fechaRegistro.getMonth() ===
+            ahora.getMonth() &&
+
+        fechaRegistro.getFullYear() ===
+            ahora.getFullYear()
+    );
+
+}
+
+
+/* =========================
+   SALUDO
+========================= */
 
 async function cargarUsuario() {
 
     const saludo =
-        document.getElementById("saludo");
+        document.getElementById(
+            "saludo"
+        );
+
 
     const resultado =
         await supabaseClient.auth.getUser();
 
+
     const usuario =
         resultado.data?.user;
+
 
     if (!usuario) {
 
@@ -958,10 +1973,15 @@ async function cargarUsuario() {
             "admin.html";
 
         return;
+
     }
 
+
     const correo =
-        (usuario.email || "").toLowerCase();
+        (
+            usuario.email || ""
+        ).toLowerCase();
+
 
     if (
         correo ===
@@ -971,7 +1991,9 @@ async function cargarUsuario() {
         saludo.textContent =
             "Bienvenido, Jorge";
 
-    } else if (
+    }
+
+    else if (
         correo ===
         "armentanatalia5@gmail.com"
     ) {
@@ -979,7 +2001,9 @@ async function cargarUsuario() {
         saludo.textContent =
             "Bienvenida, Nat";
 
-    } else {
+    }
+
+    else {
 
         saludo.textContent =
             "Bienvenido";
@@ -989,7 +2013,9 @@ async function cargarUsuario() {
 }
 
 
-/* CARGAR RESUMEN */
+/* =========================
+   CARGAR RESUMEN
+========================= */
 
 async function cargarResumen() {
 
@@ -1004,11 +2030,23 @@ async function cargarResumen() {
 
             supabaseClient
                 .from("ventas")
-                .select("*"),
+                .select("*")
+                .order(
+                    "fecha",
+                    {
+                        ascending: false
+                    }
+                ),
 
             supabaseClient
                 .from("cotizaciones")
-                .select("id"),
+                .select("*")
+                .order(
+                    "fechacotizacion",
+                    {
+                        ascending: false
+                    }
+                ),
 
             supabaseClient
                 .from("clientes")
@@ -1017,6 +2055,12 @@ async function cargarResumen() {
             supabaseClient
                 .from("gastos")
                 .select("*")
+                .order(
+                    "fecha",
+                    {
+                        ascending: false
+                    }
+                )
 
         ]);
 
@@ -1025,13 +2069,16 @@ async function cargarResumen() {
             throw resultadoVentas.error;
         }
 
+
         if (resultadoCotizaciones.error) {
             throw resultadoCotizaciones.error;
         }
 
+
         if (resultadoClientes.error) {
             throw resultadoClientes.error;
         }
+
 
         if (resultadoGastos.error) {
             throw resultadoGastos.error;
@@ -1041,11 +2088,14 @@ async function cargarResumen() {
         const ventas =
             resultadoVentas.data || [];
 
+
         const cotizaciones =
             resultadoCotizaciones.data || [];
 
+
         const clientes =
             resultadoClientes.data || [];
+
 
         const gastos =
             resultadoGastos.data || [];
@@ -1053,42 +2103,114 @@ async function cargarResumen() {
 
         let ventasMes = 0;
 
-        ventas.forEach(function(venta) {
+        ventas.forEach(
+            function(venta) {
 
-            if (esEsteMes(venta.fecha)) {
+                if (
+                    esEsteMes(
+                        venta.fecha
+                    )
+                ) {
 
-                ventasMes +=
-                    obtenerMontoVenta(venta);
+                    ventasMes +=
+                        obtenerMontoVenta(
+                            venta
+                        );
+
+                }
 
             }
-
-        });
+        );
 
 
         let gastosMes = 0;
 
-        gastos.forEach(function(gasto) {
+        gastos.forEach(
+            function(gasto) {
 
-            if (esEsteMes(gasto.fecha)) {
+                if (
+                    esEsteMes(
+                        gasto.fecha
+                    )
+                ) {
 
-                gastosMes +=
-                    numero(gasto.monto);
+                    gastosMes +=
+                        numero(
+                            gasto.monto
+                        );
+
+                }
 
             }
+        );
 
-        });
+
+        let porCobrar = 0;
+
+
+        cotizaciones.forEach(
+            function(cotizacion) {
+
+                const estado =
+                    String(
+                        cotizacion.estado ||
+                        ""
+                    ).toLowerCase();
+
+
+                if (
+                    estado === "cancelada"
+                ) {
+
+                    return;
+
+                }
+
+
+                porCobrar +=
+                    obtenerRestanteCotizacion(
+                        cotizacion
+                    );
+
+            }
+        );
+
+
+        const ganancia =
+            ventasMes -
+            gastosMes;
 
 
         document.getElementById(
             "ventasMes"
         ).textContent =
-            dinero(ventasMes);
+            dinero(
+                ventasMes
+            );
 
 
         document.getElementById(
             "gastosMes"
         ).textContent =
-            dinero(gastosMes);
+            dinero(
+                gastosMes
+            );
+
+
+        document.getElementById(
+            "gananciaMes"
+        ).textContent =
+            dinero(
+                ganancia
+            );
+
+
+        document.getElementById(
+            "porCobrar"
+        ).textContent =
+            dinero(
+                porCobrar
+            );
 
 
         document.getElementById(
@@ -1103,7 +2225,24 @@ async function cargarResumen() {
             clientes.length;
 
 
-    } catch (error) {
+        cargarUltimasCotizaciones(
+            cotizaciones
+        );
+
+
+        cargarUltimasVentas(
+            ventas
+        );
+
+
+        cargarProximasEntregas(
+            cotizaciones
+        );
+
+
+    }
+
+    catch (error) {
 
         console.error(
             "Error cargando resumen:",
@@ -1115,7 +2254,367 @@ async function cargarResumen() {
 }
 
 
-/* CONTADOR DE NOTIFICACIONES */
+/* =========================
+   ÚLTIMAS COTIZACIONES
+========================= */
+
+function cargarUltimasCotizaciones(
+    cotizaciones
+) {
+
+    const contenedor =
+        document.getElementById(
+            "listaCotizaciones"
+        );
+
+
+    const ultimas =
+        cotizaciones
+            .slice(0, 5);
+
+
+    if (!ultimas.length) {
+
+        contenedor.innerHTML =
+            `
+            <div class="sin-actividad">
+                Todavía no hay cotizaciones.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML =
+        ultimas.map(
+            function(cotizacion) {
+
+                const folio =
+                    String(
+                        cotizacion.id || 0
+                    ).padStart(
+                        3,
+                        "0"
+                    );
+
+
+                const cliente =
+                    escaparHtml(
+                        cotizacion.cliente ||
+                        "Sin nombre"
+                    );
+
+
+                const producto =
+                    escaparHtml(
+                        cotizacion.producto ||
+                        "Sin producto"
+                    );
+
+
+                const estado =
+                    escaparHtml(
+                        cotizacion.estado ||
+                        "Pendiente"
+                    );
+
+
+                const total =
+                    obtenerTotalCotizacion(
+                        cotizacion
+                    );
+
+
+                return `
+                    <a
+                        href="cotizaciones-admin.html"
+                        class="actividad-item"
+                    >
+
+                        <div class="actividad-principal">
+
+                            <span class="actividad-titulo">
+                                Cotización ${folio} · ${cliente}
+                            </span>
+
+                            <span class="actividad-subtitulo">
+                                ${producto}
+                            </span>
+
+                        </div>
+
+                        <span class="estado-mini">
+                            ${estado}
+                        </span>
+
+                    </a>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================
+   ÚLTIMAS VENTAS
+========================= */
+
+function cargarUltimasVentas(
+    ventas
+) {
+
+    const contenedor =
+        document.getElementById(
+            "listaVentas"
+        );
+
+
+    const ultimas =
+        ventas
+            .slice(0, 5);
+
+
+    if (!ultimas.length) {
+
+        contenedor.innerHTML =
+            `
+            <div class="sin-actividad">
+                Todavía no hay ventas registradas.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML =
+        ultimas.map(
+            function(venta) {
+
+                const cliente =
+                    escaparHtml(
+                        venta.cliente ||
+                        "Cliente"
+                    );
+
+
+                const producto =
+                    escaparHtml(
+                        venta.producto ||
+                        "Producto"
+                    );
+
+
+                const monto =
+                    obtenerMontoVenta(
+                        venta
+                    );
+
+
+                const fecha =
+                    fechaBonita(
+                        venta.fecha
+                    );
+
+
+                return `
+                    <a
+                        href="ventas-admin.html"
+                        class="actividad-item"
+                    >
+
+                        <div class="actividad-principal">
+
+                            <span class="actividad-titulo">
+                                ${cliente}
+                            </span>
+
+                            <span class="actividad-subtitulo">
+                                ${producto} · ${fecha}
+                            </span>
+
+                        </div>
+
+                        <span class="actividad-monto">
+                            ${dinero(monto)}
+                        </span>
+
+                    </a>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================
+   PRÓXIMAS ENTREGAS
+========================= */
+
+function cargarProximasEntregas(
+    cotizaciones
+) {
+
+    const contenedor =
+        document.getElementById(
+            "listaEntregas"
+        );
+
+
+    const hoy =
+        new Date();
+
+
+    hoy.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const proximas =
+        cotizaciones
+            .filter(
+                function(cotizacion) {
+
+                    const estado =
+                        String(
+                            cotizacion.estado ||
+                            ""
+                        ).toLowerCase();
+
+
+                    if (
+                        estado === "cancelada" ||
+                        estado === "entregada"
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    const fecha =
+                        fechaComoObjeto(
+                            cotizacion.fechaentrega
+                        );
+
+
+                    if (!fecha) {
+                        return false;
+                    }
+
+
+                    fecha.setHours(
+                        0,
+                        0,
+                        0,
+                        0
+                    );
+
+
+                    return fecha >= hoy;
+
+                }
+            )
+            .sort(
+                function(a, b) {
+
+                    const fechaA =
+                        fechaComoObjeto(
+                            a.fechaentrega
+                        );
+
+
+                    const fechaB =
+                        fechaComoObjeto(
+                            b.fechaentrega
+                        );
+
+
+                    return (
+                        fechaA - fechaB
+                    );
+
+                }
+            )
+            .slice(
+                0,
+                3
+            );
+
+
+    if (!proximas.length) {
+
+        contenedor.innerHTML =
+            `
+            <div class="sin-actividad">
+                No hay entregas próximas registradas.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML =
+        proximas.map(
+            function(cotizacion) {
+
+                const cliente =
+                    escaparHtml(
+                        cotizacion.cliente ||
+                        "Sin nombre"
+                    );
+
+
+                const producto =
+                    escaparHtml(
+                        cotizacion.producto ||
+                        "Sin producto"
+                    );
+
+
+                const fecha =
+                    fechaBonita(
+                        cotizacion.fechaentrega
+                    );
+
+
+                return `
+                    <div class="entrega">
+
+                        <div class="entrega-fecha">
+                            ${fecha}
+                        </div>
+
+                        <div class="entrega-cliente">
+                            ${cliente}
+                        </div>
+
+                        <div class="entrega-producto">
+                            ${producto}
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================
+   CONTADOR DE NOTIFICACIONES
+========================= */
 
 async function actualizarContadorNotificaciones() {
 
@@ -1130,7 +2629,9 @@ async function actualizarContadorNotificaciones() {
         const resultado =
             await supabaseClient
                 .from("cotizaciones")
-                .select("id, estado");
+                .select(
+                    "id, estado"
+                );
 
 
         if (resultado.error) {
@@ -1145,18 +2646,23 @@ async function actualizarContadorNotificaciones() {
         let pendientes = 0;
 
 
-        cotizaciones.forEach(function(cotizacion) {
+        cotizaciones.forEach(
+            function(cotizacion) {
 
-            if (
-                cotizacion.estado === "Pendiente" ||
-                cotizacion.estado === "Contactado"
-            ) {
+                if (
+                    cotizacion.estado ===
+                        "Pendiente" ||
 
-                pendientes++;
+                    cotizacion.estado ===
+                        "Contactado"
+                ) {
+
+                    pendientes++;
+
+                }
 
             }
-
-        });
+        );
 
 
         if (pendientes > 0) {
@@ -1166,23 +2672,28 @@ async function actualizarContadorNotificaciones() {
                     ? "99+"
                     : pendientes;
 
+
             contador.style.display =
                 "flex";
 
-        } else {
+        }
+
+        else {
 
             contador.style.display =
                 "none";
 
         }
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Error cargando notificaciones:",
             error
         );
+
 
         contador.style.display =
             "none";
@@ -1192,9 +2703,13 @@ async function actualizarContadorNotificaciones() {
 }
 
 
-/* CERRAR SESIÓN */
+/* =========================
+   CERRAR SESIÓN
+========================= */
 
-async function cerrarSesion(evento) {
+async function cerrarSesion(
+    evento
+) {
 
     evento.preventDefault();
 
@@ -1220,14 +2735,18 @@ async function cerrarSesion(evento) {
             resultado.error
         );
 
+
         boton.textContent =
             "← Cerrar sesión";
+
 
         alert(
             "No se pudo cerrar la sesión. Inténtalo nuevamente."
         );
 
+
         return;
+
     }
 
 
@@ -1242,49 +2761,75 @@ async function cerrarSesion(evento) {
 }
 
 
-/* INICIO */
+/* =========================
+   INICIO
+========================= */
 
 async function iniciarPanel() {
 
-    const resultado =
-        await supabaseClient.auth.getSession();
+    try {
+
+        const resultado =
+            await supabaseClient.auth.getSession();
 
 
-    const sesion =
-        resultado.data?.session;
+        const sesion =
+            resultado.data?.session;
 
 
-    if (!sesion) {
+        if (!sesion) {
 
-        window.location.href =
-            "admin.html";
+            window.location.href =
+                "admin.html";
 
-        return;
+            return;
+
+        }
+
+
+        await cargarUsuario();
+
+        await cargarResumen();
+
+        await actualizarContadorNotificaciones();
 
     }
 
+    catch (error) {
 
-    await cargarUsuario();
+        console.error(
+            "Error iniciando panel:",
+            error
+        );
 
-    await cargarResumen();
-
-    await actualizarContadorNotificaciones();
+    }
 
 }
 
 
+/* =========================
+   EVENTOS
+========================= */
+
 document
-    .getElementById("cerrarSesion")
+    .getElementById(
+        "cerrarSesion"
+    )
     .addEventListener(
         "click",
         cerrarSesion
     );
 
 
+/* =========================
+   ARRANCAR
+========================= */
+
 iniciarPanel();
 
 
 </script>
+
 
 </body>
 
