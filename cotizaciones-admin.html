@@ -327,29 +327,179 @@
       margin-top: 20px;
     }
 
+    /* =========================================================
+       AJUSTES PARA TABLET Y CELULAR
+    ========================================================= */
+
     @media (max-width: 800px) {
+
+      .contenedor {
+        width: 94%;
+        padding: 22px 0 45px;
+      }
+
+      .encabezado {
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+
+      .titulo {
+        font-size: 28px;
+      }
+
       .resumen {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .tarjeta-resumen {
+        padding: 14px;
+      }
+
+      .tarjeta-resumen strong {
+        font-size: 24px;
       }
 
       .datos {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .dato {
+        min-width: 0;
+        padding: 11px;
+        overflow: hidden;
+      }
+
+      .dato strong {
+        display: block;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .acciones {
+        gap: 8px;
+      }
+
+      .boton-secundario,
+      .boton-eliminar {
+        flex: 1 1 auto;
+        min-width: 120px;
       }
     }
 
     @media (max-width: 560px) {
-      .resumen,
-      .datos,
+
+      .contenedor {
+        width: 92%;
+        padding-top: 18px;
+      }
+
+      .encabezado {
+        align-items: stretch;
+      }
+
+      .encabezado > div {
+        width: 100%;
+      }
+
+      .titulo {
+        font-size: 25px;
+      }
+
+      .subtitulo {
+        line-height: 1.4;
+      }
+
+      .encabezado .boton-principal {
+        width: 100%;
+      }
+
+      .barra {
+        gap: 9px;
+      }
+
+      .barra input,
+      .barra select {
+        min-width: 0;
+        width: 100%;
+        flex: 1 1 100%;
+      }
+
+      .resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .tarjeta-resumen {
+        padding: 12px;
+      }
+
+      .tarjeta-resumen span {
+        font-size: 12px;
+      }
+
+      .tarjeta-resumen strong {
+        font-size: 22px;
+      }
+
+      .cotizacion {
+        padding: 15px;
+      }
+
+      .cotizacion-cabecera {
+        align-items: flex-start;
+      }
+
+      .cliente {
+        font-size: 18px;
+      }
+
+      .datos {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .dato {
+        width: 100%;
+      }
+
+      .acciones {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .boton-secundario,
+      .boton-eliminar {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .modal {
+        padding: 10px;
+      }
+
+      .modal-contenido {
+        padding: 18px;
+        border-radius: 12px;
+      }
+
       .formulario {
         grid-template-columns: 1fr;
+        gap: 12px;
       }
 
       .campo.completo {
         grid-column: auto;
       }
 
-      .titulo {
-        font-size: 25px;
+      .modal-acciones {
+        flex-direction: column-reverse;
+      }
+
+      .modal-acciones button {
+        width: 100%;
       }
     }
   </style>
@@ -491,6 +641,7 @@
       </div>
 
       <div class="total-formulario">
+
         <div class="linea-total">
           <span>Subtotal</span>
           <strong id="mostrarSubtotal">$0.00</strong>
@@ -520,11 +671,13 @@
           <span>Restante</span>
           <strong id="mostrarRestante">$0.00</strong>
         </div>
+
       </div>
 
     </div>
 
     <div class="modal-acciones">
+
       <button class="boton-secundario" onclick="cerrarModal()">
         Cancelar
       </button>
@@ -532,6 +685,7 @@
       <button class="boton-principal" onclick="guardarNuevaCotizacion()">
         Guardar cotización
       </button>
+
     </div>
 
   </div>
@@ -572,13 +726,16 @@ function fechaBonita(fecha) {
   if (!fecha) return "—";
 
   const partes = String(fecha).split("-");
+
   if (partes.length !== 3) return fecha;
 
   return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 function actualizarPrecioProducto() {
-  const producto = document.getElementById("producto").value;
+
+  const producto =
+    document.getElementById("producto").value;
 
   document.getElementById("precio").value =
     preciosProductos[producto] || 0;
@@ -587,34 +744,56 @@ function actualizarPrecioProducto() {
 }
 
 function calcularTotal() {
+
   const cantidad =
-    Number(document.getElementById("cantidad").value) || 0;
+    Number(
+      document.getElementById("cantidad").value
+    ) || 0;
 
   const precio =
-    Number(document.getElementById("precio").value) || 0;
+    Number(
+      document.getElementById("precio").value
+    ) || 0;
 
   const descuentoPorcentaje =
-    Number(document.getElementById("descuentoPorcentaje").value) || 0;
+    Number(
+      document.getElementById("descuentoPorcentaje").value
+    ) || 0;
 
   const abono =
-    Number(document.getElementById("abono").value) || 0;
+    Number(
+      document.getElementById("abono").value
+    ) || 0;
 
-  const subtotal = cantidad * precio;
+  const subtotal =
+    cantidad * precio;
 
   const montoDescuento =
-    subtotal * (descuentoPorcentaje / 100);
+    subtotal *
+    (descuentoPorcentaje / 100);
 
   const total =
-    Math.max(0, subtotal - montoDescuento);
+    Math.max(
+      0,
+      subtotal - montoDescuento
+    );
 
   const precioFinal =
-    cantidad > 0 ? total / cantidad : 0;
+    cantidad > 0
+      ? total / cantidad
+      : 0;
 
   const abonoReal =
-    Math.min(Math.max(0, abono), total);
+    Math.min(
+      Math.max(0, abono),
+      total
+    );
 
   const restante =
-    Math.max(0, total - abonoReal);
+    Math.max(
+      0,
+      total - abonoReal
+    );
 
   document.getElementById("mostrarSubtotal").textContent =
     dinero(subtotal);
@@ -636,20 +815,28 @@ function calcularTotal() {
 }
 
 function actualizarResumen() {
+
   document.getElementById("resumenTotal").textContent =
     cotizaciones.length;
 
   document.getElementById("resumenPendientes").textContent =
-    cotizaciones.filter(c => c.estado === "Pendiente").length;
+    cotizaciones.filter(
+      c => c.estado === "Pendiente"
+    ).length;
 
   document.getElementById("resumenCotizadas").textContent =
-    cotizaciones.filter(c => c.estado === "Cotizado").length;
+    cotizaciones.filter(
+      c => c.estado === "Cotizado"
+    ).length;
 
   document.getElementById("resumenEntregadas").textContent =
-    cotizaciones.filter(c => c.estado === "Cerrado").length;
+    cotizaciones.filter(
+      c => c.estado === "Cerrado"
+    ).length;
 }
 
 function mostrarCotizaciones() {
+
   const lista =
     document.getElementById("listaCotizaciones");
 
@@ -666,305 +853,473 @@ function mostrarCotizaciones() {
 
       const coincideTexto =
         !texto ||
-        String(c.cliente || "").toLowerCase().includes(texto) ||
-        String(c.telefono || "").toLowerCase().includes(texto) ||
-        String(c.producto || "").toLowerCase().includes(texto);
+        String(c.cliente || "")
+          .toLowerCase()
+          .includes(texto) ||
+
+        String(c.telefono || "")
+          .toLowerCase()
+          .includes(texto) ||
+
+        String(c.producto || "")
+          .toLowerCase()
+          .includes(texto);
 
       const coincideEstado =
-        !filtro || c.estado === filtro;
+        !filtro ||
+        c.estado === filtro;
 
       return coincideTexto && coincideEstado;
     });
 
   if (!filtradas.length) {
+
     lista.innerHTML =
-      `<div class="vacio">No hay cotizaciones para mostrar.</div>`;
+      `<div class="vacio">
+        No hay cotizaciones para mostrar.
+      </div>`;
+
     return;
   }
 
-  lista.innerHTML = filtradas.map(c => {
+  lista.innerHTML =
+    filtradas.map(c => {
 
-    const cantidad =
-      Number(c.cantidad || 0);
+      const cantidad =
+        Number(c.cantidad || 0);
 
-    const precio =
-      Number(c.precio || 0);
+      const precio =
+        Number(c.precio || 0);
 
-    const subtotal =
-      Number(
-        c.subtotal ||
-        cantidad * precio
-      );
+      const subtotal =
+        Number(
+          c.subtotal ||
+          cantidad * precio
+        );
 
-    const porcentaje =
-      Number(c.descuentoporcentaje || 0);
+      const porcentaje =
+        Number(
+          c.descuentoporcentaje || 0
+        );
 
-    const descuento =
-      Number(
-        c.monto_descuento ||
-        subtotal * porcentaje / 100
-      );
+      const descuento =
+        Number(
+          c.monto_descuento ||
+          subtotal * porcentaje / 100
+        );
 
-    const total =
-      Number(
-        c.total ||
-        Math.max(0, subtotal - descuento)
-      );
+      const total =
+        Number(
+          c.total ||
+          Math.max(
+            0,
+            subtotal - descuento
+          )
+        );
 
-    const precioFinal =
-      cantidad > 0 ? total / cantidad : 0;
+      const precioFinal =
+        cantidad > 0
+          ? total / cantidad
+          : 0;
 
-    const abono =
-      Math.min(
-        Number(c.abono || 0),
-        total
-      );
+      const abono =
+        Math.min(
+          Number(c.abono || 0),
+          total
+        );
 
-    const restante =
-      Math.max(0, total - abono);
+      const restante =
+        Math.max(
+          0,
+          total - abono
+        );
 
-    return `
-      <div class="cotizacion">
+      return `
+        <div class="cotizacion">
 
-        <div class="cotizacion-cabecera">
-          <div>
-            <div class="cliente">
-              ${escapeHtml(c.cliente || "Sin nombre")}
+          <div class="cotizacion-cabecera">
+
+            <div>
+
+              <div class="cliente">
+                ${escapeHtml(
+                  c.cliente ||
+                  "Sin nombre"
+                )}
+              </div>
+
+              <div class="telefono">
+                ${escapeHtml(
+                  c.telefono ||
+                  "Sin teléfono"
+                )}
+              </div>
+
             </div>
 
-            <div class="telefono">
-              ${escapeHtml(c.telefono || "Sin teléfono")}
+            <div class="estado">
+              ${escapeHtml(
+                c.estado ||
+                "Pendiente"
+              )}
             </div>
+
           </div>
 
-          <div class="estado">
-            ${escapeHtml(c.estado || "Pendiente")}
+          <div class="datos">
+
+            <div class="dato">
+              <small>Producto</small>
+              <strong>
+                ${escapeHtml(
+                  c.producto ||
+                  "—"
+                )}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Cantidad</small>
+              <strong>
+                ${cantidad}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Precio unitario</small>
+              <strong>
+                ${dinero(precio)}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Subtotal</small>
+              <strong>
+                ${dinero(subtotal)}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Descuento</small>
+              <strong>
+                ${porcentaje.toFixed(2)}% ·
+                ${dinero(descuento)}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Precio final por pieza</small>
+              <strong>
+                ${dinero(precioFinal)}
+              </strong>
+            </div>
+
+            <div class="dato dato-total">
+              <small>Total</small>
+              <strong>
+                ${dinero(total)}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Abono</small>
+              <strong>
+                ${dinero(abono)}
+              </strong>
+            </div>
+
+            <div class="dato dato-total">
+              <small>Restante</small>
+              <strong>
+                ${dinero(restante)}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Fecha de cotización</small>
+              <strong>
+                ${fechaBonita(
+                  c.fechacotizacion
+                )}
+              </strong>
+            </div>
+
+            <div class="dato">
+              <small>Fecha de entrega</small>
+              <strong>
+                ${fechaBonita(
+                  c.fechaentrega
+                )}
+              </strong>
+            </div>
+
           </div>
+
+          ${
+            c.notas
+              ? `
+                <div class="notas">
+                  ${escapeHtml(c.notas)}
+                </div>
+              `
+              : ""
+          }
+
+          <div class="acciones">
+
+            <button
+              type="button"
+              class="boton-secundario"
+              onclick="editarCotizacion(${c.id})">
+              Editar
+            </button>
+
+            <button
+              type="button"
+              class="boton-secundario"
+              onclick="descargarTicketCotizacion(${c.id})">
+              Descargar ticket
+            </button>
+
+            <button
+              type="button"
+              class="boton-eliminar"
+              onclick="eliminarCotizacion(${c.id})">
+              Eliminar
+            </button>
+
+          </div>
+
         </div>
+      `;
 
-        <div class="datos">
-
-          <div class="dato">
-            <small>Producto</small>
-            <strong>${escapeHtml(c.producto || "—")}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Cantidad</small>
-            <strong>${cantidad}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Precio unitario</small>
-            <strong>${dinero(precio)}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Subtotal</small>
-            <strong>${dinero(subtotal)}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Descuento</small>
-            <strong>
-              ${porcentaje.toFixed(2)}% · ${dinero(descuento)}
-            </strong>
-          </div>
-
-          <div class="dato">
-            <small>Precio final por pieza</small>
-            <strong>${dinero(precioFinal)}</strong>
-          </div>
-
-          <div class="dato dato-total">
-            <small>Total</small>
-            <strong>${dinero(total)}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Abono</small>
-            <strong>${dinero(abono)}</strong>
-          </div>
-
-          <div class="dato dato-total">
-            <small>Restante</small>
-            <strong>${dinero(restante)}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Fecha de cotización</small>
-            <strong>${fechaBonita(c.fechacotizacion)}</strong>
-          </div>
-
-          <div class="dato">
-            <small>Fecha de entrega</small>
-            <strong>${fechaBonita(c.fechaentrega)}</strong>
-          </div>
-
-        </div>
-
-        ${
-          c.notas
-            ? `<div class="notas">
-                ${escapeHtml(c.notas)}
-               </div>`
-            : ""
-        }
-
-        <div class="acciones">
-
-          <button
-            type="button"
-            class="boton-secundario"
-            onclick="editarCotizacion(${c.id})">
-            Editar
-          </button>
-
-          <button
-            type="button"
-            class="boton-secundario"
-            onclick="descargarTicketCotizacion(${c.id})">
-            Descargar ticket
-          </button>
-
-          <button
-            type="button"
-            class="boton-eliminar"
-            onclick="eliminarCotizacion(${c.id})">
-            Eliminar
-          </button>
-
-        </div>
-
-      </div>
-    `;
-  }).join("");
+    }).join("");
 }
 
 function escapeHtml(text) {
+
   return String(text ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
 
 function abrirNuevaCotizacion() {
+
   editandoId = null;
 
-  document.getElementById("tituloModal").textContent =
+  document.getElementById(
+    "tituloModal"
+  ).textContent =
     "Nueva cotización";
 
-  document.getElementById("cliente").value = "";
-  document.getElementById("telefono").value = "";
-  document.getElementById("producto").value = "BottleBox";
-  document.getElementById("cantidad").value = 1;
-  document.getElementById("descuentoPorcentaje").value = 0;
-  document.getElementById("abono").value = 0;
+  document.getElementById(
+    "cliente"
+  ).value = "";
+
+  document.getElementById(
+    "telefono"
+  ).value = "";
+
+  document.getElementById(
+    "producto"
+  ).value =
+    "BottleBox";
+
+  document.getElementById(
+    "cantidad"
+  ).value = 1;
+
+  document.getElementById(
+    "descuentoPorcentaje"
+  ).value = 0;
+
+  document.getElementById(
+    "abono"
+  ).value = 0;
 
   const hoy =
-    new Date().toISOString().split("T")[0];
+    new Date()
+      .toISOString()
+      .split("T")[0];
 
-  document.getElementById("fechaCotizacion").value = hoy;
-  document.getElementById("fechaEntrega").value = "";
-  document.getElementById("estado").value = "Pendiente";
-  document.getElementById("notas").value = "";
+  document.getElementById(
+    "fechaCotizacion"
+  ).value = hoy;
+
+  document.getElementById(
+    "fechaEntrega"
+  ).value = "";
+
+  document.getElementById(
+    "estado"
+  ).value =
+    "Pendiente";
+
+  document.getElementById(
+    "notas"
+  ).value = "";
 
   actualizarPrecioProducto();
 
-  document.getElementById("modal")
-    .classList.add("activo");
+  document.getElementById(
+    "modal"
+  ).classList.add("activo");
 }
 
 function cerrarModal() {
-  document.getElementById("modal")
-    .classList.remove("activo");
+
+  document.getElementById(
+    "modal"
+  ).classList.remove("activo");
 }
 
 function editarCotizacion(id) {
+
   const c =
     cotizaciones.find(
-      x => Number(x.id) === Number(id)
+      x =>
+        Number(x.id) ===
+        Number(id)
     );
 
   if (!c) return;
 
   editandoId = c.id;
 
-  document.getElementById("tituloModal").textContent =
+  document.getElementById(
+    "tituloModal"
+  ).textContent =
     "Editar cotización";
 
-  document.getElementById("cliente").value =
+  document.getElementById(
+    "cliente"
+  ).value =
     c.cliente || "";
 
-  document.getElementById("telefono").value =
+  document.getElementById(
+    "telefono"
+  ).value =
     c.telefono || "";
 
-  document.getElementById("producto").value =
-    c.producto || "BottleBox";
+  document.getElementById(
+    "producto"
+  ).value =
+    c.producto ||
+    "BottleBox";
 
-  document.getElementById("cantidad").value =
+  document.getElementById(
+    "cantidad"
+  ).value =
     c.cantidad || 1;
 
-  document.getElementById("precio").value =
+  document.getElementById(
+    "precio"
+  ).value =
     c.precio ||
-    preciosProductos[c.producto] ||
+    preciosProductos[
+      c.producto
+    ] ||
     0;
 
-  document.getElementById("descuentoPorcentaje").value =
-    c.descuentoporcentaje || 0;
+  document.getElementById(
+    "descuentoPorcentaje"
+  ).value =
+    c.descuentoporcentaje ||
+    0;
 
-  document.getElementById("abono").value =
+  document.getElementById(
+    "abono"
+  ).value =
     c.abono || 0;
 
-  document.getElementById("fechaCotizacion").value =
+  document.getElementById(
+    "fechaCotizacion"
+  ).value =
     c.fechacotizacion || "";
 
-  document.getElementById("fechaEntrega").value =
+  document.getElementById(
+    "fechaEntrega"
+  ).value =
     c.fechaentrega || "";
 
-  document.getElementById("estado").value =
-    c.estado || "Pendiente";
+  document.getElementById(
+    "estado"
+  ).value =
+    c.estado ||
+    "Pendiente";
 
-  document.getElementById("notas").value =
+  document.getElementById(
+    "notas"
+  ).value =
     c.notas || "";
 
   calcularTotal();
 
-  document.getElementById("modal")
-    .classList.add("activo");
+  document.getElementById(
+    "modal"
+  ).classList.add("activo");
 }
 
 async function guardarNuevaCotizacion() {
 
   const cliente =
-    document.getElementById("cliente")
-      .value.trim();
+    document.getElementById(
+      "cliente"
+    ).value.trim();
 
   if (!cliente) {
-    alert("Escribe el nombre del cliente.");
+
+    alert(
+      "Escribe el nombre del cliente."
+    );
+
     return;
   }
 
   const cantidad =
     Number(
-      document.getElementById("cantidad").value
+      document.getElementById(
+        "cantidad"
+      ).value
     ) || 0;
 
   const precio =
     Number(
-      document.getElementById("precio").value
+      document.getElementById(
+        "precio"
+      ).value
     ) || 0;
 
   const descuentoPorcentaje =
     Number(
-      document.getElementById("descuentoPorcentaje").value
+      document.getElementById(
+        "descuentoPorcentaje"
+      ).value
     ) || 0;
 
   const abonoIngresado =
     Number(
-      document.getElementById("abono").value
+      document.getElementById(
+        "abono"
+      ).value
     ) || 0;
 
   const subtotal =
@@ -972,31 +1327,43 @@ async function guardarNuevaCotizacion() {
 
   const montoDescuento =
     subtotal *
-    (descuentoPorcentaje / 100);
+    (
+      descuentoPorcentaje /
+      100
+    );
 
   const total =
     Math.max(
       0,
-      subtotal - montoDescuento
+      subtotal -
+      montoDescuento
     );
 
   const abono =
     Math.min(
-      Math.max(0, abonoIngresado),
+      Math.max(
+        0,
+        abonoIngresado
+      ),
       total
     );
 
   const datos = {
+
     cliente,
 
     telefono:
-      document.getElementById("telefono")
-        .value.trim(),
+      document.getElementById(
+        "telefono"
+      ).value.trim(),
 
     producto:
-      document.getElementById("producto").value,
+      document.getElementById(
+        "producto"
+      ).value,
 
     cantidad,
+
     precio,
 
     descuentoporcentaje:
@@ -1006,23 +1373,30 @@ async function guardarNuevaCotizacion() {
       montoDescuento,
 
     subtotal,
+
     total,
+
     abono,
 
     fechacotizacion:
-      document.getElementById("fechaCotizacion")
-        .value || null,
+      document.getElementById(
+        "fechaCotizacion"
+      ).value || null,
 
     fechaentrega:
-      document.getElementById("fechaEntrega")
-        .value || null,
+      document.getElementById(
+        "fechaEntrega"
+      ).value || null,
 
     estado:
-      document.getElementById("estado").value,
+      document.getElementById(
+        "estado"
+      ).value,
 
     notas:
-      document.getElementById("notas")
-        .value.trim()
+      document.getElementById(
+        "notas"
+      ).value.trim()
   };
 
   let error;
@@ -1033,9 +1407,13 @@ async function guardarNuevaCotizacion() {
       await supabaseClient
         .from("cotizaciones")
         .update(datos)
-        .eq("id", editandoId);
+        .eq(
+          "id",
+          editandoId
+        );
 
-    error = respuesta.error;
+    error =
+      respuesta.error;
 
   } else {
 
@@ -1044,12 +1422,18 @@ async function guardarNuevaCotizacion() {
         .from("cotizaciones")
         .insert(datos);
 
-    error = respuesta.error;
+    error =
+      respuesta.error;
   }
 
   if (error) {
+
     console.error(error);
-    alert("No se pudo guardar la cotización.");
+
+    alert(
+      "No se pudo guardar la cotización."
+    );
+
     return;
   }
 
@@ -1071,11 +1455,19 @@ async function eliminarCotizacion(id) {
     await supabaseClient
       .from("cotizaciones")
       .delete()
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
   if (error) {
+
     console.error(error);
-    alert("No se pudo eliminar.");
+
+    alert(
+      "No se pudo eliminar."
+    );
+
     return;
   }
 
@@ -1088,26 +1480,40 @@ async function eliminarCotizacion(id) {
 
 async function crearPdfCotizacion(cotizacion) {
 
-  const { jsPDF } = window.jspdf;
+  const { jsPDF } =
+    window.jspdf;
 
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "letter"
-  });
+  const doc =
+    new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "letter"
+    });
 
-  const ancho = 215.9;
+  const ancho =
+    215.9;
 
-  const colorCafe = [39, 27, 19];
-  const colorDorado = [200, 138, 61];
-  const colorCrema = [244, 238, 231];
-  const colorGris = [105, 94, 84];
+  const colorCafe =
+    [39, 27, 19];
+
+  const colorDorado =
+    [200, 138, 61];
+
+  const colorCrema =
+    [244, 238, 231];
+
+  const colorGris =
+    [105, 94, 84];
 
   const cantidad =
-    Number(cotizacion.cantidad || 0);
+    Number(
+      cotizacion.cantidad || 0
+    );
 
   const precio =
-    Number(cotizacion.precio || 0);
+    Number(
+      cotizacion.precio || 0
+    );
 
   const subtotal =
     Number(
@@ -1117,19 +1523,26 @@ async function crearPdfCotizacion(cotizacion) {
 
   const porcentaje =
     Number(
-      cotizacion.descuentoporcentaje || 0
+      cotizacion.descuentoporcentaje ||
+      0
     );
 
   const descuento =
     Number(
       cotizacion.monto_descuento ||
-      subtotal * porcentaje / 100
+      subtotal *
+      porcentaje /
+      100
     );
 
   const total =
     Number(
       cotizacion.total ||
-      Math.max(0, subtotal - descuento)
+      Math.max(
+        0,
+        subtotal -
+        descuento
+      )
     );
 
   const precioFinal =
@@ -1139,17 +1552,24 @@ async function crearPdfCotizacion(cotizacion) {
 
   const abono =
     Math.min(
-      Number(cotizacion.abono || 0),
+      Number(
+        cotizacion.abono ||
+        0
+      ),
       total
     );
 
   const restante =
     Math.max(
       0,
-      total - abono
+      total -
+      abono
     );
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
+
   doc.rect(
     0,
     0,
@@ -1178,17 +1598,22 @@ async function crearPdfCotizacion(cotizacion) {
     }
 
   } catch (e) {
+
     console.warn(
       "No se pudo cargar el logo:",
       e
     );
   }
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(18);
 
   doc.text(
@@ -1198,6 +1623,7 @@ async function crearPdfCotizacion(cotizacion) {
   );
 
   doc.setFontSize(10);
+
   doc.setFont(
     "helvetica",
     "normal"
@@ -1227,8 +1653,12 @@ async function crearPdfCotizacion(cotizacion) {
 
   const folio =
     "COT-" +
-    String(cotizacion.id)
-      .padStart(4, "0");
+    String(
+      cotizacion.id
+    ).padStart(
+      4,
+      "0"
+    );
 
   doc.setFontSize(9);
 
@@ -1243,11 +1673,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   let y = 62;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(11);
 
   doc.text(
@@ -1258,7 +1692,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -1269,11 +1705,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 9;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(9);
 
   doc.text(
@@ -1282,11 +1722,15 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(11);
 
   doc.text(
@@ -1300,11 +1744,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(9);
 
   doc.text(
@@ -1313,7 +1761,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
@@ -1330,11 +1781,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 14;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(11);
 
   doc.text(
@@ -1345,7 +1800,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -1356,7 +1813,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
 
   doc.rect(
     18,
@@ -1366,11 +1825,15 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(8);
 
   doc.text(
@@ -1399,16 +1862,21 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 13;
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(9);
 
   const producto =
     String(
-      cotizacion.producto || "—"
+      cotizacion.producto ||
+      "—"
     );
 
   const productoLineas =
@@ -1461,7 +1929,10 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 10;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFontSize(9);
 
   doc.text(
@@ -1470,7 +1941,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(subtotal),
@@ -1483,7 +1956,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     `Descuento (${porcentaje.toFixed(2)}%)`,
@@ -1491,10 +1966,13 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
-    "-" + dinero(descuento),
+    "-" +
+    dinero(descuento),
     195,
     y,
     {
@@ -1520,11 +1998,15 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(11);
 
   doc.text(
@@ -1548,9 +2030,12 @@ async function crearPdfCotizacion(cotizacion) {
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(9);
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Precio final por pieza",
@@ -1558,7 +2043,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(precioFinal),
@@ -1571,7 +2058,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Abono",
@@ -1579,7 +2068,9 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
 
   doc.text(
     dinero(abono),
@@ -1592,7 +2083,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
 
   doc.text(
     "Restante",
@@ -1600,7 +2093,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
@@ -1617,11 +2113,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 16;
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(10);
 
   doc.text(
@@ -1632,7 +2132,9 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(...colorDorado);
+  doc.setDrawColor(
+    ...colorDorado
+  );
 
   doc.line(
     18,
@@ -1643,11 +2145,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(9);
 
   doc.text(
@@ -1656,7 +2162,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
@@ -1670,7 +2179,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
@@ -1682,7 +2194,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorCafe);
+  doc.setTextColor(
+    ...colorCafe
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
@@ -1698,7 +2213,10 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 15;
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFont(
     "helvetica",
     "normal"
@@ -1710,7 +2228,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(...colorDorado);
+  doc.setTextColor(
+    ...colorDorado
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
@@ -1729,11 +2250,15 @@ async function crearPdfCotizacion(cotizacion) {
 
   if (cotizacion.notas) {
 
-    doc.setTextColor(...colorDorado);
+    doc.setTextColor(
+      ...colorDorado
+    );
+
     doc.setFont(
       "helvetica",
       "bold"
     );
+
     doc.setFontSize(10);
 
     doc.text(
@@ -1744,7 +2269,9 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 7;
 
-    doc.setDrawColor(...colorDorado);
+    doc.setDrawColor(
+      ...colorDorado
+    );
 
     doc.line(
       18,
@@ -1755,16 +2282,22 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 8;
 
-    doc.setTextColor(...colorGris);
+    doc.setTextColor(
+      ...colorGris
+    );
+
     doc.setFont(
       "helvetica",
       "normal"
     );
+
     doc.setFontSize(9);
 
     const notas =
       doc.splitTextToSize(
-        String(cotizacion.notas),
+        String(
+          cotizacion.notas
+        ),
         ancho - 36
       );
 
@@ -1775,12 +2308,16 @@ async function crearPdfCotizacion(cotizacion) {
     );
 
     y +=
-      notas.length * 5 + 8;
+      notas.length * 5 +
+      8;
   }
 
-  const pieY = 260;
+  const pieY =
+    260;
 
-  doc.setFillColor(...colorCafe);
+  doc.setFillColor(
+    ...colorCafe
+  );
 
   doc.rect(
     0,
@@ -1790,11 +2327,15 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(...colorCrema);
+  doc.setTextColor(
+    ...colorCrema
+  );
+
   doc.setFont(
     "helvetica",
     "bold"
   );
+
   doc.setFontSize(9);
 
   doc.text(
@@ -1807,6 +2348,7 @@ async function crearPdfCotizacion(cotizacion) {
     "helvetica",
     "normal"
   );
+
   doc.setFontSize(8);
 
   doc.text(
@@ -1833,7 +2375,10 @@ async function crearPdfCotizacion(cotizacion) {
     }
   );
 
-  doc.setTextColor(...colorGris);
+  doc.setTextColor(
+    ...colorGris
+  );
+
   doc.setFontSize(7);
 
   doc.text(
@@ -1856,11 +2401,17 @@ async function descargarTicketCotizacion(id) {
 
   const cotizacion =
     cotizaciones.find(
-      c => Number(c.id) === Number(id)
+      c =>
+        Number(c.id) ===
+        Number(id)
     );
 
   if (!cotizacion) {
-    alert("No se encontró la cotización.");
+
+    alert(
+      "No se encontró la cotización."
+    );
+
     return;
   }
 
@@ -1868,22 +2419,28 @@ async function descargarTicketCotizacion(id) {
     !window.jspdf ||
     !window.jspdf.jsPDF
   ) {
+
     alert(
       "No se pudo cargar el generador de PDF. Revisa tu conexión a internet."
     );
+
     return;
   }
 
   try {
 
-    /* Buscar si ya existe un comprobante */
-
     const existente =
       await supabaseClient
         .from("comprobantes")
         .select("*")
-        .eq("cotizacion_id", cotizacion.id)
-        .eq("tipo", "cotizacion")
+        .eq(
+          "cotizacion_id",
+          cotizacion.id
+        )
+        .eq(
+          "tipo",
+          "cotizacion"
+        )
         .limit(1)
         .maybeSingle();
 
@@ -1907,31 +2464,31 @@ async function descargarTicketCotizacion(id) {
 
         descargarBlob(
           descargaExistente.data,
-          generarNombreArchivo(cotizacion)
+          generarNombreArchivo(
+            cotizacion
+          )
         );
 
         return;
       }
     }
 
-    /* Crear PDF */
-
     const doc =
       await crearPdfCotizacion(
         cotizacion
       );
 
-    /* Convertir PDF a archivo */
-
     const pdfBlob =
       doc.output("blob");
 
-    /* Ruta dentro del bucket */
-
     const folio =
       "COT-" +
-      String(cotizacion.id)
-        .padStart(4, "0");
+      String(
+        cotizacion.id
+      ).padStart(
+        4,
+        "0"
+      );
 
     const nombreArchivo =
       generarNombreArchivo(
@@ -1943,8 +2500,6 @@ async function descargarTicketCotizacion(id) {
       folio +
       ".pdf";
 
-    /* Subir a Supabase Storage */
-
     const subida =
       await supabaseClient
         .storage
@@ -1953,7 +2508,8 @@ async function descargarTicketCotizacion(id) {
           ruta,
           pdfBlob,
           {
-            contentType: "application/pdf",
+            contentType:
+              "application/pdf",
             upsert: false
           }
         );
@@ -1977,10 +2533,10 @@ async function descargarTicketCotizacion(id) {
       return;
     }
 
-    /* Registrar comprobante */
-
     const registro = {
-      tipo: "cotizacion",
+
+      tipo:
+        "cotizacion",
 
       cotizacion_id:
         cotizacion.id,
@@ -1988,25 +2544,40 @@ async function descargarTicketCotizacion(id) {
       folio,
 
       cliente:
-        cotizacion.cliente || "",
+        cotizacion.cliente ||
+        "",
 
       telefono:
-        cotizacion.telefono || "",
+        cotizacion.telefono ||
+        "",
 
       producto:
-        cotizacion.producto || "",
+        cotizacion.producto ||
+        "",
 
       total:
-        Number(cotizacion.total || 0),
+        Number(
+          cotizacion.total ||
+          0
+        ),
 
       abono:
-        Number(cotizacion.abono || 0),
+        Number(
+          cotizacion.abono ||
+          0
+        ),
 
       restante:
         Math.max(
           0,
-          Number(cotizacion.total || 0) -
-          Number(cotizacion.abono || 0)
+          Number(
+            cotizacion.total ||
+            0
+          ) -
+          Number(
+            cotizacion.abono ||
+            0
+          )
         ),
 
       archivo_url:
@@ -2016,7 +2587,9 @@ async function descargarTicketCotizacion(id) {
     const guardado =
       await supabaseClient
         .from("comprobantes")
-        .insert(registro);
+        .insert(
+          registro
+        );
 
     if (guardado.error) {
 
@@ -2036,8 +2609,6 @@ async function descargarTicketCotizacion(id) {
 
       return;
     }
-
-    /* Descargar en el dispositivo */
 
     descargarBlob(
       pdfBlob,
@@ -2061,30 +2632,49 @@ async function descargarTicketCotizacion(id) {
   }
 }
 
-function descargarBlob(blob, nombreArchivo) {
+function descargarBlob(
+  blob,
+  nombreArchivo
+) {
 
   const url =
-    URL.createObjectURL(blob);
+    URL.createObjectURL(
+      blob
+    );
 
   const enlace =
-    document.createElement("a");
+    document.createElement(
+      "a"
+    );
 
-  enlace.href = url;
+  enlace.href =
+    url;
+
   enlace.download =
-    nombreArchivo + ".pdf";
+    nombreArchivo +
+    ".pdf";
 
-  document.body.appendChild(enlace);
+  document.body.appendChild(
+    enlace
+  );
 
   enlace.click();
 
   enlace.remove();
 
-  setTimeout(() => {
-    URL.revokeObjectURL(url);
-  }, 1000);
+  setTimeout(
+    () => {
+      URL.revokeObjectURL(
+        url
+      );
+    },
+    1000
+  );
 }
 
-function generarNombreArchivo(cotizacion) {
+function generarNombreArchivo(
+  cotizacion
+) {
 
   const cliente =
     String(
@@ -2103,19 +2693,31 @@ function generarNombreArchivo(cotizacion) {
 
   return (
     "Cotizacion-" +
-    String(cotizacion.id)
-      .padStart(4, "0") +
+    String(
+      cotizacion.id
+    ).padStart(
+      4,
+      "0"
+    ) +
     "-" +
-    (cliente || "cliente")
+    (
+      cliente ||
+      "cliente"
+    )
   );
 }
 
-async function cargarImagenBase64(url) {
+async function cargarImagenBase64(
+  url
+) {
 
   const respuesta =
-    await fetch(url);
+    await fetch(
+      url
+    );
 
   if (!respuesta.ok) {
+
     throw new Error(
       "No se pudo cargar la imagen."
     );
@@ -2125,20 +2727,26 @@ async function cargarImagenBase64(url) {
     await respuesta.blob();
 
   return await new Promise(
-    (resolve, reject) => {
+    (
+      resolve,
+      reject
+    ) => {
 
       const lector =
         new FileReader();
 
       lector.onloadend =
-        () => resolve(
-          lector.result
-        );
+        () =>
+          resolve(
+            lector.result
+          );
 
       lector.onerror =
         reject;
 
-      lector.readAsDataURL(blob);
+      lector.readAsDataURL(
+        blob
+      );
     }
   );
 }
@@ -2165,7 +2773,9 @@ async function cargarCotizaciones() {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     document.getElementById(
       "listaCotizaciones"
