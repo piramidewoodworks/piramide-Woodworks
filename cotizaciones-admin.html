@@ -328,7 +328,7 @@
     }
 
     /* =========================================================
-       AJUSTES PARA TABLET Y CELULAR
+       TABLET
     ========================================================= */
 
     @media (max-width: 800px) {
@@ -348,16 +348,21 @@
       }
 
       .resumen {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
       }
 
       .tarjeta-resumen {
-        padding: 14px;
+        padding: 12px 8px;
+      }
+
+      .tarjeta-resumen span {
+        font-size: 11px;
+        white-space: nowrap;
       }
 
       .tarjeta-resumen strong {
-        font-size: 24px;
+        font-size: 22px;
       }
 
       .datos {
@@ -383,40 +388,59 @@
 
       .boton-secundario,
       .boton-eliminar {
-        flex: 1 1 auto;
-        min-width: 120px;
+        flex: 1 1 0;
+        min-width: 0;
       }
     }
+
+    /* =========================================================
+       CELULAR
+    ========================================================= */
 
     @media (max-width: 560px) {
 
       .contenedor {
-        width: 92%;
+        width: 94%;
         padding-top: 18px;
       }
 
+      /* Titulo + Nueva cotización juntos */
       .encabezado {
-        align-items: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: nowrap;
+        margin-bottom: 18px;
       }
 
       .encabezado > div {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1;
       }
 
       .titulo {
-        font-size: 25px;
+        font-size: 23px;
+        white-space: nowrap;
       }
 
       .subtitulo {
-        line-height: 1.4;
+        display: none;
       }
 
       .encabezado .boton-principal {
-        width: 100%;
+        width: auto;
+        flex-shrink: 0;
+        padding: 10px 12px;
+        font-size: 12px;
+        white-space: nowrap;
       }
 
+      /* Buscador */
       .barra {
-        gap: 9px;
+        gap: 8px;
+        margin-bottom: 16px;
       }
 
       .barra input,
@@ -424,58 +448,112 @@
         min-width: 0;
         width: 100%;
         flex: 1 1 100%;
+        padding: 11px 12px;
       }
 
+      /* Resumen compacto */
       .resumen {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 18px;
       }
 
       .tarjeta-resumen {
-        padding: 12px;
+        padding: 9px 4px;
+        border-radius: 9px;
+        text-align: center;
       }
 
       .tarjeta-resumen span {
-        font-size: 12px;
+        font-size: 9px;
+        margin-bottom: 5px;
+        white-space: nowrap;
       }
 
       .tarjeta-resumen strong {
-        font-size: 22px;
+        font-size: 19px;
       }
 
+      /* Si la pantalla es muy pequeña, 2 x 2 */
       .cotizacion {
-        padding: 15px;
+        padding: 13px;
+        border-radius: 11px;
       }
 
       .cotizacion-cabecera {
-        align-items: flex-start;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 13px;
+        flex-wrap: nowrap;
       }
 
       .cliente {
-        font-size: 18px;
+        font-size: 17px;
+        overflow-wrap: anywhere;
       }
 
+      .telefono {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
+      .estado {
+        flex-shrink: 0;
+        padding: 5px 8px;
+        font-size: 10px;
+      }
+
+      /* Dos columnas */
       .datos {
-        grid-template-columns: 1fr;
-        gap: 9px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
       }
 
       .dato {
-        width: 100%;
+        padding: 9px;
+        border-radius: 7px;
+        min-height: 53px;
       }
 
+      .dato small {
+        font-size: 9px;
+        margin-bottom: 4px;
+      }
+
+      .dato strong {
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .dato-total strong {
+        font-size: 15px;
+      }
+
+      .notas {
+        margin-top: 10px;
+        padding: 10px;
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      /* Botones compactos en una fila */
       .acciones {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        margin-top: 12px;
       }
 
       .boton-secundario,
       .boton-eliminar {
         width: 100%;
         min-width: 0;
+        padding: 9px 4px;
+        font-size: 11px;
+        white-space: nowrap;
       }
 
+      /* Modal */
       .modal {
         padding: 10px;
       }
@@ -500,6 +578,45 @@
 
       .modal-acciones button {
         width: 100%;
+      }
+    }
+
+    /* Pantallas muy pequeñas */
+    @media (max-width: 380px) {
+
+      .titulo {
+        font-size: 21px;
+      }
+
+      .encabezado .boton-principal {
+        font-size: 11px;
+        padding: 9px 10px;
+      }
+
+      .resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .tarjeta-resumen {
+        padding: 9px;
+      }
+
+      .tarjeta-resumen span {
+        font-size: 10px;
+      }
+
+      .tarjeta-resumen strong {
+        font-size: 19px;
+      }
+
+      .acciones {
+        grid-template-columns: 1fr;
+      }
+
+      .boton-secundario,
+      .boton-eliminar {
+        font-size: 12px;
       }
     }
   </style>
@@ -1078,7 +1195,7 @@ function mostrarCotizaciones() {
               type="button"
               class="boton-secundario"
               onclick="descargarTicketCotizacion(${c.id})">
-              Descargar ticket
+              Ticket
             </button>
 
             <button
@@ -1099,26 +1216,11 @@ function mostrarCotizaciones() {
 function escapeHtml(text) {
 
   return String(text ?? "")
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function abrirNuevaCotizacion() {
@@ -1490,30 +1592,18 @@ async function crearPdfCotizacion(cotizacion) {
       format: "letter"
     });
 
-  const ancho =
-    215.9;
+  const ancho = 215.9;
 
-  const colorCafe =
-    [39, 27, 19];
-
-  const colorDorado =
-    [200, 138, 61];
-
-  const colorCrema =
-    [244, 238, 231];
-
-  const colorGris =
-    [105, 94, 84];
+  const colorCafe = [39, 27, 19];
+  const colorDorado = [200, 138, 61];
+  const colorCrema = [244, 238, 231];
+  const colorGris = [105, 94, 84];
 
   const cantidad =
-    Number(
-      cotizacion.cantidad || 0
-    );
+    Number(cotizacion.cantidad || 0);
 
   const precio =
-    Number(
-      cotizacion.precio || 0
-    );
+    Number(cotizacion.precio || 0);
 
   const subtotal =
     Number(
@@ -1530,9 +1620,7 @@ async function crearPdfCotizacion(cotizacion) {
   const descuento =
     Number(
       cotizacion.monto_descuento ||
-      subtotal *
-      porcentaje /
-      100
+      subtotal * porcentaje / 100
     );
 
   const total =
@@ -1540,8 +1628,7 @@ async function crearPdfCotizacion(cotizacion) {
       cotizacion.total ||
       Math.max(
         0,
-        subtotal -
-        descuento
+        subtotal - descuento
       )
     );
 
@@ -1552,23 +1639,17 @@ async function crearPdfCotizacion(cotizacion) {
 
   const abono =
     Math.min(
-      Number(
-        cotizacion.abono ||
-        0
-      ),
+      Number(cotizacion.abono || 0),
       total
     );
 
   const restante =
     Math.max(
       0,
-      total -
-      abono
+      total - abono
     );
 
-  doc.setFillColor(
-    ...colorCafe
-  );
+  doc.setFillColor(...colorCafe);
 
   doc.rect(
     0,
@@ -1605,9 +1686,7 @@ async function crearPdfCotizacion(cotizacion) {
     );
   }
 
-  doc.setTextColor(
-    ...colorCrema
-  );
+  doc.setTextColor(...colorCrema);
 
   doc.setFont(
     "helvetica",
@@ -1673,9 +1752,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   let y = 62;
 
-  doc.setTextColor(
-    ...colorDorado
-  );
+  doc.setTextColor(...colorDorado);
 
   doc.setFont(
     "helvetica",
@@ -1692,9 +1769,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(
-    ...colorDorado
-  );
+  doc.setDrawColor(...colorDorado);
 
   doc.line(
     18,
@@ -1705,9 +1780,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 9;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFont(
     "helvetica",
@@ -1722,9 +1795,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -1744,9 +1815,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFont(
     "helvetica",
@@ -1761,9 +1830,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -1781,9 +1848,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 14;
 
-  doc.setTextColor(
-    ...colorDorado
-  );
+  doc.setTextColor(...colorDorado);
 
   doc.setFont(
     "helvetica",
@@ -1800,9 +1865,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(
-    ...colorDorado
-  );
+  doc.setDrawColor(...colorDorado);
 
   doc.line(
     18,
@@ -1813,9 +1876,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setFillColor(
-    ...colorCafe
-  );
+  doc.setFillColor(...colorCafe);
 
   doc.rect(
     18,
@@ -1825,9 +1886,7 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(
-    ...colorCrema
-  );
+  doc.setTextColor(...colorCrema);
 
   doc.setFont(
     "helvetica",
@@ -1862,9 +1921,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 13;
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -1929,9 +1986,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 10;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFontSize(9);
 
@@ -1941,9 +1996,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.text(
     dinero(subtotal),
@@ -1956,9 +2009,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.text(
     `Descuento (${porcentaje.toFixed(2)}%)`,
@@ -1966,13 +2017,10 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.text(
-    "-" +
-    dinero(descuento),
+    "-" + dinero(descuento),
     195,
     y,
     {
@@ -1998,9 +2046,7 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -2033,9 +2079,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   doc.setFontSize(9);
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.text(
     "Precio final por pieza",
@@ -2043,9 +2087,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.text(
     dinero(precioFinal),
@@ -2058,9 +2100,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.text(
     "Abono",
@@ -2068,9 +2108,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.text(
     dinero(abono),
@@ -2083,9 +2121,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.text(
     "Restante",
@@ -2093,9 +2129,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorDorado
-  );
+  doc.setTextColor(...colorDorado);
 
   doc.setFont(
     "helvetica",
@@ -2113,9 +2147,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 16;
 
-  doc.setTextColor(
-    ...colorDorado
-  );
+  doc.setTextColor(...colorDorado);
 
   doc.setFont(
     "helvetica",
@@ -2132,9 +2164,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 7;
 
-  doc.setDrawColor(
-    ...colorDorado
-  );
+  doc.setDrawColor(...colorDorado);
 
   doc.line(
     18,
@@ -2145,9 +2175,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 8;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFont(
     "helvetica",
@@ -2162,9 +2190,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -2179,9 +2205,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFont(
     "helvetica",
@@ -2194,9 +2218,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorCafe
-  );
+  doc.setTextColor(...colorCafe);
 
   doc.setFont(
     "helvetica",
@@ -2213,9 +2235,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   y += 15;
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFont(
     "helvetica",
@@ -2228,9 +2248,7 @@ async function crearPdfCotizacion(cotizacion) {
     y
   );
 
-  doc.setTextColor(
-    ...colorDorado
-  );
+  doc.setTextColor(...colorDorado);
 
   doc.setFont(
     "helvetica",
@@ -2250,9 +2268,7 @@ async function crearPdfCotizacion(cotizacion) {
 
   if (cotizacion.notas) {
 
-    doc.setTextColor(
-      ...colorDorado
-    );
+    doc.setTextColor(...colorDorado);
 
     doc.setFont(
       "helvetica",
@@ -2269,9 +2285,7 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 7;
 
-    doc.setDrawColor(
-      ...colorDorado
-    );
+    doc.setDrawColor(...colorDorado);
 
     doc.line(
       18,
@@ -2282,9 +2296,7 @@ async function crearPdfCotizacion(cotizacion) {
 
     y += 8;
 
-    doc.setTextColor(
-      ...colorGris
-    );
+    doc.setTextColor(...colorGris);
 
     doc.setFont(
       "helvetica",
@@ -2306,18 +2318,11 @@ async function crearPdfCotizacion(cotizacion) {
       18,
       y
     );
-
-    y +=
-      notas.length * 5 +
-      8;
   }
 
-  const pieY =
-    260;
+  const pieY = 260;
 
-  doc.setFillColor(
-    ...colorCafe
-  );
+  doc.setFillColor(...colorCafe);
 
   doc.rect(
     0,
@@ -2327,9 +2332,7 @@ async function crearPdfCotizacion(cotizacion) {
     "F"
   );
 
-  doc.setTextColor(
-    ...colorCrema
-  );
+  doc.setTextColor(...colorCrema);
 
   doc.setFont(
     "helvetica",
@@ -2375,9 +2378,7 @@ async function crearPdfCotizacion(cotizacion) {
     }
   );
 
-  doc.setTextColor(
-    ...colorGris
-  );
+  doc.setTextColor(...colorGris);
 
   doc.setFontSize(7);
 
