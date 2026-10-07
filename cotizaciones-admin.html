@@ -2706,14 +2706,17 @@ async function guardarAbono() {
       anterior
     );
 
-  if (monto > restanteAntes) {
+  if (
+  Math.round(monto * 100) >
+  Math.round(restanteAntes * 100)
+) {
 
-    alert(
-      "El abono no puede ser mayor que el restante."
-    );
+  alert(
+    "El abono no puede ser mayor que el restante."
+  );
 
-    return;
-  }
+  return;
+}
 
   const metodo =
     document.getElementById(
@@ -2847,10 +2850,11 @@ async function guardarAbono() {
       .from(
         "cotizaciones"
       )
-      .update({
-        abono:
-          nuevoAcumulado
-      })
+    
+.update({
+  abono: nuevoAcumulado,
+  ...(nuevoRestante <= 0 ? { estado: "Cerrado" } : {})
+})
       .eq(
         "id",
         c.id
