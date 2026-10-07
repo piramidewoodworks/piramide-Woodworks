@@ -2044,26 +2044,50 @@ let cotizaciones = [];
 let abonos = [];
 let editandoId = null;
 let cotizacionAbonoActual = null;
-
+let productosDisponibles = [];
 // =========================================================
 // NUEVO: ventas ya vinculadas con cotizaciones
 // =========================================================
 let ventasConvertidas = new Map();
 
-const preciosProductos = {
+async function cargarProductos() {
 
-  "BottleBox": 600,
-  "TequilaBox": 1200,
-  "TequilaBox sin botella": 480,
-  "GiftBox": 550,
-  "SlidingBox": 400,
-  "Portallaves Home": 130,
-  "Mostrador QR & Códigos Personalizado": 120,
-  "Carruaje de Cenicienta": 155,
-  "Mesa Carruaje Gigante": 2500
+  const { data, error } = await supabaseClient
+    .from("productos")
+    .select("*")
+    .order("nombre", { ascending: true });
 
-};
+  if (error) {
+    console.error("Error cargando productos:", error);
+    alert("No se pudieron cargar los productos.");
+    return;
+  }
 
+  productosDisponibles = data || [];
+
+  const select = document.getElementById("producto");
+
+  if (!select) {
+    console.error("No se encontró el selector de productos.");
+    return;
+  }
+
+  select.innerHTML = "";
+
+  productosDisponibles.forEach(producto => {
+
+    const option = document.createElement("option");
+
+    option.value = producto.nombre;
+    option.textContent = producto.nombre;
+
+    select.appendChild(option);
+
+  });
+
+  actualizarPrecioProducto();
+
+}
 /* =========================================================
    UTILIDADES
 ========================================================= */
@@ -2214,19 +2238,21 @@ function obtenerTotalAbonado(cotizacion) {
 
 function actualizarPrecioProducto() {
 
-  const producto =
-    document.getElementById(
-      "producto"
-    ).value;
+  const productoSeleccionado =
+    document.getElementById("producto").value;
 
-  document.getElementById(
-    "precio"
-  ).value =
-    preciosProductos[
-      producto
-    ] || 0;
+  const productoEncontrado =
+    productosDisponibles.find(
+      producto => producto.nombre === productoSeleccionado
+    );
+
+  document.getElementById("precio").value =
+    productoEncontrado
+      ? productoEncontrado.precio
+      : 0;
 
   calcularTotal();
+
 }
 
 /* =========================================================
@@ -3201,10 +3227,15 @@ function abrirNuevaCotizacion() {
     "telefono"
   ).value = "";
 
-  document.getElementById(
-    "producto"
-  ).value =
-    "BottleBox";
+  const selectProducto =
+    document.getElementById("producto");
+
+  if (
+    selectProducto &&
+    productosDisponibles.length > 0
+  ) {
+    selectProducto.selectedIndex = 0;
+  }
 
   document.getElementById(
     "cantidad"
@@ -3312,14 +3343,21 @@ function editarCotizacion(id) {
   ).value =
     c.cantidad || 1;
 
-  document.getElementById(
-    "precio"
-  ).value =
-    c.precio ||
-    preciosProductos[
-      c.producto
-    ] ||
-    0;
+  const productoEncontrado =
+  productosDisponibles.find(
+    producto =>
+      producto.nombre === c.producto
+  );
+
+document.getElementById(
+  "precio"
+).value =
+  c.precio ||
+  (
+    productoEncontrado
+      ? productoEncontrado.precio
+      : 0
+  );
 
   document.getElementById(
     "descuentoPorcentaje"
@@ -6692,11 +6730,11 @@ async function iniciar() {
     return;
   }
 
+  await cargarProductos();
   await cargarCotizaciones();
 }
 
 iniciar();
-
 </script>
 
 </body>
