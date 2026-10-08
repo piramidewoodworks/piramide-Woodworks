@@ -187,34 +187,79 @@
             margin-bottom: 17px;
         }
 
+
+        /* =========================
+           FOTO PRINCIPAL
+        ========================= */
+
         .foto-principal {
             width: 100%;
             height: 370px;
-            object-fit: cover;
+
+            /*
+             * Antes estaba en "cover".
+             * Ahora usamos "contain" para que
+             * nunca se corte el producto.
+             */
+
+            object-fit: contain;
+
+            background: var(--crema);
+
             border-radius: 10px;
+
             cursor: pointer;
+
             display: block;
+
+            padding: 4px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
+
+        .foto-principal:hover {
+            transform: scale(1.01);
+
+            box-shadow:
+                0 6px 18px rgba(0,0,0,0.12);
+        }
+
+
+        /* =========================
+           MINIATURAS
+        ========================= */
 
         .miniaturas {
             display: flex;
             gap: 8px;
             margin-top: 9px;
             overflow-x: auto;
+            padding-bottom: 2px;
         }
 
         .miniaturas img {
             width: 68px;
             height: 68px;
+
             object-fit: cover;
+
+            background: var(--crema);
+
             border-radius: 7px;
+
             cursor: pointer;
+
             border: 2px solid transparent;
+
+            flex-shrink: 0;
         }
 
         .miniaturas img:hover {
             border-color: var(--dorado);
         }
+
 
         .sin-foto {
             height: 220px;
@@ -280,54 +325,86 @@
             background: var(--dorado);
         }
 
+
         /* =========================
            VISOR DE IMAGEN
         ========================= */
 
         .visor-imagen {
             position: fixed;
+
             inset: 0;
+
             width: 100vw;
             height: 100vh;
             height: 100dvh;
 
-            background: rgba(0,0,0,0.92);
+            background: rgba(0,0,0,0.94);
 
             display: none;
+
             justify-content: center;
             align-items: center;
 
             z-index: 1000;
 
+            /*
+             * Dejamos un pequeño margen
+             * para que la imagen nunca quede
+             * pegada a las orillas.
+             */
+
             padding: 10px;
+
             overflow: hidden;
+
+            animation:
+                aparecerVisor 0.18s ease-out;
         }
+
 
         .visor-imagen img {
             display: block;
 
+            /*
+             * La imagen puede ser vertical,
+             * horizontal o cuadrada.
+             */
+
             width: auto;
             height: auto;
 
-            max-width: 100%;
-            max-height: 100%;
+            max-width: calc(100vw - 20px);
+            max-height: calc(100dvh - 20px);
 
             object-fit: contain;
 
-            border-radius: 8px;
+            border-radius: 6px;
 
             user-select: none;
             -webkit-user-select: none;
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,0.45);
         }
+
 
         .cerrar-visor {
             position: absolute;
-            top: 15px;
-            right: 20px;
+
+            top: 12px;
+            right: 17px;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             color: white;
 
-            font-size: 40px;
+            font-size: 36px;
             line-height: 1;
 
             cursor: pointer;
@@ -336,13 +413,36 @@
 
             text-shadow:
                 0 2px 6px rgba(0,0,0,0.7);
+
+            border-radius: 50%;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
         .cerrar-visor:hover {
             color: var(--dorado-claro);
+            background: rgba(255,255,255,0.08);
         }
 
-        /* CARRITO */
+
+        @keyframes aparecerVisor {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* =========================
+           CARRITO
+        ========================= */
 
         .boton-carrito {
             position: fixed;
@@ -457,6 +557,11 @@
             background: #956f3f;
         }
 
+
+        /* =========================
+           TABLET / CELULAR
+        ========================= */
+
         @media (max-width: 700px) {
 
             header {
@@ -490,9 +595,17 @@
                 grid-template-columns: 1fr;
             }
 
+
+            /* FOTO PRINCIPAL EN CELULAR */
+
             .foto-principal {
                 height: 320px;
+
+                object-fit: contain;
+
+                padding: 3px;
             }
+
 
             .encabezado-categoria {
                 align-items: flex-start;
@@ -515,15 +628,20 @@
                 bottom: 15px;
             }
 
-            /* VISOR EN CELULAR */
+
+            /* =========================
+               VISOR EN CELULAR
+            ========================= */
 
             .visor-imagen {
                 padding: 8px;
             }
 
             .visor-imagen img {
-                max-width: 100vw;
-                max-height: 100dvh;
+
+                max-width: calc(100vw - 16px);
+
+                max-height: calc(100dvh - 16px);
 
                 width: auto;
                 height: auto;
@@ -531,22 +649,36 @@
                 object-fit: contain;
 
                 border-radius: 4px;
+
+                box-shadow:
+                    0 8px 25px rgba(0,0,0,0.5);
             }
 
             .cerrar-visor {
-                top: 10px;
-                right: 14px;
-                font-size: 38px;
-                z-index: 1001;
+                top: 8px;
+                right: 10px;
+
+                width: 40px;
+                height: 40px;
+
+                font-size: 36px;
             }
+
         }
+
 
         @media (max-width: 380px) {
 
             .categorias {
                 grid-template-columns: 1fr;
             }
+
+            .foto-principal {
+                height: 290px;
+            }
+
         }
+
     </style>
 </head>
 
@@ -569,14 +701,15 @@
 
     <div class="titulo-seccion">
         <h2>Elige una categoría</h2>
+
         <p>
             Encuentra diseños personalizados hechos en madera.
         </p>
     </div>
 
+
     <div class="categorias">
 
-        <!-- Cajas para tequila -->
         <div
             class="categoria"
             onclick="abrirCategoria('tequila')"
@@ -591,7 +724,6 @@
         </div>
 
 
-        <!-- Cajas de regalo -->
         <div
             class="categoria"
             onclick="abrirCategoria('regalo')"
@@ -606,7 +738,6 @@
         </div>
 
 
-        <!-- Portallaves y accesorios -->
         <div
             class="categoria"
             onclick="abrirCategoria('accesorios')"
@@ -621,7 +752,6 @@
         </div>
 
 
-        <!-- Centros de mesa -->
         <div
             class="categoria"
             onclick="abrirCategoria('centros')"
@@ -636,7 +766,6 @@
         </div>
 
 
-        <!-- Mesas -->
         <div
             class="categoria"
             onclick="abrirCategoria('mesas')"
@@ -651,7 +780,6 @@
         </div>
 
 
-        <!-- Otros -->
         <div
             class="categoria"
             onclick="abrirCategoria('otros')"
@@ -705,9 +833,6 @@
 
     <div class="productos">
 
-
-        <!-- TEQUILABOX -->
-
         <div class="producto-card">
 
             <div class="galeria-producto">
@@ -747,9 +872,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    TequilaBox
-                </h3>
+                <h3>TequilaBox</h3>
 
                 <p>
                     Caja personalizada por dentro y fuera.
@@ -782,8 +905,6 @@
 
         </div>
 
-
-        <!-- BOXTEQUILA SIN BOTELLA -->
 
         <div class="producto-card">
 
@@ -818,9 +939,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    Boxtequila
-                </h3>
+                <h3>Boxtequila</h3>
 
                 <p>
                     Es el mismo modelo de la caja
@@ -856,8 +975,6 @@
         </div>
 
 
-        <!-- BOTTLEBOX -->
-
         <div class="producto-card">
 
             <div class="galeria-producto">
@@ -891,9 +1008,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    BottleBox
-                </h3>
+                <h3>BottleBox</h3>
 
                 <p>
                     Caja personalizada para cualquier
@@ -944,9 +1059,7 @@
 
     <div class="encabezado-categoria">
 
-        <h2>
-            Cajas de Regalo
-        </h2>
+        <h2>Cajas de Regalo</h2>
 
         <button
             class="boton-volver"
@@ -959,9 +1072,6 @@
 
 
     <div class="productos">
-
-
-        <!-- GIFTBOX -->
 
         <div class="producto-card">
 
@@ -996,9 +1106,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    GiftBox
-                </h3>
+                <h3>GiftBox</h3>
 
                 <p>
                     Caja personalizada con apertura hacia arriba.
@@ -1032,8 +1140,6 @@
 
         </div>
 
-
-        <!-- SLIDINGBOX -->
 
         <div class="producto-card">
 
@@ -1080,9 +1186,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    SlidingBox
-                </h3>
+                <h3>SlidingBox</h3>
 
                 <p>
                     Caja personalizada con apertura deslizante
@@ -1131,9 +1235,7 @@
 
     <div class="encabezado-categoria">
 
-        <h2>
-            Portallaves & Accesorios
-        </h2>
+        <h2>Portallaves & Accesorios</h2>
 
         <button
             class="boton-volver"
@@ -1146,9 +1248,6 @@
 
 
     <div class="productos">
-
-
-        <!-- PORTALLAVES HOME -->
 
         <div class="producto-card">
 
@@ -1183,9 +1282,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    Portallaves Home
-                </h3>
+                <h3>Portallaves Home</h3>
 
                 <p>
                     Portallaves de pared en madera,
@@ -1219,8 +1316,6 @@
 
         </div>
 
-
-        <!-- PORTACÓDIGOS QR -->
 
         <div class="producto-card">
 
@@ -1310,9 +1405,7 @@
 
     <div class="encabezado-categoria">
 
-        <h2>
-            Centros de Mesa
-        </h2>
+        <h2>Centros de Mesa</h2>
 
         <button
             class="boton-volver"
@@ -1325,9 +1418,6 @@
 
 
     <div class="productos">
-
-
-        <!-- CARRUAJE DE CENICIENTA -->
 
         <div class="producto-card">
 
@@ -1368,9 +1458,7 @@
 
             <div class="producto-info">
 
-                <h3>
-                    Carruaje de Cenicienta
-                </h3>
+                <h3>Carruaje de Cenicienta</h3>
 
                 <p>
                     Modelo único con caballos y grabado.
@@ -1406,8 +1494,6 @@
 
         </div>
 
-
-        <!-- ABEJITA PLIM PLIM -->
 
         <div class="producto-card">
 
@@ -1503,9 +1589,7 @@
 
     <div class="encabezado-categoria">
 
-        <h2>
-            Mesas
-        </h2>
+        <h2>Mesas</h2>
 
         <button
             class="boton-volver"
@@ -1518,9 +1602,6 @@
 
 
     <div class="productos">
-
-
-        <!-- MESA CARRUAJE -->
 
         <div class="producto-card">
 
@@ -1632,9 +1713,7 @@
 
     <div class="encabezado-categoria">
 
-        <h2>
-            Otros Diseños
-        </h2>
+        <h2>Otros Diseños</h2>
 
         <button
             class="boton-volver"
@@ -1650,9 +1729,7 @@
 
         <div class="producto-info">
 
-            <h3>
-                Próximamente
-            </h3>
+            <h3>Próximamente</h3>
 
             <p>
                 Aquí iremos agregando nuevos diseños
@@ -1682,6 +1759,7 @@
     >
         ×
     </span>
+
 
     <img
         id="imagen-grande"
@@ -1723,8 +1801,7 @@
         🛒 Tu carrito
     </h3>
 
-    <div id="lista-carrito">
-    </div>
+    <div id="lista-carrito"></div>
 
     <div
         id="total-carrito"
@@ -1758,7 +1835,9 @@
         document
             .querySelectorAll(".pantalla-categoria")
             .forEach(function(seccion) {
+
                 seccion.style.display = "none";
+
             });
 
         document
@@ -1769,6 +1848,7 @@
             top: 0,
             behavior: "smooth"
         });
+
     }
 
 
@@ -1777,7 +1857,9 @@
         document
             .querySelectorAll(".pantalla-categoria")
             .forEach(function(seccion) {
+
                 seccion.style.display = "none";
+
             });
 
         document
@@ -1788,6 +1870,7 @@
             top: 0,
             behavior: "smooth"
         });
+
     }
 
 
@@ -1796,7 +1879,9 @@
     ========================= */
 
     let carrito =
-        JSON.parse(localStorage.getItem("carrito")) || [];
+        JSON.parse(
+            localStorage.getItem("carrito")
+        ) || [];
 
 
     function guardarCarrito() {
@@ -1805,6 +1890,7 @@
             "carrito",
             JSON.stringify(carrito)
         );
+
     }
 
 
@@ -1812,7 +1898,9 @@
 
         let producto =
             carrito.find(function(item) {
+
                 return item.nombre === nombre;
+
             });
 
 
@@ -1823,9 +1911,13 @@
         } else {
 
             carrito.push({
+
                 nombre: nombre,
+
                 precio: precio,
+
                 cantidad: 1
+
             });
 
         }
@@ -1838,6 +1930,7 @@
         document
             .getElementById("carrito")
             .classList.add("visible");
+
     }
 
 
@@ -1845,7 +1938,9 @@
 
         let producto =
             carrito.find(function(item) {
+
                 return item.nombre === nombre;
+
             });
 
 
@@ -1861,7 +1956,9 @@
 
             carrito =
                 carrito.filter(function(item) {
+
                     return item.nombre !== nombre;
+
                 });
 
         }
@@ -1870,6 +1967,7 @@
         guardarCarrito();
 
         actualizarCarrito();
+
     }
 
 
@@ -1877,26 +1975,35 @@
 
         carrito =
             carrito.filter(function(item) {
+
                 return item.nombre !== nombre;
+
             });
 
 
         guardarCarrito();
 
         actualizarCarrito();
+
     }
 
 
     function actualizarCarrito() {
 
         const lista =
-            document.getElementById("lista-carrito");
+            document.getElementById(
+                "lista-carrito"
+            );
 
         const contador =
-            document.getElementById("contador-carrito");
+            document.getElementById(
+                "contador-carrito"
+            );
 
         const totalElemento =
-            document.getElementById("total-carrito");
+            document.getElementById(
+                "total-carrito"
+            );
 
 
         lista.innerHTML = "";
@@ -1923,7 +2030,8 @@
 
                 total += subtotal;
 
-                cantidad += producto.cantidad;
+                cantidad +=
+                    producto.cantidad;
 
 
                 lista.innerHTML += `
@@ -1972,6 +2080,7 @@
                     </div>
 
                 `;
+
             });
 
         }
@@ -1983,6 +2092,7 @@
 
         totalElemento.textContent =
             "Total: $" + total;
+
     }
 
 
@@ -1993,6 +2103,7 @@
             .classList.toggle("visible");
 
         actualizarCarrito();
+
     }
 
 
@@ -2005,11 +2116,13 @@
             );
 
             return;
+
         }
 
 
         window.location.href =
             "cotizacion.html";
+
     }
 
 
@@ -2022,16 +2135,21 @@
         document
             .getElementById(id)
             .src = src;
+
     }
 
 
     function abrirImagen(src) {
 
         const visor =
-            document.getElementById("visor-imagen");
+            document.getElementById(
+                "visor-imagen"
+            );
 
         const imagen =
-            document.getElementById("imagen-grande");
+            document.getElementById(
+                "imagen-grande"
+            );
 
 
         imagen.src = src;
@@ -2039,16 +2157,20 @@
         visor.style.display = "flex";
 
         document.body.style.overflow = "hidden";
+
     }
 
 
     function cerrarImagen() {
 
         document
-            .getElementById("visor-imagen")
+            .getElementById(
+                "visor-imagen"
+            )
             .style.display = "none";
 
         document.body.style.overflow = "";
+
     }
 
 
