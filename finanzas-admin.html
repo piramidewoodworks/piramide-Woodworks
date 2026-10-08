@@ -1,194 +1,291 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanzas - Pirámide Woodworks</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finanzas | Pirámide Woodworks</title>
 
-    <style>
-        :root {
-            --negro: #171717;
-            --blanco: #ffffff;
-            --texto: #26221e;
-            --texto-suave: #716b64;
-            --dorado: #b28a52;
-            --dorado-claro: #d1b27d;
-            --linea: #e7e2db;
-            --verde: #55745c;
-            --rojo: #9a554b;
-        }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
+:root{
+    --negro:#171717;
+    --blanco:#fff;
+    --texto:#26221e;
+    --suave:#716b64;
+    --dorado:#b28a52;
+    --claro:#d1b27d;
+    --linea:#e7e2db;
+    --verde:#55745c;
+    --rojo:#9a554b;
+}
 
-        body {
-            margin: 0;
-            background:
-                linear-gradient(
-                    rgba(20, 14, 10, 0.78),
-                    rgba(20, 14, 10, 0.88)
-                ),
-                repeating-linear-gradient(
-                    92deg,
-                    #3a281d 0px,
-                    #493225 55px,
-                    #34231a 58px,
-                    #52382a 115px,
-                    #39271c 118px
-                );
-            color: var(--blanco);
-            font-family: "Segoe UI", Arial, sans-serif;
-            min-height: 100vh;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        header {
-            text-align: center;
-            padding: 45px 20px 30px;
-        }
+body{
+    margin:0;
+    min-height:100vh;
+    background:
+        linear-gradient(
+            rgba(20,14,10,.82),
+            rgba(20,14,10,.9)
+        ),
+        repeating-linear-gradient(
+            92deg,
+            #3a281d 0,
+            #493225 55px,
+            #34231a 58px,
+            #52382a 115px,
+            #39271c 118px
+        );
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--blanco);
+}
 
-        header h1 {
-            margin: 0;
-            font-size: clamp(30px, 6vw, 45px);
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
+header{
+    text-align:center;
+    padding:34px 16px 22px;
+}
 
-        header p {
-            margin: 9px 0 0;
-            color: var(--dorado-claro);
-            font-size: 14px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+header h1{
+    margin:0;
+    font-size:clamp(30px,6vw,44px);
+    font-weight:500;
+    letter-spacing:.3px;
+}
 
-        main {
-            width: min(950px, calc(100% - 30px));
-            margin: auto;
-            padding-bottom: 50px;
-        }
+header p{
+    margin:8px 0 0;
+    color:var(--claro);
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
 
-        .volver {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--dorado-claro);
-            text-decoration: none;
-            font-size: 14px;
-        }
+main{
+    width:min(100% - 28px,1000px);
+    margin:0 auto 45px;
+}
 
-        .resumen {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-            margin-bottom: 25px;
-        }
+.volver{
+    display:inline-block;
+    margin-bottom:18px;
+    color:var(--claro);
+    text-decoration:none;
+    font-size:14px;
+}
 
-        .resumen-card {
-            background: rgba(255,255,255,0.96);
-            color: var(--texto);
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
+.estado{
+    text-align:center;
+    color:var(--claro);
+    font-size:12px;
+    margin:0 0 14px;
+}
 
-        .resumen-card strong {
-            display: block;
-            font-size: 23px;
-            color: var(--dorado);
-            margin-bottom: 5px;
-        }
+/* FILTRO */
 
-        .resumen-card span {
-            font-size: 12px;
-            color: var(--texto-suave);
-        }
+.filtro-fecha{
+    background:#fffffff7;
+    color:var(--texto);
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:16px;
+    box-shadow:0 8px 25px #0002;
+}
 
-        .positivo {
-            color: var(--verde) !important;
-        }
+.filtro-fecha label{
+    display:block;
+    color:var(--suave);
+    font-size:12px;
+    margin-bottom:6px;
+}
 
-        .negativo {
-            color: var(--rojo) !important;
-        }
+.filtro-fecha select{
+    width:100%;
+    padding:11px;
+    border:1px solid var(--linea);
+    border-radius:7px;
+    background:white;
+    color:var(--texto);
+    font:inherit;
+    outline:none;
+}
 
-        .seccion {
-            background: rgba(255,255,255,0.96);
-            color: var(--texto);
-            border-radius: 13px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.16);
-        }
+/* RESUMEN */
 
-        .seccion h2 {
-            margin: 0 0 18px;
-            font-size: 19px;
-            font-weight: 500;
-        }
+.resumen{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
 
-        .fila {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            padding: 13px 0;
-            border-bottom: 1px solid var(--linea);
-        }
+.resumen-card{
+    background:rgba(255,255,255,.97);
+    color:var(--texto);
+    border-radius:12px;
+    padding:17px 12px;
+    text-align:center;
+    box-shadow:0 8px 25px #0002;
+}
 
-        .fila:last-child {
-            border-bottom: none;
-        }
+.resumen-card span{
+    display:block;
+    color:var(--suave);
+    font-size:11px;
+    margin-bottom:6px;
+}
 
-        .fila span {
-            color: var(--texto-suave);
-            font-size: 14px;
-        }
+.resumen-card strong{
+    display:block;
+    color:var(--dorado);
+    font-size:22px;
+    font-weight:600;
+}
 
-        .fila strong {
-            font-size: 16px;
-        }
+.resumen-card.principal{
+    border:1px solid var(--dorado);
+}
 
-        .vacio {
-            color: var(--texto-suave);
-            text-align: center;
-            padding: 20px 5px;
-            font-size: 14px;
-        }
+.resumen-card.principal strong{
+    font-size:25px;
+}
 
-        .nota {
-            color: var(--texto-suave);
-            font-size: 12px;
-            margin-top: 15px;
-        }
+/* SECCIONES */
 
-        .estado {
-            text-align: center;
-            color: var(--dorado-claro);
-            font-size: 12px;
-            margin: 0 0 18px;
-        }
+.seccion{
+    background:#fffffff7;
+    color:var(--texto);
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:0 8px 25px #0002;
+}
 
-        @media (max-width: 750px) {
-            .resumen {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+.seccion h2{
+    margin:0 0 13px;
+    font-size:18px;
+    font-weight:500;
+}
 
-        @media (max-width: 450px) {
-            .resumen {
-                grid-template-columns: 1fr 1fr;
-            }
+.fila{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid var(--linea);
+}
 
-            .resumen-card {
-                padding: 17px 8px;
-            }
+.fila:last-child{
+    border-bottom:none;
+}
 
-            .resumen-card strong {
-                font-size: 19px;
-            }
-        }
-    </style>
+.fila span{
+    color:var(--suave);
+    font-size:13px;
+}
+
+.fila strong{
+    font-size:15px;
+}
+
+.fila.efectivo{
+    background:#faf7f1;
+    margin:0 -8px;
+    padding:11px 8px;
+    border-radius:7px;
+}
+
+.general-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.general-card{
+    background:#f7f5f1;
+    border:1px solid var(--linea);
+    border-radius:9px;
+    padding:12px;
+    text-align:center;
+}
+
+.general-card span{
+    display:block;
+    color:var(--suave);
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.general-card strong{
+    font-size:18px;
+    color:var(--dorado);
+}
+
+.positivo{
+    color:var(--verde)!important;
+}
+
+.negativo{
+    color:var(--rojo)!important;
+}
+
+.nota{
+    color:var(--suave);
+    font-size:11px;
+    line-height:1.5;
+    margin:12px 0 0;
+}
+
+.vacio{
+    color:var(--suave);
+    text-align:center;
+    padding:15px 5px;
+    font-size:13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:750px){
+
+    .resumen{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:450px){
+
+    .resumen{
+        grid-template-columns:repeat(2,1fr);
+        gap:9px;
+    }
+
+    .resumen-card{
+        padding:14px 7px;
+    }
+
+    .resumen-card strong{
+        font-size:18px;
+    }
+
+    .resumen-card.principal strong{
+        font-size:21px;
+    }
+
+    .seccion{
+        padding:15px;
+    }
+
+    .general-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
 </head>
 
 <body>
@@ -200,80 +297,98 @@
 
 <main>
 
-    <a href="panel.html" class="volver">← Volver al panel</a>
+<a href="panel.html" class="volver">← Volver al panel</a>
 
-    <div id="estadoConexion" class="estado">
-        ☁️ Cargando información financiera...
+<div id="estadoConexion" class="estado">
+    Cargando información financiera...
+</div>
+
+<section class="filtro-fecha">
+
+    <label for="filtroFecha">
+        Periodo
+    </label>
+
+    <select id="filtroFecha" onchange="calcularFinanzas()">
+        <option value="hoy">Hoy</option>
+        <option value="semana">Esta semana</option>
+        <option value="mes" selected>Este mes</option>
+        <option value="todo">Todo</option>
+    </select>
+
+</section>
+
+<section class="resumen">
+
+    <div class="resumen-card principal">
+        <span>Dinero general</span>
+        <strong id="dineroGeneral">$0</strong>
     </div>
 
-    <section class="resumen">
+    <div class="resumen-card">
+        <span>Efectivo</span>
+        <strong id="dineroEfectivo">$0</strong>
+    </div>
 
-        <div class="resumen-card">
-            <strong id="ventasMes">$0</strong>
-            <span>Ventas del mes</span>
-        </div>
+    <div class="resumen-card">
+        <span>Transferencia</span>
+        <strong id="dineroTransferencia">$0</strong>
+    </div>
 
-        <div class="resumen-card">
-            <strong id="gastosMes">$0</strong>
-            <span>Gastos del mes</span>
-        </div>
+    <div class="resumen-card">
+        <span>Tarjeta</span>
+        <strong id="dineroTarjeta">$0</strong>
+    </div>
 
-        <div class="resumen-card">
-            <strong id="resultadoMes">$0</strong>
-            <span>Resultado del mes</span>
-        </div>
+</section>
 
-        <div class="resumen-card">
-            <strong id="ventasTotales">$0</strong>
-            <span>Ventas registradas</span>
-        </div>
+<section class="seccion">
 
-    </section>
+    <h2>Ventas por método de pago</h2>
 
-    <section class="seccion">
+    <div id="metodosPago"></div>
 
-        <h2>Resumen financiero</h2>
+    <p class="nota">
+        El dinero general corresponde a todos los pagos recibidos
+        durante el periodo seleccionado.
+    </p>
 
-        <div class="fila">
-            <span>Total vendido</span>
+</section>
+
+<section class="seccion">
+
+    <h2>Resumen general</h2>
+
+    <div class="general-grid">
+
+        <div class="general-card">
+            <span>Dinero cobrado</span>
             <strong id="totalVendido">$0</strong>
         </div>
 
-        <div class="fila">
-            <span>Total gastado</span>
+        <div class="general-card">
+            <span>Gastos</span>
             <strong id="totalGastado">$0</strong>
         </div>
 
-        <div class="fila">
-            <span>Resultado general</span>
+        <div class="general-card">
+            <span>Disponible después de gastos</span>
             <strong id="resultadoGeneral">$0</strong>
         </div>
 
-        <p class="nota">
-            El resultado se calcula restando los gastos registrados a las ventas registradas.
-        </p>
+    </div>
 
-    </section>
+</section>
 
-    <section class="seccion">
+<section class="seccion">
 
-        <h2>Ventas por método de pago</h2>
+    <h2>Gastos por categoría</h2>
 
-        <div id="metodosPago"></div>
+    <div id="categoriasGasto"></div>
 
-    </section>
-
-    <section class="seccion">
-
-        <h2>Gastos por categoría</h2>
-
-        <div id="categoriasGasto"></div>
-
-    </section>
+</section>
 
 </main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -290,91 +405,220 @@ const supabaseClient =
     );
 
 let ventas = [];
+let pagos = [];
 let gastos = [];
 
-function numero(valor) {
+
+function numero(valor){
     return Number(valor) || 0;
 }
 
-function dinero(valor) {
-    return "$" + numero(valor).toLocaleString("es-MX", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-    });
-}
 
-function esEsteMes(fecha) {
+function dinero(valor){
 
-    if (!fecha) return false;
-
-    const ahora = new Date();
-    const fechaRegistro = new Date(fecha);
-
-    return (
-        fechaRegistro.getMonth() === ahora.getMonth() &&
-        fechaRegistro.getFullYear() === ahora.getFullYear()
+    return "$" + numero(valor).toLocaleString(
+        "es-MX",
+        {
+            minimumFractionDigits:0,
+            maximumFractionDigits:2
+        }
     );
+
 }
 
-function obtenerMontoVenta(venta) {
 
-    if (venta.total !== undefined && venta.total !== null) {
-        return numero(venta.total);
+function fechaLocal(valor){
+
+    if(!valor){
+        return null;
     }
 
-    const precio = numero(venta.precio);
-    const cantidad = numero(venta.cantidad) || 1;
+    const texto =
+        String(valor).slice(0,10);
 
-    return precio * cantidad;
+    const partes =
+        texto.split("-");
+
+    if(partes.length !== 3){
+        return null;
+    }
+
+    return new Date(
+        Number(partes[0]),
+        Number(partes[1])-1,
+        Number(partes[2])
+    );
+
 }
 
-function obtenerMontoGasto(gasto) {
-    return numero(gasto.monto);
+
+function inicioSemana(){
+
+    const hoy = new Date();
+
+    hoy.setHours(0,0,0,0);
+
+    const dia = hoy.getDay();
+
+    const diferencia =
+        dia === 0 ? 6 : dia - 1;
+
+    hoy.setDate(
+        hoy.getDate() - diferencia
+    );
+
+    return hoy;
+
 }
 
-async function cargarDatos() {
+
+function pagoDentroDelFiltro(fecha){
+
+    const filtro =
+        String(
+            document.getElementById("filtroFecha").value
+        ).toLowerCase().trim();
+
+    if(filtro === "todo"){
+        return true;
+    }
+
+    const fechaPago = fechaLocal(fecha);
+
+    if(!fechaPago){
+        return false;
+    }
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    if(filtro === "hoy"){
+        return fechaPago.getTime() === hoy.getTime();
+    }
+
+    if(filtro === "semana"){
+        return fechaPago >= inicioSemana();
+    }
+
+    if(filtro === "mes"){
+        return (
+            fechaPago.getMonth() === hoy.getMonth() &&
+            fechaPago.getFullYear() === hoy.getFullYear()
+        );
+    }
+
+    return true;
+}
+
+
+function gastoDentroDelFiltro(fecha){
+
+    const filtro =
+        String(
+            document.getElementById("filtroFecha").value
+        ).toLowerCase().trim();
+
+    if(filtro === "todo"){
+        return true;
+    }
+
+    const fechaGasto = fechaLocal(fecha);
+
+    if(!fechaGasto){
+        return false;
+    }
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    if(filtro === "hoy"){
+        return fechaGasto.getTime() === hoy.getTime();
+    }
+
+    if(filtro === "semana"){
+        return fechaGasto >= inicioSemana();
+    }
+
+    if(filtro === "mes"){
+        return (
+            fechaGasto.getMonth() === hoy.getMonth() &&
+            fechaGasto.getFullYear() === hoy.getFullYear()
+        );
+    }
+
+    return true;
+}
+
+
+async function cargarDatos(){
 
     const estado =
-        document.getElementById("estadoConexion");
+        document.getElementById(
+            "estadoConexion"
+        );
 
-    try {
+    try{
 
         const resultadoVentas =
             await supabaseClient
                 .from("ventas")
                 .select("*")
-                .order("fecha", {
-                    ascending: false
+                .order("fecha",{
+                    ascending:false
                 });
 
-        if (resultadoVentas.error) {
+
+        if(resultadoVentas.error){
             throw resultadoVentas.error;
         }
+
+
+        const resultadoPagos =
+            await supabaseClient
+                .from("pagos_ventas")
+                .select("*")
+                .order("fecha",{
+                    ascending:false
+                });
+
+
+        if(resultadoPagos.error){
+            throw resultadoPagos.error;
+        }
+
 
         const resultadoGastos =
             await supabaseClient
                 .from("gastos")
                 .select("*")
-                .order("fecha", {
-                    ascending: false
+                .order("fecha",{
+                    ascending:false
                 });
 
-        if (resultadoGastos.error) {
+
+        if(resultadoGastos.error){
             throw resultadoGastos.error;
         }
+
 
         ventas =
             resultadoVentas.data || [];
 
+        pagos =
+            resultadoPagos.data || [];
+
         gastos =
             resultadoGastos.data || [];
 
+
         estado.textContent =
-            "☁️ Finanzas sincronizadas";
+            "Finanzas sincronizadas";
+
 
         calcularFinanzas();
 
-    } catch (error) {
+
+    }catch(error){
 
         console.error(
             "Error cargando finanzas:",
@@ -382,218 +626,430 @@ async function cargarDatos() {
         );
 
         estado.textContent =
-            "⚠️ No se pudo cargar la información financiera.";
+            "No se pudo cargar la información financiera.";
 
-        document.getElementById("metodosPago").innerHTML =
-            '<div class="vacio">No se pudieron cargar las ventas.</div>';
+        document.getElementById(
+            "metodosPago"
+        ).innerHTML =
+            '<div class="vacio">No se pudieron cargar los pagos.</div>';
 
-        document.getElementById("categoriasGasto").innerHTML =
-            '<div class="vacio">No se pudieron cargar los gastos.</div>';
     }
+
 }
 
-function calcularFinanzas() {
 
-    let totalVendido = 0;
-    let ventasMes = 0;
+function obtenerPagosVenta(ventaId){
 
-    ventas.forEach(function(venta) {
+    return pagos.filter(function(pago){
 
-        const monto =
-            obtenerMontoVenta(venta);
+        return Number(pago.venta_id) ===
+               Number(ventaId);
 
-        totalVendido += monto;
-
-        if (esEsteMes(venta.fecha)) {
-            ventasMes += monto;
-        }
     });
+
+}
+
+
+function calcularFinanzas(){
+
+    let dineroGeneral = 0;
+
+    const metodos = {
+
+        "Efectivo":0,
+        "Transferencia":0,
+        "Tarjeta":0,
+        "Otro":0
+
+    };
+
+
+    ventas.forEach(function(venta){
+
+        const pagosVenta =
+            obtenerPagosVenta(venta.id);
+
+
+        /*
+         * Si existe historial de pagos,
+         * usamos los pagos reales.
+         */
+
+        if(pagosVenta.length){
+
+            pagosVenta.forEach(function(pago){
+
+                if(
+                    !pagoDentroDelFiltro(
+                        pago.fecha
+                    )
+                ){
+                    return;
+                }
+
+
+                const monto =
+                    numero(pago.monto);
+
+                const metodo =
+                    pago.metodo || "Otro";
+
+
+                dineroGeneral += monto;
+
+
+                if(
+                    metodos[metodo] === undefined
+                ){
+                    metodos[metodo] = 0;
+                }
+
+
+                metodos[metodo] += monto;
+
+            });
+
+
+        }else{
+
+            /*
+             * Respaldo para ventas antiguas
+             * que todavía no tienen pagos separados.
+             */
+
+            if(
+                !pagoDentroDelFiltro(
+                    venta.fecha
+                )
+            ){
+                return;
+            }
+
+
+            const monto =
+                numero(venta.total);
+
+            const metodo =
+                venta.metodo || "Otro";
+
+
+            dineroGeneral += monto;
+
+
+            if(
+                metodos[metodo] === undefined
+            ){
+                metodos[metodo] = 0;
+            }
+
+
+            metodos[metodo] += monto;
+
+        }
+
+    });
+
 
     let totalGastado = 0;
-    let gastosMes = 0;
 
-    gastos.forEach(function(gasto) {
 
-        const monto =
-            obtenerMontoGasto(gasto);
+    gastos.forEach(function(gasto){
 
-        totalGastado += monto;
-
-        if (esEsteMes(gasto.fecha)) {
-            gastosMes += monto;
+        if(
+            !gastoDentroDelFiltro(
+                gasto.fecha
+            )
+        ){
+            return;
         }
+
+
+        totalGastado +=
+            numero(gasto.monto);
+
     });
 
-    const resultadoMes =
-        ventasMes - gastosMes;
 
-    const resultadoGeneral =
-        totalVendido - totalGastado;
+    const resultado =
+        dineroGeneral - totalGastado;
 
-    document.getElementById("ventasMes").textContent =
-        dinero(ventasMes);
 
-    document.getElementById("gastosMes").textContent =
-        dinero(gastosMes);
+    document.getElementById(
+        "dineroGeneral"
+    ).textContent =
+        dinero(dineroGeneral);
 
-    document.getElementById("resultadoMes").textContent =
-        dinero(resultadoMes);
 
-    document.getElementById("ventasTotales").textContent =
-        dinero(totalVendido);
+    document.getElementById(
+        "dineroEfectivo"
+    ).textContent =
+        dinero(metodos.Efectivo || 0);
 
-    document.getElementById("totalVendido").textContent =
-        dinero(totalVendido);
 
-    document.getElementById("totalGastado").textContent =
+    document.getElementById(
+        "dineroTransferencia"
+    ).textContent =
+        dinero(metodos.Transferencia || 0);
+
+
+    document.getElementById(
+        "dineroTarjeta"
+    ).textContent =
+        dinero(metodos.Tarjeta || 0);
+
+
+    document.getElementById(
+        "totalVendido"
+    ).textContent =
+        dinero(dineroGeneral);
+
+
+    document.getElementById(
+        "totalGastado"
+    ).textContent =
         dinero(totalGastado);
 
-    document.getElementById("resultadoGeneral").textContent =
-        dinero(resultadoGeneral);
+
+    document.getElementById(
+        "resultadoGeneral"
+    ).textContent =
+        dinero(resultado);
+
 
     aplicarColor(
-        document.getElementById("resultadoMes"),
-        resultadoMes
+        document.getElementById(
+            "resultadoGeneral"
+        ),
+        resultado
     );
 
-    aplicarColor(
-        document.getElementById("resultadoGeneral"),
-        resultadoGeneral
+
+    mostrarMetodosPago(
+        metodos,
+        dineroGeneral
     );
 
-    mostrarMetodosPago();
+
     mostrarCategoriasGasto();
+
 }
 
-function aplicarColor(elemento, valor) {
 
-    elemento.classList.remove("positivo");
-    elemento.classList.remove("negativo");
+function aplicarColor(
+    elemento,
+    valor
+){
 
-    if (valor > 0) {
-        elemento.classList.add("positivo");
+    elemento.classList.remove(
+        "positivo"
+    );
+
+    elemento.classList.remove(
+        "negativo"
+    );
+
+
+    if(valor > 0){
+
+        elemento.classList.add(
+            "positivo"
+        );
+
     }
 
-    if (valor < 0) {
-        elemento.classList.add("negativo");
+
+    if(valor < 0){
+
+        elemento.classList.add(
+            "negativo"
+        );
+
     }
+
 }
 
-function mostrarMetodosPago() {
+
+function mostrarMetodosPago(
+    metodos,
+    total
+){
 
     const contenedor =
-        document.getElementById("metodosPago");
-
-    const metodos = {};
-
-    ventas.forEach(function(venta) {
-
-        const metodo =
-            venta.metodo || "Otro";
-
-        if (!metodos[metodo]) {
-            metodos[metodo] = 0;
-        }
-
-        metodos[metodo] +=
-            obtenerMontoVenta(venta);
-    });
+        document.getElementById(
+            "metodosPago"
+        );
 
     contenedor.innerHTML = "";
 
-    const nombres =
-        Object.keys(metodos);
 
-    if (nombres.length === 0) {
+    const nombres = [
+        "Efectivo",
+        "Transferencia",
+        "Tarjeta",
+        "Otro"
+    ];
 
-        contenedor.innerHTML =
-            '<div class="vacio">Todavía no hay ventas registradas.</div>';
 
-        return;
-    }
-
-    nombres.forEach(function(metodo) {
+    nombres.forEach(function(metodo){
 
         const fila =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        fila.className = "fila";
+        fila.className =
+            "fila" +
+            (
+                metodo === "Efectivo"
+                    ? " efectivo"
+                    : ""
+            );
+
 
         const nombre =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
-        nombre.textContent = metodo;
+        nombre.textContent =
+            metodo;
+
 
         const monto =
-            document.createElement("strong");
+            document.createElement(
+                "strong"
+            );
 
         monto.textContent =
-            dinero(metodos[metodo]);
+            dinero(
+                metodos[metodo] || 0
+            );
+
 
         fila.appendChild(nombre);
         fila.appendChild(monto);
 
         contenedor.appendChild(fila);
+
     });
+
+
+    const filaTotal =
+        document.createElement(
+            "div"
+        );
+
+    filaTotal.className =
+        "fila";
+
+
+    filaTotal.innerHTML =
+        "<span><strong>Total cobrado</strong></span>" +
+        "<strong>" +
+        dinero(total) +
+        "</strong>";
+
+
+    contenedor.appendChild(
+        filaTotal
+    );
+
 }
 
-function mostrarCategoriasGasto() {
+
+function mostrarCategoriasGasto(){
 
     const contenedor =
-        document.getElementById("categoriasGasto");
+        document.getElementById(
+            "categoriasGasto"
+        );
 
     const categorias = {};
 
-    gastos.forEach(function(gasto) {
+
+    gastos.forEach(function(gasto){
+
+        if(
+            !gastoDentroDelFiltro(
+                gasto.fecha
+            )
+        ){
+            return;
+        }
+
 
         const categoria =
             gasto.categoria || "Otro";
 
-        if (!categorias[categoria]) {
+
+        if(!categorias[categoria]){
             categorias[categoria] = 0;
         }
 
+
         categorias[categoria] +=
-            obtenerMontoGasto(gasto);
+            numero(gasto.monto);
+
     });
 
+
     contenedor.innerHTML = "";
+
 
     const nombres =
         Object.keys(categorias);
 
-    if (nombres.length === 0) {
+
+    if(nombres.length === 0){
 
         contenedor.innerHTML =
-            '<div class="vacio">Todavía no hay gastos registrados.</div>';
+            '<div class="vacio">No hay gastos en este periodo.</div>';
 
         return;
+
     }
 
-    nombres.forEach(function(categoria) {
+
+    nombres.forEach(function(categoria){
 
         const fila =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        fila.className = "fila";
+        fila.className =
+            "fila";
+
 
         const nombre =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
-        nombre.textContent = categoria;
+        nombre.textContent =
+            categoria;
+
 
         const monto =
-            document.createElement("strong");
+            document.createElement(
+                "strong"
+            );
 
         monto.textContent =
-            dinero(categorias[categoria]);
+            dinero(
+                categorias[categoria]
+            );
+
 
         fila.appendChild(nombre);
         fila.appendChild(monto);
 
         contenedor.appendChild(fila);
+
     });
+
 }
+
 
 cargarDatos();
 
