@@ -1,306 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gastos | Pirámide Woodworks</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastos | Pirámide Woodworks</title>
 
-    <style>
-        :root {
-            --negro: #171717;
-            --blanco: #ffffff;
-            --texto: #26221e;
-            --texto-suave: #716b64;
-            --dorado: #b28a52;
-            --dorado-claro: #d1b27d;
-            --linea: #e7e2db;
-        }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                linear-gradient(
-                    rgba(20, 14, 10, 0.78),
-                    rgba(20, 14, 10, 0.88)
-                ),
-                repeating-linear-gradient(
-                    92deg,
-                    #3a281d 0px,
-                    #493225 55px,
-                    #34231a 58px,
-                    #52382a 115px,
-                    #39271c 118px
-                );
-            font-family: "Segoe UI", Arial, sans-serif;
-            color: var(--blanco);
-        }
+:root{
+    --negro:#171717;
+    --blanco:#fff;
+    --texto:#26221e;
+    --suave:#716b64;
+    --dorado:#b28a52;
+    --claro:#d1b27d;
+    --linea:#e7e2db;
+    --rojo:#9b3d3d;
+}
 
-        header {
-            text-align: center;
-            padding: 42px 20px 28px;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: clamp(30px, 6vw, 44px);
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
+body{
+    margin:0;
+    min-height:100vh;
+    background:
+        linear-gradient(
+            rgba(20,14,10,.82),
+            rgba(20,14,10,.9)
+        ),
+        repeating-linear-gradient(
+            92deg,
+            #3a281d 0,
+            #493225 55px,
+            #34231a 58px,
+            #52382a 115px,
+            #39271c 118px
+        );
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--blanco);
+}
 
-        header p {
-            margin: 8px 0 0;
-            color: var(--dorado-claro);
-            font-size: 13px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+header{
+    text-align:center;
+    padding:34px 16px 22px;
+}
 
-        main {
-            width: min(100% - 30px, 1000px);
-            margin: 0 auto 50px;
-        }
+header h1{
+    margin:0;
+    font-size:clamp(30px,6vw,44px);
+    font-weight:500;
+    letter-spacing:.3px;
+}
 
-        .volver {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--dorado-claro);
-            text-decoration: none;
-            font-size: 14px;
-        }
+header p{
+    margin:8px 0 0;
+    color:var(--claro);
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
 
-        .acciones {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-        }
+main{
+    width:min(100% - 28px,1000px);
+    margin:0 auto 45px;
+}
 
-        .acciones h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 500;
-        }
+.volver{
+    display:inline-block;
+    margin-bottom:18px;
+    color:var(--claro);
+    text-decoration:none;
+    font-size:14px;
+}
 
-        .boton {
-            border: 1px solid var(--dorado);
-            background: var(--negro);
-            color: white;
-            padding: 11px 17px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.acciones{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
 
-        .boton:hover {
-            background: #292929;
-            border-color: var(--dorado-claro);
-        }
+.acciones h2{
+    margin:0;
+    font-size:21px;
+    font-weight:500;
+}
 
-        .resumen {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 22px;
-        }
+.boton{
+    border:1px solid var(--dorado);
+    background:var(--negro);
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
 
-        .resumen-card {
-            background: rgba(255,255,255,0.96);
-            color: var(--texto);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-        }
+.boton:hover{
+    background:#292929;
+    border-color:var(--claro);
+}
 
-        .resumen-card span {
-            display: block;
-            color: var(--texto-suave);
-            font-size: 12px;
-            margin-bottom: 7px;
-        }
+/* RESUMEN */
 
-        .resumen-card strong {
-            font-size: 25px;
-            font-weight: 500;
-            color: var(--dorado);
-        }
+.resumen{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
 
-        .filtros {
-            background: rgba(255,255,255,0.96);
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
+.resumen-card{
+    background:rgba(255,255,255,.97);
+    color:var(--texto);
+    border-radius:12px;
+    padding:17px 12px;
+    text-align:center;
+    box-shadow:0 8px 25px #0002;
+}
 
-        .filtros-grid {
-            display: grid;
-            grid-template-columns: 1fr 220px;
-            gap: 10px;
-        }
+.resumen-card span{
+    display:block;
+    color:var(--suave);
+    font-size:11px;
+    margin-bottom:6px;
+}
 
-        .filtros input,
-        .filtros select {
-            width: 100%;
-            padding: 11px 12px;
-            border: 1px solid var(--linea);
-            border-radius: 7px;
-            font-size: 14px;
-            outline: none;
-            background: white;
-        }
+.resumen-card strong{
+    display:block;
+    color:var(--dorado);
+    font-size:22px;
+    font-weight:600;
+}
 
-        .gasto {
-            background: rgba(255,255,255,0.97);
-            color: var(--texto);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-        }
+/* FILTROS */
 
-        .gasto-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            align-items: flex-start;
-        }
+.filtros{
+    background:#fffffff7;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:16px;
+    box-shadow:0 8px 25px #0002;
+}
 
-        .gasto h3 {
-            margin: 0 0 5px;
-            font-size: 18px;
-            font-weight: 600;
-        }
+.filtros-grid{
+    display:grid;
+    grid-template-columns:1fr 190px 170px;
+    gap:9px;
+}
 
-        .fecha {
-            color: var(--texto-suave);
-            font-size: 12px;
-        }
+.filtros input,
+.filtros select{
+    width:100%;
+    padding:10px 11px;
+    border:1px solid var(--linea);
+    border-radius:7px;
+    background:white;
+    color:var(--texto);
+    font:inherit;
+    font-size:13px;
+    outline:none;
+}
 
-        .gasto-total {
-            color: #9b3d3d;
-            font-size: 20px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
+/* GASTOS */
 
-        .gasto-info {
-            margin-top: 15px;
-            line-height: 1.7;
-            font-size: 14px;
-        }
+.gasto{
+    background:#fffffff7;
+    color:var(--texto);
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:12px;
+    box-shadow:0 8px 25px #0002;
+}
 
-        .gasto-acciones {
-            display: flex;
-            gap: 8px;
-            margin-top: 17px;
-            padding-top: 15px;
-            border-top: 1px solid var(--linea);
-        }
+.gasto-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+}
 
-        .boton-secundario {
-            border: 1px solid var(--linea);
-            background: white;
-            color: var(--texto);
-            padding: 8px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-        }
+.gasto h3{
+    margin:0 0 5px;
+    font-size:17px;
+    font-weight:600;
+}
 
-        .boton-eliminar {
-            color: #9b3d3d;
-        }
+.fecha{
+    color:var(--suave);
+    font-size:12px;
+}
 
-        .vacio {
-            background: rgba(255,255,255,0.96);
-            color: var(--texto-suave);
-            border-radius: 12px;
-            padding: 35px 20px;
-            text-align: center;
-        }
+.gasto-total{
+    color:var(--rojo);
+    font-size:19px;
+    font-weight:600;
+    white-space:nowrap;
+}
 
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.65);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 1000;
-        }
+.gasto-info{
+    margin-top:12px;
+    line-height:1.65;
+    font-size:13px;
+}
 
-        .modal-contenido {
-            background: white;
-            color: var(--texto);
-            width: min(100%, 600px);
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 14px;
-            padding: 24px;
-        }
+.gasto-info strong{
+    font-weight:600;
+}
 
-        .modal-contenido h2 {
-            margin-top: 0;
-            font-weight: 500;
-        }
+.gasto-acciones{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px solid var(--linea);
+}
 
-        .campo {
-            margin-bottom: 13px;
-        }
+.boton-secundario{
+    border:1px solid var(--linea);
+    background:white;
+    color:var(--texto);
+    padding:8px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:13px;
+}
 
-        .campo label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 6px;
-            color: var(--texto-suave);
-        }
+.boton-eliminar{
+    color:var(--rojo);
+}
 
-        .campo input,
-        .campo select,
-        .campo textarea {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid var(--linea);
-            border-radius: 7px;
-            font-family: inherit;
-            font-size: 14px;
-            outline: none;
-        }
+/* VACIO */
 
-        .campo textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
+.vacio{
+    background:#fffffff7;
+    color:var(--suave);
+    border-radius:12px;
+    padding:30px 18px;
+    text-align:center;
+    font-size:13px;
+}
 
-        .modal-botones {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 20px;
-        }
+/* ESTADO */
 
-        @media (max-width: 700px) {
+.estado{
+    text-align:center;
+    color:var(--claro);
+    font-size:12px;
+    margin:0 0 14px;
+}
 
-            .resumen {
-                grid-template-columns: 1fr;
-            }
+/* MODAL */
 
-            .filtros-grid {
-                grid-template-columns: 1fr;
-            }
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#000a;
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+    z-index:1000;
+}
 
-            .gasto-top {
-                flex-direction: column;
-            }
-        }
-    </style>
+.modal-contenido{
+    background:white;
+    color:var(--texto);
+    width:min(100%,600px);
+    max-height:94vh;
+    overflow-y:auto;
+    border-radius:14px;
+    padding:21px;
+}
+
+.modal-contenido h2{
+    margin:0 0 18px;
+    font-size:21px;
+    font-weight:500;
+}
+
+.campo{
+    margin-bottom:13px;
+}
+
+.campo label{
+    display:block;
+    color:var(--suave);
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.campo input,
+.campo select,
+.campo textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid var(--linea);
+    border-radius:7px;
+    font:inherit;
+    font-size:14px;
+    outline:none;
+    background:white;
+    color:var(--texto);
+}
+
+.campo textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.modal-botones{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+/* MOVIL */
+
+@media(max-width:750px){
+
+    .resumen{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .filtros-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .resumen{
+        gap:8px;
+    }
+
+    .resumen-card{
+        padding:14px 6px;
+    }
+
+    .resumen-card span{
+        font-size:10px;
+    }
+
+    .resumen-card strong{
+        font-size:17px;
+    }
+
+    .gasto-top{
+        flex-direction:row;
+    }
+
+    .gasto{
+        padding:16px;
+    }
+
+    .gasto-total{
+        font-size:17px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -312,89 +382,157 @@
 
 <main>
 
-    <a href="panel.html" class="volver">← Volver al panel</a>
+<a href="panel.html" class="volver">
+    ← Volver al panel
+</a>
 
-    <div class="acciones">
+<div id="estadoConexion" class="estado">
+    Cargando gastos...
+</div>
 
-        <h2>Registro de gastos</h2>
+<div class="acciones">
 
-        <button class="boton" onclick="abrirModal()">
-            + Nuevo gasto
-        </button>
+    <h2>Registro de gastos</h2>
+
+    <button
+        class="boton"
+        onclick="abrirModal()">
+        + Nuevo gasto
+    </button>
+
+</div>
+
+<section class="resumen">
+
+    <div class="resumen-card">
+        <span>Gastos registrados</span>
+        <strong id="totalGastos">0</strong>
+    </div>
+
+    <div class="resumen-card">
+        <span>Gastos del periodo</span>
+        <strong id="gastosPeriodo">$0</strong>
+    </div>
+
+    <div class="resumen-card">
+        <span>Total gastado</span>
+        <strong id="totalGastado">$0</strong>
+    </div>
+
+</section>
+
+<section class="filtros">
+
+    <div class="filtros-grid">
+
+        <input
+            type="text"
+            id="busqueda"
+            placeholder="Buscar gasto..."
+            oninput="mostrarGastos()"
+        >
+
+        <select
+            id="filtroCategoria"
+            onchange="mostrarGastos()">
+
+            <option value="Todas">
+                Todas las categorías
+            </option>
+
+            <option value="Materiales">
+                Materiales
+            </option>
+
+            <option value="Herramientas">
+                Herramientas
+            </option>
+
+            <option value="Equipo">
+                Equipo
+            </option>
+
+            <option value="Empaque">
+                Empaque
+            </option>
+
+            <option value="Envíos">
+                Envíos
+            </option>
+
+            <option value="Publicidad">
+                Publicidad
+            </option>
+
+            <option value="Servicios">
+                Servicios
+            </option>
+
+            <option value="Otro">
+                Otro
+            </option>
+
+        </select>
+
+        <select
+            id="filtroFecha"
+            onchange="mostrarGastos()">
+
+            <option value="hoy">
+                Hoy
+            </option>
+
+            <option value="semana">
+                Esta semana
+            </option>
+
+            <option value="mes" selected>
+                Este mes
+            </option>
+
+            <option value="todo">
+                Todo
+            </option>
+
+        </select>
 
     </div>
 
-    <section class="resumen">
+</section>
 
-        <div class="resumen-card">
-            <span>Gastos registrados</span>
-            <strong id="totalGastos">0</strong>
-        </div>
-
-        <div class="resumen-card">
-            <span>Gastos del mes</span>
-            <strong id="gastosMes">$0</strong>
-        </div>
-
-        <div class="resumen-card">
-            <span>Total gastado</span>
-            <strong id="totalGastado">$0</strong>
-        </div>
-
-    </section>
-
-    <section class="filtros">
-
-        <div class="filtros-grid">
-
-            <input
-                type="text"
-                id="busqueda"
-                placeholder="Buscar por descripción..."
-                oninput="mostrarGastos()"
-            >
-
-            <select
-                id="filtroCategoria"
-                onchange="mostrarGastos()"
-            >
-                <option value="Todas">Todas las categorías</option>
-                <option value="Materiales">Materiales</option>
-                <option value="Herramientas">Herramientas</option>
-                <option value="Equipo">Equipo</option>
-                <option value="Empaque">Empaque</option>
-                <option value="Envíos">Envíos</option>
-                <option value="Publicidad">Publicidad</option>
-                <option value="Servicios">Servicios</option>
-                <option value="Otro">Otro</option>
-            </select>
-
-        </div>
-
-    </section>
-
-    <section id="listaGastos"></section>
+<section id="listaGastos"></section>
 
 </main>
+
 
 <div class="modal" id="modalGasto">
 
     <div class="modal-contenido">
 
-        <h2>Nuevo gasto</h2>
+        <h2 id="tituloModal">
+            Nuevo gasto
+        </h2>
 
         <div class="campo">
-            <label>Descripción</label>
+
+            <label for="descripcion">
+                Descripción
+            </label>
+
             <input
                 type="text"
                 id="descripcion"
                 placeholder="Ej. Triplay Birch 4mm"
             >
+
         </div>
+
 
         <div class="campo">
 
-            <label>Categoría</label>
+            <label for="categoria">
+                Categoría
+            </label>
 
             <select id="categoria">
 
@@ -434,22 +572,29 @@
 
         </div>
 
+
         <div class="campo">
 
-            <label>Monto</label>
+            <label for="monto">
+                Monto
+            </label>
 
             <input
                 type="number"
                 id="monto"
                 min="0"
                 step="0.01"
+                placeholder="0.00"
             >
 
         </div>
 
+
         <div class="campo">
 
-            <label>Método de pago</label>
+            <label for="metodo">
+                Método de pago
+            </label>
 
             <select id="metodo">
 
@@ -473,9 +618,26 @@
 
         </div>
 
+
         <div class="campo">
 
-            <label>Notas</label>
+            <label for="fechaGasto">
+                Fecha del gasto
+            </label>
+
+            <input
+                type="date"
+                id="fechaGasto"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="notas">
+                Notas
+            </label>
 
             <textarea
                 id="notas"
@@ -484,18 +646,24 @@
 
         </div>
 
+
         <div class="modal-botones">
 
             <button
                 class="boton-secundario"
                 onclick="cerrarModal()">
+
                 Cancelar
+
             </button>
 
             <button
                 class="boton"
+                id="guardarBtn"
                 onclick="guardarGasto()">
+
                 Guardar gasto
+
             </button>
 
         </div>
@@ -504,8 +672,6 @@
 
 </div>
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -524,26 +690,250 @@ const supabaseCliente =
 
 let gastos = [];
 
+let modoEdicionId = null;
+
 
 /* =========================
-   MIGRAR GASTOS ANTIGUOS
+   FECHA DE HOY
 ========================= */
 
-async function migrarGastosAntiguos() {
+function obtenerFechaHoy(){
+
+    const fecha = new Date();
+
+    return (
+        fecha.getFullYear() +
+        "-" +
+        String(
+            fecha.getMonth() + 1
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            fecha.getDate()
+        ).padStart(2,"0")
+    );
+
+}
+
+
+/* =========================
+   FECHA LOCAL
+========================= */
+
+function fechaLocal(valor){
+
+    if(!valor){
+        return null;
+    }
+
+    const texto =
+        String(valor).slice(0,10);
+
+    const partes =
+        texto.split("-");
+
+    if(partes.length !== 3){
+        return null;
+    }
+
+    return new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+
+}
+
+
+/* =========================
+   FECHA BONITA
+========================= */
+
+function fechaBonita(valor){
+
+    const fecha =
+        fechaLocal(valor);
+
+    if(!fecha){
+        return "—";
+    }
+
+    return (
+        String(fecha.getDate()).padStart(2,"0") +
+        "/" +
+        String(
+            fecha.getMonth() + 1
+        ).padStart(2,"0") +
+        "/" +
+        fecha.getFullYear()
+    );
+
+}
+
+
+/* =========================
+   DINERO
+========================= */
+
+function dinero(valor){
+
+    return "$" +
+        Number(valor || 0).toLocaleString(
+            "es-MX",
+            {
+                minimumFractionDigits:0,
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* =========================
+   INICIO DE SEMANA
+========================= */
+
+function inicioSemana(){
+
+    const hoy =
+        new Date();
+
+    hoy.setHours(
+        0,0,0,0
+    );
+
+    const dia =
+        hoy.getDay();
+
+    const diferencia =
+        dia === 0
+            ? 6
+            : dia - 1;
+
+    hoy.setDate(
+        hoy.getDate() - diferencia
+    );
+
+    return hoy;
+
+}
+
+
+/* =========================
+   FILTRO DE FECHA
+========================= */
+
+function gastoDentroDelFiltro(
+    fecha
+){
+
+    const filtro =
+        document.getElementById(
+            "filtroFecha"
+        ).value;
+
+
+    if(filtro === "todo"){
+        return true;
+    }
+
+
+    const fechaGasto =
+        fechaLocal(fecha);
+
+
+    if(!fechaGasto){
+        return false;
+    }
+
+
+    const hoy =
+        new Date();
+
+    hoy.setHours(
+        0,0,0,0
+    );
+
+
+    if(filtro === "hoy"){
+
+        return (
+            fechaGasto.getTime() ===
+            hoy.getTime()
+        );
+
+    }
+
+
+    if(filtro === "semana"){
+
+        return (
+            fechaGasto >=
+            inicioSemana()
+        );
+
+    }
+
+
+    if(filtro === "mes"){
+
+        return (
+            fechaGasto.getMonth() ===
+                hoy.getMonth() &&
+            fechaGasto.getFullYear() ===
+                hoy.getFullYear()
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================
+   MIGRACIÓN
+========================= */
+
+async function migrarGastosAntiguos(){
 
     const yaMigro =
-        localStorage.getItem("gastosMigradosSupabase");
+        localStorage.getItem(
+            "gastosMigradosSupabase"
+        );
 
-    if (yaMigro === "true") {
+
+    if(yaMigro === "true"){
         return;
     }
 
-    const gastosAntiguos =
-        JSON.parse(
-            localStorage.getItem("gastos")
-        ) || [];
 
-    if (gastosAntiguos.length === 0) {
+    let gastosAntiguos = [];
+
+
+    try{
+
+        gastosAntiguos =
+            JSON.parse(
+                localStorage.getItem(
+                    "gastos"
+                )
+            ) || [];
+
+    }catch(error){
+
+        console.warn(
+            "No se pudieron leer gastos antiguos.",
+            error
+        );
+
+        gastosAntiguos = [];
+
+    }
+
+
+    if(gastosAntiguos.length === 0){
 
         localStorage.setItem(
             "gastosMigradosSupabase",
@@ -551,62 +941,66 @@ async function migrarGastosAntiguos() {
         );
 
         return;
+
     }
 
+
     const datosParaSubir =
-        gastosAntiguos.map(function(gasto) {
+        gastosAntiguos.map(
+            function(gasto){
 
-            return {
+                return {
 
-                descripcion:
-                    gasto.descripcion || "",
+                    descripcion:
+                        gasto.descripcion || "",
 
-                categoria:
-                    gasto.categoria || "Otro",
+                    categoria:
+                        gasto.categoria || "Otro",
 
-                monto:
-                    Number(gasto.monto) || 0,
+                    monto:
+                        Number(gasto.monto) || 0,
 
-                metodo:
-                    gasto.metodo || "Efectivo",
+                    metodo:
+                        gasto.metodo || "Efectivo",
 
-                notas:
-                    gasto.notas || "",
+                    notas:
+                        gasto.notas || "",
 
-                fecha:
-                    gasto.fecha || new Date().toISOString()
+                    fecha:
+                        gasto.fecha ||
+                        obtenerFechaHoy()
 
-            };
+                };
 
-        });
+            }
+        );
+
 
     const { error } =
         await supabaseCliente
             .from("gastos")
-            .insert(datosParaSubir);
+            .insert(
+                datosParaSubir
+            );
 
-    if (error) {
+
+    if(error){
 
         console.error(
             "Error migrando gastos:",
             error
         );
 
-        alert(
-            "No se pudieron sincronizar los gastos anteriores. Intenta nuevamente."
-        );
-
         return;
+
     }
+
 
     localStorage.setItem(
         "gastosMigradosSupabase",
         "true"
     );
 
-    console.log(
-        "Gastos antiguos migrados correctamente."
-    );
 }
 
 
@@ -614,154 +1008,372 @@ async function migrarGastosAntiguos() {
    CARGAR GASTOS
 ========================= */
 
-async function cargarGastos() {
+async function cargarGastos(){
 
-    const { data, error } =
+    const estado =
+        document.getElementById(
+            "estadoConexion"
+        );
+
+
+    const {
+        data,
+        error
+    } =
         await supabaseCliente
             .from("gastos")
             .select("*")
-            .order("fecha", {
-                ascending: false
-            });
+            .order(
+                "fecha",
+                {
+                    ascending:false
+                }
+            );
 
-    if (error) {
+
+    if(error){
 
         console.error(
             "Error cargando gastos:",
             error
         );
 
-        alert(
-            "No se pudieron cargar los gastos."
+        estado.textContent =
+            "No se pudieron cargar los gastos.";
+
+        return;
+
+    }
+
+
+    gastos =
+        data || [];
+
+
+    estado.textContent =
+        "Gastos sincronizados";
+
+
+    mostrarGastos();
+
+}
+
+
+/* =========================
+   ABRIR MODAL
+========================= */
+
+function abrirModal(){
+
+    modoEdicionId = null;
+
+
+    document.getElementById(
+        "tituloModal"
+    ).textContent =
+        "Nuevo gasto";
+
+
+    document.getElementById(
+        "guardarBtn"
+    ).textContent =
+        "Guardar gasto";
+
+
+    document.getElementById(
+        "descripcion"
+    ).value = "";
+
+
+    document.getElementById(
+        "categoria"
+    ).value =
+        "Materiales";
+
+
+    document.getElementById(
+        "monto"
+    ).value = "";
+
+
+    document.getElementById(
+        "metodo"
+    ).value =
+        "Efectivo";
+
+
+    document.getElementById(
+        "fechaGasto"
+    ).value =
+        obtenerFechaHoy();
+
+
+    document.getElementById(
+        "notas"
+    ).value = "";
+
+
+    document.getElementById(
+        "modalGasto"
+    ).style.display =
+        "flex";
+
+}
+
+
+/* =========================
+   CERRAR MODAL
+========================= */
+
+function cerrarModal(){
+
+    document.getElementById(
+        "modalGasto"
+    ).style.display =
+        "none";
+
+    modoEdicionId = null;
+
+}
+
+
+/* =========================
+   EDITAR GASTO
+========================= */
+
+function editarGasto(id){
+
+    const gasto =
+        gastos.find(
+            function(item){
+                return Number(item.id) ===
+                       Number(id);
+            }
         );
 
+
+    if(!gasto){
         return;
     }
 
-    gastos = data || [];
 
-    mostrarGastos();
-}
+    modoEdicionId =
+        gasto.id;
 
 
-/* =========================
-   MODAL
-========================= */
+    document.getElementById(
+        "tituloModal"
+    ).textContent =
+        "Editar gasto";
 
-function abrirModal() {
 
-    document.getElementById("modalGasto").style.display =
+    document.getElementById(
+        "guardarBtn"
+    ).textContent =
+        "Guardar cambios";
+
+
+    document.getElementById(
+        "descripcion"
+    ).value =
+        gasto.descripcion || "";
+
+
+    document.getElementById(
+        "categoria"
+    ).value =
+        gasto.categoria || "Otro";
+
+
+    document.getElementById(
+        "monto"
+    ).value =
+        gasto.monto || "";
+
+
+    document.getElementById(
+        "metodo"
+    ).value =
+        gasto.metodo || "Efectivo";
+
+
+    document.getElementById(
+        "fechaGasto"
+    ).value =
+        String(
+            gasto.fecha ||
+            obtenerFechaHoy()
+        ).slice(0,10);
+
+
+    document.getElementById(
+        "notas"
+    ).value =
+        gasto.notas || "";
+
+
+    document.getElementById(
+        "modalGasto"
+    ).style.display =
         "flex";
-}
 
-
-function cerrarModal() {
-
-    document.getElementById("modalGasto").style.display =
-        "none";
-
-    document.getElementById("descripcion").value = "";
-
-    document.getElementById("categoria").value =
-        "Materiales";
-
-    document.getElementById("monto").value = "";
-
-    document.getElementById("metodo").value =
-        "Efectivo";
-
-    document.getElementById("notas").value = "";
 }
 
 
 /* =========================
-   GUARDAR GASTO
+   GUARDAR / EDITAR
 ========================= */
 
-async function guardarGasto() {
+async function guardarGasto(){
 
     const descripcion =
-        document
-            .getElementById("descripcion")
-            .value
-            .trim();
+        document.getElementById(
+            "descripcion"
+        ).value.trim();
+
 
     const categoria =
-        document.getElementById("categoria").value;
+        document.getElementById(
+            "categoria"
+        ).value;
+
 
     const monto =
         Number(
-            document.getElementById("monto").value
+            document.getElementById(
+                "monto"
+            ).value
         );
 
+
     const metodo =
-        document.getElementById("metodo").value;
+        document.getElementById(
+            "metodo"
+        ).value;
+
+
+    const fecha =
+        document.getElementById(
+            "fechaGasto"
+        ).value;
+
 
     const notas =
-        document
-            .getElementById("notas")
-            .value
-            .trim();
+        document.getElementById(
+            "notas"
+        ).value.trim();
 
 
-    if (!descripcion || !monto) {
+    if(
+        !descripcion ||
+        !monto ||
+        monto <= 0 ||
+        !fecha
+    ){
 
         alert(
-            "Completa la descripción y el monto."
+            "Completa descripción, monto y fecha."
         );
 
         return;
+
     }
 
 
-    const { error } =
-        await supabaseCliente
-            .from("gastos")
-            .insert({
-
-                descripcion:
-                    descripcion,
-
-                categoria:
-                    categoria,
-
-                monto:
-                    monto,
-
-                metodo:
-                    metodo,
-
-                notas:
-                    notas,
-
-                fecha:
-                    new Date().toISOString()
-
-            });
+    const btn =
+        document.getElementById(
+            "guardarBtn"
+        );
 
 
-    if (error) {
+    btn.disabled = true;
+
+    btn.textContent =
+        "Guardando...";
+
+
+    const registro = {
+
+        descripcion:
+            descripcion,
+
+        categoria:
+            categoria,
+
+        monto:
+            monto,
+
+        metodo:
+            metodo,
+
+        notas:
+            notas,
+
+        fecha:
+            fecha
+
+    };
+
+
+    let resultado;
+
+
+    if(modoEdicionId){
+
+        resultado =
+            await supabaseCliente
+                .from("gastos")
+                .update(registro)
+                .eq(
+                    "id",
+                    modoEdicionId
+                );
+
+    }else{
+
+        resultado =
+            await supabaseCliente
+                .from("gastos")
+                .insert(
+                    registro
+                );
+
+    }
+
+
+    if(resultado.error){
 
         console.error(
             "Error guardando gasto:",
-            error
+            resultado.error
         );
 
         alert(
             "No se pudo guardar el gasto."
         );
 
+        btn.disabled = false;
+
+        btn.textContent =
+            modoEdicionId
+                ? "Guardar cambios"
+                : "Guardar gasto";
+
         return;
+
     }
+
+
+    cerrarModal();
+
+    btn.disabled = false;
+
+    btn.textContent =
+        "Guardar gasto";
 
 
     await cargarGastos();
 
-    cerrarModal();
-
-    alert(
-        "☁️ Gasto guardado y sincronizado."
-    );
 }
 
 
@@ -769,139 +1381,239 @@ async function guardarGasto() {
    MOSTRAR GASTOS
 ========================= */
 
-function mostrarGastos() {
+function mostrarGastos(){
 
     const contenedor =
-        document.getElementById("listaGastos");
+        document.getElementById(
+            "listaGastos"
+        );
+
 
     const busqueda =
-        document
-            .getElementById("busqueda")
-            .value
-            .toLowerCase();
+        document.getElementById(
+            "busqueda"
+        ).value
+        .toLowerCase()
+        .trim();
+
 
     const filtroCategoria =
-        document.getElementById("filtroCategoria").value;
+        document.getElementById(
+            "filtroCategoria"
+        ).value;
 
 
     const filtrados =
-        gastos.filter(function(gasto) {
+        gastos.filter(
+            function(gasto){
 
-            const coincideBusqueda =
-                (gasto.descripcion || "")
-                    .toLowerCase()
-                    .includes(busqueda);
+                const texto =
+                    (
+                        (gasto.descripcion || "") +
+                        " " +
+                        (gasto.notas || "")
+                    )
+                    .toLowerCase();
 
-            const coincideCategoria =
-                filtroCategoria === "Todas" ||
-                gasto.categoria === filtroCategoria;
 
-            return (
-                coincideBusqueda &&
-                coincideCategoria
-            );
+                const coincideBusqueda =
+                    texto.includes(
+                        busqueda
+                    );
 
-        });
+
+                const coincideCategoria =
+                    filtroCategoria === "Todas" ||
+                    gasto.categoria ===
+                        filtroCategoria;
+
+
+                const coincideFecha =
+                    gastoDentroDelFiltro(
+                        gasto.fecha
+                    );
+
+
+                return (
+                    coincideBusqueda &&
+                    coincideCategoria &&
+                    coincideFecha
+                );
+
+            }
+        );
 
 
     contenedor.innerHTML = "";
 
 
-    if (filtrados.length === 0) {
+    if(filtrados.length === 0){
 
-        contenedor.innerHTML = `
+        contenedor.innerHTML =
+            `
             <div class="vacio">
                 No hay gastos para mostrar.
             </div>
-        `;
+            `;
 
-    } else {
+    }else{
 
-        filtrados.forEach(function(gasto) {
+        filtrados.forEach(
+            function(gasto){
 
-            const fecha =
-                new Date(gasto.fecha)
-                    .toLocaleString("es-MX");
+                const tarjeta =
+                    document.createElement(
+                        "article"
+                    );
 
 
-            contenedor.innerHTML += `
+                tarjeta.className =
+                    "gasto";
 
-                <article class="gasto">
+
+                tarjeta.innerHTML =
+                    `
 
                     <div class="gasto-top">
 
                         <div>
 
                             <h3>
-                                ${gasto.descripcion}
+                                ${escapar(
+                                    gasto.descripcion
+                                )}
                             </h3>
 
                             <div class="fecha">
-                                ${fecha}
+                                ${fechaBonita(
+                                    gasto.fecha
+                                )}
                             </div>
 
                         </div>
 
                         <div class="gasto-total">
-                            -$${Number(gasto.monto).toFixed(2)}
+                            -${dinero(
+                                gasto.monto
+                            )}
                         </div>
 
                     </div>
 
+
                     <div class="gasto-info">
 
                         <strong>Categoría:</strong>
-                        ${gasto.categoria}
+                        ${escapar(
+                            gasto.categoria || "Otro"
+                        )}
+
                         <br>
 
                         <strong>Pago:</strong>
-                        ${gasto.metodo}
+                        ${escapar(
+                            gasto.metodo || "Otro"
+                        )}
 
                         ${
                             gasto.notas
-                            ? `
+                                ? `
                                 <br>
                                 <strong>Notas:</strong>
-                                ${gasto.notas}
-                            `
-                            : ""
+                                ${escapar(
+                                    gasto.notas
+                                )}
+                                `
+                                : ""
                         }
 
                     </div>
 
+
                     <div class="gasto-acciones">
 
                         <button
+                            class="boton-secundario"
+                            onclick="editarGasto(${Number(
+                                gasto.id
+                            )})">
+
+                            Editar
+
+                        </button>
+
+
+                        <button
                             class="boton-secundario boton-eliminar"
-                            onclick="eliminarGasto(${gasto.id})">
+                            onclick="eliminarGasto(${Number(
+                                gasto.id
+                            )})">
+
                             Eliminar
+
                         </button>
 
                     </div>
 
-                </article>
+                    `;
 
-            `;
-        });
+
+                contenedor.appendChild(
+                    tarjeta
+                );
+
+            }
+        );
+
     }
 
 
     actualizarResumen();
+
 }
 
 
 /* =========================
-   ELIMINAR GASTO
+   ESCAPAR TEXTO
 ========================= */
 
-async function eliminarGasto(id) {
+function escapar(valor){
+
+    return String(
+        valor ?? ""
+    ).replace(
+        /[&<>"']/g,
+        function(caracter){
+
+            return {
+
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+
+            }[caracter];
+
+        }
+    );
+
+}
+
+
+/* =========================
+   ELIMINAR
+========================= */
+
+async function eliminarGasto(id){
 
     const confirmar =
         confirm(
             "¿Seguro que quieres eliminar este gasto?"
         );
 
-    if (!confirmar) {
+
+    if(!confirmar){
         return;
     }
 
@@ -910,10 +1622,13 @@ async function eliminarGasto(id) {
         await supabaseCliente
             .from("gastos")
             .delete()
-            .eq("id", id);
+            .eq(
+                "id",
+                id
+            );
 
 
-    if (error) {
+    if(error){
 
         console.error(
             "Error eliminando gasto:",
@@ -925,6 +1640,7 @@ async function eliminarGasto(id) {
         );
 
         return;
+
     }
 
 
@@ -937,56 +1653,58 @@ async function eliminarGasto(id) {
    RESUMEN
 ========================= */
 
-function actualizarResumen() {
+function actualizarResumen(){
 
-    document.getElementById("totalGastos").textContent =
+    document.getElementById(
+        "totalGastos"
+    ).textContent =
         gastos.length;
 
 
-    const ahora =
-        new Date();
-
-    const mesActual =
-        ahora.getMonth();
-
-    const añoActual =
-        ahora.getFullYear();
-
-
-    let totalMes = 0;
+    let totalPeriodo = 0;
 
     let totalGeneral = 0;
 
 
-    gastos.forEach(function(gasto) {
+    gastos.forEach(
+        function(gasto){
 
-        totalGeneral +=
-            Number(gasto.monto) || 0;
+            const monto =
+                Number(
+                    gasto.monto
+                ) || 0;
 
 
-        const fecha =
-            new Date(gasto.fecha);
+            totalGeneral +=
+                monto;
 
 
-        if (
-            fecha.getMonth() === mesActual &&
-            fecha.getFullYear() === añoActual
-        ) {
+            if(
+                gastoDentroDelFiltro(
+                    gasto.fecha
+                )
+            ){
 
-            totalMes +=
-                Number(gasto.monto) || 0;
+                totalPeriodo +=
+                    monto;
+
+            }
 
         }
-
-    });
-
-
-    document.getElementById("gastosMes").textContent =
-        "$" + totalMes.toFixed(2);
+    );
 
 
-    document.getElementById("totalGastado").textContent =
-        "$" + totalGeneral.toFixed(2);
+    document.getElementById(
+        "gastosPeriodo"
+    ).textContent =
+        dinero(totalPeriodo);
+
+
+    document.getElementById(
+        "totalGastado"
+    ).textContent =
+        dinero(totalGeneral);
+
 }
 
 
@@ -994,7 +1712,7 @@ function actualizarResumen() {
    INICIO
 ========================= */
 
-async function iniciarGastos() {
+async function iniciarGastos(){
 
     await migrarGastosAntiguos();
 
