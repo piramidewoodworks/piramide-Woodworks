@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Cotizaciones | Pirámide Woodworks</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -69,6 +62,23 @@
       padding: 12px 18px;
       border-radius: 8px;
       font-weight: bold;
+    }
+
+    .boton-regresar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 9px 13px;
+      border: 1px solid #6b503b;
+      border-radius: 8px;
+      background: #211710;
+      color: #f4eee7;
+      font-weight: bold;
+    }
+
+    .boton-regresar:hover {
+      background: #35251a;
     }
 
     .boton-principal:hover {
@@ -301,7 +311,7 @@
 
     .abono-item {
       display: grid;
-      grid-template-columns: 90px 1fr auto;
+      grid-template-columns: 90px 1fr auto auto;
       gap: 10px;
       align-items: center;
       padding: 9px 0;
@@ -371,24 +381,6 @@
 
     .boton-abono:hover {
       background: #3b633d;
-    }
-
-    /* NUEVO: botón para convertir cotización en venta */
-    .boton-venta {
-      background: #365b3b;
-      color: #d7f0d8;
-      border: 1px solid #56815c;
-    }
-
-    .boton-venta:hover {
-      background: #46734c;
-    }
-
-    .boton-venta-registrada {
-      background: #252525;
-      color: #8fd18f;
-      border: 1px solid #3e573f;
-      cursor: default;
     }
 
     .boton-eliminar {
@@ -519,851 +511,6 @@
     }
 
     @media (max-width: 800px) {
-      .contenedor {
-        width: 94%;
-        padding: 22px 0 45px;
-      }
-
-      .encabezado {
-        gap: 14px;
-        margin-bottom: 20px;
-      }
-
-      .titulo {
-        font-size: 28px;
-      }
-
-      .resumen {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 8px;
-      }
-
-      .tarjeta-resumen {
-        padding: 12px 8px;
-      }
-
-      .tarjeta-resumen span {
-        font-size: 11px;
-        white-space: nowrap;
-      }
-
-      .tarjeta-resumen strong {
-        font-size: 22px;
-      }
-
-      .datos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .acciones {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 560px) {
-      .contenedor {
-        width: 94%;
-        padding-top: 16px;
-      }
-
-      .encabezado {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-
-      .encabezado > div {
-        min-width: 0;
-        width: auto;
-      }
-
-      .titulo {
-        font-size: 22px;
-        white-space: nowrap;
-      }
-
-      .subtitulo {
-        display: none;
-      }
-
-      .encabezado .boton-principal {
-        width: auto;
-        padding: 9px 11px;
-        font-size: 11px;
-        white-space: nowrap;
-      }
-
-      .barra {
-        display: grid;
-        grid-template-columns: minmax(0, 1.45fr) minmax(110px, .8fr);
-        gap: 7px;
-        margin-bottom: 14px;
-      }
-
-      .barra input,
-      .barra select {
-        min-width: 0;
-        width: 100%;
-        padding: 10px 9px;
-        font-size: 12px;
-      }
-
-      .resumen {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 5px;
-        margin-bottom: 15px;
-      }
-
-      .tarjeta-resumen {
-        padding: 8px 3px;
-        border-radius: 8px;
-      }
-
-      .tarjeta-resumen span {
-        font-size: 8px;
-        margin-bottom: 4px;
-      }
-
-      .tarjeta-resumen strong {
-        font-size: 18px;
-      }
-
-      .lista {
-        gap: 8px;
-      }
-
-      .cotizacion {
-        border-radius: 10px;
-      }
-
-      .cotizacion-cabecera {
-        padding: 12px 11px;
-        gap: 7px;
-      }
-
-      .cliente-linea {
-        gap: 5px;
-      }
-
-      .folio {
-        font-size: 9px;
-      }
-
-      .cliente {
-        font-size: 14px;
-      }
-
-      .fecha-cabecera {
-        font-size: 9px;
-      }
-
-      .telefono {
-        font-size: 10px;
-        margin-top: 3px;
-      }
-
-      .cabecera-derecha {
-        gap: 5px;
-      }
-
-      .estado {
-        padding: 4px 6px;
-        font-size: 8px;
-      }
-
-      .flecha {
-        width: 23px;
-        height: 23px;
-        font-size: 12px;
-      }
-
-      .cotizacion-detalle {
-        padding: 0 11px 12px;
-      }
-
-      .datos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 6px;
-        padding-top: 11px;
-      }
-
-      .dato {
-        padding: 8px;
-        border-radius: 6px;
-        min-height: 48px;
-      }
-
-      .dato small {
-        font-size: 8px;
-        margin-bottom: 3px;
-      }
-
-      .dato strong {
-        font-size: 11px;
-        line-height: 1.25;
-      }
-
-      .dato-total strong {
-        font-size: 14px;
-      }
-
-      .notas {
-        margin-top: 8px;
-        padding: 9px;
-        font-size: 10px;
-      }
-
-      .historial {
-        margin-top: 8px;
-        padding: 9px;
-      }
-
-      .historial-titulo {
-        font-size: 10px;
-      }
-
-      .abono-item {
-        grid-template-columns: 65px 1fr auto;
-        gap: 5px;
-        font-size: 9px;
-      }
-
-      .abono-info small {
-        font-size: 8px;
-      }
-
-      .abono-monto {
-        font-size: 10px;
-      }
-
-      .acciones {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 5px;
-        margin-top: 10px;
-      }
-
-      .boton-secundario,
-      .boton-eliminar {
-        width: 100%;
-        min-width: 0;
-        padding: 8px 2px;
-        font-size: 9px;
-        white-space: nowrap;
-      }
-
-      .modal {
-        padding: 10px;
-      }
-
-      .modal-contenido {
-        padding: 18px;
-        border-radius: 12px;
-      }
-
-      .formulario {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .campo.completo,
-      .mensaje-info,
-      .total-formulario {
-        grid-column: auto;
-      }
-
-      .modal-acciones {
-        flex-direction: column-reverse;
-      }
-
-      .modal-acciones button {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .titulo {
-        font-size: 20px;
-      }
-
-      .encabezado .boton-principal {
-        font-size: 10px;
-        padding: 8px 9px;
-      }
-
-      .barra {
-        grid-template-columns: minmax(0, 1.3fr) minmax(100px, .8fr);
-      }
-
-      .resumen {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 6px;
-      }
-
-      .tarjeta-resumen {
-        padding: 8px;
-      }
-
-      .tarjeta-resumen span {
-        font-size: 9px;
-      }
-
-      .tarjeta-resumen strong {
-        font-size: 18px;
-      }
-
-      .cliente {
-        font-size: 13px;
-      }
-
-      .fecha-cabecera {
-        width: 100%;
-      }
-
-      .estado {
-        display: none;
-      }
-
-      .acciones {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-  </style>
-
-</head>
-
-<body>
-
-<div class="contenedor">
-
- <div class="encabezado">
-
-  <div>
-
-    <h1 class="titulo">
-      Cotizaciones
-    </h1>
-
-    <p class="subtitulo">
-      Administración de cotizaciones de Pirámide Woodworks
-    </p>
-
-  </div>
-
-  <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-
-    <button
-      class="boton-secundario"
-     onclick="history.back()"
-
-      ← Regresar
-
-    </button>
-
-    <button
-      class="boton-principal"
-      onclick="abrirNuevaCotizacion()">
-
-      Nueva cotización
-
-    </button>
-
-  </div>
-
-</div>
-
-  <div class="resumen">
-
-    <div class="tarjeta-resumen">
-
-      <span>Total</span>
-
-      <strong id="resumenTotal">
-        0
-      </strong>
-
-    </div>
-
-    <div class="tarjeta-resumen">
-
-      <span>Pendientes</span>
-
-      <strong id="resumenPendientes">
-        0
-      </strong>
-
-    </div>
-
-    <div class="tarjeta-resumen">
-
-      <span>Cotizadas</span>
-
-      <strong id="resumenCotizadas">
-        0
-      </strong>
-
-    </div>
-
-    <div class="tarjeta-resumen">
-
-      <span>Entregadas</span>
-
-      <strong id="resumenEntregadas">
-        0
-      </strong>
-
-    </div>
-
-  </div>
-
-  <div class="barra">
-
-    <input
-      type="text"
-      id="buscador"
-      placeholder="Buscar cliente, teléfono o producto..."
-      oninput="mostrarCotizaciones()">
-
-    <select
-      id="filtroEstado"
-      onchange="mostrarCotizaciones()">
-
-      <option value="">
-        Todos los estados
-      </option>
-
-      <option value="Pendiente">
-        Pendiente
-      </option>
-
-      <option value="Contactado">
-        Contactado
-      </option>
-
-      <option value="Cotizado">
-        Cotizado
-      </option>
-
-      <option value="Cerrado">
-        Cerrado
-      </option>
-
-    </select>
-
-  </div>
-
-  <div
-    id="listaCotizaciones"
-    class="lista">
-  </div>
-
-</div>
-
-<!-- =========================================================
-     MODAL COTIZACIÓN
-========================================================= -->
-
-<div
-  id="modal"
-  class="modal">
-
-  <div class="modal-contenido">
-
-    <h2 id="tituloModal">
-      Nueva cotización
-    </h2>
-
-    <div class="formulario">
-
-      <div class="campo">
-
-        <label>
-          Cliente
-        </label>
-
-        <input
-          type="text"
-          id="cliente">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Teléfono
-        </label>
-
-        <input
-          type="text"
-          id="telefono">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Producto
-        </label>
-
-        <select
-          id="producto"
-          onchange="actualizarPrecioProducto()">
-
-          <option value="BottleBox">
-            BottleBox
-          </option>
-
-          <option value="TequilaBox">
-            TequilaBox
-          </option>
-
-          <option value="TequilaBox sin botella">
-            TequilaBox sin botella
-          </option>
-
-          <option value="GiftBox">
-            GiftBox
-          </option>
-
-          <option value="SlidingBox">
-            SlidingBox
-          </option>
-
-          <option value="Portallaves Home">
-            Portallaves Home
-          </option>
-
-          <option value="Mostrador QR & Códigos Personalizado">
-            Mostrador QR & Códigos Personalizado
-          </option>
-
-          <option value="Carruaje de Cenicienta">
-            Carruaje de Cenicienta
-          </option>
-
-          <option value="Mesa Carruaje Gigante">
-            Mesa Carruaje Gigante
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Cantidad
-        </label>
-
-        <input
-          type="number"
-          id="cantidad"
-          min="1"
-          value="1"
-          oninput="calcularTotal()">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Precio unitario
-        </label>
-
-        <input
-          type="number"
-          id="precio"
-          readonly>
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Descuento (%)
-        </label>
-
-        <input
-          type="number"
-          id="descuentoPorcentaje"
-          min="0"
-          max="100"
-          step="0.01"
-          value="0"
-          oninput="calcularTotal()">
-
-      </div>
-
-      <div class="campo">
-
-        <label id="etiquetaAbonoCotizacion">
-          Abono inicial
-        </label>
-
-        <input
-          type="number"
-          id="abono"
-          min="0"
-          step="0.01"
-          value="0"
-          oninput="calcularTotal()">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Fecha de cotización
-        </label>
-
-        <input
-          type="date"
-          id="fechaCotizacion">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Fecha de entrega
-        </label>
-
-        <input
-          type="date"
-          id="fechaEntrega">
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Estado
-        </label>
-
-        <select id="estado">
-
-          <option value="Pendiente">
-            Pendiente
-          </option>
-
-          <option value="Contactado">
-            Contactado
-          </option>
-
-          <option value="Cotizado">
-            Cotizado
-          </option>
-
-          <option value="Cerrado">
-            Cerrado
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="campo completo">
-
-        <label>
-          Notas
-        </label>
-
-        <textarea id="notas"></textarea>
-
-      </div>
-
-      <div
-        id="mensajeHistorialEdicion"
-        class="mensaje-info"
-        style="display:none;">
-      </div>
-
-      <div class="total-formulario">
-
-        <div class="linea-total">
-
-          <span>
-            Subtotal
-          </span>
-
-          <strong id="mostrarSubtotal">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Descuento
-          </span>
-
-          <strong id="mostrarDescuento">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Precio final por pieza
-          </span>
-
-          <strong id="mostrarPrecioFinal">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Total
-          </span>
-
-          <strong id="mostrarTotal">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Abonado
-          </span>
-
-          <strong id="mostrarAbono">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Restante
-          </span>
-
-          <strong id="mostrarRestante">
-            $0.00
-          </strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="modal-acciones">
-
-      <button
-        class="boton-secundario"
-        onclick="cerrarModal()">
-
-        Cancelar
-
-      </button>
-
-      <button
-        class="boton-principal"
-        onclick="guardarNuevaCotizacion()">
-
-        Guardar cotización
-
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- =========================================================
-     MODAL ABONO
-========================================================= -->
-
-<div
-  id="modalAbono"
-  class="modal">
-
-  <div class="modal-contenido">
-
-    <h2 id="tituloModalAbono">
-      Registrar abono
-    </h2>
-
-    <div class="formulario">
-
-      <div class="mensaje-info">
-
-        <strong id="folioAbono"></strong>
-
-        <br>
-
-        <span id="clienteAbono"></span>
-
-      </div>
-
-      <div class="total-formulario">
-
-        <div class="linea-total">
-
-          <span>
-            Total de la cotización
-          </span>
-
-          <strong id="abonoTotalCotizacion">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Abonado anteriormente
-          </span>
-
-          <strong id="abonoAnterior">
-            $0.00
-          </strong>
-
-        </div>
-
-        <div class="linea-total">
-
-          <span>
-            Restante antes del abono
-          </span>
-
-          <strong id="abonoRestanteAntes">
-            $0.00
-          </strong>
-
-        </div>
-
-      </div>
-
-      <div class="campo">
-
-        <label>
-          Monto del abono
-        </label>
-
-        <input
-          type="number"
-          id="montoAbono"
-          min="0.01"
-          step="0.01"
-          oninput="actualizarResumenAbono()">
-
-      </div>
-          @media (max-width: 800px) {
       .contenedor {
         width: 94%;
         padding: 22px 0 45px;
@@ -1684,6 +831,7 @@
 
   <div class="encabezado">
     <div>
+      <button type="button" class="boton-regresar" onclick="window.history.back()">← Regresar</button>
       <h1 class="titulo">Cotizaciones</h1>
       <p class="subtitulo">
         Administración de cotizaciones de Pirámide Woodworks
@@ -1784,6 +932,7 @@
           <option value="Mostrador QR & Códigos Personalizado">Mostrador QR & Códigos Personalizado</option>
           <option value="Carruaje de Cenicienta">Carruaje de Cenicienta</option>
           <option value="Mesa Carruaje Gigante">Mesa Carruaje Gigante</option>
+          <option value="Abejita Plim Plim">Abejita Plim Plim</option>
         </select>
       </div>
 
@@ -1976,7 +1125,8 @@
           step="0.01"
           oninput="actualizarResumenAbono()">
       </div>
-            <div class="campo">
+
+      <div class="campo">
         <label>Método de pago</label>
 
         <select id="metodoAbono">
@@ -2056,50 +1206,22 @@ let cotizaciones = [];
 let abonos = [];
 let editandoId = null;
 let cotizacionAbonoActual = null;
-let productosDisponibles = [];
-// =========================================================
-// NUEVO: ventas ya vinculadas con cotizaciones
-// =========================================================
-let ventasConvertidas = new Map();
 
-async function cargarProductos() {
+const preciosProductos = {
 
-  const { data, error } = await supabaseClient
-    .from("productos")
-    .select("*")
-    .order("nombre", { ascending: true });
+  "BottleBox": 600,
+  "TequilaBox": 1200,
+  "TequilaBox sin botella": 480,
+  "GiftBox": 550,
+  "SlidingBox": 400,
+  "Portallaves Home": 130,
+  "Mostrador QR & Códigos Personalizado": 120,
+  "Carruaje de Cenicienta": 155,
+  "Mesa Carruaje Gigante": 2500,
+  "Abejita Plim Plim": 105
 
-  if (error) {
-    console.error("Error cargando productos:", error);
-    alert("No se pudieron cargar los productos.");
-    return;
-  }
+};
 
-  productosDisponibles = data || [];
-
-  const select = document.getElementById("producto");
-
-  if (!select) {
-    console.error("No se encontró el selector de productos.");
-    return;
-  }
-
-  select.innerHTML = "";
-
-  productosDisponibles.forEach(producto => {
-
-    const option = document.createElement("option");
-
-    option.value = producto.nombre;
-    option.textContent = producto.nombre;
-
-    select.appendChild(option);
-
-  });
-
-  actualizarPrecioProducto();
-
-}
 /* =========================================================
    UTILIDADES
 ========================================================= */
@@ -2176,10 +1298,8 @@ function obtenerFolio(cotizacion) {
   const numero =
     Number(cotizacion.id || 0);
 
-  return (
-    "COT-" +
-    String(numero).padStart(3, "0")
-  );
+  // Folio consecutivo numérico, sin prefijos ni letras.
+  return String(numero).padStart(3, "0");
 }
 
 function escapeHtml(text) {
@@ -2250,21 +1370,19 @@ function obtenerTotalAbonado(cotizacion) {
 
 function actualizarPrecioProducto() {
 
-  const productoSeleccionado =
-    document.getElementById("producto").value;
+  const producto =
+    document.getElementById(
+      "producto"
+    ).value;
 
-  const productoEncontrado =
-    productosDisponibles.find(
-      producto => producto.nombre === productoSeleccionado
-    );
-
-  document.getElementById("precio").value =
-    productoEncontrado
-      ? productoEncontrado.precio
-      : 0;
+  document.getElementById(
+    "precio"
+  ).value =
+    preciosProductos[
+      producto
+    ] || 0;
 
   calcularTotal();
-
 }
 
 /* =========================================================
@@ -2562,14 +1680,6 @@ function mostrarCotizaciones() {
         const folio =
           obtenerFolio(c);
 
-        // =====================================================
-        // NUEVO: saber si ya existe una venta vinculada
-        // =====================================================
-        const ventaId =
-          ventasConvertidas.get(
-            Number(c.id)
-          );
-
         return `
 
           <div
@@ -2774,6 +1884,14 @@ function mostrarCotizaciones() {
                               )}
                             </div>
 
+                            <button
+                              type="button"
+                              class="boton-secundario"
+                              style="padding:5px 8px;font-size:11px;"
+                              onclick="detenerDespliegue(event); editarAbono(${a.id}, ${c.id});">
+                              Editar abono
+                            </button>
+
                           </div>
                         `
                       ).join("")}
@@ -2827,6 +1945,15 @@ function mostrarCotizaciones() {
                   Editar
                 </button>
 
+                ${restante <= 0.009 && c.estado !== "Cerrado" ? `
+                  <button
+                    type="button"
+                    class="boton-secundario"
+                    onclick="detenerDespliegue(event); marcarCotizacionCerrada(${c.id});">
+                    Marcar cerrada
+                  </button>
+                ` : ""}
+
                 <button
                   type="button"
                   class="boton-secundario"
@@ -2836,36 +1963,6 @@ function mostrarCotizaciones() {
                   ">
                   Ticket
                 </button>
-
-                <!-- =================================================
-                     NUEVO: CONVERTIR COTIZACION EN VENTA
-                ================================================== -->
-
-                ${
-                  ventaId
-                    ? `
-                      <button
-                        type="button"
-                        class="boton-secundario"
-                        disabled
-                        onclick="detenerDespliegue(event);">
-                        ✓ Venta registrada
-                      </button>
-                    `
-                    : c.estado === "Cerrado" && restante <= 0
-                      ? `
-                        <button
-                          type="button"
-                          class="boton-secundario"
-                          onclick="
-                            detenerDespliegue(event);
-                            convertirEnVenta(${c.id});
-                          ">
-                          🛒 Convertir en venta
-                        </button>
-                      `
-                      : ""
-                }
 
                 <button
                   type="button"
@@ -2889,336 +1986,6 @@ function mostrarCotizaciones() {
 }
 
 /* =========================================================
-   NUEVO: CONVERTIR COTIZACION EN VENTA
-========================================================= */
-
-async function convertirEnVenta(id) {
-
-  const cotizacion =
-    cotizaciones.find(
-      c =>
-        Number(c.id) ===
-        Number(id)
-    );
-
-  if (!cotizacion) {
-
-    alert(
-      "No se encontró la cotización."
-    );
-
-    return;
-  }
-
-  /*
-   * Solo permitimos convertir una cotización cerrada
-   * y completamente pagada.
-   */
-  const total =
-    Number(
-      cotizacion.total || 0
-    );
-
-  const abonado =
-    Math.min(
-      obtenerTotalAbonado(
-        cotizacion
-      ),
-      total
-    );
-
-  const restante =
-    Math.max(
-      0,
-      total -
-      abonado
-    );
-
-  if (
-    cotizacion.estado !== "Cerrado" ||
-    restante > 0
-  ) {
-
-    alert(
-      "La cotización debe estar cerrada y completamente pagada para convertirla en venta."
-    );
-
-    return;
-  }
-
-  /*
-   * Verificamos directamente en Supabase
-   * para evitar duplicados aunque la página
-   * todavía no se haya actualizado.
-   */
-  const {
-    data: ventaExistente,
-    error: errorBusqueda
-  } =
-    await supabaseClient
-      .from(
-        "ventas"
-      )
-      .select(
-        "id,cotizacion_id"
-      )
-      .eq(
-        "cotizacion_id",
-        cotizacion.id
-      )
-      .maybeSingle();
-
-  if (errorBusqueda) {
-
-    console.error(
-      errorBusqueda
-    );
-
-    alert(
-      "No se pudo comprobar si esta cotización ya tiene una venta."
-    );
-
-    return;
-  }
-
-  if (ventaExistente) {
-
-    ventasConvertidas.set(
-      Number(cotizacion.id),
-      ventaExistente.id
-    );
-
-    mostrarCotizaciones();
-
-    alert(
-      "Esta cotización ya está registrada como venta."
-    );
-
-    return;
-  }
-
-  const confirmar =
-    confirm(
-      `¿Convertir ${obtenerFolio(cotizacion)} en una venta?\n\n` +
-      `Cliente: ${cotizacion.cliente || "Sin nombre"}\n` +
-      `Producto: ${cotizacion.producto || "—"}\n` +
-      `Cantidad: ${cotizacion.cantidad || 0}\n` +
-      `Total: ${dinero(total)}`
-    );
-
-  if (!confirmar) {
-    return;
-  }
-
-  /*
-   * Obtenemos los métodos utilizados en los abonos.
-   * Si hubo un solo método, lo conservamos.
-   * Si hubo varios, usamos "Otro" y dejamos
-   * el detalle completo en las notas.
-   */
-  const historial =
-    obtenerAbonosCotizacion(
-      cotizacion.id
-    );
-
-  const metodos =
-    [
-      ...new Set(
-        historial
-          .map(
-            a =>
-              String(
-                a.metodo || ""
-              ).trim()
-          )
-          .filter(Boolean)
-      )
-    ];
-
-  let metodoVenta =
-    "Efectivo";
-
-  if (metodos.length === 1) {
-
-    metodoVenta =
-      metodos[0];
-
-  } else if (metodos.length > 1) {
-
-    metodoVenta =
-      "Otro";
-  }
-
-  /*
-   * Guardamos el detalle de los pagos dentro
-   * de las notas de la venta para que no se pierda
-   * la información aunque "ventas" maneje un solo
-   * campo de método de pago.
-   */
-  const detalleAbonos =
-    historial.length
-      ? historial
-          .map(
-            (a, indice) =>
-              `Pago ${indice + 1}: ${dinero(
-                a.monto
-              )} - ${
-                a.metodo ||
-                "Sin método"
-              }${
-                a.fecha
-                  ? ` (${fechaBonita(a.fecha)})`
-                  : ""
-              }`
-          )
-          .join(" | ")
-      : "Sin historial de pagos.";
-
-  const notasVenta =
-    [
-      `Venta generada desde ${obtenerFolio(cotizacion)}.`,
-      `Abonado total: ${dinero(abonado)}.`,
-      detalleAbonos,
-      cotizacion.notas
-        ? `Notas de cotización: ${cotizacion.notas}`
-        : ""
-    ]
-      .filter(Boolean)
-      .join(" ");
-
-  const cantidad =
-    Number(
-      cotizacion.cantidad || 0
-    );
-
-  const precio =
-    Number(
-      cotizacion.precio || 0
-    );
-
-  const subtotal =
-    Number(
-      cotizacion.subtotal ??
-      cantidad * precio
-    );
-
-  const descuento =
-    Number(
-      cotizacion.descuentoporcentaje ||
-      0
-    );
-
-  const montoDescuento =
-    Number(
-      cotizacion.monto_descuento ??
-      subtotal * descuento / 100
-    );
-
-  /*
-   * Insertamos la venta.
-   */
-  const {
-    data: ventaNueva,
-    error
-  } =
-    await supabaseClient
-      .from(
-        "ventas"
-      )
-      .insert({
-        cliente:
-          cotizacion.cliente ||
-          "",
-
-        producto:
-          cotizacion.producto ||
-          "",
-
-        cantidad,
-
-        precio,
-
-        descuento,
-
-        monto_descuento:
-          montoDescuento,
-
-        subtotal,
-
-        total,
-
-        metodo:
-          metodoVenta,
-
-        notas:
-          notasVenta,
-
-        fecha:
-          cotizacion.fechacotizacion ||
-          hoyLocalInput(),
-
-        /*
-         * ESTA ES LA VINCULACION
-         * CON LA COTIZACION.
-         */
-        cotizacion_id:
-          cotizacion.id
-      })
-      .select()
-      .single();
-
-  if (error) {
-
-    console.error(
-      "Error creando venta:",
-      error
-    );
-
-    /*
-     * El índice UNIQUE que agregamos a Supabase
-     * también protege contra duplicados.
-     */
-    if (
-      error.code === "23505"
-    ) {
-
-      alert(
-        "Esta cotización ya fue convertida en venta."
-      );
-
-      await cargarVentasVinculadas();
-
-      mostrarCotizaciones();
-
-      return;
-    }
-
-    alert(
-      "No se pudo registrar la venta:\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-  /*
-   * Guardamos inmediatamente la relación
-   * en memoria para actualizar la pantalla.
-   */
-  ventasConvertidas.set(
-    Number(cotizacion.id),
-    ventaNueva.id
-  );
-
-  mostrarCotizaciones();
-
-  alert(
-    `¡Venta registrada correctamente! 🎉\n\n` +
-    `${obtenerFolio(cotizacion)} quedó vinculada a la venta.`
-  );
-}
-
-/* =========================================================
    NUEVA COTIZACION
 ========================================================= */
 
@@ -3239,15 +2006,10 @@ function abrirNuevaCotizacion() {
     "telefono"
   ).value = "";
 
-  const selectProducto =
-    document.getElementById("producto");
-
-  if (
-    selectProducto &&
-    productosDisponibles.length > 0
-  ) {
-    selectProducto.selectedIndex = 0;
-  }
+  document.getElementById(
+    "producto"
+  ).value =
+    "BottleBox";
 
   document.getElementById(
     "cantidad"
@@ -3355,21 +2117,14 @@ function editarCotizacion(id) {
   ).value =
     c.cantidad || 1;
 
-  const productoEncontrado =
-  productosDisponibles.find(
-    producto =>
-      producto.nombre === c.producto
-  );
-
-document.getElementById(
-  "precio"
-).value =
-  c.precio ||
-  (
-    productoEncontrado
-      ? productoEncontrado.precio
-      : 0
-  );
+  document.getElementById(
+    "precio"
+  ).value =
+    c.precio ||
+    preciosProductos[
+      c.producto
+    ] ||
+    0;
 
   document.getElementById(
     "descuentoPorcentaje"
@@ -3393,6 +2148,11 @@ document.getElementById(
   campoAbono.value =
     totalAbonado;
 
+  /*
+   * Si ya existe historial, no permitimos cambiar
+   * manualmente el acumulado desde "Editar".
+   * Los nuevos pagos se registran desde "Abono".
+   */
   if (historial.length > 0) {
 
     campoAbono.readOnly = true;
@@ -3540,6 +2300,10 @@ async function guardarNuevaCotizacion() {
 
   let abono = 0;
 
+  /*
+   * En edición con historial, conservamos
+   * el acumulado real.
+   */
   if (editandoId) {
 
     const existente =
@@ -3611,6 +2375,10 @@ async function guardarNuevaCotizacion() {
     descuentoporcentaje:
       descuentoPorcentaje,
 
+    monto_descuento:
+      montoDescuento,
+
+    subtotal,
 
     total,
 
@@ -3642,73 +2410,78 @@ async function guardarNuevaCotizacion() {
   let error = null;
   let cotizacionGuardada = null;
 
-  if (editandoId) {
+  try {
+    if (editandoId) {
 
-    const respuesta =
-      await supabaseClient
-        .from(
-          "cotizaciones"
-        )
-        .update(
-          datos
-        )
-        .eq(
-          "id",
-          editandoId
-        )
-        .select()
-        .single();
+      const respuesta =
+        await supabaseClient
+          .from(
+            "cotizaciones"
+          )
+          .update(
+            datos
+          )
+          .eq(
+            "id",
+            editandoId
+          )
+          .select()
+          .single();
 
-    error =
-      respuesta.error;
+      error = respuesta.error;
+      cotizacionGuardada = respuesta.data;
 
-    cotizacionGuardada =
-      respuesta.data;
+    } else {
 
-  } else {
+      const respuesta =
+        await supabaseClient
+          .from(
+            "cotizaciones"
+          )
+          .insert(
+            datos
+          )
+          .select()
+          .single();
 
-    const respuesta =
-      await supabaseClient
-        .from(
-          "cotizaciones"
-        )
-        .insert(
-          datos
-        )
-        .select()
-        .single();
-
-    error =
-      respuesta.error;
-
-    cotizacionGuardada =
-      respuesta.data;
+      error = respuesta.error;
+      cotizacionGuardada = respuesta.data;
+    }
+  } catch (errorDeConexion) {
+    console.error("Error de conexión al guardar la cotización:", errorDeConexion);
+    alert(
+      "No se pudo conectar para guardar la cotización. Revisa tu conexión e inténtalo de nuevo.\n\nDetalle: " +
+      (errorDeConexion?.message || String(errorDeConexion))
+    );
+    return;
   }
 
   if (error) {
 
-   console.error(
-  "ERROR COMPLETO AL GUARDAR:",
-  error
-);
+    console.error(
+      "Error de Supabase al guardar la cotización:",
+      error
+    );
 
-alert(
-  "ERROR: " +
-  (error.message || "") +
-  "\nCódigo: " +
-  (error.code || "") +
-  "\nDetalles: " +
-  (error.details || "") +
-  "\nHint: " +
-  (error.hint || "")
-);
+    const detalleError =
+      error.message ||
+      error.details ||
+      error.hint ||
+      JSON.stringify(error);
+
     alert(
-      "No se pudo guardar la cotización."
+      "No se pudo guardar la cotización.\n\nDetalle: " +
+      detalleError +
+      (error.code ? "\nCódigo: " + error.code : "")
     );
 
     return;
   }
 
+  /*
+   * Si es una NUEVA cotización y se capturó un abono inicial,
+   * lo registramos también como evento en la tabla abonos.
+   */
   if (
     !editandoId &&
     abono > 0 &&
@@ -3937,6 +2710,132 @@ function actualizarResumenAbono() {
     dinero(restante);
 }
 
+/* =========================================================
+   CONVERTIR COTIZACIÓN LIQUIDADA EN VENTA
+========================================================= */
+
+async function convertirEnVenta(cotizacion) {
+
+  if (!cotizacion || !cotizacion.id) return false;
+
+  const total = Number(cotizacion.total || 0);
+  const abonado = Math.min(obtenerTotalAbonado(cotizacion), total);
+  const restante = Math.max(0, total - abonado);
+
+  // Solo se convierte una cotización liquidada.
+  if (restante > 0.009) return false;
+
+  let ventaExistente = null;
+
+  const consultaExistente = await supabaseClient
+    .from("ventas")
+    .select("*")
+    .eq("cotizacion_id", cotizacion.id)
+    .maybeSingle();
+
+  if (consultaExistente.error) {
+    console.error("No se pudo comprobar si la cotización ya tiene venta:", consultaExistente.error);
+    alert("El abono quedó guardado, pero no se pudo verificar la venta existente. Revisa la tabla ventas y la columna cotizacion_id.");
+    return false;
+  }
+
+  ventaExistente = consultaExistente.data;
+
+  if (!ventaExistente) {
+    const metodos = [...new Set(
+      obtenerAbonosCotizacion(cotizacion.id)
+        .map(a => String(a.metodo || "Otro"))
+    )];
+
+    const registroVenta = {
+      cotizacion_id: cotizacion.id,
+      cliente: cotizacion.cliente || "",
+      producto: cotizacion.producto || "",
+      cantidad: Number(cotizacion.cantidad || 1),
+      precio: Number(cotizacion.precio || 0),
+      descuento: Number(cotizacion.descuentoporcentaje || cotizacion.descuento || 0),
+      monto_descuento: Number(cotizacion.monto_descuento || 0),
+      subtotal: Number(cotizacion.subtotal || (Number(cotizacion.cantidad || 1) * Number(cotizacion.precio || 0))),
+      total,
+      metodo: metodos.length === 1 ? metodos[0] : (metodos.length > 1 ? "Mixto" : "Otro"),
+      notas: cotizacion.notas || "",
+      fecha: hoyLocalInput()
+    };
+
+    const creada = await supabaseClient
+      .from("ventas")
+      .insert(registroVenta)
+      .select("*")
+      .single();
+
+    if (creada.error) {
+      // Si otra ejecución la creó al mismo tiempo, recuperamos esa venta.
+      if (creada.error.code === "23505") {
+        const repetida = await supabaseClient
+          .from("ventas")
+          .select("*")
+          .eq("cotizacion_id", cotizacion.id)
+          .maybeSingle();
+
+        if (repetida.error || !repetida.data) {
+          console.error("Error recuperando venta duplicada:", repetida.error || creada.error);
+          alert("La cotización se liquidó, pero no se pudo confirmar la venta creada. Revisa la sección Ventas.");
+          return false;
+        }
+
+        ventaExistente = repetida.data;
+      } else {
+        console.error("Error convirtiendo cotización en venta:", creada.error);
+        alert("El último abono quedó registrado, pero no se pudo crear la venta. Revisa que la tabla ventas tenga la columna cotizacion_id y los campos de ventas.");
+        return false;
+      }
+    } else {
+      ventaExistente = creada.data;
+    }
+  }
+
+  // Copiamos los abonos al historial de pagos de la venta para que
+  // también aparezcan en ventas-admin.html, sin duplicarlos.
+  const pagosExistentes = await supabaseClient
+    .from("pagos_ventas")
+    .select("id")
+    .eq("venta_id", ventaExistente.id)
+    .limit(1);
+
+  if (pagosExistentes.error) {
+    console.error("No se pudo revisar el historial de pagos de la venta:", pagosExistentes.error);
+    alert("La venta quedó creada, pero no se pudo comprobar su historial de pagos en pagos_ventas.");
+    return true;
+  }
+
+  if (!pagosExistentes.data || pagosExistentes.data.length === 0) {
+    const pagosCotizacion = obtenerAbonosCotizacion(cotizacion.id);
+
+    if (pagosCotizacion.length) {
+      const registrosPagos = pagosCotizacion.map(a => ({
+        venta_id: ventaExistente.id,
+        monto: Number(a.monto || 0),
+        metodo: a.metodo || "Otro",
+        fecha: a.fecha || hoyLocalInput(),
+        notas: a.notas || ""
+      }));
+
+      const guardados = await supabaseClient
+        .from("pagos_ventas")
+        .insert(registrosPagos);
+
+      if (guardados.error) {
+        console.error("La venta se creó, pero no se copiaron sus pagos:", guardados.error);
+        alert("La venta se creó correctamente, pero no se pudo copiar el historial de abonos a pagos_ventas.");
+        return true;
+      }
+    }
+  }
+
+  console.log("Cotización liquidada convertida en venta:", ventaExistente.id);
+  return true;
+}
+
 async function guardarAbono() {
 
   if (!cotizacionAbonoActual) {
@@ -3980,10 +2879,7 @@ async function guardarAbono() {
       anterior
     );
 
-  if (
-    Math.round(monto * 100) >
-    Math.round(restanteAntes * 100)
-  ) {
+  if (monto > restanteAntes) {
 
     alert(
       "El abono no puede ser mayor que el restante."
@@ -4019,6 +2915,12 @@ async function guardarAbono() {
       nuevoAcumulado
     );
 
+  /*
+   * 1. Si la cotización es antigua y tiene un abono guardado
+   *    solamente en cotizaciones.abono, lo pasamos al historial
+   *    antes de registrar el nuevo pago. Así nunca se pierde
+   *    ni se duplica el dinero abonado.
+   */
   const historialActual =
     obtenerAbonosCotizacion(c.id);
 
@@ -4068,6 +2970,9 @@ async function guardarAbono() {
     }
   }
 
+  /*
+   * 2. Guardamos el nuevo evento de pago.
+   */
   const {
     data: abonoGuardado,
     error: errorAbono
@@ -4104,23 +3009,24 @@ async function guardarAbono() {
     return;
   }
 
+  /*
+   * 3. Actualizamos el acumulado de la cotización
+   * para mantener compatibilidad con el sistema anterior.
+   */
+  const actualizacionCotizacion = {
+    abono: nuevoAcumulado
+  };
+
+  // El pago total NO cierra el registro automáticamente.
+  // La persona usuaria puede marcarlo como cerrado cuando lo decida.
+
   const {
     error: errorCotizacion
   } =
     await supabaseClient
-      .from(
-        "cotizaciones"
-      )
-      .update({
-        abono: nuevoAcumulado,
-        ...(nuevoRestante <= 0
-          ? { estado: "Cerrado" }
-          : {})
-      })
-      .eq(
-        "id",
-        c.id
-      );
+      .from("cotizaciones")
+      .update(actualizacionCotizacion)
+      .eq("id", c.id);
 
   if (errorCotizacion) {
 
@@ -4141,17 +3047,26 @@ async function guardarAbono() {
 
   await cargarCotizaciones();
 
+  /*
+   * 4. Si este fue el último abono, convertimos la cotización
+   *    en venta automáticamente. La función comprueba que no
+   *    exista ya una venta ligada a esta cotización.
+   */
   const cotizacionActualizada =
     cotizaciones.find(
-      x =>
-        Number(x.id) ===
-        Number(c.id)
+      x => Number(x.id) === Number(c.id)
     ) || {
       ...c,
-      abono:
-        nuevoAcumulado
+      abono: nuevoAcumulado
     };
 
+  if (nuevoRestante <= 0.009) {
+    await convertirEnVenta(cotizacionActualizada);
+  }
+
+  /*
+   * 5. Generamos el comprobante del pago.
+   */
   const tipoRecibo =
     nuevoRestante <= 0
       ? "pago final"
@@ -4179,6 +3094,158 @@ async function guardarAbono() {
 }
 
 /* =========================================================
+   EDITAR ABONO EXISTENTE
+========================================================= */
+
+async function editarAbono(abonoId, cotizacionId) {
+  const original = abonos.find(a => Number(a.id) === Number(abonoId));
+  if (!original) {
+    alert("No encontré ese abono en el historial. Actualiza la página e inténtalo de nuevo.");
+    return;
+  }
+
+  const montoTexto = prompt("Monto del abono:", String(Number(original.monto || 0)));
+  if (montoTexto === null) return;
+  const monto = Number(montoTexto);
+  if (!Number.isFinite(monto) || monto < 0) {
+    alert("Escribe un monto válido, igual o mayor que cero.");
+    return;
+  }
+
+  const fecha = prompt("Fecha del abono (AAAA-MM-DD):", String(original.fecha || hoyLocalInput()).slice(0, 10));
+  if (fecha === null) return;
+  const metodo = prompt("Método de pago:", String(original.metodo || "Otro"));
+  if (metodo === null) return;
+  const notas = prompt("Notas del abono:", String(original.notas || ""));
+  if (notas === null) return;
+
+  const confirmar = confirm("¿Guardar los cambios de este abono?");
+  if (!confirmar) return;
+
+  const { error } = await supabaseClient
+    .from("abonos")
+    .update({ monto, fecha, metodo: metodo.trim() || "Otro", notas })
+    .eq("id", abonoId)
+    .eq("cotizacion_id", cotizacionId);
+
+  if (error) {
+    console.error("No se pudo editar el abono:", error);
+    alert("No se pudo guardar el cambio del abono. Revisa los permisos de la tabla abonos.");
+    return;
+  }
+
+  // Recalcular el acumulado usando el historial actualizado.
+  const { data: pagosActualizados, error: errorPagos } = await supabaseClient
+    .from("abonos")
+    .select("id, monto, fecha, metodo, notas, cotizacion_id")
+    .eq("cotizacion_id", cotizacionId);
+
+  if (errorPagos) {
+    console.error(errorPagos);
+    alert("El abono se editó, pero no pude recalcular el acumulado. Actualiza la página y revisa la cotización.");
+    await cargarCotizaciones();
+    return;
+  }
+
+  const acumulado = (pagosActualizados || []).reduce((sum, a) => sum + Number(a.monto || 0), 0);
+  const cotizacionBase = cotizaciones.find(x => Number(x.id) === Number(cotizacionId));
+  if (cotizacionBase && acumulado > Number(cotizacionBase.total || 0) + 0.009) {
+    // Revertimos el cambio si el total de abonos excedería el total de la cotización.
+    await supabaseClient.from("abonos").update({
+      monto: Number(original.monto || 0),
+      fecha: original.fecha,
+      metodo: original.metodo || "Otro",
+      notas: original.notas || ""
+    }).eq("id", abonoId).eq("cotizacion_id", cotizacionId);
+    await cargarCotizaciones();
+    alert("La suma de los abonos no puede ser mayor que el total de la cotización. Dejé el abono como estaba.");
+    return;
+  }
+  const { error: errorCotizacion } = await supabaseClient
+    .from("cotizaciones")
+    .update({ abono: acumulado })
+    .eq("id", cotizacionId);
+
+  if (errorCotizacion) {
+    console.error(errorCotizacion);
+    alert("El abono se editó, pero no se pudo actualizar el acumulado de la cotización.");
+  }
+
+  // Si ya existe una venta ligada, actualizar su pago correspondiente para conservar el historial.
+  const { data: venta } = await supabaseClient
+    .from("ventas")
+    .select("id")
+    .eq("cotizacion_id", cotizacionId)
+    .maybeSingle();
+
+  if (venta) {
+    const { data: pagosVenta } = await supabaseClient
+      .from("pagos_ventas")
+      .select("id, monto, fecha, metodo, notas")
+      .eq("venta_id", venta.id);
+    const pagoCoincidente = (pagosVenta || []).find(p =>
+      Number(p.monto || 0) === Number(original.monto || 0) &&
+      String(p.fecha || "").slice(0, 10) === String(original.fecha || "").slice(0, 10) &&
+      String(p.metodo || "Otro") === String(original.metodo || "Otro")
+    );
+    if (pagoCoincidente) {
+      const { error: errorPagoVenta } = await supabaseClient
+        .from("pagos_ventas")
+        .update({ monto, fecha, metodo: metodo.trim() || "Otro", notas })
+        .eq("id", pagoCoincidente.id);
+      if (errorPagoVenta) console.error("El abono se editó, pero no se pudo sincronizar en pagos_ventas:", errorPagoVenta);
+    }
+  }
+
+  await cargarCotizaciones();
+  const cotizacionActual = cotizaciones.find(x => Number(x.id) === Number(cotizacionId));
+  if (cotizacionActual && Math.max(0, Number(cotizacionActual.total || 0) - obtenerTotalAbonado(cotizacionActual)) <= 0.009) {
+    await convertirEnVenta(cotizacionActual);
+  }
+  await cargarCotizaciones();
+  alert("Abono actualizado correctamente.");
+}
+
+/* =========================================================
+   CERRAR COTIZACIÓN / VENTA MANUALMENTE
+========================================================= */
+
+async function marcarCotizacionCerrada(id) {
+  const c = cotizaciones.find(x => Number(x.id) === Number(id));
+  if (!c) return;
+
+  const restante = Math.max(0, Number(c.total || 0) - obtenerTotalAbonado(c));
+  if (restante > 0.009) {
+    alert("Todavía hay saldo pendiente. No se puede marcar como cerrada.");
+    return;
+  }
+  if (!confirm("El saldo está en $0.00. ¿Quieres marcar esta cotización como CERRADA?")) return;
+
+  const { error } = await supabaseClient
+    .from("cotizaciones")
+    .update({ estado: "Cerrado" })
+    .eq("id", id);
+
+  if (error) {
+    console.error("No se pudo cerrar la cotización:", error);
+    alert("No se pudo marcar como cerrada. Revisa los permisos de la tabla cotizaciones.");
+    return;
+  }
+
+  // Si la venta ya fue creada desde esta cotización, marcarla también como cerrada.
+  const { error: errorVenta } = await supabaseClient
+    .from("ventas")
+    .update({ estado: "Cerrado" })
+    .eq("cotizacion_id", id);
+  if (errorVenta) {
+    console.warn("La cotización quedó cerrada, pero no se pudo actualizar el estado de la venta:", errorVenta);
+  }
+
+  await cargarCotizaciones();
+  alert("Cotización marcada como CERRADA.");
+}
+
+/* =========================================================
    ELIMINAR COTIZACION
 ========================================================= */
 
@@ -4192,25 +3259,8 @@ async function eliminarCotizacion(id) {
   if (!confirmar) return;
 
   /*
-   * Si ya fue convertida en venta, no permitimos
-   * eliminar la cotización sin antes quitar la
-   * relación con la venta.
+   * Primero eliminamos los abonos relacionados.
    */
-  const ventaVinculada =
-    ventasConvertidas.get(
-      Number(id)
-    );
-
-  if (ventaVinculada) {
-
-    alert(
-      "Esta cotización ya está vinculada a una venta. " +
-      "Primero elimina la venta desde el apartado Ventas."
-    );
-
-    return;
-  }
-
   const {
     error: errorAbonos
   } =
@@ -4328,9 +3378,12 @@ async function crearPdfCotizacion(
     );
 
   const descuento =
-    subtotal *
-    porcentaje /
-    100;
+    Number(
+      cotizacion.monto_descuento ||
+      subtotal *
+      porcentaje /
+      100
+    );
 
   const total =
     Number(
@@ -6614,61 +5667,6 @@ async function cargarAbonos() {
 }
 
 /* =========================================================
-   NUEVO: CARGAR VENTAS VINCULADAS
-========================================================= */
-
-async function cargarVentasVinculadas() {
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from(
-        "ventas"
-      )
-      .select(
-        "id,cotizacion_id"
-      )
-      .not(
-        "cotizacion_id",
-        "is",
-        null
-      );
-
-  if (error) {
-
-    console.error(
-      "Error cargando ventas vinculadas:",
-      error
-    );
-
-    ventasConvertidas =
-      new Map();
-
-    return;
-  }
-
-  ventasConvertidas =
-    new Map(
-      (data || [])
-        .filter(
-          venta =>
-            venta.cotizacion_id !== null &&
-            venta.cotizacion_id !== undefined
-        )
-        .map(
-          venta => [
-            Number(
-              venta.cotizacion_id
-            ),
-            venta.id
-          ]
-        )
-    );
-}
-
-/* =========================================================
    CARGAR COTIZACIONES
 ========================================================= */
 
@@ -6713,11 +5711,6 @@ async function cargarCotizaciones() {
 
   await cargarAbonos();
 
-  // =======================================================
-  // NUEVO: cargar también las ventas relacionadas
-  // =======================================================
-  await cargarVentasVinculadas();
-
   actualizarResumen();
 
   mostrarCotizaciones();
@@ -6746,11 +5739,11 @@ async function iniciar() {
     return;
   }
 
-  await cargarProductos();
   await cargarCotizaciones();
 }
 
 iniciar();
+
 </script>
 
 </body>
