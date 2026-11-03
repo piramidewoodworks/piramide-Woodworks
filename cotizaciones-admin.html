@@ -822,6 +822,28 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
+
+
+    /* CALCULADORA INTERNA */
+    .calc-panel{display:none;margin:24px 0;background:#211710;border:1px solid #6b503b;border-radius:14px;padding:22px}
+    .calc-panel.activa{display:block}
+    .calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .calc-campo{display:flex;flex-direction:column;gap:6px}
+    .calc-campo label,.calc-panel label{font-size:12px;color:#d1b27d;font-weight:bold}
+    .calc-campo input,.material-fila input{width:100%;min-width:0;padding:10px;border-radius:7px;border:1px solid #5a4433;background:#17110d;color:#fff}
+    .calc-seccion-titulo{color:#f3c27b;margin:22px 0 12px;font-size:17px}
+    .material-fila{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr auto;gap:8px;margin:9px 0;align-items:end}
+    .material-fila label{display:block;margin-bottom:5px}
+    .calc-acciones{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .calc-secundario{background:#382719;color:#f4eee7;border:1px solid #9a7045;padding:10px 13px;border-radius:8px;font-weight:bold}
+    .calc-resultados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px}
+    .calc-resultado{background:#17110d;border:1px solid #59412d;border-radius:10px;padding:13px}
+    .calc-resultado span{display:block;color:#bdb2a8;font-size:12px;margin-bottom:6px}
+    .calc-resultado strong{color:#f3c27b;font-size:21px}
+    .calc-nota{font-size:12px;color:#bdb2a8;line-height:1.5;margin-top:12px}
+    .calc-borrar{background:#63352a;color:white;border:0;border-radius:7px;padding:8px 10px}
+    @media(max-width:700px){.calc-grid{grid-template-columns:1fr}.material-fila{grid-template-columns:1fr 1fr}.material-fila .calc-campo:first-child{grid-column:1/-1}.calc-resultados{grid-template-columns:1fr}.calc-acciones button{flex:1}}
+
   </style>
 </head>
 
@@ -843,6 +865,8 @@
       onclick="abrirNuevaCotizacion()">
       Nueva cotización
     </button>
+
+    <button type="button" class="calc-secundario" onclick="alternarCalculadora()">🧮 Calculadora de precios</button>
   </div>
 
   <div class="resumen">
@@ -893,6 +917,42 @@
 
   <div id="listaCotizaciones" class="lista"></div>
 
+  <section id="calculadoraPrecios" class="calc-panel">
+    <h2 class="titulo" style="font-size:24px">Calculadora de precios</h2>
+    <p class="subtitulo">Calcula tus costos y el precio para el cliente. Tus costos y ganancias no aparecerán en la notita.</p>
+    <div class="calc-grid" style="margin-top:18px">
+      <div class="calc-campo"><label for="calcProducto">Producto</label><input id="calcProducto" placeholder="Ej. Recuerdos personalizados"></div>
+      <div class="calc-campo"><label for="calcCantidad">Cantidad a fabricar</label><input id="calcCantidad" type="number" min="1" value="1" oninput="calcularPrecioInterno()"></div>
+    </div>
+    <h3 class="calc-seccion-titulo">Materiales</h3>
+    <div id="calcMateriales"></div>
+    <div class="calc-acciones"><button type="button" class="calc-secundario" onclick="agregarFilaMaterial()">+ Agregar material</button><button type="button" class="calc-secundario" onclick="guardarMaterialesBiblioteca()">Guardar materiales para reutilizar</button></div>
+    <p class="calc-nota">En cada material indica cuánto cuesta el envase/paquete, cuánto contiene y cuánto consumes en toda esta producción. Ejemplo: pegamento de $120 por 1,000 ml; si usas 30 ml, solo se cargan $3.60.</p>
+    <h3 class="calc-seccion-titulo">Trabajo y gastos</h3>
+    <div class="calc-grid">
+      <div class="calc-campo"><label for="calcHorasDiseno">Horas de diseño (total)</label><input id="calcHorasDiseno" type="number" min="0" step="0.1" value="0" oninput="calcularPrecioInterno()"></div>
+      <div class="calc-campo"><label for="calcTarifaHora">Costo por hora de trabajo ($)</label><input id="calcTarifaHora" type="number" min="0" step="0.01" value="0" oninput="calcularPrecioInterno()"></div>
+      <div class="calc-campo"><label for="calcHorasLaser">Horas de máquina láser</label><input id="calcHorasLaser" type="number" min="0" step="0.1" value="0" oninput="calcularPrecioInterno()"></div>
+      <div class="calc-campo"><label for="calcCostoLaser">Costo por hora de máquina ($)</label><input id="calcCostoLaser" type="number" min="0" step="0.01" value="0" oninput="calcularPrecioInterno()"></div>
+      <div class="calc-campo"><label for="calcOtros">Otros gastos de toda la producción ($)</label><input id="calcOtros" type="number" min="0" step="0.01" value="0" oninput="calcularPrecioInterno()"></div>
+      <div class="calc-campo"><label for="calcGanancia">Ganancia sobre costo (%)</label><input id="calcGanancia" type="number" min="0" step="1" value="40" oninput="calcularPrecioInterno()"></div>
+    </div>
+    <div class="calc-resultados">
+      <div class="calc-resultado"><span>Costo total de producción</span><strong id="calcCostoTotal">$0.00</strong></div>
+      <div class="calc-resultado"><span>Costo por pieza</span><strong id="calcCostoPieza">$0.00</strong></div>
+      <div class="calc-resultado"><span>Precio sugerido por pieza</span><strong id="calcPrecioPieza">$0.00</strong></div>
+      <div class="calc-resultado"><span>Precio total al cliente</span><strong id="calcPrecioTotal">$0.00</strong></div>
+      <div class="calc-resultado"><span>Ganancia estimada total</span><strong id="calcGananciaTotal">$0.00</strong></div>
+      <div class="calc-resultado"><span>Precio sugerido por 5+ piezas</span><strong id="calcMayoreo">$0.00</strong></div>
+    </div>
+    <div class="calc-acciones">
+      <button type="button" class="boton-principal" onclick="generarNotitaPNG()">Generar notita PNG</button>
+      <button type="button" class="calc-secundario" onclick="limpiarCalculadora()">Limpiar cálculo</button>
+    </div>
+    <p class="calc-nota">El precio de mayoreo usa un descuento orientativo del 5% sobre el precio sugerido. Puedes ajustar el precio manualmente al cotizar. Los materiales guardados se conservan en este navegador; más adelante podemos conectarlos a una tabla de inventario en Supabase.</p>
+  </section>
+
+
 </div>
 
 <!-- =========================================================
@@ -922,18 +982,9 @@
       <div class="campo">
         <label>Producto</label>
 
-        <select id="producto" onchange="actualizarPrecioProducto()">
-          <option value="BottleBox">BottleBox</option>
-          <option value="TequilaBox">TequilaBox</option>
-          <option value="TequilaBox sin botella">TequilaBox sin botella</option>
-          <option value="GiftBox">GiftBox</option>
-          <option value="SlidingBox">SlidingBox</option>
-          <option value="Portallaves Home">Portallaves Home</option>
-          <option value="Mostrador QR & Códigos Personalizado">Mostrador QR & Códigos Personalizado</option>
-          <option value="Carruaje de Cenicienta">Carruaje de Cenicienta</option>
-          <option value="Mesa Carruaje Gigante">Mesa Carruaje Gigante</option>
-          <option value="Abejita Plim Plim">Abejita Plim Plim</option>
-        </select>
+       <select id="producto" onchange="actualizarPrecioProducto()">
+  <option value="">Cargando productos...</option>
+</select>
       </div>
 
       <div class="campo">
@@ -1207,20 +1258,83 @@ let abonos = [];
 let editandoId = null;
 let cotizacionAbonoActual = null;
 
-const preciosProductos = {
+// Productos cargados directamente desde Supabase
+let productosDisponibles = [];
 
-  "BottleBox": 600,
-  "TequilaBox": 1200,
-  "TequilaBox sin botella": 480,
-  "GiftBox": 550,
-  "SlidingBox": 400,
-  "Portallaves Home": 130,
-  "Mostrador QR & Códigos Personalizado": 120,
-  "Carruaje de Cenicienta": 155,
-  "Mesa Carruaje Gigante": 2500,
-  "Abejita Plim Plim": 105
+function obtenerNombreProducto(producto) {
+  return String(
+    producto.nombre ??
+    producto.name ??
+    producto.producto ??
+    producto.titulo ??
+    ""
+  ).trim();
+}
 
-};
+function obtenerPrecioProducto(producto) {
+  return Number(
+    producto.precio ??
+    producto.price ??
+    producto.precio_venta ??
+    producto.precio_publico ??
+    0
+  );
+}
+
+async function cargarProductosCotizacion() {
+  const selector = document.getElementById("producto");
+
+  selector.innerHTML = '<option value="">Cargando...</option>';
+
+  const { data, error } = await supabaseClient
+    .from("productos")
+    .select("*");
+
+  if (error) {
+    console.error("Error cargando productos:", error);
+    selector.innerHTML =
+      '<option value="">No se pudieron cargar los productos</option>';
+
+    alert(
+      "No se pudieron cargar los productos. Revisa la tabla y los permisos de Supabase."
+    );
+    return;
+  }
+
+  productosDisponibles = (data || [])
+    .map(producto => ({
+      ...producto,
+      nombreCotizacion: obtenerNombreProducto(producto),
+      precioCotizacion: obtenerPrecioProducto(producto)
+    }))
+    .filter(producto => producto.nombreCotizacion !== "");
+
+  selector.innerHTML = "";
+
+  if (productosDisponibles.length === 0) {
+    selector.innerHTML =
+      '<option value="">No hay productos registrados</option>';
+    document.getElementById("precio").value = "";
+    calcularTotal();
+    return;
+  }
+
+  productosDisponibles.forEach(producto => {
+    const opcion = document.createElement("option");
+    opcion.value = producto.nombreCotizacion;
+    opcion.textContent = producto.nombreCotizacion;
+    selector.appendChild(opcion);
+  });
+
+  selector.selectedIndex = 0;
+  actualizarPrecioProducto();
+}
+
+function buscarProductoCotizacion(nombre) {
+  return productosDisponibles.find(
+    producto => producto.nombreCotizacion === nombre
+  );
+}
 
 /* =========================================================
    UTILIDADES
@@ -1369,18 +1483,14 @@ function obtenerTotalAbonado(cotizacion) {
 ========================================================= */
 
 function actualizarPrecioProducto() {
+  const nombreProducto = document.getElementById("producto").value;
 
-  const producto =
-    document.getElementById(
-      "producto"
-    ).value;
+  const producto = productosDisponibles.find(
+    p => p.nombreCotizacion === nombreProducto
+  );
 
-  document.getElementById(
-    "precio"
-  ).value =
-    preciosProductos[
-      producto
-    ] || 0;
+  document.getElementById("precio").value =
+    producto ? producto.precioCotizacion : "";
 
   calcularTotal();
 }
@@ -2006,10 +2116,7 @@ function abrirNuevaCotizacion() {
     "telefono"
   ).value = "";
 
-  document.getElementById(
-    "producto"
-  ).value =
-    "BottleBox";
+ document.getElementById("producto").selectedIndex = 0;
 
   document.getElementById(
     "cantidad"
@@ -2117,14 +2224,12 @@ function editarCotizacion(id) {
   ).value =
     c.cantidad || 1;
 
-  document.getElementById(
-    "precio"
-  ).value =
-    c.precio ||
-    preciosProductos[
-      c.producto
-    ] ||
-    0;
+ const productoGuardado = buscarProductoCotizacion(c.producto);
+
+document.getElementById("precio").value =
+  c.precio ??
+  productoGuardado?.precioCotizacion ??
+  0;
 
   document.getElementById(
     "descuentoPorcentaje"
@@ -5739,10 +5844,119 @@ async function iniciar() {
     return;
   }
 
-  await cargarCotizaciones();
+ await cargarProductosCotizacion();
+await cargarCotizaciones();
 }
 
 iniciar();
+
+
+/* =========================================================
+   CALCULADORA INTERNA DE PRECIOS
+========================================================= */
+let bibliotecaMateriales = JSON.parse(localStorage.getItem("pw_biblioteca_materiales") || "[]");
+let ultimoCalculoPW = null;
+
+function alternarCalculadora(){
+  const panel=document.getElementById("calculadoraPrecios");
+  panel.classList.toggle("activa");
+  if(panel.classList.contains("activa")){
+    if(!document.querySelector(".material-fila")) agregarFilaMaterial();
+    panel.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+}
+function numeroPW(id){return Math.max(0,Number(document.getElementById(id)?.value)||0)}
+function dineroPW(n){return new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(Number(n)||0)}
+function agregarFilaMaterial(datos={}){
+  const cont=document.getElementById("calcMateriales");
+  const fila=document.createElement("div"); fila.className="material-fila";
+  fila.innerHTML=`
+    <div class="calc-campo"><label>Material</label><input class="mat-nombre" list="listaMaterialesPW" placeholder="Ej. Pegamento" value="${String(datos.nombre||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;")}" onchange="autocompletarMaterialPW(this)" oninput="calcularPrecioInterno()"></div>
+    <div class="calc-campo"><label>Costo del paquete ($)</label><input class="mat-costo" type="number" min="0" step="0.01" placeholder="120" value="${datos.costo??""}" oninput="calcularPrecioInterno()"></div>
+    <div class="calc-campo"><label>Contenido del paquete</label><input class="mat-contenido" type="number" min="0.001" step="any" placeholder="1000" value="${datos.contenido??""}" oninput="calcularPrecioInterno()"></div>
+    <div class="calc-campo"><label>Consumo total</label><input class="mat-consumo" type="number" min="0" step="any" placeholder="30" value="${datos.consumo??""}" oninput="calcularPrecioInterno()"></div>
+    <button type="button" class="calc-borrar" title="Quitar material" onclick="this.parentElement.remove();calcularPrecioInterno()">×</button>`;
+  cont.appendChild(fila); calcularPrecioInterno();
+}
+function autocompletarMaterialPW(input){
+  const m=bibliotecaMateriales.find(x=>x.nombre.toLowerCase()===input.value.trim().toLowerCase());
+  if(!m)return; const f=input.closest(".material-fila");
+  f.querySelector(".mat-costo").value=m.costo;
+  f.querySelector(".mat-contenido").value=m.contenido;
+  calcularPrecioInterno();
+}
+function guardarMaterialesBiblioteca(){
+  document.querySelectorAll(".material-fila").forEach(f=>{
+    const nombre=f.querySelector(".mat-nombre").value.trim();
+    const costo=Number(f.querySelector(".mat-costo").value)||0;
+    const contenido=Number(f.querySelector(".mat-contenido").value)||0;
+    if(nombre && costo>0 && contenido>0){
+      const item={nombre,costo,contenido};
+      const i=bibliotecaMateriales.findIndex(x=>x.nombre.toLowerCase()===nombre.toLowerCase());
+      if(i>=0) bibliotecaMateriales[i]=item; else bibliotecaMateriales.push(item);
+    }
+  });
+  localStorage.setItem("pw_biblioteca_materiales",JSON.stringify(bibliotecaMateriales));
+  alert("Materiales guardados para reutilizarlos en este navegador.");
+}
+function calcularPrecioInterno(){
+  const cantidad=Math.max(1,numeroPW("calcCantidad"));
+  let materiales=0;
+  document.querySelectorAll(".material-fila").forEach(f=>{
+    const costo=Number(f.querySelector(".mat-costo").value)||0;
+    const contenido=Number(f.querySelector(".mat-contenido").value)||0;
+    const consumo=Number(f.querySelector(".mat-consumo").value)||0;
+    if(contenido>0) materiales+=costo/contenido*consumo;
+  });
+  const mano=numeroPW("calcHorasDiseno")*numeroPW("calcTarifaHora");
+  const maquina=numeroPW("calcHorasLaser")*numeroPW("calcCostoLaser");
+  const otros=numeroPW("calcOtros");
+  const costoTotal=materiales+mano+maquina+otros;
+  const costoPieza=costoTotal/cantidad;
+  const margen=numeroPW("calcGanancia")/100;
+  const precioPieza=costoPieza*(1+margen);
+  const precioTotal=precioPieza*cantidad;
+  const ganancia=precioTotal-costoTotal;
+  const mayoreo=precioPieza*.95;
+  const valores={cantidad,materiales,mano,maquina,otros,costoTotal,costoPieza,precioPieza,precioTotal,ganancia,mayoreo};
+  ultimoCalculoPW=valores;
+  document.getElementById("calcCostoTotal").textContent=dineroPW(costoTotal);
+  document.getElementById("calcCostoPieza").textContent=dineroPW(costoPieza);
+  document.getElementById("calcPrecioPieza").textContent=dineroPW(precioPieza);
+  document.getElementById("calcPrecioTotal").textContent=dineroPW(precioTotal);
+  document.getElementById("calcGananciaTotal").textContent=dineroPW(ganancia);
+  document.getElementById("calcMayoreo").textContent=dineroPW(mayoreo);
+  return valores;
+}
+function limpiarCalculadora(){
+  ["calcProducto","calcHorasDiseno","calcTarifaHora","calcHorasLaser","calcCostoLaser","calcOtros"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("calcCantidad").value=1;
+  document.getElementById("calcGanancia").value=40;
+  document.getElementById("calcMateriales").innerHTML="";
+  agregarFilaMaterial();
+}
+async function generarNotitaPNG(){
+  const v=calcularPrecioInterno();
+  const producto=document.getElementById("calcProducto").value.trim()||"Producto personalizado";
+  const canvas=document.createElement("canvas"); canvas.width=1000; canvas.height=1200;
+  const ctx=canvas.getContext("2d");
+  ctx.fillStyle="#171717";ctx.fillRect(0,0,1000,1200);
+  ctx.fillStyle="#b28a52";ctx.fillRect(35,35,930,1130);
+  ctx.fillStyle="#171717";ctx.fillRect(48,48,904,1104);
+  try{const logo=new Image();logo.src="imagenes/logo.jpeg";await new Promise((resolve,reject)=>{logo.onload=resolve;logo.onerror=reject});ctx.save();ctx.beginPath();ctx.arc(500,230,115,0,Math.PI*2);ctx.clip();ctx.drawImage(logo,385,115,230,230);ctx.restore();}catch(e){console.warn("No se pudo cargar el logo para la notita",e)}
+  ctx.textAlign="center";ctx.fillStyle="#d1b27d";ctx.font="bold 48px Arial";ctx.fillText("PIRÁMIDE WOODWORKS",500,420);
+  ctx.fillStyle="#f4eee7";ctx.font="bold 42px Arial";ctx.fillText("COTIZACIÓN",500,535);
+  ctx.fillStyle="#bdb2a8";ctx.font="28px Arial";ctx.fillText("Gracias por tu interés",500,590);
+  ctx.textAlign="left";ctx.fillStyle="#d1b27d";ctx.font="bold 25px Arial";ctx.fillText("PRODUCTO",120,700);
+  ctx.fillStyle="#ffffff";ctx.font="34px Arial";let nombre=producto;if(ctx.measureText(nombre).width>750){while(nombre.length>3&&ctx.measureText(nombre+"…").width>750)nombre=nombre.slice(0,-1);nombre+="…"}ctx.fillText(nombre,120,755);
+  ctx.fillStyle="#bdb2a8";ctx.font="28px Arial";ctx.fillText("Cantidad: "+v.cantidad+" piezas",120,830);
+  ctx.fillText("Precio por pieza: "+dineroPW(v.precioPieza),120,885);
+  ctx.fillStyle="#b28a52";ctx.fillRect(115,930,770,3);
+  ctx.fillStyle="#d1b27d";ctx.font="bold 30px Arial";ctx.fillText("TOTAL",120,1010);
+  ctx.textAlign="right";ctx.font="bold 58px Arial";ctx.fillText(dineroPW(v.precioTotal),880,1085);
+  ctx.textAlign="center";ctx.fillStyle="#bdb2a8";ctx.font="22px Arial";ctx.fillText("Hecho con dedicación · Diseños en madera",500,1125);
+  const a=document.createElement("a");a.download="Cotizacion-Piramide-Woodworks.png";a.href=canvas.toDataURL("image/png");a.click();
+}
 
 </script>
 
