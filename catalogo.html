@@ -1,2223 +1,4646 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 
     <title>Catálogo | Pirámide Woodworks</title>
 
+
+
     <style>
+
         :root {
+
             --negro: #171717;
+
             --negro-suave: #222222;
+
             --blanco: #ffffff;
+
             --crema: #f7f5f1;
+
             --texto: #26221e;
+
             --texto-suave: #716b64;
+
             --dorado: #b28a52;
+
             --dorado-claro: #d1b27d;
+
             --linea: #e7e2db;
+
         }
+
+
 
         * {
+
             box-sizing: border-box;
+
         }
+
+
 
         body {
+
             margin: 0;
+
             font-family: Arial, Helvetica, sans-serif;
+
             color: var(--texto);
 
+
+
             background:
+
                 linear-gradient(
+
                     rgba(20, 14, 10, 0.78),
+
                     rgba(20, 14, 10, 0.88)
+
                 ),
+
                 repeating-linear-gradient(
+
                     92deg,
+
                     #3a281d 0px,
+
                     #493225 55px,
+
                     #34231a 58px,
+
                     #52382a 115px,
+
                     #39271c 118px
+
                 );
 
+
+
             min-height: 100vh;
+
         }
+
+
 
         header {
+
             text-align: center;
+
             padding: 35px 20px 25px;
+
             color: white;
+
         }
+
+
 
         header h1 {
+
             margin: 0;
+
             font-size: 38px;
+
             letter-spacing: 1px;
+
         }
+
+
 
         header p {
+
             margin: 8px 0 0;
+
             color: var(--dorado-claro);
+
             font-size: 17px;
+
         }
+
+
 
         .catalogo-inicio,
+
         .pantalla-categoria {
+
             max-width: 1050px;
+
             margin: auto;
+
             padding: 25px 24px 60px;
+
         }
+
+
 
         .titulo-seccion {
+
             text-align: center;
+
             color: white;
+
             margin-bottom: 25px;
+
         }
+
+
 
         .titulo-seccion h2 {
+
             margin-bottom: 8px;
+
             font-size: 27px;
+
         }
+
+
 
         .titulo-seccion p {
+
             margin: 0;
+
             color: #ddd2c5;
+
             font-size: 15px;
+
         }
+
+
 
         .categorias {
+
             display: grid;
+
             grid-template-columns: repeat(2, 1fr);
+
             gap: 18px;
+
         }
+
+
 
         .categoria {
+
             background: var(--blanco);
+
             border: 1px solid transparent;
+
             border-radius: 12px;
+
             min-height: 145px;
+
             padding: 25px 18px;
+
             cursor: pointer;
+
             transition: 0.25s ease;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             text-align: center;
+
             box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+
         }
+
+
 
         .categoria:hover {
+
             transform: translateY(-4px);
+
             border-color: var(--dorado);
+
         }
+
+
 
         .categoria svg {
+
             width: 42px;
+
             height: 42px;
+
             margin-bottom: 12px;
+
             fill: var(--dorado);
+
         }
+
+
 
         .categoria h3 {
+
             margin: 0;
+
             font-size: 18px;
+
         }
+
+
 
         .nota-categorias {
+
             margin: 25px auto 0;
+
             max-width: 650px;
+
             background: rgba(255,255,255,0.95);
+
             border-radius: 10px;
+
             padding: 15px;
+
             text-align: center;
+
             font-size: 14px;
+
             color: var(--texto-suave);
+
         }
+
+
 
         .pantalla-categoria {
+
             display: none;
+
         }
+
+
 
         .encabezado-categoria {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 15px;
+
             margin-bottom: 25px;
+
         }
+
+
 
         .encabezado-categoria h2 {
+
             color: white;
+
             margin: 0;
+
             font-size: 28px;
+
         }
+
+
 
         .boton-volver {
+
             border: 1px solid var(--dorado-claro);
+
             background: transparent;
+
             color: white;
+
             padding: 10px 15px;
+
             border-radius: 8px;
+
             cursor: pointer;
+
             font-size: 14px;
+
         }
+
+
 
         .boton-volver:hover {
+
             background: var(--dorado);
+
             border-color: var(--dorado);
+
         }
+
+
 
         .productos {
+
             display: grid;
+
             grid-template-columns: repeat(2, 1fr);
+
             gap: 22px;
+
         }
+
+
 
         .producto-card {
+
             background: var(--blanco);
+
             border-radius: 13px;
+
             padding: 18px;
+
             box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+
         }
 
+
+
         .galeria-producto {
+
             margin-bottom: 17px;
+
         }
+
+
+
 
 
         /* =========================
+
            FOTO PRINCIPAL
+
         ========================= */
 
+
+
         .foto-principal {
+
             width: 100%;
+
             height: 370px;
 
+
+
             /*
+
              * Antes estaba en "cover".
+
              * Ahora usamos "contain" para que
+
              * nunca se corte el producto.
+
              */
+
+
 
             object-fit: contain;
 
+
+
             background: var(--crema);
+
+
 
             border-radius: 10px;
 
+
+
             cursor: pointer;
 
+
+
             display: block;
+
+
 
             padding: 4px;
 
+
+
             transition:
+
                 transform 0.2s ease,
+
                 box-shadow 0.2s ease;
+
         }
+
+
 
         .foto-principal:hover {
+
             transform: scale(1.01);
 
+
+
             box-shadow:
+
                 0 6px 18px rgba(0,0,0,0.12);
+
         }
+
+
+
 
 
         /* =========================
+
            MINIATURAS
+
         ========================= */
 
+
+
         .miniaturas {
+
             display: flex;
+
             gap: 8px;
+
             margin-top: 9px;
+
             overflow-x: auto;
+
             padding-bottom: 2px;
+
         }
 
+
+
         .miniaturas img {
+
             width: 68px;
+
             height: 68px;
+
+
 
             object-fit: cover;
 
+
+
             background: var(--crema);
+
+
 
             border-radius: 7px;
 
+
+
             cursor: pointer;
+
+
 
             border: 2px solid transparent;
 
+
+
             flex-shrink: 0;
+
         }
 
+
+
         .miniaturas img:hover {
+
             border-color: var(--dorado);
+
         }
+
+
+
 
 
         .sin-foto {
+
             height: 220px;
+
             border-radius: 10px;
+
             background:
+
                 linear-gradient(
+
                     rgba(20, 14, 10, 0.35),
+
                     rgba(20, 14, 10, 0.55)
+
                 ),
+
                 repeating-linear-gradient(
+
                     92deg,
+
                     #3a281d 0px,
+
                     #493225 55px,
+
                     #34231a 58px,
+
                     #52382a 115px,
+
                     #39271c 118px
+
                 );
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             color: var(--dorado-claro);
+
             font-size: 16px;
+
             text-align: center;
+
         }
+
+
 
         .producto-info h3 {
+
             margin: 0 0 10px;
+
             font-size: 22px;
+
         }
+
+
 
         .producto-info p {
+
             line-height: 1.5;
+
             color: var(--texto-suave);
+
         }
+
+
 
         .producto-info ul {
+
             padding-left: 20px;
+
             color: var(--texto-suave);
+
             line-height: 1.6;
+
         }
+
+
 
         .precio {
+
             color: var(--dorado) !important;
+
             font-size: 24px;
+
             font-weight: bold;
+
             margin: 15px 0;
+
         }
+
+
 
         .boton-principal {
+
             width: 100%;
+
             border: none;
+
             background: var(--negro);
+
             color: white;
+
             padding: 13px 16px;
+
             border-radius: 8px;
+
             cursor: pointer;
+
             font-size: 15px;
+
             font-weight: bold;
+
             transition: 0.2s ease;
+
         }
 
+
+
         .boton-principal:hover {
+
             background: var(--dorado);
+
         }
+
+
+
 
 
         /* =========================
+
            VISOR DE IMAGEN
+
         ========================= */
 
+
+
         .visor-imagen {
+
             position: fixed;
+
+
 
             inset: 0;
 
+
+
             width: 100vw;
+
             height: 100vh;
+
             height: 100dvh;
+
+
 
             background: rgba(0,0,0,0.94);
 
+
+
             display: none;
 
+
+
             justify-content: center;
+
             align-items: center;
+
+
 
             z-index: 1000;
 
+
+
             /*
+
              * Dejamos un pequeño margen
+
              * para que la imagen nunca quede
+
              * pegada a las orillas.
+
              */
+
+
 
             padding: 10px;
 
+
+
             overflow: hidden;
 
+
+
             animation:
+
                 aparecerVisor 0.18s ease-out;
+
         }
+
+
+
 
 
         .visor-imagen img {
+
             display: block;
 
+
+
             /*
+
              * La imagen puede ser vertical,
+
              * horizontal o cuadrada.
+
              */
 
+
+
             width: auto;
+
             height: auto;
 
+
+
             max-width: calc(100vw - 20px);
+
             max-height: calc(100dvh - 20px);
+
+
 
             object-fit: contain;
 
+
+
             border-radius: 6px;
 
+
+
             user-select: none;
+
             -webkit-user-select: none;
 
+
+
             box-shadow:
+
                 0 12px 35px rgba(0,0,0,0.45);
+
         }
+
+
+
 
 
         .cerrar-visor {
+
             position: absolute;
 
+
+
             top: 12px;
+
             right: 17px;
 
+
+
             width: 42px;
+
             height: 42px;
 
+
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
+
 
             color: white;
 
+
+
             font-size: 36px;
+
             line-height: 1;
+
+
 
             cursor: pointer;
 
+
+
             z-index: 1001;
 
+
+
             text-shadow:
+
                 0 2px 6px rgba(0,0,0,0.7);
+
+
 
             border-radius: 50%;
 
+
+
             transition:
+
                 background 0.2s ease,
+
                 color 0.2s ease;
+
         }
 
+
+
         .cerrar-visor:hover {
+
             color: var(--dorado-claro);
+
             background: rgba(255,255,255,0.08);
+
         }
+
+
+
 
 
         @keyframes aparecerVisor {
 
+
+
             from {
+
                 opacity: 0;
+
             }
+
+
 
             to {
+
                 opacity: 1;
+
             }
 
+
+
         }
 
 
+
+
+
         /* =========================
+
            CARRITO
+
         ========================= */
+
+
 
         .boton-carrito {
+
             position: fixed;
+
             right: 20px;
+
             bottom: 20px;
+
             width: 55px;
+
             height: 55px;
+
             border-radius: 50%;
+
             background: var(--negro);
+
             border: 2px solid var(--dorado);
+
             color: white;
+
             font-size: 23px;
+
             cursor: pointer;
+
             z-index: 900;
+
             box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+
         }
+
+
 
         .contador-carrito {
+
             position: absolute;
+
             top: -6px;
+
             right: -5px;
+
             background: var(--dorado);
+
             color: white;
+
             width: 22px;
+
             height: 22px;
+
             border-radius: 50%;
+
             font-size: 12px;
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             font-weight: bold;
+
         }
+
+
 
         .carrito {
+
             position: fixed;
+
             right: 20px;
+
             bottom: 88px;
+
             width: 340px;
+
             max-width: calc(100vw - 40px);
+
             max-height: 70vh;
+
             overflow-y: auto;
+
             background: white;
+
             border-radius: 12px;
+
             padding: 18px;
+
             box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+
             z-index: 899;
+
             display: none;
+
         }
+
+
 
         .carrito.visible {
+
             display: block;
+
         }
+
+
 
         .carrito h3 {
+
             margin-top: 0;
+
             margin-bottom: 15px;
+
         }
+
+
 
         .item-carrito {
+
             border-bottom: 1px solid var(--linea);
+
             padding: 12px 0;
+
             font-size: 14px;
+
         }
+
+
 
         .item-carrito-nombre {
+
             font-weight: bold;
+
             margin-bottom: 5px;
+
         }
+
+
 
         .controles-cantidad {
+
             display: flex;
+
             align-items: center;
+
             gap: 7px;
+
             margin: 8px 0;
+
         }
+
+
 
         .controles-cantidad button {
+
             border: none;
+
             background: var(--negro);
+
             color: white;
+
             width: 28px;
+
             height: 28px;
+
             border-radius: 5px;
+
             cursor: pointer;
+
         }
+
+
 
         .controles-cantidad .boton-eliminar {
+
             width: auto;
+
             padding: 0 9px;
+
             background: #8b3333;
+
             font-size: 12px;
+
         }
+
+
 
         .total-carrito {
+
             font-size: 20px;
+
             font-weight: bold;
+
             margin: 18px 0;
+
         }
+
+
 
         .boton-cotizacion {
+
             width: 100%;
+
             background: var(--dorado);
+
             color: white;
+
             border: none;
+
             padding: 13px;
+
             border-radius: 8px;
+
             cursor: pointer;
+
             font-weight: bold;
+
         }
 
+
+
         .boton-cotizacion:hover {
+
             background: #956f3f;
+
         }
+
+
+
 
 
         /* =========================
+
            TABLET / CELULAR
+
         ========================= */
+
+
 
         @media (max-width: 700px) {
 
+
+
             header {
+
                 padding-top: 28px;
+
             }
+
+
 
             header h1 {
+
                 font-size: 30px;
+
             }
+
+
 
             .catalogo-inicio,
+
             .pantalla-categoria {
+
                 padding: 20px 15px 50px;
+
             }
+
+
 
             .categorias {
+
                 grid-template-columns: repeat(2, 1fr);
+
                 gap: 12px;
+
             }
+
+
 
             .categoria {
+
                 min-height: 135px;
+
                 padding: 18px 10px;
+
             }
+
+
 
             .categoria h3 {
+
                 font-size: 15px;
+
             }
 
+
+
             .productos {
+
                 grid-template-columns: 1fr;
+
             }
+
+
+
 
 
             /* FOTO PRINCIPAL EN CELULAR */
 
+
+
             .foto-principal {
+
                 height: 320px;
+
+
 
                 object-fit: contain;
 
+
+
                 padding: 3px;
+
             }
+
+
+
 
 
             .encabezado-categoria {
+
                 align-items: flex-start;
+
                 flex-direction: column;
+
             }
+
+
 
             .boton-volver {
+
                 width: 100%;
+
             }
+
+
 
             .carrito {
+
                 right: 10px;
+
                 bottom: 82px;
+
                 width: calc(100vw - 20px);
+
                 max-width: none;
+
             }
 
+
+
             .boton-carrito {
+
                 right: 15px;
+
                 bottom: 15px;
+
             }
+
+
+
 
 
             /* =========================
+
                VISOR EN CELULAR
+
             ========================= */
 
+
+
             .visor-imagen {
+
                 padding: 8px;
+
             }
+
+
 
             .visor-imagen img {
 
+
+
                 max-width: calc(100vw - 16px);
+
+
 
                 max-height: calc(100dvh - 16px);
 
+
+
                 width: auto;
+
                 height: auto;
+
+
 
                 object-fit: contain;
 
+
+
                 border-radius: 4px;
 
+
+
                 box-shadow:
+
                     0 8px 25px rgba(0,0,0,0.5);
+
             }
+
+
 
             .cerrar-visor {
+
                 top: 8px;
+
                 right: 10px;
 
+
+
                 width: 40px;
+
                 height: 40px;
 
+
+
                 font-size: 36px;
+
             }
 
+
+
         }
+
+
+
 
 
         @media (max-width: 380px) {
 
+
+
             .categorias {
+
                 grid-template-columns: 1fr;
+
             }
 
+
+
             .foto-principal {
+
                 height: 290px;
+
             }
+
+
 
         }
 
+
+
     </style>
+
 </head>
+
+
 
 <body>
 
+
+
 <header>
+
     <h1>Catálogo</h1>
+
     <p>Pirámide Woodworks</p>
+
 </header>
 
 
+
+
+
 <!-- ========================= -->
+
 <!-- PANTALLA DE CATEGORÍAS -->
+
 <!-- ========================= -->
+
+
 
 <section
+
     id="pantalla-inicio"
+
     class="catalogo-inicio"
+
 >
 
+
+
     <div class="titulo-seccion">
+
         <h2>Elige una categoría</h2>
 
+
+
         <p>
+
             Encuentra diseños personalizados hechos en madera.
+
         </p>
+
     </div>
+
+
+
 
 
     <div class="categorias">
 
+
+
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('tequila')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M9 2h6v3l1 1v14H8V6l1-1V2zm2 2v1h2V4h-2zm-1 4v9h4V8h-4z"/>
+
             </svg>
 
+
+
             <h3>
+
                 Cajas para Tequila & Botellas
+
             </h3>
+
         </div>
 
 
+
+
+
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('regalo')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M20 12v8H4v-8h16zm-1-7h-4.2c.1-.3.2-.7.2-1 0-1.7-1.3-3-3-3-1.2 0-2.2.7-2.7 1.7C8.8.7 7.8 0 6.5 0c-1.7 0-3 1.3-3 3 0 .3.1.7.2 1H0v5h19V5zM6.5 2c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1zm5.5 0c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1z"/>
+
             </svg>
 
+
+
             <h3>
+
                 Cajas de Regalo
+
             </h3>
+
         </div>
 
 
+
+
+
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('accesorios')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M7 14a5 5 0 1 1 4.9-6H22v4h-2v2h-3v2h-3v-3h-2.1A5 5 0 0 1 7 14zm0-8a3 3 0 1 0 0 6 3 3 0 0 0-3-6z"/>
+
             </svg>
 
+
+
             <h3>
-                Portallaves & Accesorios
+
+                Portallaves
+
             </h3>
+
         </div>
 
 
+
+
+
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('centros')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M12 2c1.5 2.2 3.5 3.7 5 5.2C18.5 8.7 19 10.3 19 12c0 3.9-3.1 7-7 7s-7-3.1-7-7c0-1.7.5-3.3 2-4.8C8.5 5.7 10.5 4.2 12 2zm0 6c-.8 1.2-2.2 2.3-2.2 4.1 0 1.7 1.3 3 3 3s3-1.3 3-3c0-1.2-.5-2.3-1.5-3.3-.7-.7-1.6-1.3-2.3-1.8z"/>
+
             </svg>
 
+
+
             <h3>
+
                 Centros de Mesa
+
             </h3>
+
         </div>
 
 
+
+
+
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('mesas')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M3 5h18v3H3V5zm2 4h2v9H5V9zm12 0h2v9h-2V9zM2 19h20v2H2v-2z"/>
+
             </svg>
 
+
+
             <h3>
+
                 Mesas
+
             </h3>
+
         </div>
+
+
+
 
 
         <div
+
             class="categoria"
+
             onclick="abrirCategoria('otros')"
+
         >
+
             <svg viewBox="0 0 24 24">
+
                 <path d="M4 4h16v16H4V4zm3 3v10h10V7H7zm2 2h6v2H9V9zm0 4h6v2H9v-2z"/>
+
             </svg>
 
+
+
             <h3>
+
                 Otros Diseños
+
             </h3>
+
         </div>
 
-    </div>
 
 
-    <div class="nota-categorias">
+    
+        <div
+            class="categoria"
+            onclick="abrirCategoria('navidad')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2 8.5 7h2L7 12h3l-2 5h8l-2-5h3l-3.5-5h2L12 2zm-1 17h2v3h-2v-3z"/>
+            </svg>
+            <h3>Navidad</h3>
+        </div>
+
+        <div
+            class="categoria"
+            onclick="abrirCategoria('muertos')"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2a8 8 0 0 0-8 8v3a8 8 0 0 0 16 0v-3a8 8 0 0 0-8-8zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-6 6h6a3 3 0 0 1-6 0z"/>
+            </svg>
+            <h3>Día de Muertos</h3>
+        </div>
+
+</div>
+
+        <div class="nota-categorias">
+
         ¿Necesitas otro tamaño?
+
         Podemos ajustar las medidas.
+
         El precio depende del tamaño.
+
         Pregunta sin compromiso.
+
     </div>
+
+
 
 </section>
 
 
-<!-- ========================= -->
-<!-- TEQUILA -->
+
+
+
 <!-- ========================= -->
 
+<!-- TEQUILA -->
+
+<!-- ========================= -->
+
+
+
 <section
+
     id="categoria-tequila"
+
     class="pantalla-categoria"
+
 >
+
+
 
     <div class="encabezado-categoria">
 
+
+
         <h2>
+
             Cajas para Tequila & Botellas
+
         </h2>
 
+
+
         <button
+
             class="boton-volver"
+
             onclick="volverCategorias()"
+
         >
+
             ← Volver a categorías
+
         </button>
+
+
 
     </div>
 
 
+
+
+
     <div class="productos">
+
+
 
         <div class="producto-card">
 
+
+
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-tequilabox"
+
                     class="foto-principal"
+
                     src="imagenes/TequilaBox.jpeg"
+
                     alt="TequilaBox"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
+
+
                     <img
+
                         src="imagenes/TequilaBox.jpeg"
+
                         alt="TequilaBox"
+
                         onclick="cambiarFoto('foto-tequilabox', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/TequilaBox2.jpeg"
+
                         alt="TequilaBox"
+
                         onclick="cambiarFoto('foto-tequilabox', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/TequilaBox3.jpeg"
+
                         alt="TequilaBox"
+
                         onclick="cambiarFoto('foto-tequilabox', this.src)"
+
                     >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>TequilaBox</h3>
 
+
+
                 <p>
+
                     Caja personalizada por dentro y fuera.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>1 Don Julio Blanco 750 ml</li>
+
                     <li>2 vasitos de shots</li>
+
                     <li>1 frasco de cacahuates</li>
+
                     <li>Personalizada por dentro y fuera</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     Triplay Birch 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $1,200 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('TequilaBox', 1200)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
 
+
+
             </div>
+
+
 
         </div>
 
 
+
+
+
         <div class="producto-card">
+
+
 
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-boxtequila"
+
                     class="foto-principal"
+
                     src="imagenes/Boxtequila.jpg"
+
                     alt="Boxtequila sin botella"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
-                    <img
-                        src="imagenes/Boxtequila.jpg"
-                        alt="Boxtequila"
-                        onclick="cambiarFoto('foto-boxtequila', this.src)"
-                    >
+
 
                     <img
-                        src="imagenes/Boxtequila2.jpeg"
+
+                        src="imagenes/Boxtequila.jpg"
+
                         alt="Boxtequila"
+
                         onclick="cambiarFoto('foto-boxtequila', this.src)"
+
                     >
+
+
+
+                    <img
+
+                        src="imagenes/Boxtequila2.jpeg"
+
+                        alt="Boxtequila"
+
+                        onclick="cambiarFoto('foto-boxtequila', this.src)"
+
+                    >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>Boxtequila</h3>
 
+
+
                 <p>
+
                     Es el mismo modelo de la caja
+
                     para Don Julio, pero
+
                     <strong>no incluye la botella.</strong>
+
                 </p>
+
+
 
                 <ul>
+
                     <li>2 vasitos de shots</li>
+
                     <li>1 frasco de cacahuates</li>
+
                     <li>Personalizada por dentro y fuera</li>
+
                     <li>No incluye botella de tequila</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     Triplay Birch 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $480 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('Boxtequila', 480)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
 
+
+
             </div>
+
+
 
         </div>
 
 
+
+
+
         <div class="producto-card">
+
+
 
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-bottlebox"
+
                     class="foto-principal"
+
                     src="imagenes/botllebox.jpeg"
+
                     alt="BottleBox"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
-                    <img
-                        src="imagenes/botllebox.jpeg"
-                        alt="BottleBox"
-                        onclick="cambiarFoto('foto-bottlebox', this.src)"
-                    >
+
 
                     <img
-                        src="imagenes/botllebox2.jpeg"
+
+                        src="imagenes/botllebox.jpeg"
+
                         alt="BottleBox"
+
                         onclick="cambiarFoto('foto-bottlebox', this.src)"
+
                     >
+
+
+
+                    <img
+
+                        src="imagenes/botllebox2.jpeg"
+
+                        alt="BottleBox"
+
+                        onclick="cambiarFoto('foto-bottlebox', this.src)"
+
+                    >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>BottleBox</h3>
 
+
+
                 <p>
+
                     Caja personalizada para cualquier
+
                     otra botella, tamaño o marca.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>2 vasitos de shots</li>
+
                     <li>1 frasco de cacahuates</li>
+
                     <li>Personalizada por dentro y fuera</li>
+
                     <li>Medidas: A elegir</li>
+
                     <li>El precio depende de la altura de la botella</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     Triplay Birch 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $600 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('BottleBox', 600)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
+
+
 
             </div>
 
+
+
         </div>
 
+
+
     </div>
+
+
 
 </section>
 
 
+
+
+
 <!-- ========================= -->
+
 <!-- CAJAS DE REGALO -->
+
 <!-- ========================= -->
+
+
 
 <section
+
     id="categoria-regalo"
+
     class="pantalla-categoria"
+
 >
 
+
+
     <div class="encabezado-categoria">
+
+
 
         <h2>Cajas de Regalo</h2>
 
+
+
         <button
+
             class="boton-volver"
+
             onclick="volverCategorias()"
+
         >
+
             ← Volver a categorías
+
         </button>
+
+
 
     </div>
 
 
+
+
+
     <div class="productos">
+
+
 
         <div class="producto-card">
 
+
+
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-giftbox"
+
                     class="foto-principal"
+
                     src="imagenes/GiftBox.jpeg"
+
                     alt="GiftBox"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
-                    <img
-                        src="imagenes/GiftBox.jpeg"
-                        alt="GiftBox"
-                        onclick="cambiarFoto('foto-giftbox', this.src)"
-                    >
+
 
                     <img
-                        src="imagenes/GiftBox2.jpeg"
+
+                        src="imagenes/GiftBox.jpeg"
+
                         alt="GiftBox"
+
                         onclick="cambiarFoto('foto-giftbox', this.src)"
+
                     >
+
+
+
+                    <img
+
+                        src="imagenes/GiftBox2.jpeg"
+
+                        alt="GiftBox"
+
+                        onclick="cambiarFoto('foto-giftbox', this.src)"
+
+                    >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>GiftBox</h3>
 
+
+
                 <p>
+
                     Caja personalizada con apertura hacia arriba.
+
                     Ideal para diferentes tipos de regalos.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>Puede llevar desde un reloj hasta un regalo de máximo 40 cm</li>
+
                     <li>30 × 20 × 10 cm</li>
+
                     <li>El precio también depende del tamaño</li>
+
                     <li>Grabado por dentro y fuera</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     Triplay Birch 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $550 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('GiftBox', 550)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
 
+
+
             </div>
+
+
 
         </div>
 
 
+
+
+
         <div class="producto-card">
+
+
 
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-slidingbox"
+
                     class="foto-principal"
+
                     src="imagenes/slidingBox.jpeg"
+
                     alt="SlidingBox"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
+
+
                     <img
+
                         src="imagenes/slidingBox.jpeg"
+
                         alt="SlidingBox"
+
                         onclick="cambiarFoto('foto-slidingbox', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/slidingBox2.jpeg"
+
                         alt="SlidingBox"
+
                         onclick="cambiarFoto('foto-slidingbox', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/slidingBox3.jpeg"
+
                         alt="SlidingBox"
+
                         onclick="cambiarFoto('foto-slidingbox', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/slidingBox4.jpeg"
+
                         alt="SlidingBox"
+
                         onclick="cambiarFoto('foto-slidingbox', this.src)"
+
                     >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>SlidingBox</h3>
 
+
+
                 <p>
+
                     Caja personalizada con apertura deslizante
+
                     y decoración de corazón en la tapa.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>30 × 20 × 10 cm</li>
+
                     <li>Personalizada</li>
+
                     <li>Diseño con corazón en la tapa</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     Triplay Birch 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $400 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('SlidingBox', 400)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
+
+
 
             </div>
 
+
+
         </div>
 
+
+
     </div>
+
+
 
 </section>
 
 
-<!-- ========================= -->
-<!-- PORTALLAVES & ACCESORIOS -->
+
+
+
 <!-- ========================= -->
 
+<!-- PORTALLAVES -->
+
+<!-- ========================= -->
+
+
+
 <section
+
     id="categoria-accesorios"
+
     class="pantalla-categoria"
+
 >
+
+
 
     <div class="encabezado-categoria">
 
-        <h2>Portallaves & Accesorios</h2>
+
+
+        <h2>Portallaves</h2>
+
+
 
         <button
+
             class="boton-volver"
+
             onclick="volverCategorias()"
+
         >
+
             ← Volver a categorías
+
         </button>
+
+
 
     </div>
 
 
+
+
+
     <div class="productos">
+
+
 
         <div class="producto-card">
 
+
+
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-portallaves"
+
                     class="foto-principal"
+
                     src="imagenes/portallaves.jpeg"
+
                     alt="Portallaves Home"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
-                    <img
-                        src="imagenes/portallaves.jpeg"
-                        alt="Portallaves Home"
-                        onclick="cambiarFoto('foto-portallaves', this.src)"
-                    >
+
 
                     <img
-                        src="imagenes/portallaves2.png"
+
+                        src="imagenes/portallaves.jpeg"
+
                         alt="Portallaves Home"
+
                         onclick="cambiarFoto('foto-portallaves', this.src)"
+
                     >
+
+
+
+                    <img
+
+                        src="imagenes/portallaves2.png"
+
+                        alt="Portallaves Home"
+
+                        onclick="cambiarFoto('foto-portallaves', this.src)"
+
+                    >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>Portallaves Home</h3>
 
+
+
                 <p>
+
                     Portallaves de pared en madera,
+
                     decorativo y funcional.
+
                 </p>
 
+
+
                 <ul>
+
                     <li>Ganchos metálicos</li>
+
                     <li>Personalización con nombres, apellidos, frases o logos</li>
+
                     <li>Ideal para casa, oficina o regalo</li>
+
                     <li>30 × 15 cm</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     MDF 4 mm
+
                 </p>
 
+
+
                 <p class="precio">
+
                     $130 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('Portallaves Home', 130)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
 
+
+
             </div>
+
+
 
         </div>
 
 
-        <div class="producto-card">
-
-            <div class="galeria-producto">
-
-                <img
-                    id="foto-mostrador"
-                    class="foto-principal"
-                    src="imagenes/Mostrador.jpeg"
-                    alt="Portacódigos QR Personalizado"
-                    onclick="abrirImagen(this.src)"
-                >
-
-                <div class="miniaturas">
-
-                    <img
-                        src="imagenes/Mostrador.jpeg"
-                        alt="Portacódigos QR"
-                        onclick="cambiarFoto('foto-mostrador', this.src)"
-                    >
-
-                    <img
-                        src="imagenes/Mostrador2.jpeg"
-                        alt="Portacódigos QR"
-                        onclick="cambiarFoto('foto-mostrador', this.src)"
-                    >
-
-                </div>
-
-            </div>
 
 
-            <div class="producto-info">
 
-                <h3>
-                    Portacódigos QR Personalizado
-                </h3>
+        
 
-                <p>
-                    Mostrador personalizado ideal para
-                    negocios, menús, métodos de pago,
-                    códigos de barras y redes sociales.
-                </p>
 
-                <ul>
-                    <li>Ideal para menú</li>
-                    <li>Métodos de pago</li>
-                    <li>Códigos de barras y códigos QR</li>
-                    <li>Redes sociales</li>
-                    <li>Diseño personalizado a elegir</li>
-                    <li>20 cm de alto × 15 cm de ancho</li>
-                </ul>
-
-                <p>
-                    <strong>Material:</strong>
-                    Triplay Birch 4 mm + base de 6 mm
-                </p>
-
-                <p class="precio">
-                    $120 MXN pieza
-                </p>
-
-                <button
-                    class="boton-principal"
-                    onclick="agregarAlCarrito('Portacódigos QR Personalizado', 120)"
-                >
-                    Agregar al carrito
-                </button>
-
-            </div>
-
-        </div>
 
     </div>
+
+
 
 </section>
 
 
+
+
+
 <!-- ========================= -->
+
 <!-- CENTROS DE MESA -->
+
 <!-- ========================= -->
+
+
 
 <section
+
     id="categoria-centros"
+
     class="pantalla-categoria"
+
 >
 
+
+
     <div class="encabezado-categoria">
+
+
 
         <h2>Centros de Mesa</h2>
 
+
+
         <button
+
             class="boton-volver"
+
             onclick="volverCategorias()"
+
         >
+
             ← Volver a categorías
+
         </button>
+
+
 
     </div>
 
 
+
+
+
     <div class="productos">
+
+
 
         <div class="producto-card">
 
+
+
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-cenicienta"
+
                     class="foto-principal"
+
                     src="imagenes/cenicienta.jpg"
+
                     alt="Carruaje de Cenicienta"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
+
+
                     <img
+
                         src="imagenes/cenicienta.jpg"
+
                         alt="Carruaje de Cenicienta"
+
                         onclick="cambiarFoto('foto-cenicienta', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/cenicienta2.jpg"
+
                         alt="Carruaje de Cenicienta"
+
                         onclick="cambiarFoto('foto-cenicienta', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/cenicienta3.jpg"
+
                         alt="Carruaje de Cenicienta"
+
                         onclick="cambiarFoto('foto-cenicienta', this.src)"
+
                     >
+
     <img
+
                         src="imagenes/cenicienta4.jpg"
+
                         alt="Carruaje de Cenicienta"
+
                         onclick="cambiarFoto('foto-cenicienta', this.src)"
+
                     >
+
     <img
+
                         src="imagenes/cenicienta5.jpg"
+
                         alt="Carruaje de Cenicienta"
+
                         onclick="cambiarFoto('foto-cenicienta', this.src)"
+
                     >
+
+
 
                 </div>
+
+
 
             </div>
 
 
+
+
+
             <div class="producto-info">
+
+
 
                 <h3>Carruaje de Cenicienta</h3>
 
+
+
                 <p>
+
                     Modelo único con caballos y grabado.
+
                     Ideal para cumpleaños, XV años
+
                     y diferentes eventos.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>25 cm de alto × 37 cm de ancho</li>
+
                     <li>Ideal para centros de mesa</li>
+
                     <li>Diseño con caballos y grabado</li>
+
                     <li>Mayoreo: 10 piezas $1,200</li>
+
                     <li>Mayoreo: 20 piezas $2,000</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     MDF 3 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $155 MXN pieza
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('Carruaje de Cenicienta', 155)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
+
+
 
             </div>
 
+
+
         </div>
+
+
+
 
 
         <div class="producto-card">
 
+
+
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-plimplim"
+
                     class="foto-principal"
+
                     src="imagenes/plim,plim1.jpeg"
+
                     alt="Centro de Mesa Abejita Plim Plim"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
+
+
                     <img
+
                         src="imagenes/plim,plim1.jpeg"
+
                         alt="Centro de Mesa Abejita Plim Plim"
+
                         onclick="cambiarFoto('foto-plimplim', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/plim,plim2.jpeg"
+
                         alt="Centro de Mesa Abejita Plim Plim"
+
                         onclick="cambiarFoto('foto-plimplim', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/plim,plim3.jpeg"
+
                         alt="Centro de Mesa Abejita Plim Plim"
+
                         onclick="cambiarFoto('foto-plimplim', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/plim,plim4.jpeg"
+
                         alt="Centro de Mesa Abejita Plim Plim"
+
                         onclick="cambiarFoto('foto-plimplim', this.src)"
+
                     >
+
+
 
                 </div>
 
+
+
             </div>
+
+
+
 
 
             <div class="producto-info">
 
+
+
                 <h3>
+
                     Centro de Mesa Abejita Plim Plim
+
                 </h3>
 
+
+
                 <p>
+
                     Centro de mesa personalizado con diseño
+
                     de la Abejita Plim Plim. Ideal para
+
                     cumpleaños y fiestas infantiles.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>25 × 25 cm</li>
+
                     <li>Ideal para centros de mesa</li>
+
                     <li>Diseño de Abejita Plim Plim</li>
+
                     <li>Mayoreo: 5 piezas $95 c/u</li>
+
                     <li>Mayoreo: 10 piezas $85 c/u</li>
+
                     <li>Mayoreo: 20 piezas $80 c/u</li>
+
                 </ul>
 
+
+
                 <p>
+
                     <strong>Material:</strong>
+
                     MDF 4 mm
+
                 </p>
+
+
 
                 <p class="precio">
+
                     $105 MXN pieza
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('Centro de Mesa Abejita Plim Plim', 105)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
+
+
 
             </div>
 
+
+
         </div>
 
+
+
     </div>
+
+
 
 </section>
 
 
-<!-- ========================= -->
-<!-- MESAS -->
+
+
+
 <!-- ========================= -->
 
+<!-- MESAS -->
+
+<!-- ========================= -->
+
+
+
 <section
+
     id="categoria-mesas"
+
     class="pantalla-categoria"
+
 >
+
+
 
     <div class="encabezado-categoria">
 
+
+
         <h2>Mesas</h2>
 
+
+
         <button
+
             class="boton-volver"
+
             onclick="volverCategorias()"
+
         >
+
             ← Volver a categorías
+
         </button>
 
+
+
     </div>
+
+
+
 
 
     <div class="productos">
 
+
+
         <div class="producto-card">
+
+
 
             <div class="galeria-producto">
 
+
+
                 <img
+
                     id="foto-mesa"
+
                     class="foto-principal"
+
                     src="imagenes/mesa.jpg"
+
                     alt="Mesa Carruaje Gigante"
+
                     onclick="abrirImagen(this.src)"
+
                 >
+
+
 
                 <div class="miniaturas">
 
+
+
                     <img
+
                         src="imagenes/mesa.jpg"
+
                         alt="Mesa Carruaje Gigante"
+
                         onclick="cambiarFoto('foto-mesa', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/mesa2.jpg"
+
                         alt="Mesa Carruaje Gigante"
+
                         onclick="cambiarFoto('foto-mesa', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/mesa3.jpg"
+
                         alt="Mesa Carruaje Gigante"
+
                         onclick="cambiarFoto('foto-mesa', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/mesa4.jpg"
+
                         alt="Mesa Carruaje Gigante"
+
                         onclick="cambiarFoto('foto-mesa', this.src)"
+
                     >
 
+
+
                     <img
+
                         src="imagenes/mesa5.jpg"
+
                         alt="Mesa Carruaje Gigante"
+
                         onclick="cambiarFoto('foto-mesa', this.src)"
+
                     >
-   
+
+
+
+
 
                 </div>
 
+
+
             </div>
+
+
+
 
 
             <div class="producto-info">
 
+
+
                 <h3>
+
                     Mesa Carruaje Gigante de Madera para Eventos
+
                 </h3>
 
+
+
                 <p>
+
                     Mesa plegable, fácil de guardar e instalar.
+
                     Ideal como mesa de centro para XV años,
+
                     bodas, bautizos y otros eventos.
+
                 </p>
+
+
 
                 <ul>
+
                     <li>2 m × 1.5 m</li>
+
                     <li>Plegable</li>
+
                     <li>Fácil de almacenar</li>
+
                     <li>Disponible bajo pedido</li>
+
                     <li>La medida puede ajustarse</li>
+
                     <li>El precio depende de la medida</li>
+
                 </ul>
 
-                <p>
-                    <strong>Material:</strong>
-                    Triplay Birch 8 mm
-                </p>
+
 
                 <p>
-                    Pregunta sin compromiso.
+
+                    <strong>Material:</strong>
+
+                    Triplay Birch 8 mm
+
                 </p>
+
+
+
+                <p>
+
+                    Pregunta sin compromiso.
+
+                </p>
+
+
 
                 <p class="precio">
+
                     $2,500 MXN
+
                 </p>
 
+
+
                 <button
+
                     class="boton-principal"
+
                     onclick="agregarAlCarrito('Mesa Carruaje Gigante', 2500)"
+
                 >
+
                     Agregar al carrito
+
                 </button>
+
+
 
             </div>
 
+
+
         </div>
+
+
 
     </div>
 
+
+
 </section>
 
+
+
+
+
+<!-- ========================= -->
+<!-- NAVIDAD -->
+<!-- ========================= -->
+<section id="categoria-navidad" class="pantalla-categoria">
+    <div class="encabezado-categoria">
+        <h2>Navidad</h2>
+        <button class="boton-volver" onclick="volverCategorias()">
+            ← Volver a categorías
+        </button>
+    </div>
+    <div class="productos">
+        <div class="producto-card">
+            <div class="galeria-producto">
+                <img
+                    id="foto-casitas-navidad"
+                    class="foto-principal"
+                    src="imagenes/casitas.jpg"
+                    alt="Casitas navideñas"
+                    onclick="abrirImagen(this.src)"
+                >
+                <div class="miniaturas">
+                    <img
+                        src="imagenes/casitas.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                    <img
+                        src="imagenes/casitas2.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                    <img
+                        src="imagenes/casitas3.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                    <img
+                        src="imagenes/casitas4.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                    <img
+                        src="imagenes/casitas5.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                    <img
+                        src="imagenes/casitas6.jpg"
+                        alt="Casitas navideñas"
+                        onclick="cambiarFoto('foto-casitas-navidad', this.src)"
+                    >
+                </div>
+            </div>
+            <div class="producto-info">
+                <h3>Casitas navideñas</h3>
+                <p>Paquete de 5 casitas navideñas elaboradas en MDF. Puedes elegirlas solo casitas o con pesebre incluido. Ideales para decorar debajo de tu arbolito.</p>
+                <p>Opciones de iluminación:</p>
+                <p>🤍 Sin iluminación: $220 MXN</p>
+                <p>✨ Con iluminación: $260 MXN</p>
+                <p class="precio">Paquete de 5 piezas</p>
+                <label for="tipo-casitas" style="display:block; margin:10px 0 6px;">Presentación:</label>
+                <select id="tipo-casitas" class="selector-producto" style="width:100%; margin-bottom:10px;">
+                    <option value="Solo casitas">Solo casitas</option>
+                    <option value="Casitas con pesebre incluido">Casitas con pesebre incluido</option>
+                </select>
+                <button class="boton-principal" onclick="agregarAlCarrito('Casitas navideñas - ' + document.getElementById('tipo-casitas').value + ' - sin iluminación', 220)">
+                    Agregar al carrito · $220
+                </button>
+                <button class="boton-principal" style="margin-top:8px;" onclick="agregarAlCarrito('Casitas navideñas - ' + document.getElementById('tipo-casitas').value + ' - con iluminación', 260)">
+                    Agregar al carrito · $260
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================= -->
+<!-- DÍA DE MUERTOS -->
+<!-- ========================= -->
+<section id="categoria-muertos" class="pantalla-categoria">
+    <div class="encabezado-categoria">
+        <h2>Día de Muertos</h2>
+        <button class="boton-volver" onclick="volverCategorias()">
+            ← Volver a categorías
+        </button>
+    </div>
+    <div class="productos">
+        <div class="producto-card">
+            <div class="galeria-producto">
+                <img
+                    id="foto-altar-muertos"
+                    class="foto-principal"
+                    src="imagenes/Altar1.jpeg"
+                    alt="Altar de Día de Muertos"
+                    onclick="abrirImagen(this.src)"
+                >
+                <div class="miniaturas">
+                    <img
+                        src="imagenes/Altar1.jpeg"
+                        alt="Altar de Día de Muertos"
+                        onclick="cambiarFoto('foto-altar-muertos', this.src)"
+                    >
+                    <img
+                        src="imagenes/altar2.jpeg"
+                        alt="Altar de Día de Muertos"
+                        onclick="cambiarFoto('foto-altar-muertos', this.src)"
+                    >
+                    <img
+                        src="imagenes/altar3.jpeg"
+                        alt="Altar de Día de Muertos"
+                        onclick="cambiarFoto('foto-altar-muertos', this.src)"
+                    >
+                    <img
+                        src="imagenes/altar4.jpeg"
+                        alt="Altar de Día de Muertos"
+                        onclick="cambiarFoto('foto-altar-muertos', this.src)"
+                    >
+                    <img
+                        src="imagenes/altar5.jpeg"
+                        alt="Altar de Día de Muertos"
+                        onclick="cambiarFoto('foto-altar-muertos', this.src)"
+                    >
+                </div>
+            </div>
+            <div class="producto-info">
+                <h3>Altar de Día de Muertos</h3>
+                <p>Mini altar elaborado en MDF con corte láser y armado artesanal. Ideal para colocar las imágenes de tus seres queridos y darles un espacio especial en tu hogar.</p>
+                <p>📏 Medidas: 20 cm de altura hasta los escalones y 40 cm de altura total hasta el arco superior. También realizamos medidas personalizadas.</p>
+                <p class="precio">Elige tu modelo</p>
+                <label for="modelo-altar" style="display:block; margin:10px 0 6px;">Modelo:</label>
+                <select id="modelo-altar" class="selector-producto" style="width:100%; margin-bottom:10px;">
+                    <option value="Modelo 1" data-precio="190">Modelo 1 · $190 MXN</option>
+                    <option value="Modelo 2" data-precio="220">Modelo 2 · $220 MXN</option>
+                </select>
+                <button class="boton-principal" onclick="(function(){const s=document.getElementById('modelo-altar'); const o=s.options[s.selectedIndex]; agregarAlCarrito('Mini altar Día de Muertos - '+s.value, Number(o.dataset.precio));})()">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+        <div class="producto-card">
+            <div class="galeria-producto">
+                <img
+                    id="foto-calaveritas"
+                    class="foto-principal"
+                    src="imagenes/calaberita1.jpeg"
+                    alt="Calaveritas decorativas"
+                    onclick="abrirImagen(this.src)"
+                >
+                <div class="miniaturas">
+                    <img
+                        src="imagenes/calaberita1.jpeg"
+                        alt="Calaveritas decorativas"
+                        onclick="cambiarFoto('foto-calaveritas', this.src)"
+                    >
+                    <img
+                        src="imagenes/calaberita2.jpeg"
+                        alt="Calaveritas decorativas"
+                        onclick="cambiarFoto('foto-calaveritas', this.src)"
+                    >
+                    <img
+                        src="imagenes/calaberita3.jpeg"
+                        alt="Calaveritas decorativas"
+                        onclick="cambiarFoto('foto-calaveritas', this.src)"
+                    >
+                    <img
+                        src="imagenes/calaberita4.jpeg"
+                        alt="Calaveritas decorativas"
+                        onclick="cambiarFoto('foto-calaveritas', this.src)"
+                    >
+                </div>
+            </div>
+            <div class="producto-info">
+                <h3>Calaveritas decorativas</h3>
+                <p>Paquete de 4 calaveritas decorativas de 15 cm de alto, cada una con su velita. Ideales para darle un toque especial a tu altar.</p>
+                <p class="precio">Paquete de 4 por $200 MXN</p>
+                <p style="margin:10px 0 8px;"><strong>Arma tu paquete de 4 calaveritas</strong><br>Elige el diseño de cada pieza. Puedes repetirlos o combinarlos como quieras.</p>
+                <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; margin-bottom:12px;">
+                    <div>
+                        <label for="calaverita-1" style="display:block; margin-bottom:5px;">Calaverita 1</label>
+                        <select id="calaverita-1" class="selector-producto" style="width:100%;">
+                            <option value="Gatito">Gatito</option><option value="Perrito">Perrito</option><option value="Mujer">Mujer</option><option value="Hombre con charro">Hombre con charro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="calaverita-2" style="display:block; margin-bottom:5px;">Calaverita 2</label>
+                        <select id="calaverita-2" class="selector-producto" style="width:100%;">
+                            <option value="Gatito">Gatito</option><option value="Perrito">Perrito</option><option value="Mujer">Mujer</option><option value="Hombre con charro">Hombre con charro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="calaverita-3" style="display:block; margin-bottom:5px;">Calaverita 3</label>
+                        <select id="calaverita-3" class="selector-producto" style="width:100%;">
+                            <option value="Gatito">Gatito</option><option value="Perrito">Perrito</option><option value="Mujer">Mujer</option><option value="Hombre con charro">Hombre con charro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="calaverita-4" style="display:block; margin-bottom:5px;">Calaverita 4</label>
+                        <select id="calaverita-4" class="selector-producto" style="width:100%;">
+                            <option value="Gatito">Gatito</option><option value="Perrito">Perrito</option><option value="Mujer">Mujer</option><option value="Hombre con charro">Hombre con charro</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="boton-principal" onclick="agregarAlCarrito('Paquete de 4 calaveritas - ' + ['calaverita-1','calaverita-2','calaverita-3','calaverita-4'].map((id, i) => 'Pieza ' + (i + 1) + ': ' + document.getElementById(id).value).join(', '), 200)">
+                    Agregar al carrito · $200
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- ========================= -->
 <!-- OTROS DISEÑOS -->
 <!-- ========================= -->
-
-<section
-    id="categoria-otros"
-    class="pantalla-categoria"
->
-
+<section id="categoria-otros" class="pantalla-categoria">
     <div class="encabezado-categoria">
-
         <h2>Otros Diseños</h2>
-
-        <button
-            class="boton-volver"
-            onclick="volverCategorias()"
-        >
+        <button class="boton-volver" onclick="volverCategorias()">
             ← Volver a categorías
         </button>
-
     </div>
+    <div class="productos">
+        <div class="producto-card">
+            <div class="galeria-producto">
+                <img
+                    id="foto-edificios"
+                    class="foto-principal"
+                    src="imagenes/edificio.jpg"
+                    alt="Edificios decorativos"
+                    onclick="abrirImagen(this.src)"
+                >
+                <div class="miniaturas">
+                    <img
+                        src="imagenes/edificio.jpg"
+                        alt="Edificios decorativos"
+                        onclick="cambiarFoto('foto-edificios', this.src)"
+                    >
+                    <img
+                        src="imagenes/edificio2.jpg"
+                        alt="Edificios decorativos"
+                        onclick="cambiarFoto('foto-edificios', this.src)"
+                    >
+                    <img
+                        src="imagenes/edificio3.jpg"
+                        alt="Edificios decorativos"
+                        onclick="cambiarFoto('foto-edificios', this.src)"
+                    >
+                </div>
+            </div>
+            <div class="producto-info">
+                <h3>Edificios decorativos</h3>
+                <p>Edificio elaborado en MDF con corte láser, ideal para utilizar como base de centros de mesa y decorar al gusto. Se entrega sin pintar ni decorar.</p>
+                <p class="precio">$80 MXN por pieza</p>
+                <button class="boton-principal" onclick="agregarAlCarrito('Edificio MDF sin pintar ni decorar', 80)">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+<div class="producto-card">
 
 
-    <div class="producto-card">
 
-        <div class="producto-info">
+            <div class="galeria-producto">
 
-            <h3>Próximamente</h3>
 
-            <p>
-                Aquí iremos agregando nuevos diseños
-                y productos de Pirámide Woodworks.
-            </p>
+
+                <img
+
+                    id="foto-mostrador"
+
+                    class="foto-principal"
+
+                    src="imagenes/Mostrador.jpeg"
+
+                    alt="Portacódigos QR Personalizado"
+
+                    onclick="abrirImagen(this.src)"
+
+                >
+
+
+
+                <div class="miniaturas">
+
+
+
+                    <img
+
+                        src="imagenes/Mostrador.jpeg"
+
+                        alt="Portacódigos QR"
+
+                        onclick="cambiarFoto('foto-mostrador', this.src)"
+
+                    >
+
+
+
+                    <img
+
+                        src="imagenes/Mostrador2.jpeg"
+
+                        alt="Portacódigos QR"
+
+                        onclick="cambiarFoto('foto-mostrador', this.src)"
+
+                    >
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+            <div class="producto-info">
+
+
+
+                <h3>
+
+                    Portacódigos QR Personalizado
+
+                </h3>
+
+
+
+                <p>
+
+                    Mostrador personalizado ideal para
+
+                    negocios, menús, métodos de pago,
+
+                    códigos de barras y redes sociales.
+
+                </p>
+
+
+
+                <ul>
+
+                    <li>Ideal para menú</li>
+
+                    <li>Métodos de pago</li>
+
+                    <li>Códigos de barras y códigos QR</li>
+
+                    <li>Redes sociales</li>
+
+                    <li>Diseño personalizado a elegir</li>
+
+                    <li>20 cm de alto × 15 cm de ancho</li>
+
+                </ul>
+
+
+
+                <p>
+
+                    <strong>Material:</strong>
+
+                    Triplay Birch 4 mm + base de 6 mm
+
+                </p>
+
+
+
+                <p class="precio">
+
+                    $120 MXN pieza
+
+                </p>
+
+
+
+                <button
+
+                    class="boton-principal"
+
+                    onclick="agregarAlCarrito('Portacódigos QR Personalizado', 120)"
+
+                >
+
+                    Agregar al carrito
+
+                </button>
+
+
+
+            </div>
+
+
 
         </div>
 
-    </div>
-
+        </div>
 </section>
 
 
+
+
+
 <!-- ========================= -->
+
 <!-- VISOR DE IMAGEN -->
+
 <!-- ========================= -->
+
+
 
 <div
+
     id="visor-imagen"
+
     class="visor-imagen"
+
     onclick="cerrarImagen()"
+
 >
 
+
+
     <span
+
         class="cerrar-visor"
+
         onclick="event.stopPropagation(); cerrarImagen();"
+
     >
+
         ×
+
     </span>
 
 
+
+
+
     <img
+
         id="imagen-grande"
+
         src=""
+
         alt="Imagen ampliada"
+
         onclick="event.stopPropagation()"
+
     >
+
+
 
 </div>
 
 
+
+
+
 <!-- ========================= -->
+
 <!-- CARRITO -->
+
 <!-- ========================= -->
+
+
 
 <button
+
     class="boton-carrito"
+
     onclick="mostrarCarrito()"
+
     aria-label="Abrir carrito"
+
 >
+
     🛒
 
+
+
     <span
+
         id="contador-carrito"
+
         class="contador-carrito"
+
     >
+
         0
+
     </span>
+
+
 
 </button>
 
 
+
+
+
 <div
+
     id="carrito"
+
     class="carrito"
+
 >
 
+
+
     <h3>
+
         🛒 Tu carrito
+
     </h3>
+
+
 
     <div id="lista-carrito"></div>
 
+
+
     <div
+
         id="total-carrito"
+
         class="total-carrito"
+
     >
+
         Total: $0
+
     </div>
 
+
+
     <button
+
         class="boton-cotizacion"
+
         onclick="continuarCotizacion()"
+
     >
+
         Continuar con la cotización
+
     </button>
+
+
 
 </div>
 
 
+
+
+
 <script>
 
+
+
     /* =========================
+
        CATEGORÍAS
+
     ========================= */
+
+
 
     function abrirCategoria(categoria) {
 
-        document
-            .getElementById("pantalla-inicio")
-            .style.display = "none";
+
 
         document
+
+            .getElementById("pantalla-inicio")
+
+            .style.display = "none";
+
+
+
+        document
+
             .querySelectorAll(".pantalla-categoria")
+
             .forEach(function(seccion) {
+
+
 
                 seccion.style.display = "none";
 
+
+
             });
 
+
+
         document
+
             .getElementById("categoria-" + categoria)
+
             .style.display = "block";
 
+
+
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
 
+
+
     }
+
+
+
 
 
     function volverCategorias() {
 
+
+
         document
+
             .querySelectorAll(".pantalla-categoria")
+
             .forEach(function(seccion) {
+
+
 
                 seccion.style.display = "none";
 
+
+
             });
 
+
+
         document
+
             .getElementById("pantalla-inicio")
+
             .style.display = "block";
 
+
+
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
+
+
 
     }
 
 
+
+
+
     /* =========================
+
        CARRITO
+
     ========================= */
 
+
+
     let carrito =
+
         JSON.parse(
+
             localStorage.getItem("carrito")
+
         ) || [];
+
+
+
 
 
     function guardarCarrito() {
 
+
+
         localStorage.setItem(
+
             "carrito",
+
             JSON.stringify(carrito)
+
         );
 
+
+
     }
+
+
+
 
 
     function agregarAlCarrito(nombre, precio) {
 
+
+
         let producto =
+
             carrito.find(function(item) {
+
+
 
                 return item.nombre === nombre;
 
+
+
             });
+
+
+
 
 
         if (producto) {
 
+
+
             producto.cantidad++;
+
+
 
         } else {
 
+
+
             carrito.push({
+
+
 
                 nombre: nombre,
 
+
+
                 precio: precio,
+
+
 
                 cantidad: 1
 
+
+
             });
 
+
+
         }
+
+
+
 
 
         guardarCarrito();
 
+
+
         actualizarCarrito();
 
+
+
         document
+
             .getElementById("carrito")
+
             .classList.add("visible");
+
+
 
     }
 
 
+
+
+
     function cambiarCantidad(nombre, cambio) {
 
+
+
         let producto =
+
             carrito.find(function(item) {
 
+
+
                 return item.nombre === nombre;
+
+
 
             });
 
 
+
+
+
         if (!producto) {
+
             return;
+
         }
+
+
+
 
 
         producto.cantidad += cambio;
 
 
+
+
+
         if (producto.cantidad <= 0) {
 
+
+
             carrito =
+
                 carrito.filter(function(item) {
+
+
 
                     return item.nombre !== nombre;
 
+
+
                 });
+
+
 
         }
 
 
+
+
+
         guardarCarrito();
+
+
 
         actualizarCarrito();
 
+
+
     }
+
+
+
 
 
     function eliminarProducto(nombre) {
 
+
+
         carrito =
+
             carrito.filter(function(item) {
 
+
+
                 return item.nombre !== nombre;
+
+
 
             });
 
 
+
+
+
         guardarCarrito();
 
+
+
         actualizarCarrito();
+
+
 
     }
 
 
+
+
+
     function actualizarCarrito() {
 
+
+
         const lista =
+
             document.getElementById(
+
                 "lista-carrito"
+
             );
+
+
 
         const contador =
+
             document.getElementById(
+
                 "contador-carrito"
+
             );
 
+
+
         const totalElemento =
+
             document.getElementById(
+
                 "total-carrito"
+
             );
+
+
+
 
 
         lista.innerHTML = "";
 
 
+
+
+
         let total = 0;
+
+
 
         let cantidad = 0;
 
 
+
+
+
         if (carrito.length === 0) {
 
+
+
             lista.innerHTML =
+
                 "<p>Tu carrito está vacío.</p>";
+
+
 
         } else {
 
+
+
             carrito.forEach(function(producto) {
 
+
+
                 let subtotal =
+
                     producto.precio *
+
                     producto.cantidad;
+
+
+
 
 
                 total += subtotal;
 
+
+
                 cantidad +=
+
                     producto.cantidad;
+
+
+
 
 
                 lista.innerHTML += `
 
+
+
                     <div class="item-carrito">
 
+
+
                         <div class="item-carrito-nombre">
+
                             ${producto.nombre}
+
                         </div>
 
+
+
                         <div>
+
                             $${producto.precio} c/u
+
                         </div>
+
+
 
                         <div class="controles-cantidad">
 
+
+
                             <button
+
                                 onclick="cambiarCantidad('${producto.nombre}', -1)"
+
                             >
+
                                 −
+
                             </button>
+
+
 
                             <strong>
+
                                 ${producto.cantidad}
+
                             </strong>
 
-                            <button
-                                onclick="cambiarCantidad('${producto.nombre}', 1)"
-                            >
-                                +
-                            </button>
+
 
                             <button
-                                class="boton-eliminar"
-                                onclick="eliminarProducto('${producto.nombre}')"
+
+                                onclick="cambiarCantidad('${producto.nombre}', 1)"
+
                             >
-                                Eliminar
+
+                                +
+
                             </button>
+
+
+
+                            <button
+
+                                class="boton-eliminar"
+
+                                onclick="eliminarProducto('${producto.nombre}')"
+
+                            >
+
+                                Eliminar
+
+                            </button>
+
+
 
                         </div>
+
+
 
                         <div>
+
                             Subtotal: $${subtotal}
+
                         </div>
+
+
 
                     </div>
 
+
+
                 `;
 
+
+
             });
+
+
 
         }
 
 
+
+
+
         contador.textContent =
+
             cantidad;
 
 
+
+
+
         totalElemento.textContent =
+
             "Total: $" + total;
 
+
+
     }
+
+
+
 
 
     function mostrarCarrito() {
 
+
+
         document
+
             .getElementById("carrito")
+
             .classList.toggle("visible");
+
+
 
         actualizarCarrito();
 
+
+
     }
+
+
+
 
 
     function continuarCotizacion() {
 
+
+
         if (carrito.length === 0) {
 
+
+
             alert(
+
                 "Agrega al menos un producto al carrito."
+
             );
 
+
+
             return;
+
+
 
         }
 
 
+
+
+
         window.location.href =
+
             "cotizacion.html";
 
+
+
     }
+
+
+
 
 
     /* =========================
+
        FOTOS
+
     ========================= */
+
+
 
     function cambiarFoto(id, src) {
 
+
+
         document
+
             .getElementById(id)
+
             .src = src;
 
+
+
     }
+
+
+
 
 
     function abrirImagen(src) {
 
+
+
         const visor =
+
             document.getElementById(
+
                 "visor-imagen"
+
             );
 
+
+
         const imagen =
+
             document.getElementById(
+
                 "imagen-grande"
+
             );
+
+
+
 
 
         imagen.src = src;
 
+
+
         visor.style.display = "flex";
+
+
 
         document.body.style.overflow = "hidden";
 
+
+
     }
+
+
+
 
 
     function cerrarImagen() {
 
+
+
         document
+
             .getElementById(
+
                 "visor-imagen"
+
             )
+
             .style.display = "none";
 
+
+
         document.body.style.overflow = "";
+
+
 
     }
 
 
+
+
+
     /* =========================
+
        CERRAR VISOR CON ESC
+
     ========================= */
 
+
+
     document.addEventListener(
+
         "keydown",
+
         function(event) {
 
+
+
             if (
+
                 event.key === "Escape"
+
             ) {
+
+
 
                 cerrarImagen();
 
+
+
             }
 
+
+
         }
+
     );
 
 
+
+
+
     /* =========================
+
        INICIAR
+
     ========================= */
+
+
 
     actualizarCarrito();
 
+
+
 </script>
 
+
+
 </body>
+
 </html>
