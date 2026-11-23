@@ -1360,6 +1360,59 @@
 
 
 
+        /* Ajustes para que todas las categorías se adapten al celular */
+        @media (max-width: 700px) {
+            html, body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Evita que el padding de las tarjetas se sume al 100% de ancho */
+            .pantalla-categoria,
+            .catalogo-inicio,
+            .productos,
+            .producto-card,
+            .galeria-producto,
+            .producto-info,
+            .foto-principal,
+            .selector-producto,
+            .producto-info button {
+                box-sizing: border-box;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            .pantalla-categoria,
+            .catalogo-inicio,
+            .productos,
+            .producto-card,
+            .galeria-producto,
+            .producto-info,
+            .foto-principal {
+                width: 100%;
+            }
+
+            .productos {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .foto-principal {
+                display: block;
+            }
+
+            .producto-info p,
+            .producto-info h3,
+            .producto-info label {
+                overflow-wrap: anywhere;
+            }
+
+            .producto-info select,
+            .producto-info button {
+                max-width: 100%;
+            }
+        }
+
     </style>
 
 </head>
