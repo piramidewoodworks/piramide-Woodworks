@@ -618,6 +618,17 @@
 
 
 
+        .selector-variante {
+            width: 100%;
+            margin: 10px 0 4px;
+            padding: 11px 12px;
+            border: 1px solid var(--linea);
+            border-radius: 8px;
+            background: #faf9f7;
+            color: var(--texto);
+            font-size: 14px;
+        }
+
         .boton-principal {
 
             width: 100%;
@@ -4786,17 +4797,46 @@
             info.appendChild(datos);
         }
 
+        const opciones = Array.isArray(producto.opciones) ? producto.opciones : [];
         const precio = document.createElement("p");
         precio.className = "precio";
-        precio.textContent = "$" + Number(producto.precio || 0).toLocaleString("es-MX") + " MXN";
+        if (opciones.length) {
+            const menor = Math.min.apply(null, opciones.map(function(op) { return Number(op.precio) || 0; }));
+            precio.textContent = "Desde $" + menor.toLocaleString("es-MX") + " MXN";
+        } else {
+            precio.textContent = "$" + Number(producto.precio || 0).toLocaleString("es-MX") + " MXN";
+        }
         info.appendChild(precio);
+
+        let selector = null;
+        if (opciones.length) {
+            selector = document.createElement("select");
+            selector.className = "selector-variante";
+            selector.setAttribute("aria-label", "Elige una opción de " + (producto.nombre || "producto"));
+            opciones.forEach(function(opcion, indice) {
+                const opt = document.createElement("option");
+                opt.value = String(indice);
+                opt.textContent = opcion.nombre + " — $" + Number(opcion.precio || 0).toLocaleString("es-MX") + " MXN";
+                selector.appendChild(opt);
+            });
+            info.appendChild(selector);
+            selector.addEventListener("change", function() {
+                const elegida = opciones[Number(selector.value)] || opciones[0];
+                precio.textContent = "$" + Number(elegida.precio || 0).toLocaleString("es-MX") + " MXN";
+            });
+        }
 
         const boton = document.createElement("button");
         boton.className = "boton-principal";
         boton.type = "button";
         boton.textContent = "Agregar al carrito";
         boton.addEventListener("click", function () {
-            agregarAlCarrito(producto.nombre, Number(producto.precio) || 0);
+            if (opciones.length) {
+                const elegida = opciones[Number(selector.value)] || opciones[0];
+                agregarAlCarrito(producto.nombre + " — " + elegida.nombre, Number(elegida.precio) || 0);
+            } else {
+                agregarAlCarrito(producto.nombre, Number(producto.precio) || 0);
+            }
         });
         info.appendChild(boton);
 
@@ -4806,9 +4846,18 @@
     }
 
     function actualizarTarjetaFijaDesdeAdmin(tarjeta, producto) {
-        // Las tarjetas con selectores (por ejemplo, altar y casitas) conservan
-        // sus opciones especiales y no se modifican desde esta sincronización.
-        if (tarjeta.querySelector("select")) return false;
+        // Si una tarjeta antigua ya tenía un selector especial, permitimos
+        // reemplazar su panel de información cuando ahora se administra desde
+        // Productos con variantes genéricas en Supabase.
+        if (tarjeta.querySelector("select")) {
+            const opcionesNuevas = Array.isArray(producto.opciones) ? producto.opciones : [];
+            if (!opcionesNuevas.length) return false;
+            const tarjetaNueva = crearTarjetaDesdeAdmin(producto);
+            const infoNueva = tarjetaNueva.querySelector(".producto-info");
+            const infoAnterior = tarjeta.querySelector(".producto-info");
+            if (infoNueva && infoAnterior) infoAnterior.replaceWith(infoNueva);
+            return true;
+        }
 
         const titulo = tarjeta.querySelector(".producto-info h3");
         const precio = tarjeta.querySelector(".producto-info .precio");
@@ -4853,7 +4902,7 @@
         try {
             const { data, error } = await supabaseCatalogo
                 .from("productos")
-                .select("id,nombre,categoria,precio,descripcion,medidas,material,imagen")
+                .select("id,nombre,categoria,precio,descripcion,medidas,material,imagen,opciones")
                 .order("id", { ascending: true });
 
             if (error) {
