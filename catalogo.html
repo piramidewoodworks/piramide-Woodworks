@@ -3930,6 +3930,8 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
 
@@ -4685,6 +4687,224 @@
     ========================= */
 
 
+
+
+    /* =========================
+       PRODUCTOS ADMINISTRADOS EN SUPABASE
+       Lee los productos del mismo catálogo que usa productos.html.
+    ========================= */
+
+    const SUPABASE_URL_CATALOGO = "https://ighcydtijeumeqyhuvkh.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY_CATALOGO = "sb_publishable_gI5akJYFXtqZxadDOuC4zg_cUCyXofV";
+    const supabaseCatalogo = window.supabase.createClient(
+        SUPABASE_URL_CATALOGO,
+        SUPABASE_PUBLISHABLE_KEY_CATALOGO
+    );
+
+    function normalizarTextoCatalogo(valor) {
+        return String(valor || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim()
+            .toLowerCase();
+    }
+
+    function obtenerSeccionCatalogo(categoria) {
+        const valor = normalizarTextoCatalogo(categoria);
+        const mapa = {
+            "tequileras": "tequila",
+            "cajas para tequila & botellas": "tequila",
+            "regalo": "regalo",
+            "cajas de regalo": "regalo",
+            "portallaves": "accesorios",
+            "centros": "centros",
+            "centros de mesa": "centros",
+            "mesas": "mesas",
+            "dia de muertos": "muertos",
+            "navidad": "navidad",
+            "otros": "otros",
+            "otros disenos": "otros",
+            "otros diseños": "otros"
+        };
+        return mapa[valor] || "otros";
+    }
+
+    function crearTarjetaDesdeAdmin(producto) {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto-card";
+        tarjeta.dataset.productoAdmin = "true";
+
+        const galeria = document.createElement("div");
+        galeria.className = "galeria-producto";
+
+        if (producto.imagen) {
+            const imagen = document.createElement("img");
+            imagen.className = "foto-principal";
+            imagen.src = producto.imagen;
+            imagen.alt = producto.nombre || "Producto Pirámide Woodworks";
+            imagen.loading = "lazy";
+            imagen.addEventListener("click", function () {
+                abrirImagen(imagen.src);
+            });
+            imagen.addEventListener("error", function () {
+                galeria.innerHTML = '<div class="sin-foto">Imagen no disponible</div>';
+            });
+            galeria.appendChild(imagen);
+        } else {
+            const sinFoto = document.createElement("div");
+            sinFoto.className = "sin-foto";
+            sinFoto.textContent = "Producto personalizado";
+            galeria.appendChild(sinFoto);
+        }
+
+        const info = document.createElement("div");
+        info.className = "producto-info";
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = producto.nombre || "Producto";
+        info.appendChild(titulo);
+
+        if (producto.descripcion) {
+            const descripcion = document.createElement("p");
+            descripcion.textContent = producto.descripcion;
+            info.appendChild(descripcion);
+        }
+
+        if (producto.medidas || producto.material) {
+            const datos = document.createElement("p");
+            if (producto.medidas) {
+                const medidas = document.createElement("span");
+                medidas.textContent = "Medidas: " + producto.medidas;
+                datos.appendChild(medidas);
+            }
+            if (producto.material) {
+                if (producto.medidas) datos.appendChild(document.createElement("br"));
+                const material = document.createElement("span");
+                material.textContent = "Material: " + producto.material;
+                datos.appendChild(material);
+            }
+            info.appendChild(datos);
+        }
+
+        const precio = document.createElement("p");
+        precio.className = "precio";
+        precio.textContent = "$" + Number(producto.precio || 0).toLocaleString("es-MX") + " MXN";
+        info.appendChild(precio);
+
+        const boton = document.createElement("button");
+        boton.className = "boton-principal";
+        boton.type = "button";
+        boton.textContent = "Agregar al carrito";
+        boton.addEventListener("click", function () {
+            agregarAlCarrito(producto.nombre, Number(producto.precio) || 0);
+        });
+        info.appendChild(boton);
+
+        tarjeta.appendChild(galeria);
+        tarjeta.appendChild(info);
+        return tarjeta;
+    }
+
+    function actualizarTarjetaFijaDesdeAdmin(tarjeta, producto) {
+        // Las tarjetas con selectores (por ejemplo, altar y casitas) conservan
+        // sus opciones especiales y no se modifican desde esta sincronización.
+        if (tarjeta.querySelector("select")) return false;
+
+        const titulo = tarjeta.querySelector(".producto-info h3");
+        const precio = tarjeta.querySelector(".producto-info .precio");
+        const boton = tarjeta.querySelector(".producto-info button");
+
+        if (!titulo || !precio || !boton) return false;
+
+        titulo.textContent = producto.nombre || titulo.textContent;
+
+        const descripcion = tarjeta.querySelector(".producto-info p:not(.precio)");
+        if (descripcion && producto.descripcion) {
+            descripcion.textContent = producto.descripcion;
+        }
+
+        precio.textContent = "$" + Number(producto.precio || 0).toLocaleString("es-MX") + " MXN";
+
+        // Sobrescribe el comportamiento anterior para que el carrito use
+        // siempre el precio más reciente guardado desde el administrador.
+        boton.onclick = function () {
+            agregarAlCarrito(producto.nombre, Number(producto.precio) || 0);
+        };
+
+        if (producto.imagen) {
+            const foto = tarjeta.querySelector(".foto-principal");
+            if (foto) {
+                if (!foto.dataset.imagenAnterior) {
+                    foto.dataset.imagenAnterior = foto.src;
+                }
+                foto.onerror = function () {
+                    foto.onerror = null;
+                    foto.src = foto.dataset.imagenAnterior;
+                };
+                foto.src = producto.imagen;
+                foto.alt = producto.nombre || "Producto";
+            }
+        }
+
+        return true;
+    }
+
+    async function cargarProductosDesdeAdmin() {
+        try {
+            const { data, error } = await supabaseCatalogo
+                .from("productos")
+                .select("id,nombre,categoria,precio,descripcion,medidas,material,imagen")
+                .order("id", { ascending: true });
+
+            if (error) {
+                console.error("No se pudieron cargar los productos del administrador:", error);
+                return;
+            }
+
+            // Quita únicamente las tarjetas dinámicas anteriores; las tarjetas
+            // especiales que ya forman parte del catálogo permanecen intactas.
+            document.querySelectorAll('[data-producto-admin="true"]').forEach(function (tarjeta) {
+                tarjeta.remove();
+            });
+
+            (data || []).forEach(function (producto) {
+                const seccionId = "categoria-" + obtenerSeccionCatalogo(producto.categoria);
+                const seccion = document.getElementById(seccionId);
+                const contenedor = seccion && seccion.querySelector(".productos");
+                if (!contenedor) return;
+
+                const nombreBuscado = normalizarTextoCatalogo(producto.nombre);
+                const tarjetasFijas = Array.from(contenedor.querySelectorAll(".producto-card"))
+                    .filter(function (tarjeta) {
+                        return tarjeta.dataset.productoAdmin !== "true";
+                    });
+
+                const tarjetaExistente = tarjetasFijas.find(function (tarjeta) {
+                    const encabezado = tarjeta.querySelector(".producto-info h3");
+                    if (!encabezado) return false;
+                    const nombreCatalogo = normalizarTextoCatalogo(encabezado.textContent);
+                    return nombreCatalogo === nombreBuscado ||
+                        nombreCatalogo.startsWith(nombreBuscado + " ");
+                });
+
+                if (tarjetaExistente) {
+                    // Conserva títulos descriptivos más largos que ya existen en el catálogo.
+                    actualizarTarjetaFijaDesdeAdmin(tarjetaExistente, {
+                        ...producto,
+                        nombre: tarjetaExistente.querySelector(".producto-info h3").textContent
+                    });
+                    return;
+                }
+
+                contenedor.appendChild(crearTarjetaDesdeAdmin(producto));
+            });
+        } catch (error) {
+            console.error("Error conectando el catálogo con Supabase:", error);
+        }
+    }
+
+
+    cargarProductosDesdeAdmin();
 
     actualizarCarrito();
 
